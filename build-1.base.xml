@@ -26,7 +26,7 @@
 
 	<!-- Define build folder -->
 	<property name="build.dir" value="${basedir}/build"/>
-    <property name="build.output.dir" value="${build.dir}/output"/>
+    <property name="build.temp.dir" value="${build.dir}/temp"/>
 
     <!-- Define sources folder (static and generated files) -->
     <property name="src.dir" value="${basedir}/src"/>
@@ -67,8 +67,8 @@
 	<!-- Initializes the build. -->
     <target name="0.Init" description="Initialize environment for tasks executed on this module">
 		<!-- Initialize custom Ant task needed for running the server tests -->
-		<delete dir="${build.output.dir}"/>
-		<mkdir dir="${build.output.dir}"/>
+		<delete dir="${build.temp.dir}"/>
+		<mkdir dir="${build.temp.dir}"/>
 
         <mkdir dir="${dist.dir}"/>
 		<mkdir dir="${dist.cfg.dir}"/>

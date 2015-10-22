@@ -37,7 +37,7 @@
 	<!-- Cleans up the distribution files without generated classes. -->
     <target name="0.Clean" description="Cleans up the distribution files (classes and documentation)">
         <delete dir="${dist.dir}"/>
-        <delete dir="${build.output.dir}"/>
+        <delete dir="${build.temp.dir}"/>
 	</target>
 
 
@@ -58,12 +58,12 @@
 
         <buildnumber file="build.properties"/>
 
-        <javac classpathref="classpath.bin" srcdir="${src.java.dir}" destdir="${build.output.dir}"
+        <javac classpathref="classpath.bin" srcdir="${src.java.dir}" destdir="${build.temp.dir}"
             debug="${compiler.debug}" deprecation="${compiler.deprecation}" optimize="${compiler.optimize}" nowarn="true">
         </javac>
 
         <!-- Copies non java files that need to be in the classes directory -->
-        <copy todir="${build.output.dir}">
+        <copy todir="${build.temp.dir}">
             <fileset dir="${src.java.dir}/">
                 <include name="**/*.properties"/>
 				<include name="**/*.info"/>
@@ -73,7 +73,7 @@
         </copy>
 
 		<jar jarfile="${dist.bin.dir}/boot.jar">
-			<fileset dir="${build.output.dir}">
+			<fileset dir="${build.temp.dir}">
 				<include name="org/areasy/boot/"/>
 			</fileset>
 			<manifest>
@@ -86,7 +86,7 @@
 		</jar>
 
         <jar jarfile="${dist.libs.dir}/${library.jar}">
-            <fileset dir="${build.output.dir}">
+            <fileset dir="${build.temp.dir}">
                 <include name="org/areasy/common/"/>
 				<include name="org/areasy/runtime/"/>
            </fileset>
@@ -104,15 +104,15 @@
 	<!-- Generates the module's API documentation -->
     <target name="3.Doc" depends="1.Init, 2.Bin" unless="uptodate-doc" description="Generates API documentation">
 
-		<copyfile src="${src.doc.dir}/doclet.properties" dest="${build.output.dir}/doclet.properties"/>
-		<copyfile src="${src.doc.dir}/documentation.html" dest="${build.output.dir}/documentation.html"/>
+		<copyfile src="${src.doc.dir}/doclet.properties" dest="${build.temp.dir}/doclet.properties"/>
+		<copyfile src="${src.doc.dir}/documentation.html" dest="${build.temp.dir}/documentation.html"/>
 
-        <replace file="${build.output.dir}/doclet.properties" token="%year%" value="${project.years}"/>
-        <replace file="${build.output.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>
-        <replace file="${build.output.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
-        <replace file="${build.output.dir}/doclet.properties" token="%version%" value="${project.version}.${build.number}"/>
+        <replace file="${build.temp.dir}/doclet.properties" token="%year%" value="${project.years}"/>
+        <replace file="${build.temp.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>
+        <replace file="${build.temp.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
+        <replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}.${build.number}"/>
 
-		<copy overwrite="true" todir="${build.output.dir}/resources">
+		<copy overwrite="true" todir="${build.temp.dir}/resources">
             <fileset dir="${src.doc.dir}/resources">
 				<include name="*.png"/>
 			</fileset>
@@ -123,7 +123,7 @@
             maxmemory="256M" docletpathref="classpath.docs"
             packagenames="org.areasy.*"
             sourcepath="${src.java.dir}"
-            additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.output.dir}/doclet.properties'"
+            additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"
             private="no"/>
 
 		<copy overwrite="true" todir="${dist.doc.dir}">

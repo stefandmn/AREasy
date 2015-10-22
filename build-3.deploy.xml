@@ -221,7 +221,7 @@
 
         <property name="isWindows" value="true"/>
         <antcall target="1.2.2.Prepare.Structure.ForWin"/>
-        <zip destfile="${build.output.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
+        <zip destfile="${build.temp.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
     </target>
 
 
@@ -237,9 +237,9 @@
         <property name="isUnix" value="true"/>
 		<antcall target="1.2.1.Prepare.Structure.ForUnix"/>
 
-		<tar destfile="${build.output.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
-		<gzip destfile="${build.output.dir}/${project.name}-${project.version}.tar.gz" src="${build.output.dir}/${project.name}-${project.version}.tar"/>
-		<delete file="${build.output.dir}/${project.name}-${project.version}.tar" quiet="true"/>
+		<tar destfile="${build.temp.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
+		<gzip destfile="${build.temp.dir}/${project.name}-${project.version}.tar.gz" src="${build.temp.dir}/${project.name}-${project.version}.tar"/>
+		<delete file="${build.temp.dir}/${project.name}-${project.version}.tar" quiet="true"/>
 	</target>
 
 	
@@ -255,73 +255,73 @@
 
 
     <target name="3.3.1.Package.EXE.Win" if="isWindows">
-        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.output.dir}/installer.nsi"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%name%" value="${project.name}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%version%" value="${project.version}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.temp.dir}/installer.nsi"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%version%" value="${project.version}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
 
         <!-- compile installer source -->
         <exec executable="${nsis.path}/MakeNSIS.exe">
-            <arg path="${build.output.dir}/installer.nsi"/>
+            <arg path="${build.temp.dir}/installer.nsi"/>
         </exec>
 
-        <delete file="${build.output.dir}/installer.nsi" quiet="true"/>
+        <delete file="${build.temp.dir}/installer.nsi" quiet="true"/>
     </target>
 
     <target name="3.3.1.Package.EXE.Unix" if="isUnix">
-        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.output.dir}/installer.nsi"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%name%" value="${project.name}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%version%" value="${project.version}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
-        <replace file="${build.output.dir}/installer.nsi" token="${basedir}" value="z:${basedir}"/>
+        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.temp.dir}/installer.nsi"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%version%" value="${project.version}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+        <replace file="${build.temp.dir}/installer.nsi" token="${basedir}" value="z:${basedir}"/>
 
         <!-- compile installer source -->
         <exec executable="/usr/bin/wine">
-            <arg line="'${nsis.path}/MakeNSIS.exe' 'z:${build.output.dir}/installer.nsi'"/>
+            <arg line="'${nsis.path}/MakeNSIS.exe' 'z:${build.temp.dir}/installer.nsi'"/>
         </exec>
 
-        <delete file="${build.output.dir}/installer.nsi" quiet="true"/>
+        <delete file="${build.temp.dir}/installer.nsi" quiet="true"/>
     </target>
 
 
     <target name="3.4.Package.BIN" description="Build installer kit - bin file">
         <antcall target="3.2.Package.TAR.GZ"/>
 
-		<copyfile src="${src.dir}/shell/installer.bin" dest="${build.output.dir}/${project.name}.bin"/>
+		<copyfile src="${src.dir}/shell/installer.bin" dest="${build.temp.dir}/${project.name}.bin"/>
 
-		<mkdir dir="${build.output.dir}/${project.name}"/>
-		<move file="${build.output.dir}/${project.name}-${project.version}.tar.gz" todir="${build.output.dir}/${project.name}"/>
-		<copyfile src="${src.dir}/shell/setup.sh" dest="${build.output.dir}/${project.name}/setup.sh"/>
-		<replace file="${build.output.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
-		<replace file="${build.output.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
+		<mkdir dir="${build.temp.dir}/${project.name}"/>
+		<move file="${build.temp.dir}/${project.name}-${project.version}.tar.gz" todir="${build.temp.dir}/${project.name}"/>
+		<copyfile src="${src.dir}/shell/setup.sh" dest="${build.temp.dir}/${project.name}/setup.sh"/>
+		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
+		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
 
-		<tar destfile="${build.output.dir}/${project.name}.tar" basedir="${build.output.dir}/${project.name}"/>
-		<gzip destfile="${build.output.dir}/${project.name}.tar.gz" src="${build.output.dir}/${project.name}.tar"/>
+		<tar destfile="${build.temp.dir}/${project.name}.tar" basedir="${build.temp.dir}/${project.name}"/>
+		<gzip destfile="${build.temp.dir}/${project.name}.tar.gz" src="${build.temp.dir}/${project.name}.tar"/>
 
-		<concat destfile="${build.output.dir}/${project.name}-${project.version}.bin" binary="yes">
-			<fileset file="${build.output.dir}/areasy.bin"/>
-			<fileset file="${build.output.dir}/areasy.tar.gz"/>
+		<concat destfile="${build.temp.dir}/${project.name}-${project.version}.bin" binary="yes">
+			<fileset file="${build.temp.dir}/areasy.bin"/>
+			<fileset file="${build.temp.dir}/areasy.tar.gz"/>
 		</concat>
 
         <antcall target="3.4.1.Package.BIN.UnixPerm" inheritall="false"/>
 
-		<delete dir="${build.output.dir}/areasy" quiet="true"/>
-		<delete file="${build.output.dir}/${project.name}.bin" quiet="true"/>
-		<delete file="${build.output.dir}/${project.name}.tar" quiet="true"/>
-		<delete file="${build.output.dir}/${project.name}.tar.gz" quiet="true"/>
+		<delete dir="${build.temp.dir}/areasy" quiet="true"/>
+		<delete file="${build.temp.dir}/${project.name}.bin" quiet="true"/>
+		<delete file="${build.temp.dir}/${project.name}.tar" quiet="true"/>
+		<delete file="${build.temp.dir}/${project.name}.tar.gz" quiet="true"/>
 	</target>
 
 
     <target name="3.4.1.Package.BIN.UnixPerm" if="isUnix">
         <exec executable="/bin/chmod">
-            <arg line="+x '${build.output.dir}/${project.name}-${project.version}.bin'"/>
+            <arg line="+x '${build.temp.dir}/${project.name}-${project.version}.bin'"/>
         </exec>
     </target>
 

@@ -16,7 +16,7 @@ package org.areasy.common.parser.excel;
 /**
  * Interface for cell formats - used for typing information
  *
- * @deprecated Repackaged as com.snt.parser.documents.excel.format.CellFormat
+ * @deprecated Repackaged as org.areasy.common.parser.documents.excel.format.CellFormat
  */
 public interface CellFormat extends org.areasy.common.parser.excel.format.CellFormat
 {

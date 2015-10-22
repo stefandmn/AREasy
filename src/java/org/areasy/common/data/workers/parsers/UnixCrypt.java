@@ -514,7 +514,7 @@ public class UnixCrypt
 	{
 		if (arg.length != 2)
 		{
-			System.out.println("Usage - java com.snt.common.data.workers.utilities.UnixCrypt <key> <salt>");
+			System.out.println("Usage - java org.areasy.common.data.workers.utilities.UnixCrypt <key> <salt>");
 			System.exit(1);
 		}
 

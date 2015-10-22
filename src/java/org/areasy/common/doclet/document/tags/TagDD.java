@@ -42,7 +42,7 @@ public class TagDD extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#openTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#openTagElements()
 	 */
 	public Element[] openTagElements()
 	{

@@ -14,7 +14,7 @@ package org.areasy.common.parser.excel.write;
  */
 
 /**
- * @deprecated repackaged as com.snt.parser.documents.excel.format.Border
+ * @deprecated repackaged as org.areasy.common.parser.documents.excel.format.Border
  */
 public final class Border extends org.areasy.common.parser.excel.format.Border
 {

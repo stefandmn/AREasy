@@ -34,7 +34,7 @@ import java.io.Serializable;
  * </ul>
  * <p/>
  * The default implementation of this for application use is
- * com.snt.parser.engines.velocity.context.VelocityContext.
+ * org.areasy.common.parser.engines.velocity.context.VelocityContext.
  * <p/>
  * All thanks to Fedor for the chaining idea.
  *

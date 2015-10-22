@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 /**
  * TYPE Utilities.
- * Provides various static utiltiy methods for manipulating types and their
+ * Provides various static utility methods for manipulating types and their
  * string representations.
  */
 public class TypeUtility
@@ -137,7 +137,7 @@ public class TypeUtility
 
 	private static Class[] stringArg = {java.lang.String.class};
 
-	private static int intCacheSize = Integer.getInteger("com.snt.websrv.engine.utilities.TypeUtility.IntegerCacheSize", 600).intValue();
+	private static int intCacheSize = Integer.getInteger("org.areasy.common.data.TypeUtility.IntegerCacheSize", 600).intValue();
 	private static Integer[] integerCache = new Integer[intCacheSize];
 	private static String[] integerStrCache = new String[intCacheSize];
 	private static Integer minusOne = new Integer(-1);

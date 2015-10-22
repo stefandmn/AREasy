@@ -17,7 +17,7 @@ package org.areasy.common.parser.excel.write;
  * Enumeration class which contains the various patterns available within
  * the standard Excel pattern palette
  *
- * @deprecated Repackaged as com.snt.parser.documents.excel.format.Pattern
+ * @deprecated Repackaged as org.areasy.common.parser.documents.excel.format.Pattern
  */
 public final class Pattern extends org.areasy.common.parser.excel.format.Pattern
 {

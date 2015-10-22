@@ -68,7 +68,7 @@ public class DesCrypt
 	{
 		if (args.length < 2)
 		{
-			System.out.println("Usage - com.snt.common.data.workers.parsers.DesCrypt [-encrypt|-decrypt] <text>");
+			System.out.println("Usage - org.areasy.common.data.workers.parsers.DesCrypt [-encrypt|-decrypt] <text>");
 			return;
 		}
 

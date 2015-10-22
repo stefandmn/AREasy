@@ -29,7 +29,7 @@ import org.areasy.common.parser.excel.write.WritableCellFeatures;
 import org.areasy.common.parser.excel.write.WritableWorkbook;
 
 /**
- * Abstract class which stores the com.snt.parser.documents.excel.common.data used for cells, such
+ * Abstract class which stores the org.areasy.common.parser.documents.excel.common.data used for cells, such
  * as row, column and formatting information.
  * Any record which directly represents the contents of a cell, such
  * as labels and numbers, are derived from this class

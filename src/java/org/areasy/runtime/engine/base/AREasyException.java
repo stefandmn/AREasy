@@ -18,7 +18,7 @@ import org.areasy.common.errors.NestableException;
 /**
  * The base class of all exceptions thrown by this library.
  * <p/>
- * The main engine for error traces is <code>com.snt.common.nestable.NestableException</code> library.
+ * The main engine for error traces is <code>org.areasy.common.nestable.NestableException</code> library.
  *
  */
 public class AREasyException extends NestableException

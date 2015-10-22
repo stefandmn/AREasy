@@ -437,7 +437,7 @@ public class HyperlinkRecord extends WritableRecordData
 			return data;
 		}
 
-		// Build up the com.snt.parser.documents.excel.common.data
+		// Build up the org.areasy.common.parser.documents.excel.common.data
 		byte[] commonData = new byte[32];
 
 		// Set the range of cells this hyperlink applies to
@@ -872,7 +872,7 @@ public class HyperlinkRecord extends WritableRecordData
 	/**
 	 * Gets the hyperlink stream specific to a URL link
 	 *
-	 * @param cd the data com.snt.parser.documents.excel.common.for all types of hyperlink
+	 * @param cd the data org.areasy.common.parser.documents.excel.common.for all types of hyperlink
 	 * @return the raw data for a URL hyperlink
 	 */
 	private byte[] getURLData(byte[] cd)
@@ -929,7 +929,7 @@ public class HyperlinkRecord extends WritableRecordData
 	/**
 	 * Gets the hyperlink stream specific to a URL link
 	 *
-	 * @param cd the data com.snt.parser.documents.excel.common.for all types of hyperlink
+	 * @param cd the data org.areasy.common.parser.documents.excel.common.for all types of hyperlink
 	 * @return the raw data for a URL hyperlink
 	 */
 	private byte[] getUNCData(byte[] cd)
@@ -954,7 +954,7 @@ public class HyperlinkRecord extends WritableRecordData
 	/**
 	 * Gets the hyperlink stream specific to a local file link
 	 *
-	 * @param cd the data com.snt.parser.documents.excel.common.for all types of hyperlink
+	 * @param cd the data org.areasy.common.parser.documents.excel.common.for all types of hyperlink
 	 * @return the raw data for a URL hyperlink
 	 */
 	private byte[] getFileData(byte[] cd)
@@ -1040,7 +1040,7 @@ public class HyperlinkRecord extends WritableRecordData
 			dataLength += 4 + (contents.length() + 1) * 2;
 		}
 
-		// Copy across the com.snt.parser.documents.excel.common.data into the new array
+		// Copy across the org.areasy.common.parser.documents.excel.common.data into the new array
 		byte[] d = new byte[dataLength];
 
 		System.arraycopy(cd, 0, d, 0, cd.length);
@@ -1203,7 +1203,7 @@ public class HyperlinkRecord extends WritableRecordData
 	/**
 	 * Gets the hyperlink stream specific to a location link
 	 *
-	 * @param cd the data com.snt.parser.documents.excel.common.for all types of hyperlink
+	 * @param cd the data org.areasy.common.parser.documents.excel.common.for all types of hyperlink
 	 * @return the raw data for a URL hyperlink
 	 */
 	private byte[] getLocationData(byte[] cd)

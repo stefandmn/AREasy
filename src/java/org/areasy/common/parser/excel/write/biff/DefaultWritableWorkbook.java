@@ -121,7 +121,7 @@ public class DefaultWritableWorkbook extends WritableWorkbook
 	private DrawingGroup drawingGroup;
 
 	/**
-	 * The com.snt.parser.documents.excel.common.workbook styles
+	 * The org.areasy.common.parser.documents.excel.common.workbook styles
 	 */
 	private Styles styles;
 
@@ -1674,7 +1674,7 @@ public class DefaultWritableWorkbook extends WritableWorkbook
 	}
 
 	/**
-	 * Accessor for the com.snt.parser.documents.excel.common.styles
+	 * Accessor for the org.areasy.common.parser.documents.excel.common.styles
 	 *
 	 * @return the standard styles for this workbook
 	 */

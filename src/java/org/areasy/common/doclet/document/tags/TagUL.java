@@ -46,7 +46,7 @@ public class TagUL extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#openTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#openTagElements()
 	 */
 	public Element[] openTagElements()
 	{
@@ -61,7 +61,7 @@ public class TagUL extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#closeTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#closeTagElements()
 	 */
 	public Element[] closeTagElements()
 	{
@@ -83,7 +83,7 @@ public class TagUL extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#addNestedTagContent(com.lowagie.text.Element[])
 	 */
 	public void addNestedTagContent(Element[] content)
 	{

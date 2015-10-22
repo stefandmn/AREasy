@@ -34,7 +34,7 @@ import java.util.Vector;
  * </p>
  * <p><pre>
  *    resource.loader = jar
- *    jar.resource.loader.class = com.snt.parser.engines.velocity.runtime.resource.loader.JarResourceLoader
+ *    jar.resource.loader.class = org.areasy.common.parser.engines.velocity.runtime.resource.loader.JarResourceLoader
  *    jar.resource.loader.path = list of JAR &lt;URL&gt;s
  * </pre></p>
  * <p/>

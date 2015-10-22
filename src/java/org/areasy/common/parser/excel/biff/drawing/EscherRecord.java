@@ -18,7 +18,7 @@ import org.areasy.common.logger.LoggerFactory;
 
 /**
  * The base class for all escher records.  This class contains
- * the com.snt.parser.documents.excel.common.header data and is basically a wrapper for the EscherRecordData
+ * the org.areasy.common.parser.documents.excel.common.header data and is basically a wrapper for the EscherRecordData
  * object
  */
 abstract class EscherRecord

@@ -16,7 +16,7 @@ package org.areasy.common.parser.excel.write;
 /**
  * Enumeration type which describes the vertical alignment of data within a cell
  *
- * @deprecated Repackaged as com.snt.parser.documents.excel.format.VerticalAlignment
+ * @deprecated Repackaged as org.areasy.common.parser.documents.excel.format.VerticalAlignment
  */
 public final class VerticalAlignment extends org.areasy.common.parser.excel.format.VerticalAlignment
 {

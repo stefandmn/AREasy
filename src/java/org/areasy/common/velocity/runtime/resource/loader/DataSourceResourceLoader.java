@@ -44,7 +44,7 @@ import java.sql.Statement;
  * <br>
  * ds.resource.loader.public.name = DataSource <br>
  * ds.resource.loader.description = Velocity DataSource Resource Loader <br>
- * ds.resource.loader.class = com.snt.parser.engines.velocity.runtime.resource.loader.DataSourceResourceLoader <br>
+ * ds.resource.loader.class = org.areasy.common.parser.engines.velocity.runtime.resource.loader.DataSourceResourceLoader <br>
  * ds.resource.loader.resource.datasource = java:comp/env/jdbc/Velocity <br>
  * ds.resource.loader.resource.table = tb_velocity_template <br>
  * ds.resource.loader.resource.keycolumn = id_template <br>

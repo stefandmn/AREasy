@@ -92,7 +92,7 @@ if exist "%PR_JVM%" goto foundJvm
 set PR_JVM=auto
 :foundJvm
 echo Using JVM:             "%PR_JVM%"
-"%EXECUTABLE%" //IS//%SERVICE_NAME% --StartClass com.snt.boot.Main --StopClass com.snt.boot.Main --StartParams -config;"%_APP_HOM%\cfg\default.properties";-mode;server --StopParams -config;"%_APP_HOM%\cfg\default.properties";-mode;client;-action;stop
+"%EXECUTABLE%" //IS//%SERVICE_NAME% --StartClass org.areasy.boot.Main --StopClass org.areasy.boot.Main --StartParams -config;"%_APP_HOM%\cfg\default.properties";-mode;server --StopParams -config;"%_APP_HOM%\cfg\default.properties";-mode;client;-action;stop
 if not errorlevel 1 goto doUpdate
 echo Failed installing '%SERVICE_NAME%' service
 goto end

@@ -28,7 +28,7 @@ public class TagSTRONG extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#isBold()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#isBold()
 	 */
 	public boolean isBold()
 	{

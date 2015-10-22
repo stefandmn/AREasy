@@ -35,14 +35,14 @@ import java.util.Vector;
  * class to instantiate a wrapper for.</p>
  * <ul>
  * <li>Use a factory configuration attribute named
- * <code>com.snt.common.logger.Logger</code> to identify the
+ * <code>org.areasy.common.logger.Logger</code> to identify the
  * requested implementation class.</li>
- * <li>Use the <code>com.snt.common.logger.Logger</code> system property
+ * <li>Use the <code>org.areasy.common.logger.Logger</code> system property
  * to identify the requested implementation class.</li>
  * <li>If <em>Log4J</em> is available, return an instance of
- * <code>com.snt.common.logger.base.log4j.Log4JLogger</code>.</li>
+ * <code>org.areasy.common.logger.base.log4j.Log4JLogger</code>.</li>
  * <li>If <em>JDK 1.4 or later</em> is available, return an instance of
- * <code>com.snt.common.logger.base.jdk.JdkLogger</code>.</li>
+ * <code>org.areasy.common.logger.base.jdk.JdkLogger</code>.</li>
  * </ul>
  * <p/>
  * <p>If the selected {@link Logger} implementation class has a
@@ -214,8 +214,8 @@ public class DefaultLoggerFactory extends LoggerFactory
 				catch (SecurityException e) {}
 			}
 
-			if ((managerClassName == null) && isLog4JAvailable()) managerClassName = "com.snt.common.logger.base.log4j.Log4JManager";
-				else if ((managerClassName == null) && isJdkAvailable()) managerClassName = "com.snt.common.logger.base.jdk.JdkManager";
+			if ((managerClassName == null) && isLog4JAvailable()) managerClassName = "org.areasy.common.logger.base.log4j.Log4JManager";
+				else if ((managerClassName == null) && isJdkAvailable()) managerClassName = "org.areasy.common.logger.base.jdk.JdkManager";
 		}
 
 		if(managerClassName != null)
@@ -295,8 +295,8 @@ public class DefaultLoggerFactory extends LoggerFactory
 			catch (SecurityException e) {}
 		}
 
-		if ((logClassName == null) && isLog4JAvailable()) logClassName = "com.snt.common.logger.base.log4j.Log4JLogger";
-			else if ((logClassName == null) && isJdkAvailable()) logClassName = "com.snt.common.logger.base.jdk.JdkLogger";
+		if ((logClassName == null) && isLog4JAvailable()) logClassName = "org.areasy.common.logger.base.log4j.Log4JLogger";
+			else if ((logClassName == null) && isJdkAvailable()) logClassName = "org.areasy.common.logger.base.jdk.JdkLogger";
 
 		return (logClassName);
 	}
@@ -374,7 +374,7 @@ public class DefaultLoggerFactory extends LoggerFactory
 	 * MUST KEEP THIS METHOD PRIVATE.
 	 * <p/>
 	 * <p>Exposing this method outside of
-	 * <code>com.snt.common.logger.DefaultLoggerFactory</code>
+	 * <code>org.areasy.common.logger.DefaultLoggerFactory</code>
 	 * will create a security violation:
 	 * This method uses <code>AccessController.doPrivileged()</code>.
 	 * </p>
@@ -429,7 +429,7 @@ public class DefaultLoggerFactory extends LoggerFactory
 		try
 		{
 			loadClass("java.util.logging.Logger");
-			loadClass("com.snt.common.logger.base.jdk.JdkLogger");
+			loadClass("org.areasy.common.logger.base.jdk.JdkLogger");
 
 			Class throwable = loadClass("java.lang.Throwable");
 
@@ -452,7 +452,7 @@ public class DefaultLoggerFactory extends LoggerFactory
 		try
 		{
 			loadClass("org.apache.log4j.Logger");
-			loadClass("com.snt.common.logger.base.log4j.Log4JLogger");
+			loadClass("org.areasy.common.logger.base.log4j.Log4JLogger");
 
 			return true;
 		}

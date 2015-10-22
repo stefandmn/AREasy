@@ -233,7 +233,7 @@ public class TagTABLE extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#toElement(java.lang.String)
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#toElement(java.lang.String)
 	 */
 	public Element toElement(String text)
 	{
@@ -242,7 +242,7 @@ public class TagTABLE extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#openTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#openTagElements()
 	 */
 	public Element[] openTagElements()
 	{

@@ -23,5 +23,5 @@ echo "Please enter the password: "
 read PASSWORD
 
 echo Credential decoding..
-"$JAVA_HOME/bin/java" -classpath "$_APP_HOME/libs/snt-common-1.1.jar" com.snt.common.data.type.credential.Credential -d $PASSWORD
+"$JAVA_HOME/bin/java" -classpath "$_APP_HOME/libs/snt-common-1.1.jar" org.areasy.common.data.type.credential.Credential -d $PASSWORD
 

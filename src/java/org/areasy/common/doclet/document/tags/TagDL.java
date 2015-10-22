@@ -37,7 +37,7 @@ public class TagDL extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#openTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#openTagElements()
 	 */
 	public Element[] openTagElements()
 	{
@@ -51,7 +51,7 @@ public class TagDL extends HtmlTag
 
 	/*
 	 *  (non-Javadoc)
-	 * @see com.snt.common.doclet.document.tags.HTMLTag#closeTagElements()
+	 * @see org.areasy.common.doclet.document.tags.HTMLTag#closeTagElements()
 	 */
 	public Element[] closeTagElements()
 	{

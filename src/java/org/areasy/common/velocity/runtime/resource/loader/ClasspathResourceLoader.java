@@ -39,7 +39,7 @@ import java.io.InputStream;
  * <br>
  * resource.loader = class
  * class.resource.loader.class =
- * com.snt.parser.engines.velocity.runtime.resource.loader.ClasspathResourceLoader
+ * org.areasy.common.parser.engines.velocity.runtime.resource.loader.ClasspathResourceLoader
  * <br>
  * <br>
  * To use, put your template directories, jars

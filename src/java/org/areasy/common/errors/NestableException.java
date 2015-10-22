@@ -30,7 +30,7 @@ import java.io.PrintWriter;
  * the way.
  * <p> Running the following program
  * <p><blockquote><pre>
- *  1 import com.snt.common.nestable.NestableException;
+ *  1 import org.areasy.common.nestable.NestableException;
  *  2
  *  3 public class Test {
  *  4     public static void main( String[] args ) {

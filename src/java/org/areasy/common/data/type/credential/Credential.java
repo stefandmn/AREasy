@@ -112,7 +112,7 @@ public abstract class Credential
 	{
 		if (args == null || args.length < 2 || (!args[0].equals("-encrypt") && !args[0].equals("-e") && !args[0].equals("-decrypt") && !args[0].equals("-d")))
 		{
-			System.out.println("Usage - java com.snt.common.data.type.credential.Credential [-e|-d] <password>");
+			System.out.println("Usage - java org.areasy.common.data.type.credential.Credential [-e|-d] <password>");
 			System.exit(1);
 		}
 

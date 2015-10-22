@@ -290,7 +290,7 @@ public abstract class AbstractAction implements RuntimeAction
 			}
 			else
 			{
-				rootLocation = "com.snt.areasy.runtime.utilities.resources.help";
+				rootLocation = "org.areasy.runtime.utilities.resources.help";
 
 				indexAction = packageName.indexOf("areasy");
 				if(indexAction > 0) pathLocation = packageName.substring(indexAction + "areasy".length());
@@ -771,10 +771,10 @@ public abstract class AbstractAction implements RuntimeAction
 	/**
 	 * Create Velocity context. The context will include the following objects: <br/>
 	 * <b>$action</b> = action class (<i>this</i> java operator) </br>
-	 * <b>dates</br> = com.snt.common.data.DateUtility instance </br>
-	 * <b>strings</b> = com.snt.common.data.StringUtility instance </br>
-	 * <b>numbers</b> = com.snt.common.data.NumberUtility instance </br>
-	 * <b>config</b> = com.snt.common.structure.configuration.Configuration instance that consists action
+	 * <b>dates</br> = org.areasy.common.data.DateUtility instance </br>
+	 * <b>strings</b> = org.areasy.common.data.StringUtility instance </br>
+	 * <b>numbers</b> = org.areasy.common.data.NumberUtility instance </br>
+	 * <b>config</b> = org.areasy.common.structure.configuration.Configuration instance that consists action
 	 * configuration (all parameters set to the execution runtime)
 	 */
 	protected void initContext()

@@ -204,7 +204,7 @@ public class ObjRecord extends WritableRecordData
 		int pos = 0;
 		byte[] data = new byte[dataLength];
 
-		// The com.snt.parser.documents.excel.common.data
+		// The org.areasy.common.parser.documents.excel.common.data
 		// record id
 		IntegerHelper.getTwoBytes(0x15, data, pos);
 
@@ -268,7 +268,7 @@ public class ObjRecord extends WritableRecordData
 		int pos = 0;
 		byte[] data = new byte[dataLength];
 
-		// The com.snt.parser.documents.excel.common.data
+		// The org.areasy.common.parser.documents.excel.common.data
 		// record id
 		IntegerHelper.getTwoBytes(0x15, data, pos);
 
@@ -321,7 +321,7 @@ public class ObjRecord extends WritableRecordData
 		int pos = 0;
 		byte[] data = new byte[dataLength];
 
-		// The com.snt.parser.documents.excel.common.data
+		// The org.areasy.common.parser.documents.excel.common.data
 		// record id
 		IntegerHelper.getTwoBytes(0x15, data, pos);
 

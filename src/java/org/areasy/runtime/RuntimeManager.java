@@ -645,7 +645,7 @@ public class RuntimeManager
 			loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name + ".log");
 			loggerFile = new File(getLogsDirectory(), loggerFileName);
 
-			LoggerFactory.getLogManager().addFileLogger("com.snt", LoggerManager.getLoggerLevel(loggerLevel),
+			LoggerFactory.getLogManager().addFileLogger("org.areasy", LoggerManager.getLoggerLevel(loggerLevel),
 				"AREasy Root", loggerFile.getAbsolutePath(), logAppend,
 				LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
 		}

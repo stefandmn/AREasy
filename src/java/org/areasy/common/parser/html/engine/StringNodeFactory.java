@@ -28,14 +28,14 @@ public class StringNodeFactory extends PrototypicalNodeFactory implements Serial
 
 	/**
 	 * Flag to tell the parser to decode strings returned by StringNode's toPlainTextString.
-	 * Decoding occurs via the method, com.snt.parser.document.html.engine.util.Translate.decode()
+	 * Decoding occurs via the method, org.areasy.common.parser.document.html.engine.util.Translate.decode()
 	 */
 	protected boolean mDecode;
 
 
 	/**
 	 * Flag to tell the parser to remove escape characters, like \n and \t, returned by StringNode's toPlainTextString.
-	 * Escape character removal occurs via the method, com.snt.parser.document.html.engine.util.ParserUtils.removeEscapeCharacters()
+	 * Escape character removal occurs via the method, org.areasy.common.parser.document.html.engine.util.ParserUtils.removeEscapeCharacters()
 	 */
 	protected boolean mRemoveEscapes;
 

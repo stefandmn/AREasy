@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Handler;
 
 /**
- * <p>Implementation of the <code>com.snt.common.logger.Logger</code>
+ * <p>Implementation of the <code>org.areasy.common.logger.Logger</code>
  * interface that wraps the standard JDK logging mechanisms that were
  * introduced in the Merlin release (JDK 1.4).</p>
  */

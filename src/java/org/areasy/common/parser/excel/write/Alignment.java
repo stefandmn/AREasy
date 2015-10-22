@@ -17,7 +17,7 @@ package org.areasy.common.parser.excel.write;
  * Enumeration class which contains the various alignments for data within a
  * cell
  *
- * @deprecated Repackaged as com.snt.parser.documents.excel.Alignment.  This version is retained
+ * @deprecated Repackaged as org.areasy.common.parser.documents.excel.Alignment.  This version is retained
  *             for backwards compatibility
  */
 public final class Alignment extends org.areasy.common.parser.excel.format.Alignment

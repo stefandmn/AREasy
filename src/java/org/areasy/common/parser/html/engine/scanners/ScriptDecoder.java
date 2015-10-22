@@ -499,7 +499,7 @@ public class ScriptDecoder
 //        
 //        if (args.length < 2)
 //        {
-//            System.out.println ("Usage: java com.snt.parser.document.html.engine.scanners.ScriptDecoder <infile> <outfile> [charset]");
+//            System.out.println ("Usage: java org.areasy.common.parser.document.html.engine.scanners.ScriptDecoder <infile> <outfile> [charset]");
 //            ret = 1;
 //        }
 //        else

@@ -20,7 +20,7 @@ import org.areasy.common.parser.excel.format.Format;
  * the cell format information back to the user
  * <p/>
  * The difference between this class and the various format object contained
- * in the com.snt.parser.documents.excel.write package is that this object contains the Excel strings,
+ * in the org.areasy.common.parser.documents.excel.write package is that this object contains the Excel strings,
  * not their java equivalents
  */
 final class BuiltInFormat implements Format, DisplayFormat

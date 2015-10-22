@@ -17,7 +17,7 @@ package org.areasy.common.parser.excel.write;
  * Enumeration class which contains the various colours available within
  * the standard Excel colour palette
  *
- * @deprecated This has been repackaged as com.snt.parser.documents.excel.format.Colour
+ * @deprecated This has been repackaged as org.areasy.common.parser.documents.excel.format.Colour
  */
 public final class Colour extends org.areasy.common.parser.excel.format.Colour
 {

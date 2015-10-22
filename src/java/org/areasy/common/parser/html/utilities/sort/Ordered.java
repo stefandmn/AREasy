@@ -18,7 +18,7 @@ package org.areasy.common.parser.html.utilities.sort;
  * Implementors must have a comparison function,
  * which imposes a partial ordering on some
  * collection of objects. Ordered objects can be passed to a
- * sort method (such as com.snt.parser.document.html.engine.util.sort.Sort) to allow precise control
+ * sort method (such as org.areasy.common.parser.document.html.engine.util.sort.Sort) to allow precise control
  * over the sort order.
  * <p/>
  * An set of elements S is partially ordered

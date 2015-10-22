@@ -33,14 +33,14 @@ public class DataProcessAction extends PatternAction
 
 	static
 	{
-		events.put("readheaders", "com.snt.areasy.aar.actions.arserver.data.events.ReadHeadersEvent");
-		events.put("actionlist", "com.snt.areasy.aar.actions.arserver.data.events.ReadActionlistEvent");
-		events.put("runworkflow", "com.snt.areasy.aar.actions.arserver.data.events.RunDataWorkflowEvent");
-		events.put("loadmetadata", "com.snt.areasy.aar.actions.arserver.data.events.LoadMetadataEvent");
-		events.put("runscheduler", "com.snt.areasy.aar.actions.arserver.data.events.RunSchedulerEvent");
-		events.put("runautomap", "com.snt.areasy.aar.actions.arserver.data.events.RunAutomapEvent");
-		events.put("runjobexport", "com.snt.areasy.aar.actions.arserver.data.events.RunJobExportEvent");
-		events.put("runjobimport", "com.snt.areasy.aar.actions.arserver.data.events.RunJobImportEvent");
+		events.put("readheaders", "org.areasy.runtime.actions.arserver.data.tools.events.ReadHeadersEvent");
+		events.put("actionlist", "org.areasy.runtime.actions.arserver.data.tools.events.ReadActionlistEvent");
+		events.put("runworkflow", "org.areasy.runtime.actions.arserver.data.tools.events.RunDataWorkflowEvent");
+		events.put("loadmetadata", "org.areasy.runtime.actions.arserver.data.tools.events.LoadMetadataEvent");
+		events.put("runscheduler", "org.areasy.runtime.actions.arserver.data.tools.events.RunSchedulerEvent");
+		events.put("runautomap", "org.areasy.runtime.actions.arserver.data.tools.events.RunAutomapEvent");
+		events.put("runjobexport", "org.areasy.runtime.actions.arserver.data.tools.events.RunJobExportEvent");
+		events.put("runjobimport", "org.areasy.runtime.actions.arserver.data.tools.events.RunJobImportEvent");
 	}
 
 	/**

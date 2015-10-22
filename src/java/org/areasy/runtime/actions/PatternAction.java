@@ -67,18 +67,18 @@ public abstract class PatternAction extends BaseDataAction implements RuntimeAct
 
 	static
 	{
-		sources.put("No Data", "com.snt.areasy.aar.actions.arserver.data.sources.NoDataSource");
-		sources.put("Local File", "com.snt.areasy.aar.actions.arserver.data.sources.ServerFileSource");
-		sources.put("Remote File", "com.snt.areasy.aar.actions.arserver.data.sources.ServerFileSource");
-		sources.put("Remedy Form", "com.snt.areasy.aar.actions.arserver.data.sources.RemedySource");
-		sources.put("MySQL Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.MySQLSource");
-		sources.put("MSSQL Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.MSSQLSource");
-		sources.put("Oracle Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.OracleSource");
-		sources.put("Sybase Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.SybaseSource");
-		sources.put("Derby Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.DerbySource");
-		sources.put("PostgreSQL Database", "com.snt.areasy.aar.actions.arserver.data.sources.databases.PostgreSQLSource");
-		sources.put("LDAP Entities", "com.snt.areasy.aar.actions.arserver.data.sources.LDAPSource"); //@deprecated
-		sources.put("LDAP Server", "com.snt.areasy.aar.actions.arserver.data.sources.LDAPSource");
+		sources.put("No Data", "org.areasy.runtime.actions.arserver.data.tools.sources.NoDataSource");
+		sources.put("Local File", "org.areasy.runtime.actions.arserver.data.tools.ServerFileSource");
+		sources.put("Remote File", "org.areasy.runtime.actions.arserver.data.tools.ServerFileSource");
+		sources.put("Remedy Form", "org.areasy.runtime.actions.arserver.data.tools.RemedySource");
+		sources.put("MySQL Database", "org.areasy.runtime.actions.arserver.data.tools.databases.MySQLSource");
+		sources.put("MSSQL Database", "org.areasy.runtime.actions.arserver.data.tools.databases.MSSQLSource");
+		sources.put("Oracle Database", "org.areasy.runtime.actions.arserver.data.tools.databases.OracleSource");
+		sources.put("Sybase Database", "org.areasy.runtime.actions.arserver.data.tools.databases.SybaseSource");
+		sources.put("Derby Database", "org.areasy.runtime.actions.arserver.data.tools.databases.DerbySource");
+		sources.put("PostgreSQL Database", "org.areasy.runtime.actions.arserver.data.tools.databases.PostgreSQLSource");
+		sources.put("LDAP Entities", "org.areasy.runtime.actions.arserver.data.tools.LDAPSource"); //@deprecated
+		sources.put("LDAP Server", "org.areasy.runtime.actions.arserver.data.tools.LDAPSource");
 	}
 
 	/**

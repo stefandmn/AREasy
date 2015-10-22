@@ -36,7 +36,7 @@ public class RelationshipPeopleReplaceAction extends RelationshipPeopleCreateAct
 	 * To catch the parametrization please see the parameters for actions <code>cmdb.relationship.people.remove</code> and <code>cmdb.relationship.people.create</code>
 	 *
 	 * @see RelationshipPeopleRemoveAction#run(org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem)
-	 * @see RelationshipPeopleCreateAction# run (com.snt.areasy.utilities.structures.arserver.data.itsm.applications.cmdb.ConfigurationItem)
+	 * @see RelationshipPeopleCreateAction# run (org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem)
 	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occur
 	 */
 	public void run(ConfigurationItem item) throws AREasyException

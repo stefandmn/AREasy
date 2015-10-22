@@ -94,7 +94,7 @@ public class Font extends WritableFont
 	 * default point size.
 	 *
 	 * @param fn the font name
-	 * @deprecated Use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated Use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn)
 	{
@@ -107,7 +107,7 @@ public class Font extends WritableFont
 	 *
 	 * @param ps the point size
 	 * @param fn the font name
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn, int ps)
 	{
@@ -120,7 +120,7 @@ public class Font extends WritableFont
 	 * @param ps the point size
 	 * @param bs the bold style
 	 * @param fn the font name
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn, int ps, BoldStyle bs)
 	{
@@ -135,7 +135,7 @@ public class Font extends WritableFont
 	 * @param bs	 the bold style
 	 * @param italic italic flag
 	 * @param fn	 the font name
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn, int ps, BoldStyle bs, boolean italic)
 	{
@@ -151,7 +151,7 @@ public class Font extends WritableFont
 	 * @param us underscore flag
 	 * @param fn font name
 	 * @param it italic flag
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn,
 				int ps,
@@ -173,7 +173,7 @@ public class Font extends WritableFont
 	 * @param fn the font name
 	 * @param it italic flag
 	 * @param c  the colour
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn,
 				int ps,
@@ -198,7 +198,7 @@ public class Font extends WritableFont
 	 * @param it the italic flag
 	 * @param c  the colour
 	 * @param ss the script style
-	 * @deprecated use com.snt.parser.documents.excel.write.WritableFont
+	 * @deprecated use org.areasy.common.parser.documents.excel.write.WritableFont
 	 */
 	public Font(FontName fn,
 				int ps,

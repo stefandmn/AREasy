@@ -93,13 +93,13 @@ public interface Logger
 	 * The name of the system property identifying our {@link Logger}
 	 * implementation class.
 	 */
-	public static final String LOG_PROPERTY = "com.snt.common.logger.Logger";
+	public static final String LOG_PROPERTY = "org.areasy.common.logger.Logger";
 
 	/**
 	 * The name of the system property identifying our {@link org.areasy.common.logger.base.LoggerManager}
 	 * implementation class.
 	 */
-	public static final String MANAGER_PROPERTY = "com.snt.common.logger.Manager";
+	public static final String MANAGER_PROPERTY = "org.areasy.common.logger.Manager";
 
 	/**
 	 * <p> Is debug logging currently enabled? </p>

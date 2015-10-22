@@ -153,7 +153,7 @@ public final class WorkbookSettings
 	/**
 	 * The character encoding used for reading non-unicode strings.  This can
 	 * be different from the default platform encoding if processing spreadsheets
-	 * from abroad.  This may also be set using the system property com.snt.parser.documents.excel.encoding
+	 * from abroad.  This may also be set using the system property org.areasy.common.parser.documents.excel.encoding
 	 */
 	private String encoding;
 

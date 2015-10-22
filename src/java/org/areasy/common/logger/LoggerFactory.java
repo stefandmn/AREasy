@@ -41,13 +41,13 @@ public abstract class LoggerFactory
 	 * The name of the property used to identify the LoggerFactory implementation
 	 * class name.
 	 */
-	public static final String FACTORY_PROPERTY = "com.snt.common.logger.LoggerFactory";
+	public static final String FACTORY_PROPERTY = "org.areasy.common.logger.LoggerFactory";
 
 	/**
 	 * The fully qualified class name of the fallback <code>LoggerFactory</code>
 	 * implementation class to use, if no other can be found.
 	 */
-	public static final String FACTORY_DEFAULT = "com.snt.common.logger.base.DefaultLoggerFactory";
+	public static final String FACTORY_DEFAULT = "org.areasy.common.logger.base.DefaultLoggerFactory";
 
 
 	/**
@@ -163,7 +163,7 @@ public abstract class LoggerFactory
 	 * instance, using the following ordered lookup procedure to determine
 	 * the name of the implementation class to be loaded.</p>
 	 * <ul>
-	 * <li>The <code>com.snt.common.logger.LoggerFactory</code> system
+	 * <li>The <code>org.areasy.common.logger.LoggerFactory</code> system
 	 * property.</li>
 	 * <li>The JDK 1.3 Service Discovery mechanism</li>
 	 * <li>Use the properties file <code>commons-logging.properties</code>
@@ -172,7 +172,7 @@ public abstract class LoggerFactory
 	 * contains the fully qualified name of the implementation class
 	 * with the key being the system property defined above.</li>
 	 * <li>Fall back to a default implementation class
-	 * (<code>com.snt.common.logger.base.DefaultLoggerFactory</code>).</li>
+	 * (<code>org.areasy.common.logger.base.DefaultLoggerFactory</code>).</li>
 	 * </ul>
 	 * <p/>
 	 * <p><em>NOTE</em> - If the properties file method of identifying the

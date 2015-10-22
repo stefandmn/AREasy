@@ -34,10 +34,10 @@ import org.areasy.common.parser.html.engine.tags.TitleTag;
  * perform the generic processing.
  * Typical code to print all the link tags:
  * <pre>
- * import com.snt.parser.document.html.engine.Parser;
- * import com.snt.parser.document.html.engine.tags.LinkTag;
- * import com.snt.parser.document.html.engine.util.ParserException;
- * import com.snt.parser.document.html.engine.visitors.NodeVisitor;
+ * import org.areasy.common.parser.document.html.engine.Parser;
+ * import org.areasy.common.parser.document.html.engine.tags.LinkTag;
+ * import org.areasy.common.parser.document.html.engine.util.ParserException;
+ * import org.areasy.common.parser.document.html.engine.visitors.NodeVisitor;
  * <p/>
  * public class Visitor extends NodeVisitor
  * {

@@ -44,7 +44,7 @@ public class DocletUtility implements AbstractConfiguration
 	/**
 	 * List of package prefixes (built at startup time).
 	 */
-	private static String[] PACKAGE_PREFIXES = {"com.snt.common.doclet"};
+	private static String[] PACKAGE_PREFIXES = {"org.areasy.common.doclet"};
 
 	/**
 	 * Returns the source File for the given Doc; this is

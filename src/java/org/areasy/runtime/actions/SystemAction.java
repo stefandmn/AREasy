@@ -41,16 +41,16 @@ public abstract class SystemAction extends AbstractAction implements RuntimeActi
 
 	static
 	{
-		actions.put("echo", "com.snt.areasy.runtime.actions.system.EchoAction");
-		actions.put("help", "com.snt.areasy.runtime.actions.system.HelpAction");
-		actions.put("status", "com.snt.areasy.runtime.actions.system.StatusAction");
-		actions.put("config", "com.snt.areasy.runtime.actions.system.ConfigAction");
-		actions.put("clean", "com.snt.areasy.runtime.actions.system.CleanAction");
-		actions.put("start", "com.snt.areasy.runtime.actions.system.StartAction");
-		actions.put("stop", "com.snt.areasy.runtime.actions.system.StopAction");
-		actions.put("version", "com.snt.areasy.runtime.actions.system.VersionAction");
-		actions.put("process","com.snt.areasy.runtime.actions.system.ProcessAction");
-		actions.put("install","com.snt.areasy.runtime.actions.system.InstallAction");
+		actions.put("echo", "org.areasy.runtime.actions.system.EchoAction");
+		actions.put("help", "org.areasy.runtime.actions.system.HelpAction");
+		actions.put("status", "org.areasy.runtime.actions.system.StatusAction");
+		actions.put("config", "org.areasy.runtime.actions.system.ConfigAction");
+		actions.put("clean", "org.areasy.runtime.actions.system.CleanAction");
+		actions.put("start", "org.areasy.runtime.actions.system.StartAction");
+		actions.put("stop", "org.areasy.runtime.actions.system.StopAction");
+		actions.put("version", "org.areasy.runtime.actions.system.VersionAction");
+		actions.put("process","org.areasy.runtime.actions.system.ProcessAction");
+		actions.put("install","org.areasy.runtime.actions.system.InstallAction");
 	}
 
 	/** Runtime server instance */

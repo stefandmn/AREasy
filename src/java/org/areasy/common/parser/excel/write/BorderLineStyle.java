@@ -14,7 +14,7 @@ package org.areasy.common.parser.excel.write;
  */
 
 /**
- * @deprecated Repackaged as com.snt.parser.documents.excel.format.BorderLineStyle
+ * @deprecated Repackaged as org.areasy.common.parser.documents.excel.format.BorderLineStyle
  */
 public final class BorderLineStyle extends org.areasy.common.parser.excel.format.BorderLineStyle
 {

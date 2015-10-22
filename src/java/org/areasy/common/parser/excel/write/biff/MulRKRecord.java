@@ -49,7 +49,7 @@ class MulRKRecord extends WritableRecordData
 	/**
 	 * Constructs the rk numbers from the integer cells
 	 *
-	 * @param numbers A list of com.snt.parser.documents.excel.write.Number objects
+	 * @param numbers A list of org.areasy.common.parser.documents.excel.write.Number objects
 	 */
 	public MulRKRecord(List numbers)
 	{

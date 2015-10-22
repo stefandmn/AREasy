@@ -23,7 +23,7 @@ public class HtmlTagFactory
 	/**
 	 * Array with HTML tag names. NOTE: The contents of this
 	 * table relate directly to the HTML tag constants defined
-	 * in the {@see com.snt.common.doclet.document.IConstants IConstants} interface.
+	 * in the {@see org.areasy.common.doclet.document.IConstants IConstants} interface.
 	 */
 	protected static String[] tags =
 	{

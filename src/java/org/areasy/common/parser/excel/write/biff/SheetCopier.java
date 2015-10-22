@@ -459,7 +459,7 @@ class SheetCopier
 			DrawingGroupObject[] dr = si.getDrawings();
 			for (int i = 0 ; i < dr.length ; i++)
 			{
-			  if (dr[i] instanceof com.snt.parser.documents.excel.biff.drawing.Drawing)
+			  if (dr[i] instanceof org.areasy.common.parser.documents.excel.biff.drawing.Drawing)
 			  {
 				WritableImage wi = new WritableImage(dr[i],
 													 workbook.getDrawingGroup());

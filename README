@@ -1,5 +1,0 @@
-Welcome AREasy Community!
-
-AREasy is a powerful runtime used to manipulate data flows and Remedy development objects,
-managed by one or more BMC Remedy AR System instances. This application could be used
-directly in Remedy workflows via a dedicated FILTERAPI plugin or calling specific runtime processes.

@@ -18,20 +18,15 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="New actions development: set/remove hierarchical permission groups">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.iml" afterPath="$PROJECT_DIR$/areasy.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.ipr" afterPath="$PROJECT_DIR$/areasy.ipr" />
+    <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="Readme initializing">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/README" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.iws" afterPath="$PROJECT_DIR$/areasy.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-1.base.xml" afterPath="$PROJECT_DIR$/build-1.base.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-2.devel.xml" afterPath="$PROJECT_DIR$/build-2.devel.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-3.deploy.xml" afterPath="$PROJECT_DIR$/build-3.deploy.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.properties" afterPath="$PROJECT_DIR$/build.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core.properties" afterPath="$PROJECT_DIR$/core.properties" />
     </list>
     <ignored path="areasy.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Attribute.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386801290338" ignored="false" />
-    <file path="/Dummy.txt" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1445525757523" ignored="false" />
+    <file path="/Dummy.txt" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1445526658927" ignored="false" />
     <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/src/resources/demo.html" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386799939102" ignored="false" />
     <file path="/PlannerData.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386802838784" ignored="false" />
     <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/src/java/com/snt/oncall/PlannerData.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386802842995" ignored="false" />
@@ -68,7 +63,7 @@
     <file path="/SetHierarchicPermissionGroup.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431707602555" ignored="false" />
     <file path="/RemoveHierarchicPermissionGroup.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431673076087" ignored="false" />
     <file path="/EntryRemoveAction.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1434880369934" ignored="false" />
-    <file path="/core.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1441568351346" ignored="false" />
+    <file path="/core.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1445526784116" ignored="false" />
     <file path="/readme.txt" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1441570278093" ignored="false" />
     <file path="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeBase.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1445525249045" ignored="false" />
     <file path="/build-1.base.xml" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1445525519804" ignored="false" />
@@ -123,6 +118,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/BaseDataAction.java" line="570" class="org.areasy.runtime.actions.arserver.data.BaseDataAction" package="org.areasy.runtime.actions.arserver.data">
         <option name="ENABLED" value="true" />
@@ -170,7 +166,6 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -202,7 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridCompany.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridPeople.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridSupportGroup.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridServiceCategory.java" />
@@ -218,6 +212,7 @@
         <option value="$PROJECT_DIR$/build-2.devel.xml" />
         <option value="$PROJECT_DIR$/build-1.base.xml" />
         <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/core.properties" />
       </list>
     </option>
   </component>
@@ -843,7 +838,6 @@
       <pane id="Scope">
         <subPane subId="Non-Project Files" />
         <subPane subId="Problems" />
-        <subPane subId="Tests" />
         <subPane subId="Production">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -856,6 +850,7 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+        <subPane subId="Tests" />
         <subPane subId="Project Files">
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
@@ -901,13 +896,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="271" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="253" />
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="253" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="274" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="274" />
     <property name="options.splitter.main.proportions" value="0.23487261" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
@@ -932,10 +927,10 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="options.searchVisible" value="true" />
   </component>
@@ -1018,6 +1013,13 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" runner="idea" />
       <module name="" />
@@ -1037,13 +1039,6 @@
       </option>
       <envs />
       <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="false" name="10.144.80.30" type="Remote" factoryName="Remote">
@@ -1135,7 +1130,11 @@
       <created>1431751155104</created>
       <updated>1431751155104</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Readme initializing">
+      <created>1445526442445</created>
+      <updated>1445526442445</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1146,14 +1145,13 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16249236" sideWeight="0.7080132" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16249236" sideWeight="0.7080132" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3617021" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29198682" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24791914" sideWeight="0.7049724" order="1" side_tool="false" content_ui="tabs" />
@@ -1168,6 +1166,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253012" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29198682" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1214,7 +1213,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="New actions development: set/remove hierarchical permission groups" />
+    <option name="LAST_COMMIT_MESSAGE" value="Readme initializing" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1233,6 +1232,7 @@
     <MESSAGE value="Fixes for configuration management part: publishing includes now SNT libraries" />
     <MESSAGE value="Fix for: 14INGR01-4 AREasy Installer error&#10;Also, password encrypt and decrypt actions have been documented" />
     <MESSAGE value="New actions development: set/remove hierarchical permission groups" />
+    <MESSAGE value="Readme initializing" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1314,16 +1314,9 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/profile.stefan.damian.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="22" selection-start="160" selection-end="160" vertical-scroll-proportion="0.07258064" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/profile.stefan.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="437" selection-end="610" vertical-scroll-proportion="0.33870968">
-          <folding />
-        </state>
+        <state line="14" column="0" selection-start="437" selection-end="610" vertical-scroll-proportion="0.33870968" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
@@ -1345,9 +1338,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/doc/samples/pluginsvr_config.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.properties">
@@ -1394,16 +1385,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/src/definitions.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
       <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
         <state />
@@ -1411,14 +1398,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="36" selection-start="813" selection-end="813" vertical-scroll-proportion="0.22033899">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="204" selection-end="204" vertical-scroll-proportion="0.09693053">
+        <state line="0" column="0" selection-start="0" selection-end="304" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

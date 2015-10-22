@@ -1,0 +1,30 @@
+#!/bin/sh -e
+
+# Check JVM home
+if [ "$JAVA_HOME" = "" ]
+	then
+		echo "Invalid parameter JAVA_HOME"
+		echo
+		exit
+fi
+
+# Check JVM home
+if [ "$TMP" = "" ]
+	then
+		TMP="/tmp"
+		export TMP
+fi
+
+echo
+echo "AREasy Runtime Installer"
+echo "------------------------"
+echo
+echo
+sleep 2
+
+if [ -d "$TMP/areasy" ]; then
+   rm -rf $TMP/areasy
+fi
+mkdir $TMP/areasy
+sed -e '1,/^exit$/d' "$0" | tar xzf - --directory=$TMP/areasy && chmod +x $TMP/areasy/setup.sh && $TMP/areasy/setup.sh
+exit

@@ -1,0 +1,18 @@
+Applications Report
+===================
+
+The action is part of AR System management tools and it generates a complete report with all installed applications, modules and patches on the specified Remedy AR System server.
+
+The standard command line is described below:
+areasy -action admin.report.applications
+
+Attention: In order to execute this action you must have configured in the default configuration sector the Remedy server and all related details or you can specify them in the command line, using general options. For more details check the help manual from help action.
+
+
+Examples:
+---------
+1) areasy -action admin.report.applications
+ 	= print out a report with all applications deployed on remedy server that is specified in the default configuration sector (cfg/default.properties)
+
+2) areasy -action admin.report.applications -aruser Demo -arpassword 1234 -arserver ITSM -arport 2200
+ 	= print out a report with all applications deployed on the specified remedy server in the command line. The specified must must be an administrator or an user with read permissions to "SHARE:Application_Properties" form.

@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeBase.java" line="621" />
+    <bookmark url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeBase.java" line="490" />
+  </component>
+  <component name="CCaseConfig">
+    <option name="checkoutReserved" value="false" />
+    <option name="markExternalChangeAsUpToDate" value="true" />
+    <option name="checkInUseHijack" value="true" />
+    <option name="useUcmModel" value="true" />
+    <option name="synchOutside" value="false" />
+    <option name="isHistoryResticted" value="true" />
+    <option name="useIdenticalSwitch" value="true" />
+    <option name="synchActivitiesOnRefresh" value="true" />
+    <option name="lastScr" value="" />
+    <option name="scrTextFileName" value="" />
+    <option name="historyRevisionsNumber" value="4" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.properties" afterPath="$PROJECT_DIR$/build.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core.properties" afterPath="$PROJECT_DIR$/core.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/snt-common-1.1.jar" afterPath="$PROJECT_DIR$/libs/snt-common-1.1.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.ipr" afterPath="$PROJECT_DIR$/areasy.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/profile.stefan.damian.properties" afterPath="$PROJECT_DIR$/build/profile.stefan.damian.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/doc/resources/snt-common-1.1.pdf" afterPath="$PROJECT_DIR$/src/doc/resources/snt-common-1.1.pdf" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/profile.stefan.properties" afterPath="$PROJECT_DIR$/build/profile.stefan.properties" />
+    </list>
+    <ignored path="areasy.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="/Attribute.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386801290338" ignored="false" />
+    <file path="/Dummy.txt" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431751126472" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/src/resources/demo.html" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386799939102" ignored="false" />
+    <file path="/PlannerData.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386802838784" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/src/java/com/snt/oncall/PlannerData.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386802842995" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/plugin.iws" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386803091897" ignored="false" />
+    <file path="/onCallRequestHandler.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386802989582" ignored="false" />
+    <file path="$PROJECT_DIR$/../../../BMC.Remedy/12ORR002-On Call Management/Output/Impl/Plugin/src/java/com/snt/oncall/onCallRequestHandler.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1386803062793" ignored="false" />
+    <file path="$PROJECT_DIR$/../AREasy-Dist.OPET/build/profile.stefan.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1379796878058" ignored="false" />
+    <file path="$PROJECT_DIR$/../AREasy.SSO/build/profile.stefan.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1379796888856" ignored="false" />
+    <file path="$PROJECT_DIR$/../AREasy.AAR/build/profile.stefan.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1379796893997" ignored="false" />
+    <file path="/profile.stefan.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1441568922122" ignored="false" />
+    <file path="/AreaLDAP.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395762331747" ignored="false" />
+    <file path="/a.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395763573261" ignored="false" />
+    <file path="/sample.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395742298330" ignored="false" />
+    <file path="/a.dummy" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395763840847" ignored="false" />
+    <file path="$PROJECT_DIR$/../AREasy.AAR/src/java/com/snt/areasy/aar/actions/arserver/data/sources/LDAPSource.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395645973745" ignored="false" />
+    <file path="/ProcessorLevel1Context.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395662508570" ignored="false" />
+    <file path="/fragment.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431611002518" ignored="false" />
+    <file path="/RuntimeArea.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395763568794" ignored="false" />
+    <file path="/SystemPasswordEncryptAction.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395758029283" ignored="false" />
+    <file path="/runtime.areasy.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431632866743" ignored="false" />
+    <file path="/SystemPasswordDecryptAction.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395758238189" ignored="false" />
+    <file path="/AbstractArea.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395762084372" ignored="false" />
+    <file path="/RuntimeFilter.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395764001904" ignored="false" />
+    <file path="/config.info" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395764368622" ignored="false" />
+    <file path="/service.bat" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395773218754" ignored="false" />
+    <file path="/admin.password.encrypt.info" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395774386957" ignored="false" />
+    <file path="/admin.password.decrypt.info" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395775389067" ignored="false" />
+    <file path="D:/../shares/Workspace/Projects/SNT.Addons/SNT.AREasy/AREasy/build.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1395937536771" ignored="false" />
+    <file path="/hierarhicalgroups.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431637280701" ignored="false" />
+    <file path="/ServerConnection.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431606028672" ignored="false" />
+    <file path="/AbstractAction.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431604029305" ignored="false" />
+    <file path="/SetHierarchicPermissionGroups.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431635570283" ignored="false" />
+    <file path="/RemoveHierarchicPermissionGroups.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431664847468" ignored="false" />
+    <file path="/SetHierarchicPermissionGroup.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431707602555" ignored="false" />
+    <file path="/RemoveHierarchicPermissionGroup.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1431673076087" ignored="false" />
+    <file path="/EntryRemoveAction.java" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1434880369934" ignored="false" />
+    <file path="/core.properties" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1441568351346" ignored="false" />
+    <file path="/readme.txt" changelist="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" time="1441570278093" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/BaseDataAction.java" line="570" class="org.areasy.runtime.actions.arserver.data.BaseDataAction" package="org.areasy.runtime.actions.arserver.data">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java" line="36" class="org.areasy.runtime.actions.arserver.data.EntryUpdateAction" package="org.areasy.runtime.actions.arserver.data">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/RuntimeArea.java" line="197" class="org.areasy.runtime.plugins.area.RuntimeArea" package="org.areasy.runtime.plugins.area">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="areasy" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf />
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/cfg/runtime.areasy.properties" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/cfg/default.properties" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/cfg/plugin.areasy.properties" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/cmdb/HybridConfigurationItem.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridCompany.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridPeople.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridSupportGroup.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridServiceCategory.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridProductCategory.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/ImportAction.java" />
+        <option value="$PROJECT_DIR$/build-1.devel.xml" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/InstallAction.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/DataTransferAction.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/AbstractFilter.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/tools/RedirectFilter.java" />
+        <option value="$PROJECT_DIR$/build/profile.stefan.properties" />
+        <option value="$PROJECT_DIR$/build/profile.stefan.damian.properties" />
+        <option value="$PROJECT_DIR$/build-2.devel.xml" />
+        <option value="$PROJECT_DIR$/build-1.base.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ModuleEditorState">
+    <option name="LAST_EDITED_MODULE_NAME" />
+    <option name="LAST_EDITED_TAB_NAME" />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="235" />
+    <option name="y" value="25" />
+    <option name="width" value="1685" />
+    <option name="height" value="1055" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>AOP</id>
+          </State>
+          <State>
+            <id>Abstraction issues</id>
+          </State>
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Annotations verifyingGroovy</id>
+          </State>
+          <State>
+            <id>Ant inspections</id>
+          </State>
+          <State>
+            <id>Application Server Specific Inspections</id>
+          </State>
+          <State>
+            <id>Assignment issues</id>
+          </State>
+          <State>
+            <id>Assignment issuesGroovy</id>
+          </State>
+          <State>
+            <id>Assignment issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Bean Validation issues</id>
+          </State>
+          <State>
+            <id>Bitwise operation issues</id>
+          </State>
+          <State>
+            <id>Bitwise operation issuesJavaScript</id>
+          </State>
+          <State>
+            <id>CDI(Contexts and Dependency Injection) issues</id>
+          </State>
+          <State>
+            <id>CSS</id>
+          </State>
+          <State>
+            <id>Cfml inspections</id>
+          </State>
+          <State>
+            <id>Class metrics</id>
+          </State>
+          <State>
+            <id>Class structure</id>
+          </State>
+          <State>
+            <id>Cloning issues</id>
+          </State>
+          <State>
+            <id>Code maturity issues</id>
+          </State>
+          <State>
+            <id>Code style issues</id>
+          </State>
+          <State>
+            <id>Code style issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Compiler issues</id>
+          </State>
+          <State>
+            <id>Concurrency annotation issues</id>
+          </State>
+          <State>
+            <id>Control FlowGroovy</id>
+          </State>
+          <State>
+            <id>Control FlowPHP</id>
+          </State>
+          <State>
+            <id>Control flow issues</id>
+          </State>
+          <State>
+            <id>Control flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>DOM issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Data Flow IssuesGroovy</id>
+          </State>
+          <State>
+            <id>Data flow issues</id>
+          </State>
+          <State>
+            <id>Data flow issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Declaration redundancy</id>
+          </State>
+          <State>
+            <id>Dependency issues</id>
+          </State>
+          <State>
+            <id>Encapsulation issues</id>
+          </State>
+          <State>
+            <id>Error handling</id>
+          </State>
+          <State>
+            <id>Error handlingGroovy</id>
+          </State>
+          <State>
+            <id>Error handlingJavaScript</id>
+          </State>
+          <State>
+            <id>Facelet format detection</id>
+          </State>
+          <State>
+            <id>Faces Model</id>
+          </State>
+          <State>
+            <id>Finalization issues</id>
+          </State>
+          <State>
+            <id>FlexUnit inspections</id>
+          </State>
+          <State>
+            <id>FreeMarker inspections</id>
+          </State>
+          <State>
+            <id>GPath inspectionsGroovy</id>
+          </State>
+          <State>
+            <id>GSPGrailsGroovy</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>GeneralJavaScript</id>
+          </State>
+          <State>
+            <id>GeneralPHP</id>
+          </State>
+          <State>
+            <id>Google App Engine</id>
+          </State>
+          <State>
+            <id>Google Web Toolkit issues</id>
+          </State>
+          <State>
+            <id>GrailsGroovy</id>
+          </State>
+          <State>
+            <id>Groovy</id>
+          </State>
+          <State>
+            <id>Guice Inspections</id>
+          </State>
+          <State>
+            <id>HTML</id>
+          </State>
+          <State>
+            <id>Hibernate Issues</id>
+          </State>
+          <State>
+            <id>IDEA Platform Inspections</id>
+          </State>
+          <State>
+            <id>Imports</id>
+          </State>
+          <State>
+            <id>Inheritance issues</id>
+          </State>
+          <State>
+            <id>Initialization issues</id>
+          </State>
+          <State>
+            <id>Internationalization issues</id>
+          </State>
+          <State>
+            <id>J2ME Plugin</id>
+          </State>
+          <State>
+            <id>J2ME issues</id>
+          </State>
+          <State>
+            <id>JBoss Seam issues</id>
+          </State>
+          <State>
+            <id>JSF annotated elements errors</id>
+          </State>
+          <State>
+            <id>JSP Inspections</id>
+          </State>
+          <State>
+            <id>JUnit issues</id>
+          </State>
+          <State>
+            <id>Java EE issues</id>
+          </State>
+          <State>
+            <id>Java language level issues</id>
+          </State>
+          <State>
+            <id>Java language level migration aids</id>
+          </State>
+          <State>
+            <id>JavaBeans issues</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript function metricsJavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Javadoc issues</id>
+          </State>
+          <State>
+            <id>LESS</id>
+          </State>
+          <State>
+            <id>Language Injection</id>
+          </State>
+          <State>
+            <id>Logging issues</id>
+          </State>
+          <State>
+            <id>Maven</id>
+          </State>
+          <State>
+            <id>Memory issues</id>
+          </State>
+          <State>
+            <id>Method MetricsGroovy</id>
+          </State>
+          <State>
+            <id>Method metrics</id>
+          </State>
+          <State>
+            <id>Modularization issues</id>
+          </State>
+          <State>
+            <id>Naming ConventionsGroovy</id>
+          </State>
+          <State>
+            <id>Naming conventions</id>
+          </State>
+          <State>
+            <id>Naming conventionsJavaScript</id>
+          </State>
+          <State>
+            <id>Numeric issues</id>
+          </State>
+          <State>
+            <id>OSGi</id>
+          </State>
+          <State>
+            <id>PHP</id>
+          </State>
+          <State>
+            <id>PHPDocPHP</id>
+          </State>
+          <State>
+            <id>Packaging issues</id>
+          </State>
+          <State>
+            <id>Pages Navigation Model</id>
+          </State>
+          <State>
+            <id>Pattern Validation</id>
+          </State>
+          <State>
+            <id>Performance issues</id>
+          </State>
+          <State>
+            <id>Phing</id>
+          </State>
+          <State>
+            <id>Plugin DevKit</id>
+          </State>
+          <State>
+            <id>Portability issues</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsGroovy</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+          <State>
+            <id>Probable BugsJavaScript</id>
+          </State>
+          <State>
+            <id>Probable bugs</id>
+          </State>
+          <State>
+            <id>Probable bugsGroovy</id>
+          </State>
+          <State>
+            <id>Probably bugPHP</id>
+          </State>
+          <State>
+            <id>Properties Files</id>
+          </State>
+          <State>
+            <id>RELAX NG</id>
+          </State>
+          <State>
+            <id>Resource management issues</id>
+          </State>
+          <State>
+            <id>SCSS</id>
+          </State>
+          <State>
+            <id>SQL Inspections</id>
+          </State>
+          <State>
+            <id>Security issues</id>
+          </State>
+          <State>
+            <id>Serialization issues</id>
+          </State>
+          <State>
+            <id>Spelling</id>
+          </State>
+          <State>
+            <id>Spring Integration</id>
+          </State>
+          <State>
+            <id>Spring Model</id>
+          </State>
+          <State>
+            <id>Spring Web Services</id>
+          </State>
+          <State>
+            <id>Struts</id>
+          </State>
+          <State>
+            <id>Struts 1Struts</id>
+          </State>
+          <State>
+            <id>Struts 2Struts</id>
+          </State>
+          <State>
+            <id>Tapestry inspections</id>
+          </State>
+          <State>
+            <id>TestNG</id>
+          </State>
+          <State>
+            <id>Threading issues</id>
+          </State>
+          <State>
+            <id>Threading issuesGroovy</id>
+          </State>
+          <State>
+            <id>Type compatibilityPHP</id>
+          </State>
+          <State>
+            <id>UI Form Problems</id>
+          </State>
+          <State>
+            <id>Validity issuesGroovy</id>
+          </State>
+          <State>
+            <id>Velocity inspections</id>
+          </State>
+          <State>
+            <id>Verbose or redundant code constructs</id>
+          </State>
+          <State>
+            <id>Visibility issues</id>
+          </State>
+          <State>
+            <id>WSDL issues</id>
+          </State>
+          <State>
+            <id>Web Services Inspections</id>
+          </State>
+          <State>
+            <id>XML</id>
+          </State>
+          <State>
+            <id>XPath</id>
+          </State>
+          <State>
+            <id>XSLT</id>
+          </State>
+          <State>
+            <id>toString() issues</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>InconsistentResourceBundle</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages ProjectPane="false" />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Non-Project Files" />
+        <subPane subId="Problems" />
+        <subPane subId="Production">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="AREasy">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Tests" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="All">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="AREasy">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="doc" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cfg" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AREasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Favorites">
+        <subPane subId="areasy">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="271" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="253" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="274" />
+    <property name="options.splitter.main.proportions" value="0.23487261" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="223" />
+    <property name="recentsLimit" value="5" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="223" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="224" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="892" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="224" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="942" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.16561845" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="options.lastSelected" value="copyright.profiles" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="options.searchVisible" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.snt.areasy.runtime.actions.arserver.defs.tools" />
+      <recent name="com.snt.areasy.runtime.actions.arserver.admin" />
+      <recent name="com.snt.areasy.runtime.engine.structures.itsm" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Workspace\Projects\SNT.Addons\SNT.AREasy\AREasy\src\java\com\snt\areasy\runtime\utilities\resources\help\arserver\admin" />
+      <recent name="G:\Workspace\Projects\SNT.Addons\SNT.AREasy\AREasy\build" />
+      <recent name="D:\Projects\SNT.AREasy\AREasy\src\java\com\snt\areasy\runtime\utilities\resources\help\arserver\admin" />
+      <recent name="D:\Projects\SNT.AREasy\AREasy\build" />
+      <recent name="D:\Projects\SNT.AREasy\AREasy" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="org.areasy.runtime.engine.base.ARDictionary" />
+      <recent name="com.snt.areasy.runtime.plugins.sso.SimpleAuthenticator" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Remote.sdaoffice.local">
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <module name="areasy" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="10.144.80.30" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="10.144.80.30" />
+      <option name="PORT" value="9990" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9990" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="spetro603018" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="spetro603018" />
+      <option name="PORT" value="9999" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9999" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="sdaoffice.local" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="sdaoffice.local" />
+      <option name="PORT" value="9999" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="9999" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Remote.10.144.80.30" />
+      <item index="1" class="java.lang.String" itemvalue="Remote.spetro603018" />
+      <item index="2" class="java.lang.String" itemvalue="Remote.sdaoffice.local" />
+    </list>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value="ALPHA_COMPARATOR" />
+  </component>
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="true" SSL_PROTOCOLS="sslv3">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <configuration useDefault="true">$USER_HOME$/.subversion</configuration>
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="" />
+      <created>1325846426401</created>
+      <updated>1325846426401</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Fix for: 14INGR01-4 AREasy Installer error&#10;Also, password encrypt and decrypt actions have been documented">
+      <created>1395777334176</created>
+      <updated>1395777334176</updated>
+    </task>
+    <task id="LOCAL-00002" summary="New actions development: set/remove hierarchical permission groups">
+      <created>1431751155104</created>
+      <updated>1431751155104</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="235" y="25" width="1685" height="1055" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16249236" sideWeight="0.7075575" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3617021" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2924425" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24791914" sideWeight="0.7049724" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2101405" sideWeight="0.7075575" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24984728" sideWeight="0.5" order="10" side_tool="false" content_ui="combo" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253012" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="false" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
+    <option name="UPDATE_FILTER_SCOPE_NAME" />
+    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
+    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
+    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <MESSAGE value="AREASY-18" />
+    <MESSAGE value="Fixes for configuration management part: EXE paxkage" />
+    <MESSAGE value="Fixes for configuration management part: publishing includes now SNT libraries" />
+    <MESSAGE value="Fix for: 14INGR01-4 AREasy Installer error&#10;Also, password encrypt and decrypt actions have been documented" />
+    <MESSAGE value="New actions development: set/remove hierarchical permission groups" />
+  </component>
+  <component name="VssConfiguration">
+    <option name="CLIENT_PATH" value="" />
+    <option name="SRCSAFEINI_PATH" value="" />
+    <option name="USER_NAME" value="" />
+    <option name="PWD" value="" />
+    <CheckoutOptions>
+      <option name="COMMENT" value="" />
+      <option name="DO_NOT_GET_LATEST_VERSION" value="false" />
+      <option name="REPLACE_WRITABLE" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckoutOptions>
+    <CheckinOptions>
+      <option name="COMMENT" value="" />
+      <option name="KEEP_CHECKED_OUT" value="false" />
+      <option name="RECURSIVE" value="false" />
+    </CheckinOptions>
+    <AddOptions>
+      <option name="STORE_ONLY_LATEST_VERSION" value="false" />
+      <option name="CHECK_OUT_IMMEDIATELY" value="false" />
+    </AddOptions>
+    <UndocheckoutOptions>
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="REPLACE_LOCAL_COPY" value="2" />
+      <option name="RECURSIVE" value="false" />
+    </UndocheckoutOptions>
+    <GetOptions>
+      <option name="REPLACE_WRITABLE" value="0" />
+      <option name="MAKE_WRITABLE" value="false" />
+      <option name="ANSWER_NEGATIVELY" value="false" />
+      <option name="ANSWER_POSITIVELY" value="false" />
+      <option name="RECURSIVE" value="false" />
+      <option name="VERSION" />
+    </GetOptions>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <targetFilters>
+        <filter targetName="0.Init" isVisible="true" />
+        <filter targetName="1.Boot" isVisible="true" />
+        <filter targetName="2.Common" isVisible="true" />
+        <filter targetName="3.Parser" isVisible="true" />
+        <filter targetName="0.Clean" isVisible="true" />
+        <filter targetName="1.Init" isVisible="true" />
+        <filter targetName="2.Bin" isVisible="true" />
+        <filter targetName="3.Doc" isVisible="true" />
+        <filter targetName="4.Dist" isVisible="true" />
+        <filter targetName="1.1.Prepare.Configuration" isVisible="true" />
+        <filter targetName="1.2.Prepare.Structure" isVisible="true" />
+        <filter targetName="1.2.1.Prepare.Structure.ForUnix" isVisible="true" />
+        <filter targetName="1.2.2.Prepare.Structure.ForWin" isVisible="true" />
+        <filter targetName="2.1.Deploy" isVisible="true" />
+        <filter targetName="2.1.1.Deploy.Local" isVisible="false" />
+        <filter targetName="2.1.2.Deploy.SSH" isVisible="false" />
+        <filter targetName="2.2.Deploy.Fast" isVisible="true" />
+        <filter targetName="2.2.1.Deploy.Fast.Local" isVisible="false" />
+        <filter targetName="2.2.2.Deploy.Fast.SSH" isVisible="false" />
+        <filter targetName="3.1.Package.ZIP" isVisible="true" />
+        <filter targetName="3.1.1.Package.ZIP.Init" isVisible="false" />
+        <filter targetName="3.2.Package.TAR.GZ" isVisible="true" />
+        <filter targetName="3.3.Package.EXE" isVisible="true" />
+        <filter targetName="3.3.1.Package.EXE.Win" isVisible="false" />
+        <filter targetName="3.3.1.Package.EXE.Unix" isVisible="false" />
+        <filter targetName="3.4.Package.BIN" isVisible="true" />
+        <filter targetName="3.4.1.Package.BIN.UnixPerm" isVisible="false" />
+        <filter targetName="4.1.Publish" isVisible="true" />
+        <filter targetName="1.Exec" isVisible="true" />
+        <filter targetName="1.1.Exec.Caller" isVisible="false" />
+        <filter targetName="1.2.Exec.onWin" isVisible="false" />
+        <filter targetName="1.3.Exec.onUnix" isVisible="false" />
+        <filter targetName="2.AskRun" isVisible="true" />
+      </targetFilters>
+      <expanded value="true" />
+    </buildFile>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/InstallAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="284" column="30" selection-start="9879" selection-end="9879" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SingleSignOnAuthenticator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="547" column="29" selection-start="18355" selection-end="18368" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/AbstractFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="29" selection-start="2586" selection-end="2586" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/tools/RedirectFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="29" selection-start="1735" selection-end="1735" vertical-scroll-proportion="0.830313">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/profile.stefan.damian.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="22" selection-start="160" selection-end="160" vertical-scroll-proportion="0.07258064">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/profile.stefan.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="437" selection-end="610" vertical-scroll-proportion="0.33870968">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="28" selection-start="1786" selection-end="1786" vertical-scroll-proportion="0.36073825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/doclet.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.7419355">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/samples/ar.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/samples/pluginsvr_config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build-4.testing.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build-2.devel.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="46" selection-start="3054" selection-end="3054" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build-1.base.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="56" selection-start="1848" selection-end="1848" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build-3.deploy.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="326" column="32" selection-start="14275" selection-end="14275" vertical-scroll-proportion="0.32784185">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="Copyright.UI">
+        <settings>
+          <last-edited>areasy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>areasy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.6</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Unnamed</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>areasy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+

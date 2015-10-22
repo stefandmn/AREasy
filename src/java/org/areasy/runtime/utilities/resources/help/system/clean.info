@@ -1,0 +1,24 @@
+Clean
+=====
+
+Clean action runs only in server mode and it executes garbage collector, removes temporary files, log files and also removes the cache objects.
+
+The standard command line is described below:
+areasy -action clean [-olderthan <10|20|..(in days)>] [-force]
+
+Where:
+	-force     = Force to remove all objects from the cache layer. Otherwise will remove only expired objects.
+
+	-olderthan = Specify a period (in days) that will be considered to remove the log files and also the temporary files.
+
+
+Examples:
+---------
+1) areasy -action clean
+	= removes all expired objects from cache
+
+2) areasy -action clean -force
+	= removes all objects from cache
+
+3) areasy -action clean -olderthan 3
+	= removes all expired objects from cache and all log and related file older than 3 days

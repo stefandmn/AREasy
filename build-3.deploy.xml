@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2007-2015 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<project name="3.Deploy" basedir="." >
+
+	<!-- Import Ant object file -->
+	<import file="build-1.base.xml"/>
+
+
+	<!-- availability of specific configuration file -->
+	<available file="${build.dir}/deploy.properties" property="merge.config"/>
+
+    <!-- Define operating system variables -->
+    <condition property="isUnix">
+        <or>
+            <os name="Linux"/>
+            <os name="Unix"/>
+        </or>
+    </condition>
+    <condition property="isWindows">
+        <or>
+			<os name="Windows 7"/>
+			<os name="Windows 8"/>
+            <os name="Windows XP"/>
+        </or>
+    </condition>
+
+    <!-- Define deployment flags -->
+    <condition property="deployLocal">
+        <or>
+            <equals arg1="${deploy.protocol}" arg2=""/>
+            <equals arg1="${deploy.protocol}" arg2="local"/>
+        </or>
+    </condition>
+    <condition property="deployOverSSH">
+        <or>
+            <equals arg1="${deploy.protocol}" arg2="ssh"/>
+            <equals arg1="${deploy.protocol}" arg2="SSH"/>
+        </or>
+    </condition>
+
+
+    <!-- Configure ANT environment for new commands -->
+    <taskdef resource="net/jtools/classloadertask/antlib.xml">
+        <classpath>
+            <fileset dir="${libs.dir}/tools" includes="ant-classloader*.jar"/>
+        </classpath>
+    </taskdef>
+
+    <!--Add JSCH jar to the classpath-->
+    <classloader loader="system">
+        <classpath>
+            <fileset dir="${libs.dir}/tools" includes="jsch*.jar"/>
+        </classpath>
+    </classloader>
+
+
+    <!-- Set specific distribution configuration -->
+    <target name="1.1.Prepare.Configuration" if="merge.config" description="Set distribution configuration">
+        <java classname="org.areasy.common.support.configuration.providers.properties.stream.ConfigurationManager" classpathref="classpath.bin">
+            <arg value="-configfile"/>
+            <arg value="${build.dir}/deploy.properties"/>
+            <arg value="-remotepath"/>
+            <arg value="${dist.dir}/cfg"/>
+        </java>
+    </target>
+
+
+    <!-- Create OS dependent distribution -->
+    <target name="1.2.Prepare.Structure" description="Create OS dependent distribution">
+        <antcall target="1.2.1.Prepare.Structure.ForUnix"/>
+        <antcall target="1.2.2.Prepare.Structure.ForWin"/>
+    </target>
+
+
+    <!-- Create unix distribution -->
+    <target name="1.2.1.Prepare.Structure.ForUnix" description="Build installer kit - tar.gz file" if="isUnix">
+        <echo message="Prepare distribution for Unix/Linux environment"/>
+
+        <delete>
+            <fileset dir="${dist.dir}/bin" includes="*.exe"/>
+            <fileset dir="${dist.dir}/bin" includes="*.bat"/>
+            <fileset dir="${dist.dir}/bin/tools" includes="*.bat"/>
+        </delete>
+    </target>
+
+
+	<!-- Create windows distribution -->
+	<target name="1.2.2.Prepare.Structure.ForWin" description="Build installer kit - zip file" if="isWindows">
+		<echo message="Prepare distribution for Windows environment"/>
+
+		<delete>
+			<fileset dir="${dist.dir}/bin" includes="*.sh"/>
+			<fileset dir="${dist.dir}/bin/tools" includes="*.sh"/>
+		</delete>
+	</target>
+
+
+    <target name="2.1.Deploy" description="Complete deployment">
+        <antcall target="2.1.1.Deploy.Local"/>
+        <antcall target="2.1.2.Deploy.SSH"/>
+    </target>
+
+
+    <target name="2.1.1.Deploy.Local" if="deployLocal">
+        <echo message="Create AREasy distribution: ${deploy.host.path}"/>
+
+        <echo message="Create distribution structure.."/>
+        <mkdir dir="${deploy.host.path}"/>
+        <mkdir dir="${deploy.host.path}/bin"/>
+        <mkdir dir="${deploy.host.path}/bin/tools"/>
+        <mkdir dir="${deploy.host.path}/cfg"/>
+        <mkdir dir="${deploy.host.path}/libs"/>
+        <mkdir dir="${deploy.host.path}/logs"/>
+        <mkdir dir="${deploy.host.path}/work"/>
+
+        <antcall target="2.2.1.Deploy.Fast.Local"/>
+        <antcall target="1.1.Prepare.Configuration"/>
+        <antcall target="1.2.Prepare.Structure"/>
+
+        <echo message="Deploying binary files.."/>
+        <copy todir="${deploy.host.path}/bin">
+            <fileset dir="${dist.dir}/bin"/>
+        </copy>
+        <copy todir="${deploy.host.path}/bin/tools">
+            <fileset dir="${src.dir}/env/tools"/>
+        </copy>
+
+        <echo message="Deploying configuration files.."/>
+        <antcall target="1.1.Prepare.Configuration"/>
+        <copy todir="${deploy.host.path}/cfg" overwrite="yes">
+            <fileset dir="${dist.dir}/cfg"/>
+        </copy>
+    </target>
+
+
+	<target name="2.1.2.Deploy.SSH" if="deployOverSSH">
+		<echo message="Create AREasy distribution: ${deploy.host.user}@${deploy.host.name}"/>
+        <input message="Password for user ${deploy.host.user}@${deploy.host.name}" addproperty="deploy.host.password"/>
+
+		<echo message="Create distribution structure.."/>
+		<sshexec trust="yes" failonerror="no" host="${deploy.host.name}" username="${deploy.host.user}" password="${deploy.host.password}"
+            command="mkdir -p ${deploy.host.path}; mkdir ${deploy.host.path}/bin; mkdir ${deploy.host.path}/bin/tools; mkdir ${deploy.host.path}/cfg; mkdir ${deploy.host.path}/doc; mkdir ${deploy.host.path}/libs; mkdir ${deploy.host.path}/logs; mkdir ${deploy.host.path}/work"/>
+
+		<antcall target="2.2.2.Deploy.Fast.SSH" inheritrefs="true"/>
+        <antcall target="1.1.Prepare.Configuration"/>
+        <antcall target="1.2.Prepare.Structure"/>
+
+		<echo message="Deploying binaries and scripts.."/>
+		<scp trust="yes" sftp="true" todir="${deploy.host.user}:${deploy.host.password}@${deploy.host.name}:${deploy.host.path}/bin">
+			<fileset dir="${dist.dir}/bin"/>
+		</scp>
+		<scp trust="yes" sftp="true" todir="${deploy.host.user}:${deploy.host.password}@${deploy.host.name}:${deploy.host.path}/bin/tools">
+			<fileset dir="${dist.dir}/bin/tools"/>
+		</scp>
+		<echo message="Set execution permissions.."/>
+		<sshexec trust="yes" failonerror="no" host="${deploy.host.name}" username="${deploy.host.user}" password="${deploy.host.password}" command="chmod +x ${deploy.host.path}/bin/*.sh;"/>
+
+		<echo message="Deploying configuration files.."/>
+		<scp trust="yes" sftp="true" todir="${deploy.host.user}:${deploy.host.password}@${deploy.host.name}:${deploy.host.path}/cfg">
+            <fileset dir="${dist.dir}/cfg"/>
+		</scp>
+	</target>
+
+
+    <target name="2.2.Deploy.Fast" description="Complete deployment">
+        <antcall target="2.2.1.Deploy.Fast.Local"/>
+        <antcall target="2.2.2.Deploy.Fast.SSH"/>
+    </target>
+
+
+    <target name="2.2.1.Deploy.Fast.Local" if="deployLocal">
+        <echo message="Deploy AREasy libraries: ${deploy.host.path}"/>
+
+        <ant antfile="build.xml" target="4.Dist"/>
+
+        <echo message="Deploying libraries.."/>
+        <copy todir="${deploy.host.path}/libs">
+            <fileset dir="${dist.libs.dir}"/>
+        </copy>
+
+        <echo message="Removing log files and temporary files.."/>
+        <delete quiet="true">
+            <fileset dir="${deploy.host.path}/logs" includes="**/*.log"/>
+            <fileset dir="${deploy.host.path}/work" includes="**/*"/>
+        </delete>
+    </target>
+
+
+	<target name="2.2.2.Deploy.Fast.SSH" if="deployOverSSH">
+		<echo message="Deploy AREasy libraries: ${deploy.host.user}@${deploy.host.name}"/>
+        <!--input message="Password for user ${deploy.host.user}@${deploy.host.name}" addproperty="deploy.host.password"/-->
+
+		<ant antfile="build.xml" target="4.Dist"/>
+
+		<echo message="Deploying libraries.."/>
+		<scp trust="yes" sftp="true" todir="${deploy.host.user}:${deploy.host.password}@${deploy.host.name}:${deploy.host.path}/libs">
+            <fileset dir="${dist.libs.dir}/"/>
+		</scp>
+
+		<echo message="Removing log and temporary files.."/>
+		<sshexec trust="yes" failonerror="no" host="${deploy.host.name}" username="${deploy.host.user}" password="${deploy.host.password}" command="rm -rf ${deploy.host.path}/logs/*"/>
+		<sshexec trust="yes" failonerror="no" host="${deploy.host.name}" username="${deploy.host.user}" password="${deploy.host.password}" command="rm -rf ${deploy.host.path}/work/*"/>
+	</target>
+
+
+    <target name="3.1.Package.ZIP" description="Build installer kit - zip file">
+        <antcall target="3.1.1.Package.ZIP.Init"/>
+
+        <property name="isWindows" value="true"/>
+        <antcall target="1.2.2.Prepare.Structure.ForWin"/>
+        <zip destfile="${build.output.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
+    </target>
+
+
+	<target name="3.1.1.Package.ZIP.Init">
+		<ant antfile="build.xml" target="4.Dist"/>
+		<ant antfile="build.xml" target="3.Doc"/>
+	</target>
+
+
+	<target name="3.2.Package.TAR.GZ" description="Build installer kit - tar.gz file">
+        <antcall target="3.1.1.Package.ZIP.Init"/>
+
+        <property name="isUnix" value="true"/>
+		<antcall target="1.2.1.Prepare.Structure.ForUnix"/>
+
+		<tar destfile="${build.output.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
+		<gzip destfile="${build.output.dir}/${project.name}-${project.version}.tar.gz" src="${build.output.dir}/${project.name}-${project.version}.tar"/>
+		<delete file="${build.output.dir}/${project.name}-${project.version}.tar" quiet="true"/>
+	</target>
+
+	
+	<target name="3.3.Package.EXE" description="Build installer kit - exe file">
+        <antcall target="3.1.1.Package.ZIP.Init"/>
+
+        <property name="isWindows" value="true"/>
+		<antcall target="1.2.2.Prepare.Structure.ForWin"/>
+
+        <antcall target="3.3.1.Package.EXE.Win" inheritall="false"/>
+        <antcall target="3.3.1.Package.EXE.Unix" inheritall="false"/>
+	</target>
+
+
+    <target name="3.3.1.Package.EXE.Win" if="isWindows">
+        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.output.dir}/installer.nsi"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%name%" value="${project.name}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%version%" value="${project.version}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+
+        <!-- compile installer source -->
+        <exec executable="${nsis.path}/MakeNSIS.exe">
+            <arg path="${build.output.dir}/installer.nsi"/>
+        </exec>
+
+        <delete file="${build.output.dir}/installer.nsi" quiet="true"/>
+    </target>
+
+    <target name="3.3.1.Package.EXE.Unix" if="isUnix">
+        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.output.dir}/installer.nsi"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%name%" value="${project.name}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%version%" value="${project.version}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+        <replace file="${build.output.dir}/installer.nsi" token="${basedir}" value="z:${basedir}"/>
+
+        <!-- compile installer source -->
+        <exec executable="/usr/bin/wine">
+            <arg line="'${nsis.path}/MakeNSIS.exe' 'z:${build.output.dir}/installer.nsi'"/>
+        </exec>
+
+        <delete file="${build.output.dir}/installer.nsi" quiet="true"/>
+    </target>
+
+
+    <target name="3.4.Package.BIN" description="Build installer kit - bin file">
+        <antcall target="3.2.Package.TAR.GZ"/>
+
+		<copyfile src="${src.dir}/shell/installer.bin" dest="${build.output.dir}/${project.name}.bin"/>
+
+		<mkdir dir="${build.output.dir}/${project.name}"/>
+		<move file="${build.output.dir}/${project.name}-${project.version}.tar.gz" todir="${build.output.dir}/${project.name}"/>
+		<copyfile src="${src.dir}/shell/setup.sh" dest="${build.output.dir}/${project.name}/setup.sh"/>
+		<replace file="${build.output.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
+		<replace file="${build.output.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
+
+		<tar destfile="${build.output.dir}/${project.name}.tar" basedir="${build.output.dir}/${project.name}"/>
+		<gzip destfile="${build.output.dir}/${project.name}.tar.gz" src="${build.output.dir}/${project.name}.tar"/>
+
+		<concat destfile="${build.output.dir}/${project.name}-${project.version}.bin" binary="yes">
+			<fileset file="${build.output.dir}/areasy.bin"/>
+			<fileset file="${build.output.dir}/areasy.tar.gz"/>
+		</concat>
+
+        <antcall target="3.4.1.Package.BIN.UnixPerm" inheritall="false"/>
+
+		<delete dir="${build.output.dir}/areasy" quiet="true"/>
+		<delete file="${build.output.dir}/${project.name}.bin" quiet="true"/>
+		<delete file="${build.output.dir}/${project.name}.tar" quiet="true"/>
+		<delete file="${build.output.dir}/${project.name}.tar.gz" quiet="true"/>
+	</target>
+
+
+    <target name="3.4.1.Package.BIN.UnixPerm" if="isUnix">
+        <exec executable="/bin/chmod">
+            <arg line="+x '${build.output.dir}/${project.name}-${project.version}.bin'"/>
+        </exec>
+    </target>
+
+
+    <target name="4.1.Publish" description="Copy all deliverables on the public web site">
+        <echo message="Publish deliverables: ${publish.host.user}@${publish.host.name}"/>
+        <input message="Password for user ${publish.host.user}@${publish.host.name}" addproperty="publish.host.password"/>
+
+        <antcall target="3.1.Package.ZIP"/>
+        <scp trust="yes" sftp="true" todir="${publish.host.user}:${publish.host.password}@${publish.host.name}:${publish.host.path}">
+            <fileset dir="${build.output.dir}">
+                <include name="${project.name}-${project.version}.zip"/>
+            </fileset>
+            <fileset dir="${dist.libs.dir}/">
+                <include name="${library.jar}"/>
+				<include name="snt-*.jar"/>
+            </fileset>
+        </scp>
+
+        <antcall target="3.2.Package.TAR.GZ"/>
+        <scp trust="yes" sftp="true" todir="${publish.host.user}:${publish.host.password}@${publish.host.name}:${publish.host.path}">
+            <fileset dir="${build.output.dir}">
+                <include name="${project.name}-${project.version}.tar.gz"/>
+            </fileset>
+        </scp>
+
+        <antcall target="3.3.Package.EXE"/>
+        <scp trust="yes" sftp="true" todir="${publish.host.user}:${publish.host.password}@${publish.host.name}:${publish.host.path}">
+            <fileset dir="${build.output.dir}">
+                <include name="${project.name}-${project.version}.exe"/>
+            </fileset>
+        </scp>
+
+        <antcall target="3.4.Package.BIN"/>
+        <scp trust="yes" sftp="true" todir="${publish.host.user}:${publish.host.password}@${publish.host.name}:${publish.host.path}">
+            <fileset dir="${build.output.dir}">
+                <include name="${project.name}-${project.version}.bin"/>
+            </fileset>
+        </scp>
+    </target>
+
+</project>

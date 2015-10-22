@@ -1,0 +1,58 @@
+Add Data Entry
+==============
+
+This action implements a mechanism to add data record(s) into a Remedy form using different data-sources and options. This add-entry operation could be called for one main entry - into a dedicated form, and for other related entries - into secondary forms.
+So, this action could create data record(s) into a Remedy form using static values (specified in the comand line) or could take the data values from a file (specified in the command line). In this last scenario the action could push many records in the Remedy form as they are defined in the file source.
+Also this action is able to validate the data values before to push them in the form. For more details please see the parameter.
+
+The standard command line is described below:
+areasy -action data.entry.add -form <form name> [-validate [-Qx0001 <value 1> ... -Qx000N <value N>]] -Dx0001 <value 1> -Dx000N ... <value N> [-file <file path> -startindex <start index> [-endindex <end index>] [-pageindex <page> -force]] [-multipart] -[partforms <part1@formname1;part2@formname2;..;partN@formnamex> [-part1@Qx0001 <value 1> ... -partN@Qx000N <value N>] [-part1@Dx0001 <value 1> ... -partN@Dx000N <value N>]] [-entity <company|organisation|site|people|sgroup|productc|operationalc|..>] [-ignorenullquery] [-ignorenulldata] [-ignorenullpartquery] [-ignorenullpartdata]
+
+Where:
+	-form (or -formname)    = this is the Remedy form used to create new data record(s) through this action
+
+	-validate               = if this option is specified the action workflow will validate the data values (will check if the record already exists in the form) and then will push the data. The validation is done through the options "Qx000<1..N>"
+
+	-Qx000<1..N>            = actually this is a list of attributes that start with "-Q" being followed by a field Id from the specified Remedy form. So, in case of -validate option is specified in the command line the action will compose a qualification criteria like: <fieldId1 = value1 AND fieldId2 = value2 AND ... AND fieldIdN = valueN>. Using this criteria the action will search in Remedy form and if it will find at least one record will stop execution
+
+	-Dx000<1..N>            = this is a list of attributes specifying the data values that have to be submitted in the specified form. These attributes start with "-D" being followed by a field Id from the specified Remedy form. Each option is in fact a field Id that will accept a value.
+
+	-file                   = the action could accept file data-sources that could keep query values (for validation) and also data values. The file have to parsed by the action and the action workflow will run for eah line. The values from file will be referred line by line in the data or query values. If it's about and Excel file, instead of static values for -D or -Q options, can be used values like "${A}" or "${x}" - where A is the letter column and X is the index column. If it's about a CSV or text formatted file  you can refer data only using "${x}" pattern value - where X is the index column
+
+	-startindex             = if -file is specified, you can say to the action parser to handle the data file starting from the specified line index
+
+	-endindex               = if -file is specified, you can limit the parsing only to the specified line index.
+
+	-pageindex              = if -file is specified and if it's about an Excel file you can what sheet index (from the workbook) have to be parsed
+
+	-force                  = this option is used only when the action has to process many records (actually when -file option is specified) and the goal is to continue to process the next records even if the workflow met an error to a specific line from the file
+
+	-multipart              = this is an option that could bring in action workflow additional related records to the specified form and inserted record. For instance if you want to push a new record in CTM:People form and then you want to push but in the same
+
+	-partforms              = in case of -multipart is used this option declares the part names and their forms
+
+	-part<1..N>@Qx000<1..N> = in case of -multipart is used this option specified the list of query options and values
+
+	-part<1..N>@Dx000<1..N> = in case of -multipart is used this option specified the list of data options and values
+
+	-entity                 = this option indicates what AREasy CoreItem structure should be used in order to do the operations specified by the action workflow
+
+	-ignorenullquery        = this option will ignore query options that have NULL value
+
+	-ignorenulldata         = this option will ignore data options that have NULL value
+
+	-ignorenullpartquery    = this option will ignore part query options that have NULL value
+
+	-ignorenullpartdata     = this option will ignore part data options that have NULL value
+
+
+Note: In order to execute this action you must have a valid connection to Remedy server (from runtime configuration or specified in the command line).
+
+
+Examples:
+---------
+1) areasy -action data.entry.add -form "Test1" -D2 user -D7 2 -D8 "this is short description"
+	= create a new entry in "Test1" Remedy form
+
+2) 1) areasy -action data.entry.add -form "Test1" -D2 "${A}" -D7 "${C}" -D8 "${B}" -file Demo.xls -startindex 1 -endindex 0 -pageindex 0 -force
+	= create new entries in "Test1" form, using data from Demo.xls file (located in $AREASY_HOME/work folder) startling from line 2 (index 1) and until the last line from the file. The file delivers data from first sheet (sheet index 0). Also, even if one line will generate an error the action workflow will continue the execution till end of the file or till the index specified by -endindex option

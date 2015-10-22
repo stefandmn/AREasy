@@ -1,0 +1,5 @@
+Update Data Entry
+=================
+
+The standard command line is described below:
+areasy -action data.entry.update -form <form name> -id <entry id> [-Q10001 <value 1> -Q1000N <value N>] -D10001 <value 1> -D1000N <value N> [-force] [-multipart] -[partforms <par1@formname1;part2@formname2;..;partx@formnameN>] [-entity <company|organisation|site|people|sgroup|productc|operationalc>] [-ignorenullquery] [-ignorenulldata] [-ignorenullpartquery] [-ignorenullpartdata] [-ignorenulls] [-merge] [-mergeid <policy id>]

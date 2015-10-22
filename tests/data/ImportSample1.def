@@ -1,0 +1,329 @@
+char-set: UTF-8
+#
+#  File exported Sun Sep 29 12:33:22 2013
+#
+begin schema
+   name           : SNT:Test
+   core-version   : 2
+   upgrade-version: 0
+   num-fields     : 15
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   default-vui    : Default Administrator View
+   num-vuis       : 1
+   export-version : 11
+   schema-type    : 1
+   next-field-id  : 536870912
+vui  {
+   id             : 536870912
+   name           : Default Administrator View
+   label          : Default Administrator View
+   timestamp      : 1380368883
+   vui-locale     : 
+   vui-type       : 1
+   owner          : appadmin
+   last-changed   : appadmin
+   display-prop   : 1\20\4\26\Default Administrator View\
+}
+field {
+   id             : 1
+   name           : Request ID
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 3
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 15
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 0\1
+   permission     : 3\1
+   permission     : 4\1
+ display-instance : 536870912\14\3\41\2\6299\2500\29021\4600\4\6\1\7\40\2147483640\20\4\10\Request ID\21\41\2\0\400\6974\2100\27\8\16\28\6\4\29\6\1\60\40\1\65\41\2\0\0\0\0\143\4&
+ display-instance : 0\4294967295\151\41\2\7536\0\22721\2100\170\40\0\231\6\1\
+}
+field {
+   id             : 2
+   name           : Submitter
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 1
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 254
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 3\1
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\6074\5000\31945\7100\4\6\1\7\40\2147483641\20\4\9\Submitter\21\41\2\0\400\7199\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\30\65\41\2\0\0\0\&
+ display-instance : 0\66\41\2\23509\0\25871\2100\143\40\4294967295\151\41\2\7761\0\22946\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 3
+   name           : Create Date
+   datatype       : 7
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 3
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   permission     : 3\1
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\5624\7500\31945\9600\4\6\1\7\40\2147483642\20\4\11\Create Date\21\41\2\0\400\7649\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\23\65\41\2\0\0&
+ display-instance : \0\0\66\41\2\23959\0\26321\2100\143\40\4294967295\151\41\2\8211\0\23396\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 4
+   name           : Assigned To
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 2
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 254
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\5624\10000\31945\12100\4\6\1\7\40\2147483643\20\4\11\Assigned To\21\41\2\0\400\7649\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\30\65\41\2\0&
+ display-instance : \0\0\0\66\41\2\23959\0\26321\2100\143\40\4294967295\151\41\2\8211\0\23396\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 5
+   name           : Last Modified By
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 3
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 254
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\2924\12500\31945\14600\4\6\1\7\40\2147483644\20\4\16\Last Modified By\21\41\2\0\400\10348\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\33\65\&
+ display-instance : 41\2\0\0\0\0\66\41\2\26659\0\29021\2100\143\40\4294967295\151\41\2\10911\0\26096\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 6
+   name           : Modified Date
+   datatype       : 7
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 3
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\4386\15000\31945\17100\4\6\1\7\40\2147483645\20\4\13\Modified Date\21\41\2\0\400\8886\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\23\65\41\2&
+ display-instance : \0\0\0\0\66\41\2\25196\0\27558\2100\143\40\4294967295\151\41\2\9448\0\24633\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 7
+   name           : Status
+   datatype       : 6
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 1
+   timestamp      : 1380368892
+   owner          : appadmin
+   last-changed   : appadmin
+   enum-value     : New
+   enum-value     : Assigned
+   enum-value     : Fixed
+   enum-value     : Rejected
+   enum-value     : Closed
+   default        : 0
+   permission     : 3\1
+   permission     : 4\2
+ display-instance : 536870912\17\3\41\2\8548\17500\45668\19300\4\6\1\7\40\2147483646\20\4\6\Status\21\41\2\0\400\4724\1800\27\8\16\28\6\4\29\6\1\60\40\1\61\40\0\64\6\1\65\41\2\0&
+ display-instance : \0\0\0\143\40\4294967295\151\41\2\5286\400\37119\2200\170\40\0\230\4\46\5\0\New\1\Assigned\2\Fixed\3\Rejected\4\Closed\231\6\0\
+}
+field {
+   id             : 8
+   name           : Short Description
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 1
+   timestamp      : 1380368923
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 254
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 3\1
+   permission     : 4\1
+ display-instance : 536870912\16\3\41\2\1012\20000\31945\22100\4\6\1\7\40\2147483647\20\4\17\Short Description\21\41\2\0\400\12260\2100\27\8\16\28\6\4\29\6\1\60\40\1\61\40\50\65&
+ display-instance : \41\2\0\0\0\0\66\41\2\28571\0\30933\2100\143\40\4294967295\151\41\2\12823\0\28008\2100\170\40\0\231\6\0\
+}
+field {
+   id             : 15
+   name           : Status History
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 2
+   option         : 3
+   timestamp      : 1380368879
+   owner          : appadmin
+   last-changed   : appadmin
+   permission     : 3\1
+   permission     : 4\1
+}
+field {
+   id             : 536870913
+   name           : Run
+   datatype       : 32
+   fieldtype      : 0
+   create-mode    : 2
+   option         : 4
+   timestamp      : 1380446703
+   owner          : appadmin
+   last-changed   : appadmin
+   permission     : 0\1
+ display-instance : 536870912\10\2\8\1\3\41\2\33408\22700\39144\24800\4\6\1\5\6\2\7\40\2147483648\21\41\2\0\0\0\0\110\4\6\Button\143\40\4294967295\170\40\0\310\6\0\
+}
+field {
+   id             : 536870914
+   name           : Data01
+   datatype       : 4
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 2
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   length-units   : 0
+   maxlength      : 255
+   clob-store-opt : 0
+   menu-style     : 2
+   qbe-match-op   : 1
+   fulltext-optns : 0
+   permission     : 0\2
+ display-instance : 536870912\18\3\41\2\3824\22700\31945\24800\4\6\1\5\6\2\7\40\2147483649\14\40\1\20\4\6\Data01\21\41\2\0\400\9448\2100\60\40\1\66\41\2\25759\0\28121\2100\143\4&
+ display-instance : 0\4294967295\151\41\2\10011\0\25196\2100\170\40\0\231\6\0\288\6\0\289\4\4\0x00\290\4\4\0x00\310\6\0\5116\6\0\
+}
+field {
+   id             : 536870915
+   name           : Data02
+   datatype       : 2
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 2
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   range-low      : -2147483647
+   range-high     : 2147483647
+   permission     : 0\2
+ display-instance : 536870912\16\3\41\2\48706\2300\73340\4400\4\6\1\5\6\2\7\40\2147483650\14\40\1\20\4\6\Data02\21\41\2\0\400\8886\2100\62\6\1\66\41\2\0\0\0\0\143\40\4294967295\&
+ display-instance : 151\41\2\9448\0\24633\2100\170\40\0\288\6\0\289\4\4\0x00\290\4\4\0x00\310\6\0\
+}
+field {
+   id             : 536870916
+   name           : Data03
+   datatype       : 13
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 2
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   permission     : 0\2
+ display-instance : 536870912\16\3\41\2\48706\4800\76265\6900\4\6\1\5\6\2\7\40\2147483651\14\40\1\20\4\6\Data03\21\41\2\0\400\8886\2100\66\41\2\25196\0\27558\2100\143\40\4294967&
+ display-instance : 295\151\41\2\9448\0\24633\2100\170\40\0\231\6\0\288\6\0\289\4\4\0x00\290\4\4\0x00\310\6\0\
+}
+field {
+   id             : 536870917
+   name           : Data04
+   datatype       : 6
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 2
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   enum-value     : Default 1
+   permission     : 0\2
+ display-instance : 536870912\16\3\41\2\48706\7300\73340\9400\4\6\1\5\6\2\7\40\2147483652\14\40\1\20\4\6\Data04\21\41\2\0\400\8886\2100\64\6\0\143\40\4294967295\151\41\2\9448\0\&
+ display-instance : 24633\2100\170\40\0\230\4\13\1\0\Default 1\288\6\0\289\4\4\0x00\290\4\4\0x00\310\6\0\
+}
+field {
+   id             : 536870918
+   name           : Data05
+   datatype       : 12
+   fieldtype      : 1
+   create-mode    : 1
+   option         : 2
+   timestamp      : 1380446989
+   owner          : appadmin
+   last-changed   : appadmin
+   range-low      : 0
+   range-high     : 1000000000
+   precision      : 2
+   func-codes     : 1\EUR\2\
+   allow-codes    : 0\
+   default        : 12\14\1\0\3\EUR\0\0\\
+   permission     : 0\2
+ display-instance : 536870912\17\3\41\2\48706\9800\79189\11900\4\6\1\5\6\2\7\40\2147483653\14\40\1\20\4\6\Data05\21\41\2\0\400\7874\2100\65\41\2\25196\0\27558\2100\66\41\2\28121&
+ display-instance : \0\30483\2100\143\40\4294967295\151\41\2\9448\0\24633\2100\170\40\0\231\6\0\288\6\0\289\4\4\0x00\290\4\4\0x00\310\6\0\
+}
+end
+begin active link
+   name           : SNT:Test:PushButton
+   timestamp      : 1380369193
+   export-version : 11
+   owner          : appadmin
+   last-changed   : appadmin
+   actlink-order  : 0
+   wk-conn-type   : 1
+   schema-name    : SNT:Test
+   enable         : 1
+   action {
+      set-field   : 0\536870914\101\4\4\Demo\
+   }
+   object-prop    : 1\60016\4\1\0\
+   errhandler-opt : 0
+   errhandler-name: 
+end
+begin filter
+   name           : SNT:Test:SaveRecordNotification
+   timestamp      : 1380374252
+   owner          : appadmin
+   last-changed   : appadmin
+   filter-op      : 4
+   enable         : 1
+   filter-order   : 500
+   wk-conn-type   : 1
+   schema-name    : SNT:Test
+   export-version : 11
+   action {
+      message-type: 0
+      message-num : 10000
+      message-text: Record saved!!
+   }
+   errhandler-opt : 0
+end

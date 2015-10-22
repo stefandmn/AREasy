@@ -1,0 +1,33 @@
+Config
+======
+
+Config action is used to set the configuration properties from configuration files and to reload server or runtime configuration entries.
+Config action runs in security mode that means could be called locally as it is or remotely, if you'll provide admin credentials (user credentials used to connect to the AR System instance).
+Instead of clear text password could be also provided the obfuscated version. As is described in the second example, 'Demo' user and '1234' password must be the values of 'app.server.default.arsystem.user.name' and 'app.server.default.arsystem.user.password' from 'default.properties' configuration sector.
+
+The standard command line is described below:
+areasy -action config [-reload] [-sector <config sector> [-property <configuration property>] [-value <configuration value>] [-values <value1> <value2> .. <valueN>]
+
+Where:
+	-reload   = could reload configuration entries after they are changed and saved in th configuration sector(s)
+
+	-sector   = specify the configuration sector that have to be changed
+
+	-property = this is the option that indicates the property key that will be modified
+
+	-values   = the list of values that have to be associated to the specified property key
+
+	-value    = the new value of the specified property key. If are specified both options (-value and -values) the list of values will be consolidated
+
+
+Examples:
+---------
+1) areasy -action config -reload
+	= reloads server configuration for a local AREasy server
+
+2) areasy -action config -reload -aruser Demo -arpassword 1234
+	= reloads server configuration for a remote AREasy server instance
+
+3) areasy -action config -property "app.server.default.arsystem.server.name" -value "localhost" -reload
+	= sets the property key that specify what AR Server server is connected to the AREasy instance and than reloads/refreshes configuration properties from AREasy server instance
+

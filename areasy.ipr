@@ -59,30 +59,13 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
   <component name="IdProvider" IDEtalkID="50547934C3D8ECF468BD743FB02BA53B" />
-  <component name="InspectionProjectProfileManager">
-    <profiles>
-      <profile version="1.0" is_locked="false">
-        <option name="myName" value="Project Default" />
-        <option name="myLocal" value="false" />
-        <inspection_tool class="AntResolveInspection" enabled="false" level="ERROR" enabled_by_default="false" />
-        <inspection_tool class="DuplicatePropertyInspection" enabled="true" level="WARNING" enabled_by_default="true">
-          <option name="CURRENT_FILE" value="false" />
-          <option name="MODULE_WITH_DEPENDENCIES" value="false" />
-          <option name="CHECK_DUPLICATE_VALUES" value="true" />
-          <option name="CHECK_DUPLICATE_KEYS" value="true" />
-          <option name="CHECK_DUPLICATE_KEYS_WITH_DIFFERENT_VALUES" value="true" />
-        </inspection_tool>
-      </profile>
-    </profiles>
-    <option name="PROJECT_PROFILE" value="Project Default" />
-    <option name="USE_PROJECT_PROFILE" value="true" />
-    <version value="1.0" />
-  </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
     <option name="OPTION_SCOPE" value="protected" />
@@ -252,209 +235,10 @@
           <indentOptions>
             <option name="USE_TAB_CHARACTER" value="true" />
           </indentOptions>
-          <arrangement>
-            <groups>
-              <group>
-                <type>GETTERS_AND_SETTERS</type>
-                <order>KEEP</order>
-              </group>
-            </groups>
-            <rules>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PUBLIC</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PROTECTED</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PACKAGE_PRIVATE</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PRIVATE</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PUBLIC</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PROTECTED</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PACKAGE_PRIVATE</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PRIVATE</MODIFIER>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PUBLIC</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PROTECTED</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PACKAGE_PRIVATE</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PRIVATE</MODIFIER>
-                    <MODIFIER>FINAL</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PUBLIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PROTECTED</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PACKAGE_PRIVATE</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>FIELD</TYPE>
-                    <MODIFIER>PRIVATE</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>FIELD</TYPE>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>CONSTRUCTOR</TYPE>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>METHOD</TYPE>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>METHOD</TYPE>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>ENUM</TYPE>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>INTERFACE</TYPE>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <AND>
-                    <TYPE>CLASS</TYPE>
-                    <MODIFIER>STATIC</MODIFIER>
-                  </AND>
-                </match>
-              </rule>
-              <rule>
-                <match>
-                  <TYPE>CLASS</TYPE>
-                </match>
-              </rule>
-            </rules>
-          </arrangement>
         </codeStyleSettings>
       </value>
     </option>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </component>
   <component name="ProjectDictionaryState">
     <dictionary name="Stefan.Damian">
@@ -478,7 +262,7 @@
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/output" />
+    <output url="file://$PROJECT_DIR$/build/temp" />
   </component>
   <component name="SvnBranchConfigurationManager">
     <option name="myConfigurationMap">
@@ -498,5 +282,15 @@
     <mapping directory="" vcs="Git" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
+  <component name="libraryTable">
+    <library name="tools-1.7">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/tools/tools-1.7.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$PROJECT_DIR$/libs/tools/tools-1.7.jar!/" />
+      </SOURCES>
+    </library>
+  </component>
 </project>
-

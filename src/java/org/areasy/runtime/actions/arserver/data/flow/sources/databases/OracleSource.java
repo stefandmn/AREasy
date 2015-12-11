@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data.tools.sources.databases;
+package org.areasy.runtime.actions.arserver.data.flow.sources.databases;
 
 /*
  * Copyright (c) 2007-2015 AREasy Runtime
@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.data.tools.sources.databases;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.arserver.data.tools.sources.DatabaseSource;
+import org.areasy.runtime.actions.arserver.data.flow.sources.DatabaseSource;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.common.data.StringUtility;
 

@@ -63,6 +63,19 @@
 		</fileset>
 	</path>
 
+	<!-- Builds Classpath -->
+	<path id="classpath.doc">
+		<fileset dir="${libs.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${tools.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${dist.libs.dir}">
+			<include name="areasy*.jar"/>
+		</fileset>
+	</path>
+
 
 	<!-- Initializes the build. -->
     <target name="0.Init" description="Initialize environment for tasks executed on this module">

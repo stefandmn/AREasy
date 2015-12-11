@@ -14,6 +14,9 @@ package org.areasy.runtime.actions.arserver.data;
  */
 
 import com.bmc.arsys.api.Constants;
+import org.areasy.common.support.configuration.ConfigurationException;
+import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
+import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -29,6 +32,7 @@ import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.base.BaseConfiguration;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesEntry;
 
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -62,6 +66,9 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 	private int recordsCounter = 0;
 	/** Counter for errors */
 	private int errorsCounter = 0;
+
+	/** Private maps that could contains data maps used to data conversion and validation */
+	private Map<String, Dictionary> maps = null;
 
 	/** Time control to measure the time for action execution*/
 	private StopWatchUtility cron = new StopWatchUtility();
@@ -538,7 +545,7 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 
 		if(value instanceof String)
 		{
-			value = getLookupValue( (String)value);
+			value = getLookupValue((String)value, entry);
 
 			if(((ignoreNulls != null && ignoreNulls.contains(key)) || getConfiguration().getBoolean(ignorenull, false)) && StringUtility.isEmpty( (String)value))
 			{
@@ -572,7 +579,7 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 
 		if(value instanceof String)
 		{
-			value = getLookupValue( (String)value);
+			value = getLookupValue( (String)value, null);
 
 			if(((ignoreNulls != null && ignoreNulls.contains(key)) || getConfiguration().getBoolean(ignorenull, false)) && StringUtility.isEmpty( (String)value))
 			{
@@ -603,7 +610,7 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 	 * @return a lookup value from Remedy server according to teh specified expression
 	 * @throws AREasyException if any error will occur
 	 */
-	public String getLookupValue(String value) throws AREasyException
+	public String getLookupValue(String value, CoreItem entry) throws AREasyException
 	{
 		if(value != null)
 		{
@@ -619,7 +626,7 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 				if(startIndex2 > startIndex1)
 				{
 					expression = value.substring(startIndex1 + START_TOKEN.length());
-					output = getLookupValue(expression);
+					output = getLookupValue(expression, entry);
 
 					//validate output
 					if(output == null) output = "";
@@ -646,47 +653,73 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 					}
 
 					String schema = config.getString("schema", null);
-					String query = config.getString("query", null);
-					String store = config.getString("store", null);
-					String code = config.getString("key", StringUtility.variable(schema).toUpperCase());
-					int fieldId = config.getInt("return", 0);
+					String map = config.getString("map", null);
 
-					//get interrogation text into a real qualification
-					query = getTranslatedQualification(query);
-
-					CoreItem item = getCoreItem(schema);
-					item.read(getServerConnection(), query);
-
-					if(item.exists())
+					if(StringUtility.isNotEmpty(schema))
 					{
-						if(fieldId > 1) output = item.getStringAttributeValue(fieldId);
+						String query = config.getString("query", null);
+						String store = config.getString("store", null);
+						String code = config.getString("key", StringUtility.variable(schema).toUpperCase());
+						int fieldId = config.getInt("return", 0);
+
+						//get interrogation text into a real qualification
+						query = getTranslatedQualification(query);
+
+						CoreItem item = getCoreItem(schema);
+						item.read(getServerConnection(), query);
+
+						if (item.exists())
+						{
+							if (fieldId > 1) output = item.getStringAttributeValue(fieldId);
 							else output = item.getEntryId();
 
-						if(store != null)
-						{
-							String fields[] = StringUtility.split(store, ";");
-
-							for(int i = 0; fields != null && i < fields.length; i++)
+							if (store != null)
 							{
-								String storeKey = code + ":" + fields[i];
-								String storeValue = StringUtility.equals(fields[i], "1") ? item.getEntryId() : item.getStringAttributeValue(fields[i]);
+								String fields[] = StringUtility.split(store, ";");
 
-								getConfiguration().setKey(storeKey, storeValue);
+								for (int i = 0; fields != null && i < fields.length; i++)
+								{
+									String storeKey = code + ":" + fields[i];
+									String storeValue = StringUtility.equals(fields[i], "1") ? item.getEntryId() : item.getStringAttributeValue(fields[i]);
+
+									getConfiguration().setKey(storeKey, storeValue);
+								}
+							}
+						}
+						else
+						{
+							if (store != null)
+							{
+								String fields[] = StringUtility.split(store, ";");
+
+								for (int i = 0; fields != null && i < fields.length; i++)
+								{
+									String key = code + ":" + fields[i];
+									if (getConfiguration().containsKey(key)) getConfiguration().removeKey(key);
+								}
 							}
 						}
 					}
-					else
+					else if(StringUtility.isNotEmpty(map))
 					{
-						if(store != null)
-						{
-							String fields[] = StringUtility.split(store, ";");
+						String id = config.getString("key", null);
 
-							for(int i = 0; fields != null && i < fields.length; i++)
+						if(entry != null && id != null && id.startsWith(FDATA))
+						{
+							String key = id.substring(1);
+							if( NumberUtility.isNumber(key))
 							{
-								String key = code + ":" + fields[i];
-								if(getConfiguration().containsKey(key)) getConfiguration().removeKey(key);
+								key = entry.getStringAttributeValue(key);
+
+								if(maps.get(map) != null)
+								{
+									value = String.valueOf( ((Dictionary)maps.get(map)).get(key) );
+								}
+								else value = "";
 							}
+							else value = "";
 						}
+						else value = "";
 					}
 				}
 
@@ -973,6 +1006,100 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 		public String getCallerSignature()
 		{
 			return this.signature;
+		}
+	}
+
+	/**
+	 * Load data maps from external files
+	 *
+	 * @throws AREasyException
+	 */
+	protected void setDataMaps() throws AREasyException
+	{
+		//get data maps
+		if(getConfiguration().containsKey("datamaps"))
+		{
+			maps = new HashMap();
+			String[] datamaps = getConfiguration().getStringArray("datamaps", null);
+
+			for(int i = 0; datamaps != null && i < datamaps.length; i++)
+			{
+				String parts[] = StringUtility.split(datamaps[i], '@');
+
+				if(parts != null && parts.length == 2)
+				{
+					File objectfile = new File(parts[1]);
+
+					if(!objectfile.exists())
+					{
+						objectfile = new File(RuntimeManager.getWorkingDirectory(), parts[1]);
+
+						if(!objectfile.exists())
+						{
+							objectfile = new File(RuntimeManager.getCfgDirectory(), parts[1]);
+						}
+					}
+
+					if(objectfile.exists())
+					{
+						maps.put(parts[0], new Dictionary(objectfile));
+						RuntimeLogger.debug("Data dictionary '" + parts[0] + "' has been loaded");
+					}
+					else RuntimeLogger.warn("File doesn't exist for map '" + parts[0] + "': " + parts[1]);
+				}
+
+			}
+		}
+	}
+
+	public Map getDataMaps()
+	{
+		return this.maps;
+	}
+
+	/**
+	 * File dictionary in order to generate variales maps.
+	 */
+	public class Dictionary
+	{
+		private PropertiesConfiguration sector = null;
+
+		public Dictionary(File file) throws AREasyException
+		{
+			try
+			{
+				if(file != null && file.exists()) sector = new PropertiesConfiguration(file.getAbsolutePath());
+			}
+			catch(ConfigurationException ce)
+			{
+				throw new AREasyException(ce);
+			}
+		}
+
+		public String get(String key)
+		{
+			if(sector != null)
+			{
+				if(sector.containsKey(key)) return sector.getString(key, "");
+				else
+				{
+					sector.setKey(key, "");
+					return "";
+				}
+			}
+			else return null;
+		}
+
+		public void close() throws AREasyException
+		{
+			try
+			{
+				sector.save();
+			}
+			catch(ConfigurationException ce)
+			{
+				throw new AREasyException(ce);
+			}
 		}
 	}
 }

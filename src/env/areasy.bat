@@ -5,7 +5,7 @@ if "%OS%"=="Windows_NT" setlocal
 if "%OS%"=="WINNT" setlocal
 rem ---------------------------------------------------------------------------
 rem AREasy Runtime
-rem Copyright (c) 2007-2014 S&T System Integration & Technology Distribution. All Rights Reserved
+rem Copyright (c) 2007-2016 AREasy.org. All Rights Reserved.
 rem
 rem Dedicated Script to run AREasy Runtime
 rem
@@ -93,7 +93,7 @@ set COMMAND=%COMMAND% -Xdebug -Xnoagent -Xrunjdwp:transport=%JPDA_TRANSPORT%,ser
 
 :setExecCommand
 rem Set general execution command
-set COMMAND=%COMMAND% -jar "%_APP_HOM%\bin\boot-1.1.jar"%CMDVERBOSE% "-config" "%_APP_HOM%\cfg\default.properties"
+set COMMAND=%COMMAND% -jar "%_APP_HOM%\bin\boot.jar"%CMDVERBOSE% "-config" "%_APP_HOM%\cfg\default.properties"
 if "%MODE%" == "server" goto setExecServerCommand
 if "%MODE%" == "client" goto setExecClientCommand
 if "%MODE%" == "runtime" goto setExecRuntimeCommand

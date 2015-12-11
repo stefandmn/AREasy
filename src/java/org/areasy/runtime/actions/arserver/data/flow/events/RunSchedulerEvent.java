@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data.tools.events;
+package org.areasy.runtime.actions.arserver.data.flow.events;
 
 /*
  * Copyright (c) 2007-2015 AREasy Runtime
@@ -430,7 +430,7 @@ public class RunSchedulerEvent extends AbstractEvent
 				config.merge(specific);
 			}
 
-			if(StringUtility.equals(actionName, "aar.dataprocess")) config.setKey("event", "runworkflow");
+			if(StringUtility.equals(actionName, "data.processflow")) config.setKey("event", "runworkflow");
 
 			RuntimeClient client = new RuntimeClient(getAction().getManager());
 			client.run(config);

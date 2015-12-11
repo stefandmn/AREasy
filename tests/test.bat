@@ -5,7 +5,7 @@ if "%OS%"=="Windows_NT" setlocal
 if "%OS%"=="WINNT" setlocal
 rem ---------------------------------------------------------------------------
 rem AREasy Testing Environment
-rem Copyright (c) 2007-2013 S&T System Integration & Technology Distribution. All Rights Reserved
+rem Copyright (c) 2007-2016 AREasy.org. All Rights Reserved.
 rem
 rem Dedicated Script to run AREasy tests
 rem Usage:

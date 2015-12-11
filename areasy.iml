@@ -8,7 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/temp" />
       <excludeFolder url="file://$MODULE_DIR$/build/tests" />
     </content>
-    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -109,6 +109,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="tools-1.7" level="project" />
   </component>
 </module>
 

@@ -2,7 +2,7 @@
 
 # ---------------------------------------------------------------------------
 # AREasy Runtime
-# Copyright (c) 2007-2014 S&T System Integration & Technology Distribution. All Rights Reserved
+# Copyright (c) 2007-2016 AREasy.org. All Rights Reserved.
 #
 # Dedicated Script to run AREasy Runtime
 # Usage:

@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data;
+package org.areasy.runtime.actions.arserver.data.flow;
 
 /*
  * Copyright (c) 2007-2015 AREasy Runtime

@@ -82,6 +82,7 @@
 				<attribute name="Product-Version" value="${project.version}.${build.number}"/>
 				<attribute name="Product-Vendor" value="${project.vendor}"/>
 				<attribute name="Product-Years" value="${project.years}"/>
+				<attribute name="Main-Class" value="org.areasy.boot.Main"/>
 			</manifest>
 		</jar>
 
@@ -120,7 +121,7 @@
 
         <javadoc doclet="org.areasy.common.doclet.Doclet"
             classpathref="classpath.bin"
-            maxmemory="256M" docletpathref="classpath.docs"
+            maxmemory="256M" docletpathref="classpath.doc"
             packagenames="org.areasy.*"
             sourcepath="${src.java.dir}"
             additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"

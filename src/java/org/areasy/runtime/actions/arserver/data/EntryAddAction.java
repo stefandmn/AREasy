@@ -13,6 +13,10 @@ package org.areasy.runtime.actions.arserver.data;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.support.configuration.ConfigurationException;
+import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
+import org.areasy.runtime.RuntimeManager;
+import org.areasy.runtime.actions.arserver.data.flow.events.RunDataWorkflowEvent;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
@@ -21,7 +25,10 @@ import org.areasy.runtime.engine.structures.MultiPartItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
 import org.areasy.common.data.StringUtility;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Add one entry in form.
@@ -84,6 +91,9 @@ public class EntryAddAction extends BaseDataAction
 		boolean errorFlag = false;
 
 		getCron().start();
+
+		//check if there are registered data-maps and load them
+		setDataMaps();
 
 		boolean force = getConfiguration().getBoolean("force", false);
 		String file = getConfiguration().getString("parserfile", getConfiguration().getString("inputfile", getConfiguration().getString("file", null)));

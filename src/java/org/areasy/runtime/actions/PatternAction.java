@@ -14,7 +14,7 @@ package org.areasy.runtime.actions;
  */
 
 import com.bmc.arsys.api.*;
-import org.areasy.runtime.actions.arserver.data.tools.sources.AbstractSource;
+import org.areasy.runtime.actions.arserver.data.flow.sources.AbstractSource;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.arserver.data.BaseDataAction;
 import org.areasy.runtime.engine.RuntimeLogger;
@@ -170,8 +170,8 @@ public abstract class PatternAction extends BaseDataAction implements RuntimeAct
 			jobEntry.update(getServerConnection());
 
 			//call cascaded workflow if exists
-			if(jobEntry.getStringAttributeValue(536871167) != null && (!StringUtility.equals(getCode(), "aar.dataprocess") ||
-			(StringUtility.equals(getCode(), "aar.dataprocess") && StringUtility.equals(getConfiguration().getString("event", null), "runworkflow"))))
+			if(jobEntry.getStringAttributeValue(536871167) != null && (!StringUtility.equals(getCode(), "data.processflow") ||
+			(StringUtility.equals(getCode(), "data.processflow") && StringUtility.equals(getConfiguration().getString("event", null), "runworkflow"))))
 			{
 				cascadeWorkflow = jobEntry.getStringAttributeValue(536871167);
 				RuntimeLogger.info("Call related workflow: " + cascadeWorkflow);
@@ -194,7 +194,7 @@ public abstract class PatternAction extends BaseDataAction implements RuntimeAct
 				String commandLine = relatedJob.getStringAttributeValue(2431);
 
 				String relatedCommand = "-action " + actionName;
-				if(StringUtility.equalsIgnoreCase(actionName, "aar.dataprocess")) relatedCommand += " -event runworkflow";
+				if(StringUtility.equalsIgnoreCase(actionName, "data.processflow")) relatedCommand += " -event runworkflow";
 				relatedCommand += " -user " + getServerConnection().getUserName();
 				relatedCommand += " -instanceid " + cascadeWorkflow;
 				relatedCommand += " " + commandLine;

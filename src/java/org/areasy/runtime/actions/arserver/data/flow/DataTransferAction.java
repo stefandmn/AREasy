@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data;
+package org.areasy.runtime.actions.arserver.data.flow;
 
 /*
  * Copyright (c) 2007-2015 AREasy Runtime
@@ -17,8 +17,8 @@ import com.bmc.arsys.api.Constants;
 import com.bmc.arsys.api.Field;
 import com.bmc.arsys.api.SortInfo;
 import org.areasy.runtime.actions.PatternAction;
-import org.areasy.runtime.actions.arserver.data.tools.sources.AbstractSource;
-import org.areasy.runtime.actions.arserver.data.tools.sources.RemedySource;
+import org.areasy.runtime.actions.arserver.data.flow.sources.AbstractSource;
+import org.areasy.runtime.actions.arserver.data.flow.sources.RemedySource;
 import org.areasy.runtime.engine.structures.hybrid.AbstractHybrid;
 import org.areasy.runtime.engine.structures.hybrid.HybridCoreItem;
 import org.areasy.runtime.engine.RuntimeLogger;

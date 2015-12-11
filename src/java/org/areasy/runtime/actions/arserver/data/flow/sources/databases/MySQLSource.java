@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data.tools.sources.databases;
+package org.areasy.runtime.actions.arserver.data.flow.sources.databases;
 
 /*
  * Copyright (c) 2007-2015 AREasy Runtime
@@ -13,15 +13,15 @@ package org.areasy.runtime.actions.arserver.data.tools.sources.databases;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.arserver.data.tools.sources.DatabaseSource;
+import org.areasy.runtime.actions.arserver.data.flow.sources.DatabaseSource;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.common.data.StringUtility;
 
 /**
- * Dedicated data source to process data from a PostgreSQL Server database.
- * The data-source uses <code>PostgreSQL</code> native driver and libraries.
+ * Dedicated data source to process data from a MySQL Server database.
+ * The data-source uses <code>MySQL</code> native driver and libraries.
  */
-public class PostgreSQLSource extends DatabaseSource
+public class MySQLSource extends DatabaseSource
 {
 	/**
 	 * Dedicated method that has to be used internally, to set and validate the data-source configuration (<code>CoreItem</code> structure)
@@ -30,15 +30,15 @@ public class PostgreSQLSource extends DatabaseSource
 	 */
 	public void init() throws AREasyException
 	{
-		String serverName = getSourceItem().getStringAttributeValue(536870955);
-		String serverPort = getSourceItem().getStringAttributeValue(536870956);
-		String userName = getSourceItem().getStringAttributeValue(536870958);
-		String userPassword = getSourceItem().getStringAttributeValue(536870959);
-		String serverDatabase = getSourceItem().getStringAttributeValue(536870960);
+		String serverName = getSourceItem().getStringAttributeValue(536871014);
+		String serverPort = getSourceItem().getStringAttributeValue(536871015);
+		String userName = getSourceItem().getStringAttributeValue(536871016);
+		String userPassword = getSourceItem().getStringAttributeValue(536871017);
+		String serverDatabase = getSourceItem().getStringAttributeValue(536871018);
 
-		String url = "jdbc:postgresql://" + serverName + (StringUtility.isNotEmpty(serverPort) ? ":" + serverPort : "") + "/" + serverDatabase;
+		String url = "jdbc:mysql://" + serverName + (StringUtility.isNotEmpty(serverPort) ? ":" + serverPort : "") + "/" + serverDatabase;
 
-		setConnection(url, "org.postgresql.Driver", userName, userPassword);
-		setQualification( getSourceItem().getStringAttributeValue(536870961) );
+		setConnection(url, "com.mysql.jdbc.Driver", userName, userPassword);
+		setQualification( getSourceItem().getStringAttributeValue(536871019) );
 	}
 }

@@ -3,7 +3,7 @@ if "%OS%" == "Windows_NT" setlocal
 
 rem ---------------------------------------------------------------------------
 rem AREasy Runtime
-rem Copyright (c) 2007-2014 S&T System Integration & Technology Distribution. All Rights Reserved
+rem Copyright (c) 2007-2016 AREasy.org. All Rights Reserved.
 rem
 rem NT Service Install/Uninstall script
 rem

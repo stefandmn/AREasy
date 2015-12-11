@@ -45,7 +45,7 @@ Var NeedleLength ;StrContains - length of string we're looking for
 Var HaystackBuffer ;StrContains - substring we get on each iteration
 ;--------------------------------
 ;Get install folder from registry if available
-InstallDirRegKey HKLM "Software\SNT\%fullname%" ""
+InstallDirRegKey HKLM "Software\%fullname%" ""
 
 
 ;--------------------------------
@@ -140,9 +140,9 @@ SectionIn 1
 	File /r "%distdir%\libs"
 
 	;Store installation registry
-	WriteRegStr HKLM "Software\SNT\%fullname%" "name" "%fullname%"
-	WriteRegStr HKLM "Software\SNT\%fullname%" "home" $INSTDIR
-	WriteRegStr HKLM "Software\SNT\%fullname%" "version" "%version%"
+	WriteRegStr HKLM "Software\%fullname%" "name" "%fullname%"
+	WriteRegStr HKLM "Software\%fullname%" "home" $INSTDIR
+	WriteRegStr HKLM "Software\%fullname%" "version" "%version%"
 
 	;Create uninstaller
 	WriteUninstaller "$INSTDIR\bin\uninstall.exe"
@@ -177,12 +177,12 @@ SectionIn 1
 
 	;Set AREasy configuration
 	DetailPrint "Set runtime configuration"
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.server.name" -value "$optARSystemServerValue"'
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.port.number" -value "$optARSystemPortValue"'
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.user.name" -value "$optARSystemUserNameValue"'
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.user.password" -value "$optARSystemPasswordValue"'
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.host" -value "$optAREasyServerValue"'
-	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot-1.1.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.port" -value "$optAREasyPortValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.server.name" -value "$optARSystemServerValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.port.number" -value "$optARSystemPortValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.user.name" -value "$optARSystemUserNameValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.default.arsystem.user.password" -value "$optARSystemPasswordValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.host" -value "$optAREasyServerValue"'
+	ExecWait '$JavaHome\bin\javaw.exe -jar "$INSTDIR\bin\boot.jar" -config "$INSTDIR\cfg\default.properties" -runtime -action config -property "app.server.port" -value "$optAREasyPortValue"'
 
 	;Set OS Service
 	StrCmp $optServiceValue "1" 0 +4
@@ -214,8 +214,8 @@ Section Uninstall
 
 	;Delete registry records.
 	DetailPrint "Delete registry records."
-	DeleteRegKey HKLM "Software\SNT\%fullname%"
-	DeleteRegKey /ifempty HKLM "Software\SNT"
+	DeleteRegKey HKLM "Software\%fullname%"
+	;DeleteRegKey /ifempty HKLM "Software\%fullname%"
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%"
 	DeleteRegValue HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "AREASY_HOME"
 
@@ -228,11 +228,11 @@ SectionEnd
 ; Custom Functions
 
 Function .onInit
-	ReadRegStr $INSTDIR HKLM "Software\SNT\%fullname%" "home"
+	ReadRegStr $INSTDIR HKLM "Software\%fullname%" "home"
 
 	StrCmp $INSTDIR "" 0 NoError
 		;Default installation folder
-		StrCpy $INSTDIR "$PROGRAMFILES\SNT\%fullname%"
+		StrCpy $INSTDIR "$PROGRAMFILES\%fullname%"
 	NoError:
 FunctionEnd
 

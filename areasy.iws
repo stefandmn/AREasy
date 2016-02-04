@@ -19,14 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.ipr" afterPath="$PROJECT_DIR$/areasy.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.iws" afterPath="$PROJECT_DIR$/areasy.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.properties" afterPath="$PROJECT_DIR$/build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/DefinitionAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/DefinitionAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/SetFormsAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/SetFormsAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/ActiveLinkGuideWrapper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/ActiveLinkGuideWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/ApplicationWrapper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/ApplicationWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/FilterGuideWrapper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/defs/wrappers/FilterGuideWrapper.java" />
     </list>
     <ignored path="areasy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1569,7 +1562,13 @@
       <option name="project" value="LOCAL" />
       <updated>1454579005001</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fix forms association action (dev.setforms)">
+      <created>1454579030814</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1454579030814</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1646,7 +1645,8 @@
     <MESSAGE value="Update README file" />
     <MESSAGE value="Update configuration management structure and add a new action in dev area for forms association to workflow objects" />
     <MESSAGE value="Fix forms association action" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix forms association action" />
+    <MESSAGE value="Fix forms association action (dev.setforms)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix forms association action (dev.setforms)" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">

@@ -16,9 +16,8 @@
 <project name="AREasy" default="2.Bin" basedir=".">
 
 	<!-- Import Ant object files -->
-	<import file="build-1.base.xml"/>
-	<import file="build-2.devel.xml"/>
-	<import file="build-3.deploy.xml"/>
-    <import file="build-4.testing.xml"/>
+	<import file="build-0.base.xml"/>
+	<import file="build-1.devel.xml"/>
+	<import file="build-2.deploy.xml"/>
 
 </project>

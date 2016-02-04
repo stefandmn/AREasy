@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.arserver.defs.wrappers;
 
 /*
- * Copyright (c) 2007-2015 AREasy Runtime
+ * Copyright (c) 2007-2016 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -73,12 +73,6 @@ public class ApplicationWrapper extends ContainerWrapper implements ObjectWrappe
 	{
 		return type;
 	}
-
-	public void setApplicationType()
-	{
-		type = StructItemInfo.APPLICATION;
-	}
-
 
 	/**
 	 * Get the wrapper name (signature code)

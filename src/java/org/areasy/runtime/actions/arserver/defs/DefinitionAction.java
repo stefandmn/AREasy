@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.arserver.defs;
 
 /*
- * Copyright (c) 2007-2015 AREasy Runtime
+ * Copyright (c) 2007-2016 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -52,6 +52,11 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	public static String types[] = {TYPE_FORMS, TYPE_MENUS, TYPE_ACTIVELINKS, TYPE_FILTERS, TYPE_ESCALATIONS,
 									TYPE_ACTIVELINKGUIDES, TYPE_APPLICATIONS, TYPE_FILTERGUIDES, TYPE_VIEWS,
 									TYPE_IMAGES, TYPE_CONTAINERS, TYPE_FIELDS, TYPE_WEBSERVICES};
+
+	public static final int ACTIVELINKGUIDE			= 121;
+	public static final int FILTERGUIDE				= 124;
+	public static final int APPLICATIONCONTAINER	= 122;
+	public static final int WEBSERVICE 				= 125;
 
 	/**
 	 * Select and process abstract objects from an AR System server.
@@ -780,11 +785,20 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 			case StructItemInfo.VUI:
 				name = TYPE_VIEWS;
 				break;
-			case StructItemInfo.APPLICATION:
-				name = TYPE_APPLICATIONS;
-				break;
 			case StructItemInfo.FIELD:
 				name = TYPE_FIELDS;
+				break;
+			case DefinitionAction.ACTIVELINKGUIDE:
+				name = TYPE_ACTIVELINKGUIDES;
+				break;
+			case DefinitionAction.FILTERGUIDE:
+				name = TYPE_FILTERGUIDES;
+				break;
+			case DefinitionAction.APPLICATIONCONTAINER:
+				name = TYPE_APPLICATIONS;
+				break;
+			case DefinitionAction.WEBSERVICE:
+				name = TYPE_WEBSERVICES;
 				break;
 			default:
 				name = null;
@@ -799,34 +813,34 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		if(types == null) return 0;
 		else if(types.equals(TYPE_FORMS)) return StructItemInfo.SCHEMA;
 		else if(types.equals(TYPE_ACTIVELINKS)) return StructItemInfo.ACTIVE_LINK;
-		else if(types.equals(TYPE_ACTIVELINKGUIDES)) return StructItemInfo.CONTAINER;
+		else if(types.equals(TYPE_ACTIVELINKGUIDES)) return DefinitionAction.ACTIVELINKGUIDE;
 		else if(types.equals(TYPE_FILTERS)) return StructItemInfo.FILTER;
-		else if(types.equals(TYPE_FILTERGUIDES)) return StructItemInfo.CONTAINER;
+		else if(types.equals(TYPE_FILTERGUIDES)) return DefinitionAction.FILTERGUIDE;
 		else if(types.equals(TYPE_ESCALATIONS)) return StructItemInfo.ESCALATION;
 		else if(types.equals(TYPE_VIEWS)) return StructItemInfo.VUI;
 		else if(types.equals(TYPE_CONTAINERS)) return StructItemInfo.CONTAINER;
 		else if(types.equals(TYPE_IMAGES)) return StructItemInfo.IMAGE;
 		else if(types.equals(TYPE_MENUS)) return StructItemInfo.CHAR_MENU;
-		else if(types.equals(TYPE_APPLICATIONS)) return StructItemInfo.CONTAINER;
+		else if(types.equals(TYPE_APPLICATIONS)) return DefinitionAction.APPLICATIONCONTAINER;
 		else if(types.equals(TYPE_FIELDS)) return StructItemInfo.FIELD;
-		else if(types.equals(TYPE_WEBSERVICES)) return StructItemInfo.CONTAINER;
+		else if(types.equals(TYPE_WEBSERVICES)) return DefinitionAction.WEBSERVICE;
        	else return 0;
 	}
 
 	public int getObjectTypeId(ObjectBase object)
 	{
 		if(object == null) return 0;
-		else if(object instanceof ApplicationContainer) return StructItemInfo.CONTAINER;
+		else if(object instanceof ApplicationContainer) return DefinitionAction.APPLICATIONCONTAINER;
 		else if(object instanceof Form) return StructItemInfo.SCHEMA;
 		else if(object instanceof ActiveLink) return StructItemInfo.ACTIVE_LINK;
-		else if(object instanceof ActiveLinkGuide) return StructItemInfo.CONTAINER;
+		else if(object instanceof ActiveLinkGuide) return DefinitionAction.ACTIVELINKGUIDE;
 		else if(object instanceof Menu) return StructItemInfo.CHAR_MENU;
 		else if(object instanceof Escalation) return StructItemInfo.ESCALATION;
 		else if(object instanceof Filter) return StructItemInfo.FILTER;
-		else if(object instanceof FilterGuide) return StructItemInfo.CONTAINER;
+		else if(object instanceof FilterGuide) return DefinitionAction.FILTERGUIDE;
 		else if(object instanceof Image) return StructItemInfo.IMAGE;
 		else if(object instanceof View) return StructItemInfo.VUI;
-		else if(object instanceof WebService) return StructItemInfo.CONTAINER;
+		else if(object instanceof WebService) return DefinitionAction.WEBSERVICE;
 		else if(object instanceof Container) return StructItemInfo.CONTAINER;
 		else if(object instanceof Field) return StructItemInfo.FIELD;
 		else return 0;
@@ -880,6 +894,10 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		else if(info.getType() == StructItemInfo.CHAR_MENU) return new MenuWrapper(this);
 		else if(info.getType() == StructItemInfo.IMAGE) return new ImageWrapper(this);
 		else if(info.getType() == StructItemInfo.FIELD) return new FieldWrapper(this);
+		else if(info.getType() == DefinitionAction.APPLICATIONCONTAINER) return new ApplicationWrapper(this);
+		else if(info.getType() == DefinitionAction.ACTIVELINKGUIDE) return new ActiveLinkGuideWrapper(this);
+		else if(info.getType() == DefinitionAction.FILTERGUIDE) return new FilterGuideWrapper(this);
+		else if(info.getType() == DefinitionAction.WEBSERVICE) return new WebserviceWrapper(this);
 		else return null;
 	}
 

@@ -49,11 +49,12 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 	 */
 	public void execute(ObjectBase object) throws ARException
 	{
+		boolean changed = false;
+
 		if(object instanceof ActiveLink)
 		{
 			ActiveLink data = (ActiveLink)object;
 			List forms = data.getFormList();
-			boolean changed = false;
 
 			if(StringUtility.isNotEmpty(addForm) && !forms.contains(addForm))
 			{
@@ -77,7 +78,6 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 		{
 			Filter data = (Filter)object;
 			List forms = data.getFormList();
-			boolean changed = false;
 
 			if(StringUtility.isNotEmpty(addForm) && !forms.contains(addForm))
 			{
@@ -101,7 +101,6 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 		{
 			Escalation data = (Escalation)object;
 			List forms = data.getFormList();
-			boolean changed = false;
 
 			if(StringUtility.isNotEmpty(addForm) && !forms.contains(addForm))
 			{
@@ -125,7 +124,6 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 		{
 			Container data = (Container)object;
 			List forms = data.getContainerOwner();
-			boolean changed = false;
 
 			if (StringUtility.isNotEmpty(addForm))
 			{
@@ -140,7 +138,7 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 
 			if (StringUtility.isNotEmpty(delForm) && forms.contains(delForm))
 			{
-				ContainerOwner co = new ContainerOwner(ContainerOwner.SCHEMA, addForm);
+				ContainerOwner co = new ContainerOwner(ContainerOwner.SCHEMA, delForm);
 
 				if(forms.contains(co))
 				{
@@ -156,5 +154,8 @@ public class SetFormsAction extends DefinitionAction implements RuntimeAction
 			}
 		}
 		else RuntimeLogger.warn("Object signature is not recognized for associating forms action: " + getTextFromObjectBase(object));
+
+		if (changed) RuntimeLogger.info(getTextFromObjectBase(object) + (StringUtility.isNotEmpty(addForm) ? " has been associated to '" + addForm + "' form" : " has been de-associated by '" + delForm + "' form"));
+			else if(object instanceof ActiveLink || object instanceof Filter || object instanceof Escalation || object instanceof Container) RuntimeLogger.debug(getTextFromObjectBase(object) + (StringUtility.isNotEmpty(addForm) ? " is already associated to '" + addForm + "' form" : " is already de-associated by '" + delForm + "' form"));
 	}
 }

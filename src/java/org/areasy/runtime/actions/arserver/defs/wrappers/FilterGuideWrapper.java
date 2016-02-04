@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.arserver.defs.wrappers;
 
 /*
- * Copyright (c) 2007-2015 AREasy Runtime
+ * Copyright (c) 2007-2016 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,6 @@ import org.areasy.runtime.actions.arserver.defs.DefinitionAction;
 
 /**
  * Filter Guide definition object implementation.
- *
  */
 public class FilterGuideWrapper extends ContainerWrapper implements ObjectWrapper
 {
@@ -59,6 +58,16 @@ public class FilterGuideWrapper extends ContainerWrapper implements ObjectWrappe
 		object.setName(name);
 
 		return object;
+	}
+
+	/**
+	 * Get the object type id
+	 *
+	 * @return object type id
+	 */
+	public int getObjectTypeId()
+	{
+		return DefinitionAction.FILTERGUIDE;
 	}
 
 	/**

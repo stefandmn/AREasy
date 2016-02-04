@@ -1,5 +1,6 @@
 3.0
 ======
+03. Develop new action DEV area to set/associate forms for workflow objects
 02. Aggregate parser, common, boot, runtime, aar and sso libraries into one single file
 01. Public distribution over GitHub and under GNU license distribution
 

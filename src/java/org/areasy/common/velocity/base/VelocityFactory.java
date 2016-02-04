@@ -55,7 +55,7 @@ public class VelocityFactory
 	/**
 	 * controls if new VMs can be added.  Set by
 	 * VM_PERM_ALLOW_INLINE  Note the assumption that only
-	 * through inline defs can this happen.
+	 * through inline dev can this happen.
 	 * additions through autoloaded VMs is allowed
 	 */
 	private boolean addNewAllowed = true;

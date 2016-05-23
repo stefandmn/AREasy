@@ -152,7 +152,7 @@ SectionIn 1
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "UninstallString" "$INSTDIR\bin\uninstall.exe"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "DisplayVersion" "%version%"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "Publisher" "%vendor%"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "URLInfoAbout" "http://areasy.snt.ro"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "URLInfoAbout" "http://stefandmn.github.io/AREasy"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\%fullname%" "DisplayIcon" "$INSTDIR\bin\areasy.exe"
 
     ;Get estimated size

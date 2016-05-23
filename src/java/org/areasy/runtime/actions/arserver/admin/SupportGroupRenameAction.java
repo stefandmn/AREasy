@@ -37,6 +37,9 @@ import java.util.List;
  */
 public class SupportGroupRenameAction extends AbstractAction
 {
+	private SupportGroup oldSG = null;
+	private SupportGroup newSG = null;
+
 	public void run() throws AREasyException
 	{
 		boolean allgroupdetails = getConfiguration().getBoolean("allgroupdetails", false);
@@ -70,12 +73,12 @@ public class SupportGroupRenameAction extends AbstractAction
 		String newOrganisation = getConfiguration().getString("newsgrouporganisation", getConfiguration().getString("newsupportgrouporganisation", null));
 		String newGroup = getConfiguration().getString("newsgroup", getConfiguration().getString("newsgroupname", getConfiguration().getString("newsupportgroup", getConfiguration().getString("newsupportgroupname", null))));
 
-		SupportGroup oldSG = new SupportGroup();
+		oldSG = new SupportGroup();
 		oldSG.setCompanyName(oldCompany);
 		oldSG.setOrganisationName(oldOrganisation);
 		oldSG.setSupportGroupName(oldGroup);
 
-		SupportGroup newSG = new SupportGroup();
+		newSG = new SupportGroup();
 		newSG.setCompanyName(newCompany);
 		newSG.setOrganisationName(newOrganisation);
 		newSG.setSupportGroupName(newGroup);
@@ -93,6 +96,7 @@ public class SupportGroupRenameAction extends AbstractAction
 		//run new support group creation procedure and to make the old one obsolete
 		updateSupportGroup(oldSG, newSG);
 
+		//update/create all related details
 		if (memberships || allgroupdetails) transferMemberships(oldSG, newSG);
 		if(aliases || allgroupdetails) transferGroupAliases(oldSG, newSG);
 		if(approvalmappings || allgroupdetails) transferApprovalMappings(oldSG, newSG);
@@ -100,27 +104,50 @@ public class SupportGroupRenameAction extends AbstractAction
 		if(oncalls || allgroupdetails) transferOnCallRecords(oldSG, newSG);
 		if(shifts || allgroupdetails) transferShifts(oldSG, newSG);
 
+		//make old group obsolete
+		oldSG.setStatus("Obsolete");
+		oldSG.update(getServerConnection());
+		RuntimeLogger.info("Support group '" + oldSG.getCompanyName() + "/" + oldSG.getOrganisationName() + "/" + oldSG.getSupportGroupName() + "' has been set as Obsolete");
+
+		// update incidents and related templates
 		if(incidentTemplates || allrelatedtickets) updateIncidentTemplates(oldSG, newSG);
 		if(incidents || allrelatedtickets) updateIncidents(oldSG, newSG);
 
+		//update problems and related templates
 		if(problemTemplates || allrelatedtickets) updateProblemTemplates(oldSG, newSG);
 		if(problems || allrelatedtickets) updateProblems(oldSG, newSG);
 
+		//update know errors
 		if(knownerrors || allrelatedtickets) updateKnownErrors(oldSG, newSG);
 
+		//update changes and related templates
 		if(changeTemplates || allrelatedtickets) updateChangeTemplates(oldSG, newSG);
 		if(changes || allrelatedtickets) updateChanges(oldSG, newSG);
 
+		//update tasks and related templates
 		if(taskTemplates || allrelatedtickets) updateTaskTemplates(oldSG, newSG);
 		if(tasks || allrelatedtickets) updateTasks(oldSG, newSG);
 
+		//update workorders and related templates
 		if(workorderTemplates || allrelatedtickets) updateWorkOrderTemplates(oldSG, newSG);
 		if(workorders || allrelatedtickets) updateWorkOrders(oldSG, newSG);
 
+		// update CIs and related assets
 		if(assetrelationships || allrelatedtickets) updateAssetRelationships(oldSG, newSG);
 		if(cmdbrelationships || allrelatedtickets) updateCMDBRelationships(oldSG, newSG);
 
+		//update KRs
 		if(knowledgerecords || allrelatedtickets) updateKnowledgeRecords(oldSG, newSG);
+	}
+
+	protected SupportGroup getOldSupportEntity()
+	{
+		return this.oldSG;
+	}
+
+	protected SupportGroup getNewSupportEntity()
+	{
+		return this.newSG;
 	}
 
 	protected void updateSupportGroup(SupportGroup oldSG, SupportGroup newSG) throws AREasyException
@@ -160,10 +187,6 @@ public class SupportGroupRenameAction extends AbstractAction
 			newSG.update(getServerConnection());
 			RuntimeLogger.info("Support group '" + newSG.getCompanyName() + "/" + newSG.getOrganisationName() + "/" + newSG.getSupportGroupName() + "' has been updated and enabled");
 		}
-
-		oldSG.setStatus("Obsolete");
-		oldSG.update(getServerConnection());
-		RuntimeLogger.info("Support group '" + oldSG.getCompanyName() + "/" + oldSG.getOrganisationName() + "/" + oldSG.getSupportGroupName() + "' has been set as Obsolete");
 	}
 
 	protected void transferMemberships(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException

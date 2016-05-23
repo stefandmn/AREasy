@@ -44,14 +44,8 @@
 	<property name="dist.doc.dir" value="${dist.dir}/doc"/>
     <property name="dist.libs.dir" value="${dist.dir}/libs"/>
 
-    <!-- Definition testing environment -->
-    <property name="tests.dir" value="${basedir}/tests"/>
-    <property name="tests.src" value="${tests.dir}/src"/>
-    <property name="tests.out" value="${build.dir}/tests"/>
-    <property name="tests.data" value="${tests.dir}/data"/>
-
 	<!-- Define tools variables -->
-	<property name="nsis.path" value="${deploy.nsis.path}"/>
+	<property name="nsis.path" value="${location.tool.nsis}"/>
 
 	<!-- Builds Classpath -->
     <path id="classpath.bin">

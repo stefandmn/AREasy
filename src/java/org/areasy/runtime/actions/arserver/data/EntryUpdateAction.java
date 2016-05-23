@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.arserver.data;
 
 /*
- * Copyright (c) 2007-2015 AREasy Runtime
+ * Copyright (c) 2007-2016 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -134,26 +134,26 @@ public class EntryUpdateAction extends EntryRemoveAction
 		}
 		else
 		{
-			for(int i = 0; i < entries.size(); i++)
+			for (Object entry1 : entries)
 			{
-				CoreItem entry = (CoreItem) entries.get(i);
+				CoreItem entry = (CoreItem) entry1;
 
-				if(form != null) entry.setFormName(form);
+				if (form != null) entry.setFormName(form);
 					else throw new AREasyException("Form name is null");
 
 				try
 				{
 					run(entry);
 				}
-				catch(Throwable th)
+				catch (Throwable th)
 				{
-					if(getConfiguration().getBoolean("force", false))
+					if (getConfiguration().getBoolean("force", false))
 					{
 						RuntimeLogger.error("Error updating data: " + th.getMessage());
 					}
 					else
 					{
-						if(th instanceof AREasyException) throw (AREasyException) th;
+						if (th instanceof AREasyException) throw (AREasyException) th;
 							else throw new AREasyException(th);
 					}
 				}

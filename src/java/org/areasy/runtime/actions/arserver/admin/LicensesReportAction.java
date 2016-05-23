@@ -365,7 +365,7 @@ public class LicensesReportAction extends AbstractAction implements RuntimeActio
 
 							CoreItem pool = new CoreItem();
 							pool.setFormName("User");
-							pool.setAttribute(7, new Integer(0));
+							//pool.setAttribute(7, new Integer(0));
 
 							if(key.startsWith("AR User"))
 							{

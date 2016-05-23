@@ -1393,7 +1393,13 @@
       <option name="project" value="LOCAL" />
       <updated>1463996844036</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="LicenseReport update">
+      <created>1463996995273</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1463996995273</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">

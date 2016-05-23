@@ -19,8 +19,715 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.ipr" afterPath="$PROJECT_DIR$/areasy.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/areasy.iws" afterPath="$PROJECT_DIR$/areasy.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build-2.deploy.xml" afterPath="$PROJECT_DIR$/build-2.deploy.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/profile.s.damian.properties" afterPath="$PROJECT_DIR$/build/profile.s.damian.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/profile.stefan.damian.properties" afterPath="$PROJECT_DIR$/build/profile.stefan.damian.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/profile.stefan.properties" afterPath="$PROJECT_DIR$/build/profile.stefan.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core.properties" afterPath="$PROJECT_DIR$/core.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cfg/default.properties" afterPath="$PROJECT_DIR$/src/cfg/default.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/cfg/plugin.areasy.properties" afterPath="$PROJECT_DIR$/src/cfg/plugin.areasy.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/boot/Classpath.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/boot/Classpath.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/boot/Listener.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/boot/Listener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/boot/Main.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/boot/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/BufferUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/BufferUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/CharSetUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/CharSetUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/CharUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/CharUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/ClosureUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/ClosureUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/CollectionUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/CollectionUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/DateUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/DateUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/DurationFormatUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/DurationFormatUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/EnumerationUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/EnumerationUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/IteratorUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/IteratorUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/MapUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/MapUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/NumberUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/NumberUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/PredicateUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/PredicateUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/StopWatchUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/StopWatchUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/StringEscapeUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/StringEscapeUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/SystemUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/SystemUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/TransformerUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/TransformerUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/TypeUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/TypeUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/UnhandledException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/UnhandledException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/WordUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/WordUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BasicDynamicBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BasicDynamicBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BasicDynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BasicDynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanAccessLanguageException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanAccessLanguageException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanUtilityBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/BeanUtilityBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/Converter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/Converter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertingWrapDynamicBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ConvertingWrapDynamicBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicProperty.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/DynamicProperty.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/JdbcDynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/JdbcDynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/MethodUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/MethodUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/NestedNullException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/NestedNullException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/PropertyUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/PropertyUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ResultSetDynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/ResultSetDynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/RowSetDynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/RowSetDynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/SlowDynamicBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/SlowDynamicBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/WrapDynamicBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/WrapDynamicBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/WrapDynamicClass.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/WrapDynamicClass.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BigDecimalConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BigDecimalConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BigIntegerConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BigIntegerConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BooleanConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/BooleanConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ByteArrayConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ByteArrayConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/CharacterConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/CharacterConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ClassConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ClassConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/DoubleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/DoubleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/FileConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/FileConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/FloatConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/FloatConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/IntegerConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/IntegerConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/LongArrayConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/LongArrayConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ShortArrayConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ShortArrayConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ShortConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/ShortConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/SqlDateConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/SqlDateConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/SqlTimeConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/SqlTimeConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/StringArrayConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/StringArrayConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/StringConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/converters/StringConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleBeanUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleBeanUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConvertUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConvertUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConvertUtilityBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConvertUtilityBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/LocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/BigDecimalLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/BigDecimalLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/ByteLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/ByteLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/DateLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/DateLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/DecimalLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/DecimalLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/SqlTimeLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/SqlTimeLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/SqlTimestampLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/SqlTimestampLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/StringLocaleConverter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/bean/locale/converters/StringLocaleConverter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BidimensionalMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BidimensionalMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BoundedCollection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BoundedCollection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BoundedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/BoundedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Container.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Container.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/FastArrayList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/FastArrayList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/FastTreeMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/FastTreeMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/IterableMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/IterableMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MapHashtable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MapHashtable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MultiHashMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MultiHashMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MultiMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MultiMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/OrderedBidimensionalMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/OrderedBidimensionalMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Predicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Predicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/ResettableIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/ResettableIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/ResettableListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/ResettableListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/SortedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/SortedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Unmodifiable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/Unmodifiable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/AbstractBufferDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/AbstractBufferDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/BlockingBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/BlockingBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/BufferOverflowException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/BufferOverflowException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/CircularFifoBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/CircularFifoBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/PredicatedBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/PredicatedBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/TransformedBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/TransformedBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/TypedBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/TypedBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/UnboundedFifoBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/UnboundedFifoBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/UnmodifiableBuffer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/buffer/UnmodifiableBuffer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/AbstractCollectionDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/AbstractCollectionDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/PredicatedCollection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/PredicatedCollection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/TypedCollection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/TypedCollection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/UnmodifiableBoundedCollection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/UnmodifiableBoundedCollection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/UnmodifiableCollection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/collection/UnmodifiableCollection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/AbstractContainerDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/AbstractContainerDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/AbstractMapContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/AbstractMapContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/HashContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/HashContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/PredicatedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/PredicatedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/PredicatedSortedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/PredicatedSortedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/SynchronizedSortedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/SynchronizedSortedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/TransformedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/TransformedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/TransformedSortedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/TransformedSortedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/UnmodifiableSortedContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/container/UnmodifiableSortedContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/Credential.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/Credential.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/DESCredential.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/DESCredential.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/ObfuscateCredential.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/ObfuscateCredential.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/SimpleCredential.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/credential/SimpleCredential.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/AbstractOrderedMapIteratorDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/AbstractOrderedMapIteratorDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ArrayListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ArrayListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/CollatingIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/CollatingIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyOrderedMapIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EmptyOrderedMapIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EnumerationIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/EnumerationIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/FilterListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/FilterListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/IteratorEnumeration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/IteratorEnumeration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/LoopingIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/LoopingIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectArrayIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectArrayIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectArrayListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectArrayListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectGraphIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/ObjectGraphIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableListIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableListIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableOrderedMapIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/iterator/UnmodifiableOrderedMapIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/AbstractLinkedList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/AbstractLinkedList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/AbstractListDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/AbstractListDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/CursorableLinkedList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/CursorableLinkedList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/SlowList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/SlowList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TransformedList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TransformedList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TreeList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TreeList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TypedList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/TypedList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/UniqueList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/UniqueList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/UnmodifiableList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/list/UnmodifiableList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractInputCheckedMapDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractInputCheckedMapDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractLinkedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractLinkedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractMapDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractMapDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractOrderedMapDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractOrderedMapDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractSortedMapDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/AbstractSortedMapDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/CompositeMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/CompositeMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/DualHashBidimensionalMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/DualHashBidimensionalMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/DualTreeBidimensionalMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/DualTreeBidimensionalMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/FixedSizeSortedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/FixedSizeSortedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/Flat3Map.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/Flat3Map.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/HashedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/HashedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/ListOrderedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/ListOrderedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/MultiKeyMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/MultiKeyMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/MultiValuesMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/MultiValuesMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/PredicatedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/PredicatedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/ReferenceMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/ReferenceMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/SlowMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/SlowMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TransformedSortedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TransformedSortedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TreeBidimensionalMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TreeBidimensionalMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TypedSortedMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/TypedSortedMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/UnmodifiableEntrySet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/UnmodifiableEntrySet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/AbstractKeyValue.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/AbstractKeyValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/DefaultKeyValue.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/DefaultKeyValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/DefaultMapEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/DefaultMapEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/MultiKey.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/MultiKey.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/TiedMapEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/map/keyvalue/TiedMapEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/AbstractSerializableSetDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/AbstractSerializableSetDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/AbstractSetDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/AbstractSetDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/ListOrderedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/ListOrderedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/MapBackedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/MapBackedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/PredicatedSortedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/PredicatedSortedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/TransformedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/TransformedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/TransformedSortedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/TransformedSortedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/UnmodifiableSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/UnmodifiableSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/UnmodifiableSortedSet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/type/set/UnmodifiableSortedSet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/CompareToBuilder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/CompareToBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/HashCodeBuilder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/HashCodeBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/ReflectionToStringBuilder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/builders/ReflectionToStringBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/BooleanComparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/BooleanComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ComparableComparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ComparableComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ComparatorChain.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ComparatorChain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/FixedOrderComparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/FixedOrderComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ReverseComparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/comparators/ReverseComparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/AllPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/AllPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/AndPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/AndPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/CloneTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/CloneTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ClosureTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ClosureTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ConstantFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ConstantFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ExceptionFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ExceptionFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ExceptionPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/ExceptionPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FactoryTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FactoryTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FalsePredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FalsePredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FunctorException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/FunctorException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/IfClosure.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/IfClosure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstanceofPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstanceofPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstantiateFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstantiateFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstantiateTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/InstantiateTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NOPTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NOPTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NonePredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NonePredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullIsExceptionPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullIsExceptionPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullIsFalsePredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullIsFalsePredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/NullPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/OrPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/OrPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/PrototypeFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/PrototypeFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/StringValueTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/StringValueTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TransformedPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TransformedPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TransformerClosure.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TransformerClosure.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TruePredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/functors/TruePredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/Base64.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/Base64.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/DesCrypt.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/DesCrypt.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/IntHashMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/IntHashMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/UnixCrypt.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/UnixCrypt.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/XHTMLEntities.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/parsers/XHTMLEntities.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/CharRange.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/CharRange.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/JVMRandom.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/JVMRandom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/Range.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/data/workers/ranges/Range.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/AbstractConfiguration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/AbstractConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/DefaultConfiguration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/DefaultConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/BookmarkEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/BookmarkEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Bookmarks.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Bookmarks.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/CustomDescription.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/CustomDescription.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/CustomTitle.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/CustomTitle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Destinations.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Destinations.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Document.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Document.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Fonts.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Fonts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Index.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Index.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Inherited.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Inherited.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Overview.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/Overview.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/TagList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/TagList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CellBorderPadding.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CellBorderPadding.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CellNoBorderWithPadding.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CellNoBorderWithPadding.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CustomPdfPCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/elements/CustomPdfPCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/filters/FilteredPackageDoc.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/filters/FilteredPackageDoc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/filters/FilteredRootDoc.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/filters/FilteredRootDoc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/HtmlParserWrapper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/HtmlParserWrapper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/HtmlTagFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/HtmlTagFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagA.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagA.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagBR.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagBR.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagCENTER.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagCENTER.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagCODE.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagCODE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagDIV.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagDIV.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagDT.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagDT.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagFONT.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagFONT.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagHR.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagHR.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagLI.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagLI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagOL.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagOL.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagPRE.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagPRE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagSTRIKE.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagSTRIKE.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagSTRONG.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagSTRONG.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagTHEAD.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagTHEAD.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagU.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/document/tags/TagU.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/utilities/DocletUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/utilities/DocletUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/utilities/PDFUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/doclet/utilities/PDFUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/errors/ExceptionUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/errors/ExceptionUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableDelegate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableDelegate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableError.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableError.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableRuntimeException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/errors/NestableRuntimeException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/logger/LoggerException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/logger/LoggerException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/DefaultLoggerFactory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/DefaultLoggerFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/LoggerManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/LoggerManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/jdk/JdkLogger.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/jdk/JdkLogger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/log4j/Log4JManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/logger/base/log4j/Log4JManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/CsvReader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/CsvReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/CsvWriter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/CsvWriter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/CsvToBean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/CsvToBean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/DataColumnPositionDataMapping.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/DataColumnPositionDataMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/DataMapping.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/DataMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/HeaderColumnNameDataMapping.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/HeaderColumnNameDataMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/HeaderColumnNameTranslateDataMapping.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/csv/bean/HeaderColumnNameTranslateDataMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/BooleanFormulaCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/BooleanFormulaCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellFeatures.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellFeatures.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellType.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellView.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/CellView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/DateCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/DateCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/DateFormulaCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/DateFormulaCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/ExcelException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/ExcelException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Image.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Image.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Range.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Range.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Sheet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/Sheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/AutoFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/AutoFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/AutoFilterInfoRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/AutoFilterInfoRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BaseCellFeatures.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BaseCellFeatures.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BaseCompoundFile.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BaseCompoundFile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BuiltInFormat.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BuiltInFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BuiltInName.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/BuiltInName.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ByteArray.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ByteArray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CellFinder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CellFinder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CellReferenceHelper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CellReferenceHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ConditionalFormatRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ConditionalFormatRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ContinueRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/ContinueRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CountryCode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/CountryCode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DVParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DVParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DataValidityListRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DataValidityListRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DisplayFormat.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DisplayFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DoubleHelper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/DoubleHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/EncodedURLHelper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/EncodedURLHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FilterModeRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FilterModeRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FontRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FontRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/Fonts.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/Fonts.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FormatRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FormatRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FormulaData.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/FormulaData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/HeaderFooter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/HeaderFooter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/IndexMapping.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/IndexMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/NameRangeException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/NameRangeException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/PaletteRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/PaletteRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/RecordData.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/RecordData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/StringHelper.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/StringHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/WorkbookMethods.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/WorkbookMethods.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/WorkspaceInformationRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/WorkspaceInformationRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/XFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/XFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/BlipStoreEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/BlipStoreEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Button.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Button.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ChunkType.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ChunkType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ClientData.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ClientData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ClientTextBox.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/ClientTextBox.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Dg.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Dg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DgContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DgContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Dgg.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Dgg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DggContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DggContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Drawing.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/Drawing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingData.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingDataException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingDataException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingGroup.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingGroupObject.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/DrawingGroupObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherAtom.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherAtom.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherDisplay.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherDisplay.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherRecordType.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherRecordType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherStream.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/EscherStream.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/MsoDrawingRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/MsoDrawingRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/NoteRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/NoteRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/SpContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/SpContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/SpgrContainer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/SpgrContainer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/TextObjectRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/drawing/TextObjectRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Area3d.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Area3d.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ArgumentSeparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ArgumentSeparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/BinaryOperator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/BinaryOperator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/BuiltInFunction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/BuiltInFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/CellReference.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/CellReference.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/CloseParentheses.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/CloseParentheses.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ColumnRange.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ColumnRange.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Concatenate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Concatenate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Divide.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Divide.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Equal.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Equal.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ExternalSheet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ExternalSheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/FormulaParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/FormulaParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/FunctionNames.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/FunctionNames.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/GreaterEqual.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/GreaterEqual.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/GreaterThan.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/GreaterThan.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/IntegerValue.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/IntegerValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/LessThan.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/LessThan.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/MemFunc.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/MemFunc.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Minus.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Minus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/MissingArg.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/MissingArg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Multiply.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Multiply.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NameRange.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NameRange.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NotEqual.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NotEqual.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NumberValue.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/NumberValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/OpenParentheses.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/OpenParentheses.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Parenthesis.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Parenthesis.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ParseItem.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ParseItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ParsedThing.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/ParsedThing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Percent.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Percent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Plus.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Plus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/RangeSeparator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/RangeSeparator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringFormulaParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringFormulaParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringParseItem.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringParseItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringValue.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/StringValue.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Subtract.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Subtract.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/TokenFormulaParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/TokenFormulaParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Union.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Union.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/VariableArgFunction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/VariableArgFunction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Yylex.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/biff/formula/Yylex.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/common/Assert.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/common/Assert.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/common/BaseUnit.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/common/BaseUnit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/BoldStyle.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/BoldStyle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/BorderLineStyle.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/BorderLineStyle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/CellFormat.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/CellFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Colour.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Colour.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Orientation.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Orientation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Pattern.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/format/Pattern.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BOFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BOFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BiffException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BiffException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BiffRecordReader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BiffRecordReader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BooleanRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BooleanRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BoundsheetRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/BoundsheetRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CellFeaturesAccessor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CellFeaturesAccessor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CentreRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CentreRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CountryRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/CountryRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DateFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DateFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DateRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DateRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DefaultRowHeightRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DefaultRowHeightRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DefaultSheet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DefaultSheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DimensionRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/DimensionRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/ErrorRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/ErrorRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/FooterRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/FooterRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/Formula.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/Formula.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/FormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/FormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/HeaderRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/HeaderRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/HyperlinkRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/HyperlinkRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/MulBlankCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/MulBlankCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/MulBlankRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/MulBlankRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/NameRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/NameRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/NineteenFourRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/NineteenFourRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PLSRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PLSRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PasswordRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PasswordRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PrintHeadersRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/PrintHeadersRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/ProtectRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/ProtectRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/RKRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/RKRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/Record.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/Record.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/RefreshAllRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/RefreshAllRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SCLRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SCLRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedBooleanFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedBooleanFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedErrorFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedErrorFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedStringFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SharedStringFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SortRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/SortRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/StringFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/StringFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/WindowProtectedRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/WindowProtectedRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/WorkbookParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/read/biff/WorkbookParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Alignment.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Alignment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Blank.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Blank.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/BoldStyle.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/BoldStyle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Boolean.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Boolean.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/BorderLineStyle.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/BorderLineStyle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateFormat.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateFormats.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateFormats.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateTime.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/DateTime.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Formula.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Formula.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Label.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Label.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Number.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/Number.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/NumberFormats.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/NumberFormats.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableCell.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableCell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableCellFormat.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableCellFormat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableHyperlink.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableHyperlink.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableSheet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableSheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableWorkbook.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/WritableWorkbook.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BOFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BOFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BlankRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BlankRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BooleanRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BooleanRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BottomMarginRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BottomMarginRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BoundsheetRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/BoundsheetRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ButtonPropertySetRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ButtonPropertySetRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CalcModeRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CalcModeRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CellXFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CellXFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ColumnInfoRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ColumnInfoRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ColumnsExceededException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ColumnsExceededException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CompoundFile.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/CompoundFile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DBCellRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DBCellRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DSFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DSFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DateFormatRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DateFormatRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DefaultColumnWidth.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DefaultColumnWidth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DefaultWritableSheet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DefaultWritableSheet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DeltaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/DeltaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/EOFRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/EOFRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExcelDataOutput.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExcelDataOutput.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExcelWriteException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExcelWriteException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExtendedSSTRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExtendedSSTRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExternalNameRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExternalNameRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExternalSheetRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ExternalSheetRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/File.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/File.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/GridSetRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/GridSetRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/HorizontalPageBreaksRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/HorizontalPageBreaksRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/IndexRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/IndexRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/InterfaceEndRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/InterfaceEndRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/InterfaceHeaderRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/InterfaceHeaderRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/LabelRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/LabelRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MMSRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MMSRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MemoryDataOutput.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MemoryDataOutput.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MergedCells.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/MergedCells.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PaletteRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PaletteRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PaneRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PaneRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PasswordRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PasswordRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PrecisionRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PrecisionRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PrintGridLinesRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/PrintGridLinesRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Prot4RevPassRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Prot4RevPassRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ProtectRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ProtectRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadBooleanFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadBooleanFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadDateFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadDateFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadErrorFormulaRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ReadErrorFormulaRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SSTContinueRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SSTContinueRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SaveRecalcRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SaveRecalcRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ScenarioProtectRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/ScenarioProtectRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SelectionRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/SelectionRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/StringRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/StringRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Styles.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Styles.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/TabIdRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/TabIdRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/TemplateRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/TemplateRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/VerticalCentreRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/VerticalCentreRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Weird1Record.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/Weird1Record.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/WritableFontRecord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/excel/write/biff/WritableFontRecord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/Node.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/Node.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/decorators/AbstractNodeDecorator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/decorators/AbstractNodeDecorator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/decorators/EscapeCharacterRemovingNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/decorators/EscapeCharacterRemovingNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/HasAttributeFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/HasAttributeFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/HasParentFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/HasParentFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/IsEqualFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/IsEqualFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/NodeClassFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/NodeClassFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/NotFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/NotFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/TagNameFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/filters/TagNameFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Cursor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Cursor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Page.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Page.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/PageIndex.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/PageIndex.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Source.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Source.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Stream.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/Stream.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/Attribute.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/Attribute.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/StringNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/StringNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/TagNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/lexer/nodes/TagNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/Scanner.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/Scanner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/ScriptDecoder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/ScriptDecoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/ScriptScanner.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/ScriptScanner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/StyleScanner.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/scanners/StyleScanner.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Bullet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Bullet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/BulletList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/BulletList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/CompositeTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/CompositeTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Div.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Div.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/FormTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/FormTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/FrameTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/FrameTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Html.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Html.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/LabelTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/LabelTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/MetaTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/MetaTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/OptionTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/OptionTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Span.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Span.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/TableHeader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/TableHeader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/TableTag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/TableTag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Tag.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/tags/Tag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/visitors/NodeVisitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/engine/visitors/NodeVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/ChainedException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/ChainedException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/DefaultParserFeedback.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/DefaultParserFeedback.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/EncodingChangeException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/EncodingChangeException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/FeedbackManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/FeedbackManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/NodeIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/NodeIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/NodeList.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/NodeList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/ParserTool.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/ParserTool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/SimpleNodeIterator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/SimpleNodeIterator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/SpecialHashtable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/SpecialHashtable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/sort/Ordered.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/sort/Ordered.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/sort/Sort.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/parser/html/utilities/sort/Sort.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/Component.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/Component.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Configurable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Configurable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Disposable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Disposable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Initializable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/component/lifecycle/Initializable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/Configuration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/Configuration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/ConfigurationEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/ConfigurationEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/ConfigurationException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/ConfigurationException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/BaseConfiguration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/BaseConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/BaseConfigurationLocator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/BaseConfigurationLocator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/predicates/ConfigurationEntryPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/predicates/ConfigurationEntryPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/predicates/DataConfigurationEntryPredicate.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/predicates/DataConfigurationEntryPredicate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/transformers/KeyConfigurationEntryTransformer.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/base/transformers/KeyConfigurationEntryTransformer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/BasePropertiesConfiguration.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/BasePropertiesConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/rstream/ClassPropertiesLocator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/rstream/ClassPropertiesLocator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/stream/ConfigurationManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/stream/ConfigurationManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/stream/PropertiesEntry.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/support/configuration/providers/properties/stream/PropertiesEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/Velocity.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/Velocity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/VelocityException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/VelocityException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/Template.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/Template.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/VelocityManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/VelocityManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/event/EventCartridge.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/event/EventCartridge.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/event/MethodExceptionEventHandler.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/base/event/MethodExceptionEventHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/context/InternalContextAdapter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/context/InternalContextAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/context/VelocityContext.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/context/VelocityContext.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/RuntimeService.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/RuntimeService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/default.properties" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/default.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Foreach.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Foreach.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Include.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Include.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Macro.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/Macro.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/MacroParseException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/MacroParseException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/VMProxyArg.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/VMProxyArg.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/VelocityProxy.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/directive/VelocityProxy.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/ClassMap.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/ClassMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/IntrospectionCacheData.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/IntrospectionCacheData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/Introspector.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/Introspector.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/IntrospectorBase.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/IntrospectorBase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/Uberspect.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/Uberspect.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityMethod.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityMethod.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityPropertyGet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityPropertyGet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityPropertySet.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/introspection/VelocityPropertySet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/JJTParserState.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/JJTParserState.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/ParseException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/ParseException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/Parser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/Parser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/ParserTreeConstants.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/ParserTreeConstants.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/Token.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/Token.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTAddNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTAddNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTDirective.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTDirective.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEQNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEQNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTElseIfStatement.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTElseIfStatement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTElseStatement.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTElseStatement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEscape.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEscape.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEscapedDirective.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTEscapedDirective.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTExpression.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTExpression.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTIfStatement.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTIfStatement.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTLENode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTLENode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTLTNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTLTNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTNENode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTNENode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTNotNode.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTNotNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTObjectArray.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTObjectArray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTReference.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTReference.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTStringLiteral.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTStringLiteral.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTText.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTText.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTVariable.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTVariable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTWord.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ASTWord.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/AbstractExecutor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/AbstractExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/BooleanPropertyExecutor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/BooleanPropertyExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/GetExecutor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/GetExecutor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/NodeUtils.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/NodeUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ParserVisitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/parser/node/ParserVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/ContentResource.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/ContentResource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/DefaultResourceCache.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/DefaultResourceCache.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/DefaultResourceManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/DefaultResourceManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/Resource.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/Resource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/ClasspathResourceLoader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/ClasspathResourceLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/DataSourceResourceLoader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/DataSourceResourceLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/JarHolder.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/JarHolder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/ResourceLoader.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/resource/loader/ResourceLoader.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/visitor/BaseVisitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/visitor/BaseVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/visitor/VMReferenceMungeVisitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/common/velocity/runtime/visitor/VMReferenceMungeVisitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeManager.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/PatternAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/PatternAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/AbstractUserEnrollmentAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/AbstractUserEnrollmentAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ApplicationPermissionRemoveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ApplicationPermissionRemoveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ApplicationRoleRemoveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ApplicationRoleRemoveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/LicensesReportAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/LicensesReportAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/RestrictedAccessSetAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/RestrictedAccessSetAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ServerMonitorAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ServerMonitorAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ServiceTargetImportAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ServiceTargetImportAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupMembershipRemoveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupMembershipRemoveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupSetAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupSetAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemLicenseRemoveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemLicenseRemoveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemLicenseSetAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemLicenseSetAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemPasswordDecryptAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemPasswordDecryptAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemPasswordEncryptAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SystemPasswordEncryptAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/ParserAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/ParserAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/ReaderDataAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/ReaderDataAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/ConfigurationItemCreateAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/ConfigurationItemCreateAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/ConfigurationItemUpdateAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/ConfigurationItemUpdateAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/InventoryRelocateAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/InventoryRelocateAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/InventoryReserveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/InventoryReserveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/RelationshipConfigurationItemRemoveAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/RelationshipConfigurationItemRemoveAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/RelationshipPeopleCreateAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/cmdb/RelationshipPeopleCreateAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/itsm/IncidentOwnerGroupSetAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/itsm/IncidentOwnerGroupSetAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/CleanAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/CleanAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/ConfigAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/ConfigAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/EchoAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/EchoAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/InstallAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/InstallAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/ProcessAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/ProcessAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/StartAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/StartAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/StatusAction.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/StatusAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/Monitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/Monitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/NullMonitor.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/NullMonitor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeClient.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeLogger.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/RuntimeLogger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/ARDictionary.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/ARDictionary.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/AREasyException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/AREasyException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/ServerConnection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/base/ServerConnection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/cache/InitialObject.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/cache/InitialObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/cron4j/CronException.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/cron4j/CronException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/AbstractParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/AbstractParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/ParserEngine.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/ParserEngine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/BaseFileParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/BaseFileParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/CSVFileParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/CSVFileParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/XLSFileParser.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/services/parser/file/XLSFileParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/Attribute.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/Attribute.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/CoreItem.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/CoreItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/MultiPartItem.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/MultiPartItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/InventoryLocation.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/InventoryLocation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/ImpactedArea.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/ImpactedArea.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/Relationship.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/Relationship.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/WorkLog.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/cmdb/units/WorkLog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Base.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Base.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Change.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Change.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Incident.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/Incident.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/KnownError.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/KnownError.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/CostCenter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/CostCenter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/Organisation.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/Organisation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/People.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/People.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/ProductCategory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/ProductCategory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/ServiceCategory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/ServiceCategory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/SupportGroup.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/data/itsm/foundation/SupportGroup.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/AbstractHybrid.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/AbstractHybrid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridCompany.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridCompany.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridProductCategory.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/structures/hybrid/itsm/foundation/HybridProductCategory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/AbstractArea.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/AbstractArea.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/RuntimeArea.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/RuntimeArea.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/providers/AreaLDAP.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/providers/AreaLDAP.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/providers/AreaMidTierSSO.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/providers/AreaMidTierSSO.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/AbstractFilter.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/AbstractFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SimpleAuthenticator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SimpleAuthenticator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SingleSignOnAuthenticator.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SingleSignOnAuthenticator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/Netlogon.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/Netlogon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetlogonConnection.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetlogonConnection.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetlogonValidationSamInfo.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetlogonValidationSamInfo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetrLogonSamLogon.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NetrLogonSamLogon.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NtlmUserAccount.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/ntlm/engine/NtlmUserAccount.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/utilities/StreamUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/utilities/StreamUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/utilities/ZipUtility.java" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/utilities/ZipUtility.java" />
     </list>
     <ignored path="areasy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,18 +838,7 @@
     <favorites_list name="areasy" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EntryUpdateAction.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7134146">
-              <caret line="156" column="28" selection-start-line="156" selection-start-column="28" selection-end-line="156" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -177,7 +873,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/README" />
-        <option value="$PROJECT_DIR$/build/profile.s.damian.properties" />
         <option value="$PROJECT_DIR$/build/profile.stefan.damian.properties" />
         <option value="$PROJECT_DIR$/build/profile.stefan.properties" />
         <option value="$PROJECT_DIR$/build.xml" />
@@ -207,6 +902,8 @@
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/ApplicationPermissionSetAction.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryAddAction.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java" />
+        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupRenameAction.java" />
+        <option value="$PROJECT_DIR$/build/profile.s.damian.properties" />
       </list>
     </option>
   </component>
@@ -659,7 +1356,16 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="areasy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="All">
           <PATH>
@@ -697,6 +1403,7 @@
         </subPane>
         <subPane subId="Tests" />
       </pane>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -739,174 +1446,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="build" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AREasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="actions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AREasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="actions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="arserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AREasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="runtime" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="actions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="arserver" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AREasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="org" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="areasy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -926,7 +1467,7 @@
   <component name="PropertiesComponent">
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth1" value="271" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="253" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="274" />
     <property name="project.structure.proportion" value="0.15" />
@@ -941,7 +1482,7 @@
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth1" value="223" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth0" value="224" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/areasy.ipr" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/arapi.jar!/" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth4" value="892" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth3" value="224" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -960,7 +1501,7 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
-    <property name="settings.editor.selected.configurable" value="preferences.fileTypes" />
+    <property name="settings.editor.selected.configurable" value="copyright.filetypes.JAVA" />
     <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
@@ -1399,7 +1940,13 @@
       <option name="project" value="LOCAL" />
       <updated>1463996995273</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="LicenseReport update">
+      <created>1463997046133</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1463997046133</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1413,19 +1960,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="-8" width="1552" height="916" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298153" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33069828" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32849604" sideWeight="0.50268096" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31398416" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31398416" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32674572" sideWeight="0.49731904" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21849866" sideWeight="0.56607497" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32147563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21849866" sideWeight="0.56607497" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24731903" sideWeight="0.7049724" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12466488" sideWeight="0.7080132" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1442,11 +1987,13 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38735178" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298153" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32147563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1630,38 +2177,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/dev/wrappers/ApplicationWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2109589">
-          <caret line="34" column="11" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/dev/StatusAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46575344">
-          <caret line="59" column="125" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="125" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/dev/DefinitionAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3328767">
-          <caret line="702" column="21" selection-start-line="702" selection-start-column="21" selection-end-line="702" selection-end-column="21" />
-          <folding>
-            <element signature="e#41197#41205#0" expanded="false" />
-            <element signature="e#41251#41267#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/dev/wrappers/ActiveLinkGuideWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="7" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="5.2526097">
@@ -1993,8 +2508,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/data/EntryUpdateAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7134146">
+        <state vertical-scroll-proportion="0.65068495">
           <caret line="156" column="28" selection-start-line="156" selection-start-column="28" selection-end-line="156" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupMembershipSetAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0041096">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/arserver/admin/SupportGroupRenameAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0013698">
+          <caret line="57" column="51" selection-start-line="57" selection-start-column="51" selection-end-line="57" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/profile.stefan.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/profile.s.damian.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11627907">
+          <caret line="5" column="88" selection-start-line="5" selection-start-column="88" selection-end-line="5" selection-end-column="88" />
           <folding />
         </state>
       </provider>
@@ -2068,7 +2615,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

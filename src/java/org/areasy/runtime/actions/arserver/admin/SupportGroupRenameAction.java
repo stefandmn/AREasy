@@ -226,7 +226,6 @@ public class SupportGroupRenameAction extends AbstractAction
 				}
 				else RuntimeLogger.debug("Group member '" + newAssociation.getEntryId() + "' already exists");
 
-				//Remove person from old Group
 				if (!keepoldmembership)
 				{
 					currentAssociation.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
@@ -264,7 +263,6 @@ public class SupportGroupRenameAction extends AbstractAction
 
 			try
 			{
-				//Add new FRole
 				CoreItem newFRole = new CoreItem();
 				newFRole.setFormName("CTM:SupportGroupFunctionalRole");
 				newFRole.setAttribute(ARDictionary.CTM_LOGINID, currentFRole.getAttributeValue(ARDictionary.CTM_LOGINID));
@@ -285,7 +283,6 @@ public class SupportGroupRenameAction extends AbstractAction
 				}
 				else RuntimeLogger.debug("Functional role '" + newFRole.getEntryId() + "' already exists");
 
-				//Remove FRole
 				if (!keepoldfunctionalroles)
 				{
 					currentFRole.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action

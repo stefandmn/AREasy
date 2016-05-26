@@ -19,7 +19,6 @@ import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.runtime.engine.structures.data.itsm.Change;
 import org.areasy.runtime.engine.structures.data.itsm.Incident;
 import org.areasy.runtime.engine.structures.data.itsm.KnownError;
 import org.areasy.runtime.engine.structures.data.itsm.Problem;
@@ -43,7 +42,8 @@ public class SupportGroupRenameAction extends AbstractAction
 	public void run() throws AREasyException
 	{
 		boolean allgroupdetails = getConfiguration().getBoolean("allgroupdetails", false);
-		boolean memberships = getConfiguration().getBoolean("memberships", false);
+		boolean groupmembers = getConfiguration().getBoolean("groupmembers", false);
+		boolean functionalroles = getConfiguration().getBoolean("functionalroles", false);
 		boolean aliases = getConfiguration().getBoolean("aliases", false);
 		boolean approvalmappings = getConfiguration().getBoolean("approvalmappings", false);
 		boolean favorites = getConfiguration().getBoolean("favorites", false);
@@ -87,27 +87,24 @@ public class SupportGroupRenameAction extends AbstractAction
 			StringUtility.equals(newSG.getOrganisationName(), oldSG.getOrganisationName()) &&
 			StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
 		{
-			RuntimeLogger.warn("New support group '" + newSG.getCompanyName() + "/" + newSG.getOrganisationName() + "/" + newSG.getSupportGroupName() +
-							   "' is equals with the old support group: '" +
-								oldSG.getCompanyName() + "/" + oldSG.getOrganisationName() + "/" + oldSG.getSupportGroupName() +"'");
+			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
 			return;
 		}
 
 		//run new support group creation procedure and to make the old one obsolete
-		updateSupportGroup(oldSG, newSG);
+		setNewSupportGroup(oldSG, newSG);
 
 		//update/create all related details
-		if (memberships || allgroupdetails) transferMemberships(oldSG, newSG);
-		if(aliases || allgroupdetails) transferGroupAliases(oldSG, newSG);
-		if(approvalmappings || allgroupdetails) transferApprovalMappings(oldSG, newSG);
-		if(favorites || allgroupdetails) transferFavorites(oldSG, newSG);
-		if(oncalls || allgroupdetails) transferOnCallRecords(oldSG, newSG);
-		if(shifts || allgroupdetails) transferShifts(oldSG, newSG);
+		if(groupmembers || allgroupdetails) setGroupMembers(oldSG, newSG);
+		if(functionalroles || allgroupdetails) setFunctionalRoles(oldSG, newSG);
+		if(aliases || allgroupdetails) setGroupAliases(oldSG, newSG);
+		if(approvalmappings || allgroupdetails) updateApprovalMappings(oldSG, newSG);
+		if(favorites || allgroupdetails) setGroupAssignments(oldSG, newSG);
+		if(oncalls || allgroupdetails) setGroupOnCallRecords(oldSG, newSG);
+		if(shifts || allgroupdetails) setGroupShifts(oldSG, newSG);
 
-		//make old group obsolete
-		oldSG.setStatus("Obsolete");
-		oldSG.update(getServerConnection());
-		RuntimeLogger.info("Support group '" + oldSG.getCompanyName() + "/" + oldSG.getOrganisationName() + "/" + oldSG.getSupportGroupName() + "' has been set as Obsolete");
+		//make the old support group unavailable
+		setOldSupportGroupObsolete(oldSG);
 
 		// update incidents and related templates
 		if(incidentTemplates || allrelatedtickets) updateIncidentTemplates(oldSG, newSG);
@@ -140,30 +137,20 @@ public class SupportGroupRenameAction extends AbstractAction
 		if(knowledgerecords || allrelatedtickets) updateKnowledgeRecords(oldSG, newSG);
 	}
 
-	protected SupportGroup getOldSupportEntity()
-	{
-		return this.oldSG;
-	}
-
-	protected SupportGroup getNewSupportEntity()
-	{
-		return this.newSG;
-	}
-
-	protected void updateSupportGroup(SupportGroup oldSG, SupportGroup newSG) throws AREasyException
+	protected void setNewSupportGroup(SupportGroup oldSG, SupportGroup newSG) throws AREasyException
 	{
 		boolean create = true;
 		newSG.read(getServerConnection());
 
 		if (newSG.exists())
 		{
-			RuntimeLogger.warn("Support group '" + newSG.getCompanyName() + "/" + newSG.getOrganisationName() + "/" + newSG.getSupportGroupName() + "' already exists; enabling and updating it");
+			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' already exists; enabling and updating it");
 			newSG.setStatus("Enabled");
 			create = false;
 		}
 
 		oldSG.read(getServerConnection());
-		if(!oldSG.exists()) throw new AREasyException("Support group '" + oldSG.getCompanyName() + "/" + oldSG.getOrganisationName() + "/" + oldSG.getSupportGroupName() + "' doesn't exist");
+		if(!oldSG.exists()) throw new AREasyException("Support group '" + getSupportGroupString(oldSG) + "' doesn't exist");
 
 		newSG.setRole(oldSG.getRole());
 		newSG.setDescription(oldSG.getDescription());
@@ -179,29 +166,42 @@ public class SupportGroupRenameAction extends AbstractAction
 		if (create)
 		{
 			newSG.create(getServerConnection());
-			RuntimeLogger.info("Support group '" + newSG.getCompanyName() + "/" + newSG.getOrganisationName() + "/" + newSG.getSupportGroupName() + "' has been created");
+			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' has been created");
 		}
 		else
 		{
 			newSG.setIgnoreNullValues(false);
 			newSG.update(getServerConnection());
-			RuntimeLogger.info("Support group '" + newSG.getCompanyName() + "/" + newSG.getOrganisationName() + "/" + newSG.getSupportGroupName() + "' has been updated and enabled");
+			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' has been updated and enabled");
 		}
 	}
 
-	protected void transferMemberships(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setOldSupportGroupObsolete(SupportGroup oldSG) throws AREasyException
 	{
+		//make old group obsolete
+		oldSG.setStatus("Obsolete");
+		oldSG.update(getServerConnection());
+
+		RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
+	}
+
+	protected void setGroupMembers(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	{
+		RuntimeLogger.info("Support Group > Members - Start migration procedure..");
+		boolean keepoldmembership = getConfiguration().getBoolean("keepoldmembership", true);
+
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Association");
-		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId());		 //Support Group ID
+		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId());         //Support Group ID
 		List groupAssociations = searchMask.search(getServerConnection());
 
+		RuntimeLogger.info("Found " + groupAssociations.size() + " records");
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = groupAssociations.iterator(); i.hasNext();)
+		for (Object groupAssociation : groupAssociations)
 		{
-			CoreItem currentAssociation = (CoreItem) i.next();
+			CoreItem currentAssociation = (CoreItem) groupAssociation;
 
 			try
 			{
@@ -210,212 +210,286 @@ public class SupportGroupRenameAction extends AbstractAction
 				newAssociation.setFormName("CTM:Support Group Association");
 				newAssociation.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
 				newAssociation.setAttribute(ARDictionary.CTM_LOGINID, currentAssociation.getAttributeValue(ARDictionary.CTM_LOGINID));
-				newAssociation.setAttribute(ARDictionary.CTM_PERSONID, currentAssociation.getAttributeValue(ARDictionary.CTM_PERSONID));					//Person ID
+				newAssociation.setAttribute(ARDictionary.CTM_PERSONID, currentAssociation.getAttributeValue(ARDictionary.CTM_PERSONID));                    //Person ID
 				newAssociation.setAttribute(ARDictionary.CTM_SGROUP_ASSOC_ROLE, currentAssociation.getAttributeValue(ARDictionary.CTM_SGROUP_ASSOC_ROLE));  //Support Group Association Role
-				newAssociation.setAttribute(ARDictionary.CTM_FULLNAME, currentAssociation.getAttributeValue(ARDictionary.CTM_FULLNAME));					//Full Name
-				newAssociation.setAttribute(1000000075, currentAssociation.getAttributeValue(1000000075));												  //Default Group (Yes/No)
-				newAssociation.setAttribute(1000000346, currentAssociation.getAttributeValue(1000000346));												  //Assignment Availability
-				newAssociation.create(getServerConnection());
+				newAssociation.setAttribute(ARDictionary.CTM_FULLNAME, currentAssociation.getAttributeValue(ARDictionary.CTM_FULLNAME));                    //Full Name
+				newAssociation.setAttribute(1000000075, currentAssociation.getAttributeValue(1000000075));                                                  //Default Group (Yes/No)
+				newAssociation.setAttribute(1000000346, currentAssociation.getAttributeValue(1000000346));                                                  //Assignment Availability
+
+				newAssociation.read(getServerConnection());
+
+				if (!newAssociation.exists())
+				{
+					newAssociation.create(getServerConnection());
+					RuntimeLogger.debug("Group member '" + newAssociation.getEntryId() + "' became member of the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group member '" + newAssociation.getEntryId() + "' already exists");
 
 				//Remove person from old Group
-				currentAssociation.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
-				currentAssociation.update(getServerConnection());
-				RuntimeLogger.debug("Group member '" + currentAssociation.getAttributeValue(ARDictionary.CTM_LOGINID) + "' have been transferred to the new support group");
-				correct++;
+				if (!keepoldmembership)
+				{
+					currentAssociation.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					currentAssociation.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring group member '" + currentAssociation.getAttributeValue(ARDictionary.CTM_LOGINID) + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error migrating group member '" + currentAssociation.getEntryId() + "' for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "support group member", "support group members", "transferred", "transfer");
-		correct = 0;
-		errors = 0;
+		RuntimeLogger.info("Support Group > Members - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
+	}
 
-		searchMask = new CoreItem();
+	protected void setFunctionalRoles(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	{
+		RuntimeLogger.info("Support Group > Functional Roles - Start migration procedure..");
+		boolean keepoldfunctionalroles = getConfiguration().getBoolean("keepoldfunctionalroles", true);
+
+		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:SupportGroupFunctionalRole");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId());		 //Support Group ID
 		List groupFRoles = searchMask.search(getServerConnection());
 
-		for (Iterator i = groupFRoles.iterator(); i.hasNext();)
+		RuntimeLogger.info("Found " + groupFRoles.size() + " records");
+		int correct = 0;
+		int errors = 0;
+
+		for (Object groupFRole : groupFRoles)
 		{
-			CoreItem currentFRole = (CoreItem) i.next();
+			CoreItem currentFRole = (CoreItem) groupFRole;
 
 			try
 			{
 				//Add new FRole
 				CoreItem newFRole = new CoreItem();
 				newFRole.setFormName("CTM:SupportGroupFunctionalRole");
-				newFRole.setAttribute(4, currentFRole.getAttributeValue(4));
-				newFRole.setAttribute(ARDictionary.CTM_FULLNAME, currentFRole.getAttributeValue(ARDictionary.CTM_FULLNAME));	 //Full Name
-				newFRole.setAttribute(ARDictionary.CTM_PERSONID, currentFRole.getAttributeValue(ARDictionary.CTM_PERSONID));	 //Person ID
-				newFRole.setAttribute(1000000346, currentFRole.getAttributeValue(1000000346));								   //Assignment Availability
-				newFRole.setAttribute(1000001859, currentFRole.getAttributeValue(1000001859));								   //Functional Role Alias
-				newFRole.setAttribute(1000000347, currentFRole.getAttributeValue(1000000347));								   //Availability Hold
-				newFRole.setAttribute(1000000171, currentFRole.getAttributeValue(1000000171));								   //Functional Role
-				newFRole.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());										  //Support Group ID
+				newFRole.setAttribute(ARDictionary.CTM_LOGINID, currentFRole.getAttributeValue(ARDictionary.CTM_LOGINID));
+				newFRole.setAttribute(ARDictionary.CTM_FULLNAME, currentFRole.getAttributeValue(ARDictionary.CTM_FULLNAME));     //Full Name
+				newFRole.setAttribute(ARDictionary.CTM_PERSONID, currentFRole.getAttributeValue(ARDictionary.CTM_PERSONID));     //Person ID
+				newFRole.setAttribute(1000000346, currentFRole.getAttributeValue(1000000346));                                   //Assignment Availability
+				newFRole.setAttribute(1000001859, currentFRole.getAttributeValue(1000001859));                                   //Functional Role Alias
+				newFRole.setAttribute(1000000347, currentFRole.getAttributeValue(1000000347));                                   //Availability Hold
+				newFRole.setAttribute(1000000171, currentFRole.getAttributeValue(1000000171));                                   //Functional Role
+				newFRole.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());                                          //Support Group ID
 
-				newFRole.create(getServerConnection());
+				newFRole.read(getServerConnection());
+				if(!newFRole.exists())
+				{
+					newFRole.create(getServerConnection());
+					RuntimeLogger.debug("Functional role '" +  newFRole.getEntryId() + "' has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Functional role '" + newFRole.getEntryId() + "' already exists");
 
 				//Remove FRole
-				currentFRole.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
-				currentFRole.update(getServerConnection());
-				RuntimeLogger.debug("Functional role '" + currentFRole.getAttributeValue(1000000171) + "' has been transferred for '" + currentFRole.getAttributeValue(ARDictionary.CTM_FULLNAME) + "' to the new support group");
-				correct++;
+				if (!keepoldfunctionalroles)
+				{
+					currentFRole.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					currentFRole.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring functional role '" + currentFRole.getAttributeValue(1000000171) + "' for '" + currentFRole.getAttributeValue(ARDictionary.CTM_FULLNAME) + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error migrating functional role '" + currentFRole.getEntryId() + "' for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "functional role", "functional roles", "transferred", "transfer");
+		RuntimeLogger.info("Support Group > Functional Roles - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
-	protected void transferGroupAliases(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupAliases(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
+		RuntimeLogger.info("Support Group > Aliases - Start migration procedure..");
+		boolean keepoldalias = getConfiguration().getBoolean("keepoldalias", true);
+
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Alias");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
 		searchMask.setAttribute(1000000073, 1); //Primary Alias=No
 		List groupAliases = searchMask.search(getServerConnection());
 
+		RuntimeLogger.info("Found " + groupAliases.size() + " records");
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = groupAliases.iterator(); i.hasNext();)
+		for (Object groupAliase : groupAliases)
 		{
-			CoreItem alias = (CoreItem) i.next();
+			CoreItem alias = (CoreItem) groupAliase;
 
 			try
 			{
-				alias.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				alias.update(getServerConnection());
+				CoreItem newAlias = new CoreItem();
+				newAlias.setFormName("CTM:Support Group Alias");
+				newAlias.setAttribute(1000000073, 1); //Primary Alias=No
+				newAlias.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId()); //Support Group ID
+				newAlias.setAttribute(1000000293, alias.getAttributeValue(1000000293));
+				newAlias.read(getServerConnection());
 
-				RuntimeLogger.debug("Group alias '" + alias.getAttributeValue(1000000293) + "' has been transferred to the new support group");
-				correct++;
+				if(!newAlias.exists())
+				{
+					newAlias.create(getServerConnection());
+					RuntimeLogger.debug("Group alias '" + newAlias.getEntryId() + "' has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group alias '" + newAlias.getEntryId() + "' already exists");
+
+				//Remove Alias
+				if (!keepoldalias)
+				{
+					alias.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					alias.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring the group alias '" + alias.getAttributeValue(1000000293) + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error migrating group alias '" + alias.getEntryId() + "' for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "group alias", "group aliases", "transferred", "transfer");
+		RuntimeLogger.info("Support Group > Aliases - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
-	protected void transferApprovalMappings(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupAssignments(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		CoreItem searchMask = new CoreItem();
-		searchMask.setFormName("APR:Approver Lookup");
-		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
-		//searchMask.setAttribute(7, 1);
-		List list = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Support Group > Assignments - Start migration procedure..");
+		boolean keepoldassignments = getConfiguration().getBoolean("keepoldassignments", true);
 
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = list.iterator(); i.hasNext();)
-		{
-			CoreItem data = (CoreItem) i.next();
-
-			try
-			{
-				data.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				data.update(getServerConnection());
-
-				RuntimeLogger.debug("Group approval mapping '" + data.getEntryId() + "' has been transferred to the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error transferring the group alias '" + data.getEntryId() + "' to the new support group: " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "group approval mapping", "group approval mappings", "transferred", "transfer");
-	}
-
-	protected void transferFavorites(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
-	{
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Assignments");
-		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
-		//searchMask.setAttribute(7, 1);
-		List list = searchMask.search(getServerConnection());
+		searchMask.setAttribute(1000000789, fromGroup.getEntryId()); //Default Support Group ID
+		List groupAssignments = searchMask.search(getServerConnection());
 
+		RuntimeLogger.info("Found " + groupAssignments.size() + " records");
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = list.iterator(); i.hasNext();)
+		for (Object groupAssigObj : groupAssignments)
 		{
-			CoreItem data = (CoreItem) i.next();
+			CoreItem groupAssig = (CoreItem) groupAssigObj;
 
 			try
 			{
-				data.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				data.update(getServerConnection());
+				groupAssig.setAttribute(1000000789, toGroup.getEntryId());
+				groupAssig.update(getServerConnection());
 
-				RuntimeLogger.debug("Group assignment '" + data.getEntryId() + "' (favorite group) has been transferred to the new support group");
+				RuntimeLogger.debug("Group assignment '" + groupAssig.getEntryId() + "' (favorite group) has been updated to refer the new support group");
 				correct++;
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring the group assignment '" + data.getEntryId() + "' (favorite group) to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error updating existing group assignment '" + groupAssig.getEntryId() + "' (favorite group) for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "group assignment", "group assignments", "transferred", "transfer");
+		searchMask = new CoreItem();
+		searchMask.setFormName("CTM:Support Group Assignments");
+		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
+		groupAssignments = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Found " + groupAssignments.size() + " records");
+
+		for (Object groupAssignment : groupAssignments)
+		{
+			CoreItem groupAssig = (CoreItem) groupAssignment;
+
+			try
+			{
+				CoreItem newGroupAssig = new CoreItem();
+				newGroupAssig.setFormName("CTM:Support Group Assignments");
+				newGroupAssig.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				newGroupAssig.setAttribute(1000000789, groupAssig.getAttributeValue(1000000789));
+				newGroupAssig.read(getServerConnection());
+
+				if(!newGroupAssig.exists())
+				{
+					newGroupAssig.create(getServerConnection());
+					RuntimeLogger.debug("Group assignment '" + newGroupAssig.getEntryId() + "' (favorite group) has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group assignment '" + newGroupAssig.getEntryId() + "' already exists");
+
+				//Remove Assignments
+				if (!keepoldassignments)
+				{
+					groupAssig.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					groupAssig.update(getServerConnection());
+				}
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error migrating group assignment '" + groupAssig.getEntryId() + "' (favorite group) for the new support group: " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info("Support Group > Assignments - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
-	protected void transferOnCallRecords(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupOnCallRecords(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
+		RuntimeLogger.info("Support Group > OnCall Records - Start migration procedure..");
+		boolean keepoldoncallrecords = getConfiguration().getBoolean("keepoldoncallrecords", true);
+
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group On-Call");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
-		//searchMask.setAttribute(7, 1);
-		List list = searchMask.search(getServerConnection());
+		List onCallRecords = searchMask.search(getServerConnection());
 
+		RuntimeLogger.info("Found " + onCallRecords.size() + " records");
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = list.iterator(); i.hasNext();)
+		for (Object onCallRecordObj : onCallRecords)
 		{
-			CoreItem data = (CoreItem) i.next();
+			CoreItem onCallRecord = (CoreItem) onCallRecordObj;
 
 			try
 			{
-				data.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				data.update(getServerConnection());
+				CoreItem newOnCallRecord = onCallRecord.copyToNew();
+				newOnCallRecord.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				newOnCallRecord.read(getServerConnection());
 
-				RuntimeLogger.debug("Group on-call record '" + data.getEntryId() + "' has been transferred to the new support group");
-				correct++;
+				if(!newOnCallRecord.exists())
+				{
+					newOnCallRecord.create(getServerConnection());
+					RuntimeLogger.debug("Group on-call record '" + newOnCallRecord.getEntryId() + "' has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group on-call record '" + newOnCallRecord.getEntryId() + "' already exists");
+
+				if (!keepoldoncallrecords)
+				{
+					onCallRecord.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					onCallRecord.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring group on-call record '" + data.getEntryId() + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error migrating group on-call record '" + onCallRecord.getEntryId() + "' to the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "group on-call record", "group on-call records", "transferred", "transfer");
+		RuntimeLogger.info("Support Group > OnCall Records - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 
 		try
 		{
-			if(fromGroup.getOnCallGroup() != null && fromGroup.getOnCallGroup() == 0) toGroup.setOnCallGroup(new Integer(0));
-			toGroup.update(getServerConnection());
+			if(fromGroup.getOnCallGroup() != null && fromGroup.getOnCallGroup() == 0)
+			{
+				toGroup.setOnCallGroup(new Integer(0));
+				toGroup.update(getServerConnection());
+			}
 		}
 		catch(AREasyException are)
 		{
@@ -424,919 +498,227 @@ public class SupportGroupRenameAction extends AbstractAction
 		}
 	}
 
-	protected void transferShifts(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupShifts(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
+		RuntimeLogger.info("Support Group > Shifts - Start migration procedure..");
+		boolean keepoldshifts = getConfiguration().getBoolean("keepoldshifts", true);
+
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Shifts");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
-		//searchMask.setAttribute(7, 1);
-		List list = searchMask.search(getServerConnection());
+		List groupShifts = searchMask.search(getServerConnection());
 
+		RuntimeLogger.info("Found " + groupShifts.size() + " records");
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = list.iterator(); i.hasNext();)
+		for (Object groupShiftObj : groupShifts)
 		{
-			CoreItem data = (CoreItem) i.next();
+			CoreItem groupShift = (CoreItem) groupShiftObj;
 
 			try
 			{
-				data.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				data.update(getServerConnection());
+				CoreItem newGroupShift = groupShift.copyToNew();
+				newGroupShift.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				newGroupShift.read(getServerConnection());
 
-				RuntimeLogger.debug("Group shift '" + data.getEntryId() + "' has been transferred to the new support group");
-				correct++;
+				if (!newGroupShift.exists())
+				{
+					newGroupShift.create(getServerConnection());
+					RuntimeLogger.debug("Group shift '" + newGroupShift.getEntryId() + "' has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group shift '" + newGroupShift.getEntryId() + "' already exists");
+
+				if (!keepoldshifts)
+				{
+					groupShift.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					groupShift.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring group shift '" + data.getEntryId() + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error migrating group shift '" + groupShift.getEntryId() + "' for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
-
-		setInfoLoggerMessage(correct, errors, "group shift", "group shifts", "transferred", "transfer");
-		correct = 0;
-		errors = 0;
 
 		searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Shift Assoc");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
-		//searchMask.setAttribute(7, 1);
-		list = searchMask.search(getServerConnection());
+		groupShifts = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Found additional " + groupShifts.size() + " records (shift associations)");
 
-		for (Iterator i = list.iterator(); i.hasNext();)
+		for (Object groupShiftAssocObj : groupShifts)
 		{
-			CoreItem data = (CoreItem) i.next();
+			CoreItem groupShiftAssoc = (CoreItem) groupShiftAssocObj;
 
 			try
 			{
-				data.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				data.update(getServerConnection());
+				CoreItem newGroupShiftAssoc = groupShiftAssoc.copyToNew();
+				newGroupShiftAssoc.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				newGroupShiftAssoc.read(getServerConnection());
 
-				RuntimeLogger.debug("Group shift association'" + data.getEntryId() + "' has been transferred to the new support group");
-				correct++;
+				if (!newGroupShiftAssoc.exists())
+				{
+					newGroupShiftAssoc.create(getServerConnection());
+					RuntimeLogger.debug("Group shift association '" + newGroupShiftAssoc.getEntryId() + "' has been created for the new support group");
+					correct++;
+				}
+				else RuntimeLogger.debug("Group shift association '" + newGroupShiftAssoc.getEntryId() + "' already exists");
+
+				if (!keepoldshifts)
+				{
+					groupShiftAssoc.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					groupShiftAssoc.update(getServerConnection());
+				}
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error transferring group shift association '" + data.getEntryId() + "' to the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error transferring group shift association '" + groupShiftAssoc.getEntryId() + "' to the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "group shift association", "group shift associations", "transferred", "transfer");
+		RuntimeLogger.info("Support Group > Shifts - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
+	}
+
+	protected void updateApprovalMappings(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	{
+		RuntimeLogger.info("Approval > Mapping - Start migration procedure..");
+
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName("APR:Approver Lookup");
+		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
+		List approvals = searchMask.search(getServerConnection());
+
+		RuntimeLogger.info("Found " + approvals.size() + " records");
+		int correct = 0;
+		int errors = 0;
+
+		for (Object approvalObj : approvals)
+		{
+			CoreItem approval = (CoreItem) approvalObj;
+
+			try
+			{
+				approval.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				approval.update(getServerConnection());
+
+				RuntimeLogger.debug("Group approval mapping '" + approval.getEntryId() + "' has been migrated to the new support group");
+				correct++;
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error migrating the approval mapping '" + approval.getEntryId() + "' to the new support group: " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info("Approval > Mapping - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
 	protected void updateIncidentTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		//Update Assigned Group
-		CoreItem searchMask = new CoreItem();
-		searchMask.setFormName("HPD:Template");
-		searchMask.setAttribute(1000000251, fromGroup.getCompanyName()); //Assigned Company
-		searchMask.setAttribute(302126600, fromGroup.getOrganisationName()); //Assigned Organisation
-		searchMask.setAttribute(1000000217, fromGroup.getSupportGroupName()); //Assigned Group
-		//searchMask.setAttribute(1000000580, 1); //Template Status = Enabled
-		List templates = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000000251, toGroup.getCompanyName());
-				template.setAttribute(302126600, toGroup.getOrganisationName());
-				template.setAttribute(1000000217, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Assignment of Incident template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment group of Incident template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "incident template assignment", "incident template assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("HPD:Template");
-		searchMask.setAttribute(1000001341, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000001340, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000001339, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000828, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000001341, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000001340, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000001339, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring primary group of Incident template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring primary group of Incident template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "incident template authoring primary group", "incident template authoring primary groups", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("HPD:TemplateSPGAssoc");
-		searchMask.setAttribute(1000000001, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000000014, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000000015, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000079, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000000001, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000000014, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000000015, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring association group of Incident template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring association group of Incident template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "incident template authoring association group", "incident template authoring association groups", "updated", "update");
-
+		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000000251, 302126600, 1000000217, 1000000079, "Incident", "Assignee Assignment");
+		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000001341, 1000001340, 1000001339, 1000000828, "Incident", "Authoring Assignment");
+		updateTemplates(fromGroup, toGroup, "HPD:TemplateSPGAssoc", 1000000001, 1000000014, 1000000015, 1000000079, "IncidentAuthoring", "Support Group");
 	}
 
 	protected void updateIncidents(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		Long before = getConfiguration().getLong("incidentsbefore", null);
-		Long after = getConfiguration().getLong("incidentsafter", null);
-		boolean openIncidents = getConfiguration().getBoolean("openincidents", false);
-
-		//Update Assigned Group
-		Incident searchMask = new Incident();
-		searchMask.setAssignmentCompany(fromGroup.getCompanyName());
-		searchMask.setAssignmentOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignmentGroup(fromGroup.getSupportGroupName());
-
-		if(openIncidents ) searchMask.setAttribute(7, "< 5");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		List incidents = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = incidents.iterator(); i.hasNext();)
-		{
-			Incident incident = (Incident) i.next();
-
-			try
-			{
-				incident.setAssignmentCompany(toGroup.getCompanyName());
-				incident.setAssignmentOrganisation(toGroup.getOrganisationName());
-				incident.setAssignmentGroup(toGroup.getSupportGroupName());
-				incident.setAssignmentGroupId(toGroup.getEntryId());
-
-				incident.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Assignment of Incident '" + incident.getIncidentNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment of Incident '" + incident.getIncidentNumber() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "incident assignment", "incident assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Owner Group
-		searchMask = new Incident();
-		searchMask.setOwnerCompany(fromGroup.getCompanyName());
-		searchMask.setOwnerOrganisation(fromGroup.getOrganisationName());
-		searchMask.setOwnerGroup(fromGroup.getSupportGroupName());
-
-		if(openIncidents ) searchMask.setAttribute(7, "< 5");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		incidents = searchMask.search(getServerConnection());
-
-		for (Iterator i = incidents.iterator(); i.hasNext();)
-		{
-			Incident incident = (Incident) i.next();
-
-			try
-			{
-				incident.setOwnerCompany(toGroup.getCompanyName());
-				incident.setOwnerOrganisation(toGroup.getOrganisationName());
-				incident.setOwnerGroup(toGroup.getSupportGroupName());
-				incident.setOwnerGroupId(toGroup.getEntryId());
-
-				incident.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Owner group of Incident '" + incident.getIncidentNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing owner group of Incident '" + incident.getIncidentNumber() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "incident owner", "incident owners", "updated", "update");
+		updateTickets(fromGroup, toGroup, "HPD:Help Desk", "incidents", 5, 1000000251, 1000000014, 1000000217, 1000000079, "Incident", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "HPD:Help Desk", "incidents", 5, 1000000426, 1000000342, 1000000422, 1000000427, "Incident", "Owner Assignment");
 	}
 
 	protected void updateProblemTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		//Update Coordinator Assigned Group
-		CoreItem searchMask = new CoreItem();
-		searchMask.setFormName("PBM:Template");
-		searchMask.setAttribute(1000000834, fromGroup.getCompanyName()); //Coordinator Assigned Company
-		searchMask.setAttribute(1000000835, fromGroup.getOrganisationName()); //Coordinator Assigned Organisation
-		searchMask.setAttribute(1000000837, fromGroup.getSupportGroupName()); //Coordinator Assigned Group
-		//searchMask.setAttribute(1000000580, 1); //Template Status = Enabled
-		List templates = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000000834, toGroup.getCompanyName());
-				template.setAttribute(1000000835, toGroup.getOrganisationName());
-				template.setAttribute(1000000837, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Coordinator Assignment of Problem template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing coordinator assignment group of Problem template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		//Update Problem Assigned Group
-		searchMask.setFormName("PBM:Template");
-		searchMask.setAttribute(1000000251, fromGroup.getCompanyName()); //Assigned Company
-		searchMask.setAttribute(1000000014, fromGroup.getOrganisationName()); //Assigned Organisation
-		searchMask.setAttribute(1000000217, fromGroup.getSupportGroupName()); //Assigned Group
-		//searchMask.setAttribute(1000000580, 1); //Template Status = Enabled
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000000251, toGroup.getCompanyName());
-				template.setAttribute(1000000014, toGroup.getOrganisationName());
-				template.setAttribute(1000000217, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Assignment of Problem template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment group of Problem template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem template assignment", "problem template assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("PBM:Template");
-		searchMask.setAttribute(1000001341, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000001340, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000001339, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000828, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000001341, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000001340, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000001339, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring primary group of Problem template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring primary group of Problem template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem template authoring primary group", "problem template authoring primary groups", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("PBM:TemplateSPGAssoc");
-		searchMask.setAttribute(1000000001, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000000014, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000000015, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000079, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000000001, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000000014, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000000015, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring association group of Problem template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring association group of Problem template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem template authoring association group", "problem template authoring association groups", "updated", "update");
+		updateTemplates(fromGroup, toGroup, "PBM:Template", 1000000834, 1000000835, 1000000837, 0, "Problem", "Coordinator Assignment");
+		updateTemplates(fromGroup, toGroup, "PBM:Template", 1000000251, 1000000014, 1000000217, 1000000079, "Problem", "Assignee Assignment");
+		updateTemplates(fromGroup, toGroup, "PBM:Template", 1000001341, 1000001340, 1000001339, 1000000828, "Problem", "Authoring Assignment");
+		updateTemplates(fromGroup, toGroup, "PBM:TemplateSPGAssoc", 1000000001, 1000000014, 1000000015, 1000000079, "ProblemAuthoring", "Support Group");
 	}
 
 	protected void updateProblems(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		Long before = getConfiguration().getLong("problemsbefore", null);
-		Long after = getConfiguration().getLong("problemsafter", null);
-		boolean openProblems = getConfiguration().getBoolean("openproblems", false);
-
-		//Update Assigned Group
-		Problem searchMask = new Problem();
-		searchMask.setAssignmentCompany(fromGroup.getCompanyName());
-		searchMask.setAssignmentOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignmentGroup(fromGroup.getSupportGroupName());
-
-		if(openProblems ) searchMask.setAttribute(7, "< 8");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		List problems = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = problems.iterator(); i.hasNext();)
-		{
-			Problem problem = (Problem) i.next();
-
-			try
-			{
-				problem.setAssignmentCompany(toGroup.getCompanyName());
-				problem.setAssignmentOrganisation(toGroup.getOrganisationName());
-				problem.setAssignmentGroup(toGroup.getSupportGroupName());
-				problem.setAssignmentGroupId(toGroup.getEntryId());
-
-				problem.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Assignment of Problem '" + problem.getProblemNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment of Problem '" + problem.getProblemNumber() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem assignment", "problem assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Coordinator Group
-		searchMask = new Problem();
-		searchMask.setAssignedProblemCoordinatorCompany(fromGroup.getCompanyName());
-		searchMask.setAssignedProblemCoordinatorOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignedProblemCoordinatorGroup(fromGroup.getSupportGroupName());
-
-		if(openProblems ) searchMask.setAttribute(7, "< 8");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		problems = searchMask.search(getServerConnection());
-
-		for (Iterator i = problems.iterator(); i.hasNext();)
-		{
-			Problem problem = (Problem) i.next();
-
-			try
-			{
-				problem.setAssignedProblemCoordinatorCompany(toGroup.getCompanyName());
-				problem.setAssignedProblemCoordinatorOrganisation(toGroup.getOrganisationName());
-				problem.setAssignedProblemCoordinatorGroup(toGroup.getSupportGroupName());
-				problem.setAssignedProblemCoordinatorGroupId(toGroup.getEntryId());
-
-				problem.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Coordinator group of Problem '" + problem.getProblemNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing coordinator group of Problem '" + problem.getProblemNumber() + ": " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem coordinator", "problem coordinators", "updated", "update");
+		updateTickets(fromGroup, toGroup, "PBM:Problem Investigation", "problems", 8, 1000000251, 1000000014, 1000000217, 1000000079, "Problem", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "PBM:Problem Investigation", "problems", 8, 1000000834, 1000000835, 1000000837, 1000000427, "Problem", "Coordinator Assignment");
 	}
 
 	protected void updateKnownErrors(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		Long before = getConfiguration().getLong("knownerrorsbefore", null);
-		Long after = getConfiguration().getLong("knownerrorssafter", null);
-		boolean openKnownErrors = getConfiguration().getBoolean("openknownerrors", false);
-
-		//Update Assigned Group
-		KnownError searchMask = new KnownError();
-		searchMask.setAssignmentCompany(fromGroup.getCompanyName());
-		searchMask.setAssignmentOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignmentGroup(fromGroup.getSupportGroupName());
-
-		if(openKnownErrors ) searchMask.setAttribute(7, "< 5");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		List knownerrors = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = knownerrors.iterator(); i.hasNext();)
-		{
-			KnownError knownerror = (KnownError) i.next();
-
-			try
-			{
-				knownerror.setAssignmentCompany(toGroup.getCompanyName());
-				knownerror.setAssignmentOrganisation(toGroup.getOrganisationName());
-				knownerror.setAssignmentGroup(toGroup.getSupportGroupName());
-				knownerror.setAssignmentGroupId(toGroup.getEntryId());
-
-				knownerror.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Assignment of Known Error '" + knownerror.getKnownErrorId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment of Known Error '" + knownerror.getKnownErrorId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "known error assignment", "known error assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Coordinator Group
-		searchMask = new KnownError();
-		searchMask.setAssignedKnownErrorCoordinatorCompany(fromGroup.getCompanyName());
-		searchMask.setAssignedKnownErrorCoordinatorOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignedKnownErrorCoordinatorGroup(fromGroup.getSupportGroupName());
-
-		if(openKnownErrors ) searchMask.setAttribute(7, "< 5");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		knownerrors = searchMask.search(getServerConnection());
-
-		for (Iterator i = knownerrors.iterator(); i.hasNext();)
-		{
-			KnownError knownerror = (KnownError) i.next();
-
-			try
-			{
-				knownerror.setAssignedKnownErrorCoordinatorCompany(toGroup.getCompanyName());
-				knownerror.setAssignedKnownErrorCoordinatorOrganisation(toGroup.getOrganisationName());
-				knownerror.setAssignedKnownErrorCoordinatorGroup(toGroup.getSupportGroupName());
-				knownerror.setAssignedKnownErrorCoordinatorGroupId(toGroup.getEntryId());
-
-				knownerror.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Coordinator group of Known Error '" + knownerror.getKnownErrorId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing coordinator group of Known Error '" + knownerror.getKnownErrorId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "known error coordinator", "known error coordinators", "updated", "update");
+		updateTickets(fromGroup, toGroup, "PBM:Known Error", "knownerrors", 5, 1000000251, 1000000014, 1000000217, 1000000079, "KnownError", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "PBM:Known Error", "knownerrors", 5, 1000000834, 1000000835, 1000000837, 1000000427, "KnownError", "Assignee Assignment");
 	}
 
 	protected void updateChangeTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		//Update Manager Assigned Group
-		CoreItem searchMask = new CoreItem();
-		searchMask.setFormName("CHG:Template");
-		searchMask.setAttribute(1000000251, fromGroup.getCompanyName()); //Coordinator Assigned Company
-		searchMask.setAttribute(1000000014, fromGroup.getOrganisationName()); //Coordinator Assigned Organisation
-		searchMask.setAttribute(1000000015, fromGroup.getSupportGroupName()); //Coordinator Assigned Group
-		//searchMask.setAttribute(7, 1); //Template Status = Enabled
-		List templates = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000000251, toGroup.getCompanyName());
-				template.setAttribute(1000000014, toGroup.getOrganisationName());
-				template.setAttribute(1000000015, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Manager Assignment of Change template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing manager assignment group of Change template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		//Update Coordinator Assigned Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("CHG:Template");
-		searchMask.setAttribute(1000003228, fromGroup.getCompanyName()); //Coordinator Assigned Company
-		searchMask.setAttribute(1000003227, fromGroup.getOrganisationName()); //Coordinator Assigned Organisation
-		searchMask.setAttribute(1000003229, fromGroup.getSupportGroupName()); //Coordinator Assigned Group
-		//searchMask.setAttribute(7, 1); //Template Status = Enabled
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000003228, toGroup.getCompanyName());
-				template.setAttribute(1000003227, toGroup.getOrganisationName());
-				template.setAttribute(1000003229, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Coordinator Assignment of Change template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing coordinator assignment group of Change template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		//Update Assigned Implementer Group
-		searchMask.setFormName("CHG:Template");
-		searchMask.setAttribute(1000003254, fromGroup.getCompanyName()); //Assigned Company
-		searchMask.setAttribute(1000003255, fromGroup.getOrganisationName()); //Assigned Organisation
-		searchMask.setAttribute(1000003256, fromGroup.getSupportGroupName()); //Assigned Group
-		//searchMask.setAttribute(7, 1); //Template Status = Enabled
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				template.setAttribute(1000003254, toGroup.getCompanyName());
-				template.setAttribute(1000003255, toGroup.getOrganisationName());
-				template.setAttribute(1000003256, toGroup.getSupportGroupName());
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Assignment of Change template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment group of Change template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "change template assignment", "change template assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("CHG:Template");
-		searchMask.setAttribute(1000001341, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000001340, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000001339, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000828, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000001341, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000001340, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000001339, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring primary group of Change template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring primary group of Change template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "change template authoring primary group", "change template authoring primary groups", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Authoring Group
-		searchMask = new CoreItem();
-		searchMask.setFormName("CHG:TemplateSPGAssoc");
-		searchMask.setAttribute(1000000001, fromGroup.getCompanyName()); //Authoring Company
-		searchMask.setAttribute(1000000014, fromGroup.getOrganisationName()); //Authoring Organisation
-		searchMask.setAttribute(1000000015, fromGroup.getSupportGroupName()); //Authoring Group
-		templates = searchMask.search(getServerConnection());
-
-		for (Iterator i = templates.iterator(); i.hasNext();)
-		{
-			CoreItem template = (CoreItem) i.next();
-
-			try
-			{
-				template.setAttribute(1000000079, toGroup.getEntryId()); //Authoring Group ID
-				template.setAttribute(1000000001, toGroup.getCompanyName()); //Authoring Company
-				template.setAttribute(1000000014, toGroup.getOrganisationName()); //Authoring Organisation
-				template.setAttribute(1000000015, toGroup.getSupportGroupName()); //Authoring Group
-
-				template.update(getServerConnection());
-				RuntimeLogger.debug("Authoring association group of Change template '" + template.getEntryId() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing authoring association group of Problem template '" + template.getEntryId() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "problem template authoring association group", "problem template authoring association groups", "updated", "update");
+		updateTemplates(fromGroup, toGroup, "CHG:Template", 1000003228, 1000003227, 1000003229, 1000003234, "Change", "Coordinator Assignment");
+		updateTemplates(fromGroup, toGroup, "CHG:Template", 1000000251, 1000000014, 1000000015, 1000000079, "Change", "Manager Assignment");
+		updateTemplates(fromGroup, toGroup, "CHG:Template", 1000003254, 1000003255, 1000003256, 1000003259, "Change", "Implementer Assignment");
+		updateTemplates(fromGroup, toGroup, "CHG:Template", 1000000396, 1000003662, 1000003663, 1000003664, "Change", "Vendor Assignment");
+		updateTemplates(fromGroup, toGroup, "CHG:Template", 1000001341, 1000001340, 1000001339, 1000002500, "Change", "Authoring Assignment");
+		updateTemplates(fromGroup, toGroup, "CHG:TemplateSPGAssoc", 1000000001, 1000000014, 1000000015, 1000000079, "ChangeAuthoring", "Support Group");
 	}
 
 	protected void updateChanges(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		Long before = getConfiguration().getLong("changesbefore", null);
-		Long after = getConfiguration().getLong("changesafter", null);
-		boolean openChanges = getConfiguration().getBoolean("openchanges", false);
-
-		//Update Assigned Group
-		Change searchMask = new Change();
-		searchMask.setAssignmentCompany(fromGroup.getCompanyName());
-		searchMask.setAssignmentOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignmentGroup(fromGroup.getSupportGroupName());
-
-		if(openChanges ) searchMask.setAttribute(7, "< 11");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		List changes = searchMask.search(getServerConnection());
-
-		int correct = 0;
-		int errors = 0;
-
-		for (Iterator i = changes.iterator(); i.hasNext();)
-		{
-			Change change = (Change) i.next();
-
-			try
-			{
-				change.setAssignmentCompany(toGroup.getCompanyName());
-				change.setAssignmentOrganisation(toGroup.getOrganisationName());
-				change.setAssignmentGroup(toGroup.getSupportGroupName());
-				change.setAssignmentGroupId(toGroup.getEntryId());
-
-				change.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Assignment of Change '" + change.getChangeNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing assignment of Change '" + change.getChangeNumber() + "': " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "change assignment", "change assignments", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Coordinator Group
-		searchMask = new Change();
-		searchMask.setAssignedChangeCoordinatorCompany(fromGroup.getCompanyName());
-		searchMask.setAssignedChangeCoordinatorOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignedChangeCoordinatorGroup(fromGroup.getSupportGroupName());
-
-		if(openChanges ) searchMask.setAttribute(7, "< 11");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		changes = searchMask.search(getServerConnection());
-
-		for (Iterator i = changes.iterator(); i.hasNext();)
-		{
-			Change change = (Change) i.next();
-
-			try
-			{
-				change.setAssignedChangeCoordinatorCompany(toGroup.getCompanyName());
-				change.setAssignedChangeCoordinatorOrganisation(toGroup.getOrganisationName());
-				change.setAssignedChangeCoordinatorGroup(toGroup.getSupportGroupName());
-				change.setAssignedChangeCoordinatorGroupId(toGroup.getEntryId());
-
-				change.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Coordinator group of Change '" + change.getChangeNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing coordinator group of Change '" + change.getChangeNumber() + ": " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "change coordinator", "change coordinators", "updated", "update");
-		correct = 0;
-		errors = 0;
-
-		//Update Manager Group
-		searchMask = new Change();
-		searchMask.setAssignedChangeManagerCompany(fromGroup.getCompanyName());
-		searchMask.setAssignedChangeManagerOrganisation(fromGroup.getOrganisationName());
-		searchMask.setAssignedChangeManagerGroup(fromGroup.getSupportGroupName());
-
-		if(openChanges ) searchMask.setAttribute(7, "< 11");
-		if (after != null) searchMask.setAttribute(3, "> " + after.longValue());
-			else if (before != null) searchMask.setAttribute(3, "< " + before.longValue());
-
-		changes = searchMask.search(getServerConnection());
-
-		for (Iterator i = changes.iterator(); i.hasNext();)
-		{
-			Change change = (Change) i.next();
-
-			try
-			{
-				change.setAssignedChangeManagerCompany(toGroup.getCompanyName());
-				change.setAssignedChangeManagerOrganisation(toGroup.getOrganisationName());
-				change.setAssignedChangeManagerGroup(toGroup.getSupportGroupName());
-				change.setAssignedChangeManagerGroupId(toGroup.getEntryId());
-
-				change.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
-				RuntimeLogger.debug("Manager group of Change '" + change.getChangeNumber() + "' has been updated to take the new support group");
-				correct++;
-			}
-			catch(AREasyException are)
-			{
-				RuntimeLogger.error("Error changing manager group of Change '" + change.getChangeNumber() + ": " + are.getMessage());
-				logger.debug("Exception", are);
-				errors++;
-			}
-		}
-
-		setInfoLoggerMessage(correct, errors, "change manager", "change managers", "updated", "update");
+		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000003228, 1000003227, 1000003229, 1000003234, "Change", "Coordinator Assignment");
+		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000000251, 1000000014, 1000000015, 1000000079, "Change", "Manager Assignment");
+		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000000082, 1000000342, 1000000341, 1000000427, "Change", "Requester Support Group");
 	}
 
 	protected void updateTaskTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-
+		updateTemplates(fromGroup, toGroup, "TMS:TaskTemplate", 1000000251, 1000000014, 10002506, 10002505, "Task", "Assignee Assignment");
 	}
 
 	protected void updateTasks(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-
+		updateTickets(fromGroup, toGroup, "TMS:Task", "tasks", 6000, 1000000251, 1000000014, 10002506, 10002505, "Task", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "TMS:Task", "tasks", 6000, 1000000082, 1000000342, 1000000341, 1000000427, "Task", "Requester Support Group");
 	}
 
 	protected void updateWorkOrderTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-
+		updateTemplates(fromGroup, toGroup, "WOI:Template", 1000000251, 1000000014, 1000000015, 0, "WorkOrder", "Manager Assignment");
+		updateTemplates(fromGroup, toGroup, "WOI:Template", 1000003228, 1000003227, 1000003229, 0, "WorkOrder", "Assignee Assignment");
 	}
 
 	protected void updateWorkOrders(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-
+		updateTickets(fromGroup, toGroup, "WOI:WorkOrder", "workorders", 5, 1000000251, 1000000014, 1000000015, 1000000079, "WorkOrder", "Manager Assignment");
+		updateTickets(fromGroup, toGroup, "WOI:WorkOrder", "workorders", 5, 1000003228, 1000003227, 1000003229, 1000003234, "WorkOrder", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "WOI:WorkOrder", "workorders", 5, 1000000082, 1000000342, 1000000341, 1000000427, "WorkOrder", "Requester Support Group");
 	}
 
 	protected void updateKnowledgeRecords(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-
+		updateTickets(fromGroup, toGroup, "RKM:KnowledgeArticleManager", "knowledgerecords", 8, 302300585, 302300586, 302300512, 302300544, "KnowledgeRecord", "Assignee Assignment");
+		updateTickets(fromGroup, toGroup, "RKM:KnowledgeArticleManager", "knowledgerecords", 8, 302300587, 302300584, 302300542, 302300543, "KnowledgeRecord", "Owner Assignment");
 	}
 
 	protected void updateAssetRelationships(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
+		RuntimeLogger.info("Asset > Support Group Relationships - Start migration procedure..");
+
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("AST:AssetPeople");
 		searchMask.setAttribute(260100006, fromGroup.getEntryId());
 		searchMask.setAttribute(260100013, "Support Group");
 
-		//searchMask.setAttribute(7, 1); //Template Status = Enabled
 		List relations = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Found " + relations.size() + " relationships");
 
 		int correct = 0;
 		int errors = 0;
 
-		for (Iterator i = relations.iterator(); i.hasNext();)
+		for (Object relation1 : relations)
 		{
-			CoreItem relation = (CoreItem) i.next();
+			CoreItem relation = (CoreItem) relation1;
 
 			try
 			{
@@ -1348,7 +730,7 @@ public class SupportGroupRenameAction extends AbstractAction
 				RuntimeLogger.debug("Asset relationship record '" + relation.getEntryId() + "' has been updated to take the new support group");
 				correct++;
 			}
-			catch(AREasyException are)
+			catch (AREasyException are)
 			{
 				RuntimeLogger.error("Error changing asset relationship record '" + relation.getEntryId() + "': " + are.getMessage());
 				logger.debug("Exception", are);
@@ -1356,27 +738,136 @@ public class SupportGroupRenameAction extends AbstractAction
 			}
 		}
 
-		setInfoLoggerMessage(correct, errors, "asset relationship", "asset relationships", "updated", "update");
+		RuntimeLogger.info("Asset > Support Group Relationships - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
+	//todo - to be implemented
 	protected void updateCMDBRelationships(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
 
 	}
 
-	protected void setInfoLoggerMessage(int correct, int errors, String entity, String entities, String actioned, String action)
+	protected void updateTemplates(SupportGroup fromGroup, SupportGroup toGroup, String formName, long cName, long oName, long gName, long gId, String ticketName, String assignmentName) throws AREasyException
 	{
-		String correctString = "";
-		String errorString = "";
+		RuntimeLogger.info(ticketName + " Templates > " + assignmentName + " - Start migration procedure..");
 
-		if(correct <= 0) correctString = "No " + entity + " has been " + actioned;
-			else if(correct == 1) correctString = correct + " " + entity + " has been " + actioned;
-				else correctString = correct + " " + entities + " have been " + actioned;
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName(formName);
 
-		if(errors <= 0) errorString = " and no error met during " + action;
-			else if(errors == 1) errorString = " and " + errorString + " error met during " + action;
-				else errorString = " and " + errorString + " errors have been met during " + action;
+		if(cName > 0 && oName > 0 && gName > 0)
+		{
+			searchMask.setAttribute(cName, fromGroup.getCompanyName());         //Assigned Company
+			searchMask.setAttribute(oName, fromGroup.getOrganisationName());    //Assigned Organisation
+			searchMask.setAttribute(gName, fromGroup.getSupportGroupName());    //Assigned Group
+		}
+		else if (gId > 0)
+		{
+			searchMask.setAttribute(gId, fromGroup.getEntryId());   		 	//Assigned Group ID
+		}
 
-		RuntimeLogger.info(correctString + errorString);
+		List templates = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Found " + templates.size() + " " + ticketName + " templates");
+
+		int correct = 0;
+		int errors = 0;
+
+		for (Object tmplObject : templates)
+		{
+			CoreItem template = (CoreItem) tmplObject;
+
+			try
+			{
+				if(cName > 0) template.setAttribute(cName, toGroup.getCompanyName());            //Assigned Company
+				if(oName > 0) template.setAttribute(oName, toGroup.getOrganisationName());       //Assigned Organisation
+				if(gName > 0) template.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
+				if(gId > 0) template.setAttribute(gId, toGroup.getEntryId());	 				 //Assigned Group Id
+
+				//template.update(getServerConnection());
+				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
+				RuntimeLogger.debug(assignmentName + " of " + ticketName + " template '" + template.getEntryId() + "' has been migrated to the new support group");
+				correct++;
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error migrating " + assignmentName + " of " + ticketName + " template '" + template.getEntryId() + "': " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info(ticketName + " Templates > " + assignmentName + " - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
+	}
+
+	protected void updateTickets(SupportGroup fromGroup, SupportGroup toGroup, String formName, String optionName, int openStatus, long cName, long oName, long gName, long gId, String ticketName, String assignmentName) throws AREasyException
+	{
+		RuntimeLogger.info(ticketName + " Tickets > " + assignmentName + " - Start migration procedure..");
+
+		Long TicketsBefore = getConfiguration().getLong(optionName + "before", null);
+		Long TicketsAfter = getConfiguration().getLong(optionName + "after", null);
+		boolean openTickets = getConfiguration().getBoolean("open" + optionName, false);
+
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName(formName);
+
+		if(cName > 0 && oName > 0 && gName > 0)
+		{
+			searchMask.setAttribute(cName, fromGroup.getCompanyName());         //Assigned Company
+			searchMask.setAttribute(oName, fromGroup.getOrganisationName());    //Assigned Organisation
+			searchMask.setAttribute(gName, fromGroup.getSupportGroupName());    //Assigned Group
+		}
+		else if (gId > 0)
+		{
+			searchMask.setAttribute(gId, fromGroup.getEntryId());   		 	//Assigned Group ID
+		}
+
+		if (openTickets) searchMask.setAttribute(7, "< "  + String.valueOf(openStatus));
+		if (TicketsAfter != null) searchMask.setAttribute(3, "> " + TicketsAfter.longValue());
+			else if (TicketsBefore != null) searchMask.setAttribute(3, "< " + TicketsBefore.longValue());
+
+		List tickets = searchMask.search(getServerConnection());
+		RuntimeLogger.info("Found " + tickets.size() + " " + ticketName + " tickets");
+
+		int correct = 0;
+		int errors = 0;
+
+		for (Object ticketObject : tickets)
+		{
+			CoreItem ticket = (CoreItem) ticketObject;
+
+			try
+			{
+				if(cName > 0) ticket.setAttribute(cName, toGroup.getCompanyName());            //Assigned Company
+				if(oName > 0) ticket.setAttribute(oName, toGroup.getOrganisationName());       //Assigned Organisation
+				if(gName > 0) ticket.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
+				if(gId > 0) ticket.setAttribute(gId, toGroup.getEntryId());	 				   //Assigned Group Id
+
+				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
+				RuntimeLogger.debug(assignmentName + " of " + ticketName + " '" + ticket.getEntryId() + "' has been migrated to the new support group");
+				correct++;
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error migrating " + assignmentName + " of " + ticketName + " '" + ticket.getEntryId() + "': " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info(ticketName + " Tickets > " + assignmentName + " - End of migration procedure: " + correct + " updates(s) and " + errors + " error(s)");
+	}
+
+	protected SupportGroup getOldSupportEntity()
+	{
+		return this.oldSG;
+	}
+
+	protected SupportGroup getNewSupportEntity()
+	{
+		return this.newSG;
+	}
+
+	protected String getSupportGroupString(SupportGroup group)
+	{
+		return group.getCompanyName() + ">" + group.getOrganisationName() + ">" + group.getSupportGroupName();
 	}
 }

@@ -19,13 +19,9 @@ import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.runtime.engine.structures.data.itsm.Incident;
-import org.areasy.runtime.engine.structures.data.itsm.KnownError;
-import org.areasy.runtime.engine.structures.data.itsm.Problem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 import org.areasy.common.data.StringUtility;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -178,11 +174,17 @@ public class SupportGroupRenameAction extends AbstractAction
 
 	protected void setOldSupportGroupObsolete(SupportGroup oldSG) throws AREasyException
 	{
-		//make old group obsolete
-		oldSG.setStatus("Obsolete");
-		oldSG.update(getServerConnection());
+		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", false);
 
-		RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
+		if(!keepoldgroupenabled)
+		{
+			//make old group obsolete
+			oldSG.setStatus("Obsolete");
+			oldSG.update(getServerConnection());
+
+			RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
+		}
+		else RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' remained Enabled");
 	}
 
 	protected void setGroupMembers(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
@@ -213,13 +215,13 @@ public class SupportGroupRenameAction extends AbstractAction
 				newAssociation.setAttribute(ARDictionary.CTM_PERSONID, currentAssociation.getAttributeValue(ARDictionary.CTM_PERSONID));                    //Person ID
 				newAssociation.setAttribute(ARDictionary.CTM_SGROUP_ASSOC_ROLE, currentAssociation.getAttributeValue(ARDictionary.CTM_SGROUP_ASSOC_ROLE));  //Support Group Association Role
 				newAssociation.setAttribute(ARDictionary.CTM_FULLNAME, currentAssociation.getAttributeValue(ARDictionary.CTM_FULLNAME));                    //Full Name
-				newAssociation.setAttribute(1000000075, currentAssociation.getAttributeValue(1000000075));                                                  //Default Group (Yes/No)
 				newAssociation.setAttribute(1000000346, currentAssociation.getAttributeValue(1000000346));                                                  //Assignment Availability
 
 				newAssociation.read(getServerConnection());
 
 				if (!newAssociation.exists())
 				{
+					newAssociation.setAttribute(1000000075, currentAssociation.getAttributeValue(1000000075)); //Default Group (Yes/No)
 					newAssociation.create(getServerConnection());
 					RuntimeLogger.debug("Group member '" + newAssociation.getEntryId() + "' became member of the new support group");
 					correct++;
@@ -229,6 +231,11 @@ public class SupportGroupRenameAction extends AbstractAction
 				if (!keepoldmembership)
 				{
 					currentAssociation.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					currentAssociation.update(getServerConnection());
+				}
+				else if (currentAssociation.getAttributeValue(1000000075) != null && ((Integer)currentAssociation.getAttributeValue(1000000075)).intValue() == 0)
+				{
+					currentAssociation.setAttribute(1000000075, 1);
 					currentAssociation.update(getServerConnection());
 				}
 			}
@@ -277,6 +284,7 @@ public class SupportGroupRenameAction extends AbstractAction
 				newFRole.read(getServerConnection());
 				if(!newFRole.exists())
 				{
+					newFRole.setAttribute(1000000075, currentFRole.getAttributeValue(1000000075) != null ? currentFRole.getAttributeValue(1000000075) : 1); //Default (Yes/No)
 					newFRole.create(getServerConnection());
 					RuntimeLogger.debug("Functional role '" +  newFRole.getEntryId() + "' has been created for the new support group");
 					correct++;
@@ -286,6 +294,11 @@ public class SupportGroupRenameAction extends AbstractAction
 				if (!keepoldfunctionalroles)
 				{
 					currentFRole.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
+					currentFRole.update(getServerConnection());
+				}
+				else if (currentFRole.getAttributeValue(1000000075) != null && ((Integer)currentFRole.getAttributeValue(1000000075)).intValue() == 0)
+				{
+					currentFRole.setAttribute(1000000075, 1);
 					currentFRole.update(getServerConnection());
 				}
 			}

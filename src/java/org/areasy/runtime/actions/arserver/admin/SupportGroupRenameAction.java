@@ -38,13 +38,13 @@ public class SupportGroupRenameAction extends AbstractAction
 	public void run() throws AREasyException
 	{
 		boolean allgroupdetails = getConfiguration().getBoolean("allgroupdetails", false);
-		boolean groupmembers = getConfiguration().getBoolean("groupmembers", false);
+		boolean members = getConfiguration().getBoolean("members", false);
 		boolean functionalroles = getConfiguration().getBoolean("functionalroles", false);
 		boolean aliases = getConfiguration().getBoolean("aliases", false);
-		boolean approvalmappings = getConfiguration().getBoolean("approvalmappings", false);
 		boolean favorites = getConfiguration().getBoolean("favorites", false);
 		boolean oncalls = getConfiguration().getBoolean("oncalls", false);
 		boolean shifts = getConfiguration().getBoolean("shifts", false);
+		boolean approvalmappings = getConfiguration().getBoolean("approvalmappings", false);
 		boolean allrelatedtickets = getConfiguration().getBoolean("allrelatedtickets", false);
 		boolean incidents = getConfiguration().getBoolean("incidents", false);
 		boolean incidentTemplates = getConfiguration().getBoolean("incidenttemplates", false);
@@ -91,16 +91,18 @@ public class SupportGroupRenameAction extends AbstractAction
 		setNewSupportGroup(oldSG, newSG);
 
 		//update/create all related details
-		if(groupmembers || allgroupdetails) setGroupMembers(oldSG, newSG);
+		if(members || allgroupdetails) setGroupMembers(oldSG, newSG);
 		if(functionalroles || allgroupdetails) setFunctionalRoles(oldSG, newSG);
 		if(aliases || allgroupdetails) setGroupAliases(oldSG, newSG);
-		if(approvalmappings || allgroupdetails) updateApprovalMappings(oldSG, newSG);
-		if(favorites || allgroupdetails) setGroupAssignments(oldSG, newSG);
+		if(favorites || allgroupdetails) setGroupFavorites(oldSG, newSG);
 		if(oncalls || allgroupdetails) setGroupOnCallRecords(oldSG, newSG);
 		if(shifts || allgroupdetails) setGroupShifts(oldSG, newSG);
 
 		//make the old support group unavailable
 		setOldSupportGroupObsolete(oldSG);
+
+		//update the approval mapping
+		if(approvalmappings || allrelatedtickets) updateApprovalMappings(oldSG, newSG);
 
 		// update incidents and related templates
 		if(incidentTemplates || allrelatedtickets) updateIncidentTemplates(oldSG, newSG);
@@ -182,15 +184,15 @@ public class SupportGroupRenameAction extends AbstractAction
 			oldSG.setStatus("Obsolete");
 			oldSG.update(getServerConnection());
 
-			RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
+			RuntimeLogger.info("The old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
 		}
-		else RuntimeLogger.info("THe old support group '" + getSupportGroupString(oldSG) + "' remained Enabled");
+		else RuntimeLogger.info("The old support group '" + getSupportGroupString(oldSG) + "' remained Enabled");
 	}
 
 	protected void setGroupMembers(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
 		RuntimeLogger.info("Support Group > Members - Start migration procedure..");
-		boolean keepoldmembership = getConfiguration().getBoolean("keepoldmembership", true);
+		boolean keepoldmembership = getConfiguration().getBoolean("keepoldmembers", true);
 
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Association");
@@ -367,17 +369,17 @@ public class SupportGroupRenameAction extends AbstractAction
 		RuntimeLogger.info("Support Group > Aliases - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
-	protected void setGroupAssignments(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupFavorites(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
 		RuntimeLogger.info("Support Group > Assignments - Start migration procedure..");
-		boolean keepoldassignments = getConfiguration().getBoolean("keepoldassignments", true);
+		boolean keepoldfavorites = getConfiguration().getBoolean("keepoldfavorites", true);
 
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("CTM:Support Group Assignments");
 		searchMask.setAttribute(1000000789, fromGroup.getEntryId()); //Default Support Group ID
 		List groupAssignments = searchMask.search(getServerConnection());
 
-		RuntimeLogger.info("Found " + groupAssignments.size() + " records");
+		RuntimeLogger.info("Found " + groupAssignments.size() + " referred  records");
 		int correct = 0;
 		int errors = 0;
 
@@ -405,7 +407,7 @@ public class SupportGroupRenameAction extends AbstractAction
 		searchMask.setFormName("CTM:Support Group Assignments");
 		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
 		groupAssignments = searchMask.search(getServerConnection());
-		RuntimeLogger.info("Found " + groupAssignments.size() + " records");
+		RuntimeLogger.info("Found " + groupAssignments.size() + " reference records");
 
 		for (Object groupAssignment : groupAssignments)
 		{
@@ -428,7 +430,7 @@ public class SupportGroupRenameAction extends AbstractAction
 				else RuntimeLogger.debug("Group assignment '" + newGroupAssig.getEntryId() + "' already exists");
 
 				//Remove Assignments
-				if (!keepoldassignments)
+				if (!keepoldfavorites)
 				{
 					groupAssig.setAttribute(ARDictionary.CTM_Z1DACTION, "DELETE"); //z1D Action
 					groupAssig.update(getServerConnection());

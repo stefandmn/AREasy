@@ -68,10 +68,10 @@ __Details__
 
 __Examples__
 
-    areasy -runtime -action admin.rename.sgroup -memberships on -aliases on -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
+    areasy -runtime -action admin.rename.sgroup -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
 = makes old support group offline, creates a new support group and transfers from old group to the new one the following entities: aliases, people accounts and application functional roles
 
-    areasy -runtime -action admin.rename.sgroup -memberships on -aliases on -incidents on -incidenttemplates on -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
+    areasy -runtime -action admin.rename.sgroup -members -aliases -incidents -incidenttemplates -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
 = performs usual actions (mentioned in the first example) and additionally update changes in incidents and incident templates replacing old group with the new one and authoring areas is updated as well. All secondary authoring groups are evaluated for this type of change.
 
     areasy -runtime -action admin.rename.sgroup -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on

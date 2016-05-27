@@ -25,6 +25,7 @@ The standard command line is described below:
 
 **Where:**
 
+| Parameter               | Details     |
 | ----------------------- | ----------- |
 | `sgroupcompany`         | current support group company. In addition the action supports another alias for this option: `supportgroupcompany`|
 | `sgrouporganisation`    | current support group organisation. In addition the action supports another alias for this option: `supportgrouporganisation`|

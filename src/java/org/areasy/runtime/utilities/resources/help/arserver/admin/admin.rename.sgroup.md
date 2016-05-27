@@ -22,11 +22,10 @@ The standard command line is described below:
     	[-approvalmappings]
 
 
+__Details__
 
-**Where:**
-
-| Parameter               | Details     |
-| ----------------------- | ----------- |
+| Parameter Name          | Documentation     |
+| ----------------------- | ----------------- |
 | `sgroupcompany`         | current support group company. In addition the action supports another alias for this option: `supportgroupcompany`|
 | `sgrouporganisation`    | current support group organisation. In addition the action supports another alias for this option: `supportgrouporganisation`|
 | `sgroupname`            | current support group name. In addition the action supports some aliases for this option: `sgroup`, `supportgroup`, `supportgroupname`|
@@ -66,7 +65,8 @@ The standard command line is described below:
 | `changesafter`          | allows you to update only changes that are created after the specified date. This option excludes 'changesbefore' option and vice-versa|
 | `openchanges`           | allows you to update only open changes (all changes that have status = Draft, Request For Authorization, Request For Change, Planning In Progress, Scheduled For Review, Scheduled For Approval, Scheduled, Implementation In Progress, Pending, Rejected or Completed)|
 
-__Examples:__
+
+__Examples__
 
     areasy -runtime -action admin.rename.sgroup -memberships on -aliases on -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
 = makes old support group offline, creates a new support group and transfers from old group to the new one the following entities: aliases, people accounts and application functional roles

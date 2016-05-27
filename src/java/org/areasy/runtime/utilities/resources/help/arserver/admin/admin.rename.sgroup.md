@@ -24,7 +24,7 @@ The standard command line is described below:
 
 __Details__
 
-| Parameter Name          | Documentation     |
+| Parameter               | Description       |
 | ----------------------- | ----------------- |
 | `sgroupcompany`         | current support group company. In addition the action supports another alias for this option: `supportgroupcompany`|
 | `sgrouporganisation`    | current support group organisation. In addition the action supports another alias for this option: `supportgrouporganisation`|
@@ -33,11 +33,11 @@ __Details__
 | `newsgrouporganisation` | new support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: `newsupportgrouporganisation`|
 | `newsgroupname`         | new support group name (group name part of the new support group that will be created). In addition the action supports some aliases for this option: `sgroup`, `supportgroup`, `supportgroupname`|
 | `allgroupdetails`       | transfer all related details from old support group to the new support group. Here are considered all members, alias, functional roles, oncall records, shifts, etc. (actually this option could be used in case of you want to create a mirrored support group).|
-| `members`               | transfer the people accounts that are members to old support group to the new support group. Together with this transfer are managed in the same way the functional roles|
-| `keepoldmembers`        | |
-| `functionalroles`       | |
-| `keepoldfunctionalroles`| |
-| `aliases`               | transfer old support group aliases to the new support group|
+| `members`               | migrates to the new support group all people accounts that are members of old support group. In case the old support group was the primary group for specific accounts the primary role will be transferred to the new support group (and for the old one it will be reset)|
+| `keepoldmembers`        | specifies if during migration process the members of old support group will be kept or not|
+| `functionalroles`       | migrates to the new support group all functional roles found to the old support group|
+| `keepoldfunctionalroles`| specifies if during migration process the functional roles related to the old support group will be kept or not|
+| `aliases`               | migrates old support group aliases to the new support group|
 | `keepoldaiases`         | |
 | `favorites`             | transfer old support group favorites to the new support group|
 | `keepoldfavorites`      | |
@@ -76,3 +76,6 @@ __Examples__
 
     areasy -runtime -action admin.rename.sgroup -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
 = makes old group offline creates a new support group and transfer from old group to the new one all details. Additionally update all asset relationships where a support group is related, replacing old group with the new one.
+
+    areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action admin.rename.sgroup -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
+= the same target command but with an explicit connection to AR System server. The action will be executed in runtime mode (because of `-runtime` option specified in the command line) 

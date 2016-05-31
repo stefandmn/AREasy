@@ -64,6 +64,7 @@ __Details__
 | `changesbefore`         | allows you to update only changes that are created before the specified date. This option excludes 'changesafter' option and vice-versa|
 | `changesafter`          | allows you to update only changes that are created after the specified date. This option excludes 'changesbefore' option and vice-versa|
 | `openchanges`           | allows you to update only open changes (all changes that have status = Draft, Request For Authorization, Request For Change, Planning In Progress, Scheduled For Review, Scheduled For Approval, Scheduled, Implementation In Progress, Pending, Rejected or Completed)|
+| `dataaccess`            | |
 
 
 __Examples__

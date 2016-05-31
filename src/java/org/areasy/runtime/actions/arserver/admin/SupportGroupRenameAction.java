@@ -35,6 +35,9 @@ public class SupportGroupRenameAction extends AbstractAction
 	private SupportGroup oldSG = null;
 	private SupportGroup newSG = null;
 
+	private String oldPermId = null;
+	private String newPermId = null;
+
 	public void run() throws AREasyException
 	{
 		boolean allgroupdetails = getConfiguration().getBoolean("allgroupdetails", false);
@@ -58,12 +61,59 @@ public class SupportGroupRenameAction extends AbstractAction
 		boolean workorders = getConfiguration().getBoolean("workorders", false);
 		boolean workorderTemplates = getConfiguration().getBoolean("workordertemplates", false);
 		boolean assetrelationships = getConfiguration().getBoolean("assetrelationships", false);
-		boolean cmdbrelationships = getConfiguration().getBoolean("cmdbrelationships", false);
 		boolean knowledgerecords = getConfiguration().getBoolean("knowledgerecords", false);
 
+		//Detect old support group and create/update the new support group
+		setSupportGroups();
+
+		//update/create all related details
+		if(members || allgroupdetails) setGroupMembers(getOldSupportGroup(), getNewSupportGroup());
+		if(functionalroles || allgroupdetails) setFunctionalRoles(getOldSupportGroup(), getNewSupportGroup());
+		if(aliases || allgroupdetails) setGroupAliases(getOldSupportGroup(), getNewSupportGroup());
+		if(favorites || allgroupdetails) setGroupFavorites(getOldSupportGroup(), getNewSupportGroup());
+		if(oncalls || allgroupdetails) setGroupOnCallRecords(getOldSupportGroup(), getNewSupportGroup());
+		if(shifts || allgroupdetails) setGroupShifts(getOldSupportGroup(), getNewSupportGroup());
+
+		//make the old support group unavailable
+		disableOldSupportGroup();
+
+		// update incidents and related templates
+		if(incidentTemplates || allrelatedtickets) updateIncidentTemplates(getOldSupportGroup(), getNewSupportGroup());
+		if(incidents || allrelatedtickets) updateIncidents(getOldSupportGroup(), getNewSupportGroup());
+
+		//update problems, known errors and related templates
+		if(problemTemplates || allrelatedtickets) updateProblemTemplates(getOldSupportGroup(), getNewSupportGroup());
+		if(problems || allrelatedtickets) updateProblems(getOldSupportGroup(), getNewSupportGroup());
+		if(knownerrors || allrelatedtickets) updateKnownErrors(getOldSupportGroup(), getNewSupportGroup());
+
+		//update changes and related templates
+		if(changeTemplates || allrelatedtickets) updateChangeTemplates(getOldSupportGroup(), getNewSupportGroup());
+		if(changes || allrelatedtickets) updateChanges(getOldSupportGroup(), getNewSupportGroup());
+
+		//update tasks and related templates
+		if(taskTemplates || allrelatedtickets) updateTaskTemplates(getOldSupportGroup(), getNewSupportGroup());
+		if(tasks || allrelatedtickets) updateTasks(getOldSupportGroup(), getNewSupportGroup());
+
+		//update workorders and related templates
+		if(workorderTemplates || allrelatedtickets) updateWorkOrderTemplates(getOldSupportGroup(), getNewSupportGroup());
+		if(workorders || allrelatedtickets) updateWorkOrders(getOldSupportGroup(), getNewSupportGroup());
+
+		// update CIs and related assets
+		if(assetrelationships || allrelatedtickets) updateAssetRelationships(getOldSupportGroup(), getNewSupportGroup());
+
+		//update KRs
+		if(knowledgerecords || allrelatedtickets) updateKnowledgeRecords(getOldSupportGroup(), getNewSupportGroup());
+
+		//update the approval mapping
+		if(approvalmappings || allrelatedtickets) updateApprovalMappings(getOldSupportGroup(), getNewSupportGroup());
+	}
+
+	protected void setSupportGroups() throws AREasyException
+	{
 		String oldCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
 		String oldOrganisation = getConfiguration().getString("sgrouporganisation", getConfiguration().getString("supportgrouporganisation", null));
 		String oldGroup = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
+		String oldGroupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
 
 		String newCompany = getConfiguration().getString("newsgroupcompany", getConfiguration().getString("newsupportgroupcompany", null));
 		String newOrganisation = getConfiguration().getString("newsgrouporganisation", getConfiguration().getString("newsupportgrouporganisation", null));
@@ -73,6 +123,7 @@ public class SupportGroupRenameAction extends AbstractAction
 		oldSG.setCompanyName(oldCompany);
 		oldSG.setOrganisationName(oldOrganisation);
 		oldSG.setSupportGroupName(oldGroup);
+		if(oldGroupId != null) oldSG.setAttribute(1, oldGroupId);
 
 		newSG = new SupportGroup();
 		newSG.setCompanyName(newCompany);
@@ -80,63 +131,13 @@ public class SupportGroupRenameAction extends AbstractAction
 		newSG.setSupportGroupName(newGroup);
 
 		if(StringUtility.equals(newSG.getCompanyName(), oldSG.getCompanyName()) &&
-			StringUtility.equals(newSG.getOrganisationName(), oldSG.getOrganisationName()) &&
-			StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
+				StringUtility.equals(newSG.getOrganisationName(), oldSG.getOrganisationName()) &&
+				StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
 		{
 			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
 			return;
 		}
-
-		//run new support group creation procedure and to make the old one obsolete
-		setNewSupportGroup(oldSG, newSG);
-
-		//update/create all related details
-		if(members || allgroupdetails) setGroupMembers(oldSG, newSG);
-		if(functionalroles || allgroupdetails) setFunctionalRoles(oldSG, newSG);
-		if(aliases || allgroupdetails) setGroupAliases(oldSG, newSG);
-		if(favorites || allgroupdetails) setGroupFavorites(oldSG, newSG);
-		if(oncalls || allgroupdetails) setGroupOnCallRecords(oldSG, newSG);
-		if(shifts || allgroupdetails) setGroupShifts(oldSG, newSG);
-
-		//make the old support group unavailable
-		setOldSupportGroupObsolete(oldSG);
-
-		//update the approval mapping
-		if(approvalmappings || allrelatedtickets) updateApprovalMappings(oldSG, newSG);
-
-		// update incidents and related templates
-		if(incidentTemplates || allrelatedtickets) updateIncidentTemplates(oldSG, newSG);
-		if(incidents || allrelatedtickets) updateIncidents(oldSG, newSG);
-
-		//update problems and related templates
-		if(problemTemplates || allrelatedtickets) updateProblemTemplates(oldSG, newSG);
-		if(problems || allrelatedtickets) updateProblems(oldSG, newSG);
-
-		//update know errors
-		if(knownerrors || allrelatedtickets) updateKnownErrors(oldSG, newSG);
-
-		//update changes and related templates
-		if(changeTemplates || allrelatedtickets) updateChangeTemplates(oldSG, newSG);
-		if(changes || allrelatedtickets) updateChanges(oldSG, newSG);
-
-		//update tasks and related templates
-		if(taskTemplates || allrelatedtickets) updateTaskTemplates(oldSG, newSG);
-		if(tasks || allrelatedtickets) updateTasks(oldSG, newSG);
-
-		//update workorders and related templates
-		if(workorderTemplates || allrelatedtickets) updateWorkOrderTemplates(oldSG, newSG);
-		if(workorders || allrelatedtickets) updateWorkOrders(oldSG, newSG);
-
-		// update CIs and related assets
-		if(assetrelationships || allrelatedtickets) updateAssetRelationships(oldSG, newSG);
-		if(cmdbrelationships || allrelatedtickets) updateCMDBRelationships(oldSG, newSG);
-
-		//update KRs
-		if(knowledgerecords || allrelatedtickets) updateKnowledgeRecords(oldSG, newSG);
-	}
-
-	protected void setNewSupportGroup(SupportGroup oldSG, SupportGroup newSG) throws AREasyException
-	{
+		
 		boolean create = true;
 		newSG.read(getServerConnection());
 
@@ -147,8 +148,16 @@ public class SupportGroupRenameAction extends AbstractAction
 			create = false;
 		}
 
+		oldSG.setAttribute(7, new Integer(1));
 		oldSG.read(getServerConnection());
-		if(!oldSG.exists()) throw new AREasyException("Support group '" + getSupportGroupString(oldSG) + "' doesn't exist");
+
+		if(!oldSG.exists())
+		{
+			oldSG.deleteAttribute(7);
+			oldSG.read(getServerConnection());
+
+			if(!oldSG.exists()) throw new AREasyException("Support group '" + getSupportGroupString(oldSG) + "' doesn't exist");
+		}
 
 		newSG.setRole(oldSG.getRole());
 		newSG.setDescription(oldSG.getDescription());
@@ -172,11 +181,15 @@ public class SupportGroupRenameAction extends AbstractAction
 			newSG.update(getServerConnection());
 			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' has been updated and enabled");
 		}
+
+		//read permissions from new group and from old one
+		oldPermId = oldSG.getRelatedSystemGroup(getServerConnection()).getStringAttributeValue(1000001579);
+		newPermId = newSG.getRelatedSystemGroup(getServerConnection()).getStringAttributeValue(1000001579);
 	}
 
-	protected void setOldSupportGroupObsolete(SupportGroup oldSG) throws AREasyException
+	protected void disableOldSupportGroup() throws AREasyException
 	{
-		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", false);
+		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", !getConfiguration().getBoolean("keepoldmembers", true));
 
 		if(!keepoldgroupenabled)
 		{
@@ -385,19 +398,19 @@ public class SupportGroupRenameAction extends AbstractAction
 
 		for (Object groupAssigObj : groupAssignments)
 		{
-			CoreItem groupAssig = (CoreItem) groupAssigObj;
+			CoreItem groupAssignment = (CoreItem) groupAssigObj;
 
 			try
 			{
-				groupAssig.setAttribute(1000000789, toGroup.getEntryId());
-				groupAssig.update(getServerConnection());
+				groupAssignment.setAttribute(1000000789, toGroup.getEntryId());
+				groupAssignment.update(getServerConnection());
 
-				RuntimeLogger.debug("Group assignment '" + groupAssig.getEntryId() + "' (favorite group) has been updated to refer the new support group");
+				RuntimeLogger.debug("Group assignment '" + groupAssignment.getEntryId() + "' (favorite group) has been updated to refer the new support group");
 				correct++;
 			}
 			catch (AREasyException are)
 			{
-				RuntimeLogger.error("Error updating existing group assignment '" + groupAssig.getEntryId() + "' (favorite group) for the new support group: " + are.getMessage());
+				RuntimeLogger.error("Error updating existing group assignment '" + groupAssignment.getEntryId() + "' (favorite group) for the new support group: " + are.getMessage());
 				logger.debug("Exception", are);
 				errors++;
 			}
@@ -617,8 +630,7 @@ public class SupportGroupRenameAction extends AbstractAction
 			try
 			{
 				approval.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				approval.update(getServerConnection());
-
+				approval.merge(getServerConnection());
 				RuntimeLogger.debug("Group approval mapping '" + approval.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -636,6 +648,7 @@ public class SupportGroupRenameAction extends AbstractAction
 	protected void updateIncidentTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
 		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000000251, 302126600, 1000000217, 1000000079, "Incident", "Assignee Assignment");
+		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000000396, 1000003662, 1000003663, 0, "Incident", "Vendor Assignment");
 		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000001341, 1000001340, 1000001339, 1000000828, "Incident", "Authoring Assignment");
 		updateTemplates(fromGroup, toGroup, "HPD:TemplateSPGAssoc", 1000000001, 1000000014, 1000000015, 1000000079, "IncidentAuthoring", "Support Group");
 	}
@@ -644,6 +657,7 @@ public class SupportGroupRenameAction extends AbstractAction
 	{
 		updateTickets(fromGroup, toGroup, "HPD:Help Desk", "incidents", 5, 1000000251, 1000000014, 1000000217, 1000000079, "Incident", "Assignee Assignment");
 		updateTickets(fromGroup, toGroup, "HPD:Help Desk", "incidents", 5, 1000000426, 1000000342, 1000000422, 1000000427, "Incident", "Owner Assignment");
+		updateTickets(fromGroup, toGroup, "HPD:Help Desk", "incidents", 5, 1000000396, 1000003662, 1000003663, 1000003664, "Incident", "Vendor Assignment");
 	}
 
 	protected void updateProblemTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
@@ -658,6 +672,7 @@ public class SupportGroupRenameAction extends AbstractAction
 	{
 		updateTickets(fromGroup, toGroup, "PBM:Problem Investigation", "problems", 8, 1000000251, 1000000014, 1000000217, 1000000079, "Problem", "Assignee Assignment");
 		updateTickets(fromGroup, toGroup, "PBM:Problem Investigation", "problems", 8, 1000000834, 1000000835, 1000000837, 1000000427, "Problem", "Coordinator Assignment");
+		updateTickets(fromGroup, toGroup, "PBM:Problem Investigation", "problems", 8, 1000000082, 1000001640, 1000001639, 1000001641, "Problem", "Requester Support Group");
 	}
 
 	protected void updateKnownErrors(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
@@ -734,13 +749,40 @@ public class SupportGroupRenameAction extends AbstractAction
 
 			try
 			{
+				//set permissions through field 112
+				setDataAccess(relation);
+
+				//support group update data
 				relation.setAttribute(260100006, toGroup.getEntryId());
 				relation.setAttribute(301104200, toGroup.getInstanceId());
 				relation.setAttribute(260100003, toGroup.getCompanyName() + "->" + toGroup.getOrganisationName() + "->" + toGroup.getSupportGroupName());
 
-				relation.update(getServerConnection());
+				relation.merge(getServerConnection());
 				RuntimeLogger.debug("Asset relationship record '" + relation.getEntryId() + "' has been updated to take the new support group");
 				correct++;
+
+				try
+				{
+					CoreItem ci = new CoreItem("BMC.CORE:BMC_BaseElement");
+					ci.setAttribute(400129200, relation.getStringAttributeValue(301104100));
+					ci.read((getServerConnection()));
+
+					if(ci.exists())
+					{
+						//set permissions through field 112 and 60513
+						setDataAccess(ci);
+						setDataAccess(ci, "60513");
+
+						ci.merge(getServerConnection());
+						RuntimeLogger.debug("Related configuration item '" + ci.getEntryId() + "' has been updated to take the new support group");
+					}
+				}
+				catch (AREasyException are)
+				{
+					RuntimeLogger.error("Error changing related configuration item '" + relation.getStringAttributeValue(301104100) + "': " + are.getMessage());
+					logger.debug("Exception", are);
+					errors++;
+				}
 			}
 			catch (AREasyException are)
 			{
@@ -751,12 +793,6 @@ public class SupportGroupRenameAction extends AbstractAction
 		}
 
 		RuntimeLogger.info("Asset > Support Group Relationships - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
-	}
-
-	//todo - to be implemented
-	protected void updateCMDBRelationships(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
-	{
-
 	}
 
 	protected void updateTemplates(SupportGroup fromGroup, SupportGroup toGroup, String formName, long cName, long oName, long gName, long gId, String ticketName, String assignmentName) throws AREasyException
@@ -789,12 +825,15 @@ public class SupportGroupRenameAction extends AbstractAction
 
 			try
 			{
+				//set permissions through field 112
+				setDataAccess(template);
+
+				//update support group data
 				if(cName > 0) template.setAttribute(cName, toGroup.getCompanyName());            //Assigned Company
 				if(oName > 0) template.setAttribute(oName, toGroup.getOrganisationName());       //Assigned Organisation
 				if(gName > 0) template.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
 				if(gId > 0) template.setAttribute(gId, toGroup.getEntryId());	 				 //Assigned Group Id
 
-				//template.update(getServerConnection());
 				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " template '" + template.getEntryId() + "' has been migrated to the new support group");
 				correct++;
@@ -853,6 +892,11 @@ public class SupportGroupRenameAction extends AbstractAction
 				if(gName > 0) ticket.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
 				if(gId > 0) ticket.setAttribute(gId, toGroup.getEntryId());	 				   //Assigned Group Id
 
+				//set permissions through field 112
+				setDataAccess(ticket);
+				setDataAccess(ticket, "60900");
+				setDataAccess(ticket, "60903");
+
 				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " '" + ticket.getEntryId() + "' has been migrated to the new support group");
 				correct++;
@@ -868,12 +912,56 @@ public class SupportGroupRenameAction extends AbstractAction
 		RuntimeLogger.info(ticketName + " Tickets > " + assignmentName + " - End of migration procedure: " + correct + " updates(s) and " + errors + " error(s)");
 	}
 
-	protected SupportGroup getOldSupportEntity()
+	protected void setDataAccess(CoreItem entity)
+	{
+		setDataAccess(entity, null, "112");
+	}
+
+	protected void setDataAccess(CoreItem entity, String fieldId)
+	{
+		setDataAccess(entity, null, fieldId);
+	}
+
+	protected void setDataAccess(CoreItem entity, String mode, String fieldId)
+	{
+		if(mode == null) mode = getConfiguration().getString("dataaccess", "update");
+		if(fieldId == null) fieldId = "112";
+
+		if(StringUtility.equalsIgnoreCase(mode, "update"))
+		{
+			String fieldValue = entity.getStringAttributeValue(fieldId);
+			if(fieldValue != null && StringUtility.contains(fieldValue, getOldPermissionId()))
+			{
+				entity.setAttribute(fieldId, StringUtility.replace(fieldValue, getOldPermissionId(), getNewPermissionId()));
+			}
+		}
+		else if(StringUtility.equalsIgnoreCase(mode, "append"))
+		{
+			String fieldValue = entity.getStringAttributeValue(fieldId);
+			if(fieldValue != null && !StringUtility.contains(fieldValue, getNewPermissionId()))
+			{
+				if(fieldValue.endsWith(";")) entity.setAttribute(fieldId, fieldValue + getNewPermissionId() + ";");
+					else entity.setAttribute(fieldId, fieldValue + ";" + getNewPermissionId());
+			}
+		}
+	}
+
+	protected String getOldPermissionId()
+	{
+		return this.oldPermId;
+	}
+
+	protected String getNewPermissionId()
+	{
+		return this.newPermId;
+	}
+
+	protected SupportGroup getOldSupportGroup()
 	{
 		return this.oldSG;
 	}
 
-	protected SupportGroup getNewSupportEntity()
+	protected SupportGroup getNewSupportGroup()
 	{
 		return this.newSG;
 	}

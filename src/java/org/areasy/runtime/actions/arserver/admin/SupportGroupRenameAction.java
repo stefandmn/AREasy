@@ -189,7 +189,7 @@ public class SupportGroupRenameAction extends AbstractAction
 
 	protected void disableOldSupportGroup() throws AREasyException
 	{
-		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", !getConfiguration().getBoolean("keepoldmembers", true));
+		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", !getConfiguration().containsKey("keepoldmembers") || !getConfiguration().getBoolean("keepoldmembers", true));
 
 		if(!keepoldgroupenabled)
 		{
@@ -630,7 +630,7 @@ public class SupportGroupRenameAction extends AbstractAction
 			try
 			{
 				approval.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				approval.merge(getServerConnection());
+				approval.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
 				RuntimeLogger.debug("Group approval mapping '" + approval.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -743,9 +743,9 @@ public class SupportGroupRenameAction extends AbstractAction
 		int correct = 0;
 		int errors = 0;
 
-		for (Object relation1 : relations)
+		for (Object relationObj : relations)
 		{
-			CoreItem relation = (CoreItem) relation1;
+			CoreItem relation = (CoreItem) relationObj;
 
 			try
 			{
@@ -757,7 +757,7 @@ public class SupportGroupRenameAction extends AbstractAction
 				relation.setAttribute(301104200, toGroup.getInstanceId());
 				relation.setAttribute(260100003, toGroup.getCompanyName() + "->" + toGroup.getOrganisationName() + "->" + toGroup.getSupportGroupName());
 
-				relation.merge(getServerConnection());
+				relation.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
 				RuntimeLogger.debug("Asset relationship record '" + relation.getEntryId() + "' has been updated to take the new support group");
 				correct++;
 
@@ -773,7 +773,7 @@ public class SupportGroupRenameAction extends AbstractAction
 						setDataAccess(ci);
 						setDataAccess(ci, "60513");
 
-						ci.merge(getServerConnection());
+						ci.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
 						RuntimeLogger.debug("Related configuration item '" + ci.getEntryId() + "' has been updated to take the new support group");
 					}
 				}

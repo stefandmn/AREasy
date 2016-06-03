@@ -15,7 +15,7 @@
 
 <!DOCTYPE help SYSTEM "action.dtd">
 
-<help inherit="action.xml">
+<help>
 	<name>Clean</name>
 	<description>Clean action runs only in server mode and it executes garbage collector, removes temporary files, log files and also removes the cache objects.</description>
 	<syntax>areasy -action clean [-olderthan 10|20|..(in days)] [-force]</syntax>

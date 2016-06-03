@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.admin.AbstractUserEnrollment;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -23,7 +24,7 @@ import org.areasy.common.data.StringUtility;
 /**
  * Dedicated action to set application role for an user or for a list of users
  */
-public class ApplicationRoleSetAction extends AbstractUserEnrollmentAction
+public class ApplicationRoleSetAction extends AbstractUserEnrollment
 {
 	/**
 	 * Execute action's workflow.

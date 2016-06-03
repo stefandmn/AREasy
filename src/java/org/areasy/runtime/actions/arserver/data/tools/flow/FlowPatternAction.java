@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions;
+package org.areasy.runtime.actions.arserver.data.tools.flow;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -42,10 +42,10 @@ import java.util.*;
  * has to derive this class. This action is able to start an AAR workflow that record the execution startup, execute
  * proper sub-action and record the entire execution journal. All logging info are manage in some specific Remedy forms.
  */
-public abstract class PatternAction extends BaseDataAction implements RuntimeAction, ARDictionary
+public abstract class FlowPatternAction extends BaseDataAction implements RuntimeAction, ARDictionary
 {
 	/** Library logger */
-	protected static Logger logger = LoggerFactory.getLog(PatternAction.class);
+	protected static Logger logger = LoggerFactory.getLog(FlowPatternAction.class);
 
 	/** Sources repository */
 	private static Map sources = new Hashtable();
@@ -200,7 +200,7 @@ public abstract class PatternAction extends BaseDataAction implements RuntimeAct
 				relatedCommand += " " + commandLine;
 
 				Configuration config = getManager().getConfiguration(relatedCommand);
-				PatternAction action = (PatternAction) getManager().getRuntimeAction(actionName);
+				FlowPatternAction action = (FlowPatternAction) getManager().getRuntimeAction(actionName);
 				getManager().process(action, config);
 			}
 		}

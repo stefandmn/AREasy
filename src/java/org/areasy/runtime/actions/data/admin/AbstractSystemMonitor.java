@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.admin;
+package org.areasy.runtime.actions.data.admin;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -37,7 +37,7 @@ import java.util.Properties;
  * Remedy system information
  *
  */
-public abstract class AbstractSystemMonitorAction extends AbstractAction implements RuntimeAction
+public abstract class AbstractSystemMonitor extends AbstractAction implements RuntimeAction
 {
 	/**
 	 * This method execute the initialization workflow fr system actions.

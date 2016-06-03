@@ -373,11 +373,4 @@ public class DevProcessAction extends DefinitionAction
 			else list.add(object);
 		}
 	}
-
-	public String help()
-	{
-		return  "[-parserfile <excel file>] [-export|-import] [-outputfile|-outputfolder <definition file|path> " +
-				"[divided]] [-inputfile|-inputfolder <definition file|path> [divided]] [-overlay] " +
-				super.help();
-	}
 }

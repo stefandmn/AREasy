@@ -14,6 +14,7 @@ package org.areasy.runtime.actions.arserver.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.actions.data.admin.AbstractSystemMonitor;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.RuntimeServer;
 import org.areasy.runtime.engine.services.cache.CacheEntry;
@@ -25,7 +26,7 @@ import java.util.List;
  * Dedicated action to monitor if server instances are working.
  *
  */
-public class EmailMonitorAction extends AbstractSystemMonitorAction implements RuntimeAction
+public class EmailMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {
 	/**
 	 * Execute action's for monitoring.
@@ -211,15 +212,5 @@ public class EmailMonitorAction extends AbstractSystemMonitorAction implements R
 	protected String getDefaultMessageSubject()
 	{
 		return "Email Engine Monitoring Alert";
-	}
-
-	/**
-	 * Get a help text about syntaxt execution of the current action.
-	 *
-	 * @return text message specifying the syntaxt of the current action
-	 */
-	public String help()
-	{
-		return "[-arserver <remedy server>] [-repeator <number>]";
 	}
 }

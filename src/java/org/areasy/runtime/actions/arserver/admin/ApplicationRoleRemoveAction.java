@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.admin.AbstractUserEnrollment;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -27,7 +28,7 @@ import java.util.List;
  * This action is part of the administration action tools for AR System server and it has
  * the main goal to remove a specific application role for one or many users.
  */
-public class ApplicationRoleRemoveAction extends AbstractUserEnrollmentAction
+public class ApplicationRoleRemoveAction extends AbstractUserEnrollment
 {
 	/**
 	 * Execute action's workflow.

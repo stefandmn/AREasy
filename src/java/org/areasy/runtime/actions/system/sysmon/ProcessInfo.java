@@ -25,7 +25,6 @@ import java.text.DecimalFormat;
  */
 public class ProcessInfo
 {
-
 	// Process id info
 	private int pid;
 	private int parentPid;

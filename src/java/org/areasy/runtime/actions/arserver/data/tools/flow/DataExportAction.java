@@ -1100,16 +1100,6 @@ public class DataExportAction extends DataTransferAction
 		}
 	}
 
-	/**
-	 * Get a help text about syntax execution of the current action.
-	 *
-	 * @return text message specifying the syntax of the current action
-	 */
-	public String help()
-	{
-		return help(null, null, null);
-	}
-
 	public List<Integer> getSelectedFields()
 	{
 		return fields;

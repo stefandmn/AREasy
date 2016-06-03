@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.admin.AbstractUserEnrollment;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -24,7 +25,7 @@ import java.util.List;
  * Dedicated action to set unrestricted access permission for an user or for a list of users
  *
  */
-public class UnrestrictedAccessSetAction extends AbstractUserEnrollmentAction
+public class UnrestrictedAccessSetAction extends AbstractUserEnrollment
 {
 	/**
 	 * Execute action's workflow.
@@ -95,15 +96,5 @@ public class UnrestrictedAccessSetAction extends AbstractUserEnrollmentAction
 				return;
 			}
 		}
-	}
-
-	/**
-	 * Get a help text about syntaxt execution of the current action.
-	 *
-	 * @return text message specifying the syntaxt of the current action
-	 */
-	public String help()
-	{
-		return "-login <val> [-logins <val1> <val2> ... <valn>] [-exclusive]";
 	}
 }

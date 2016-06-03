@@ -13,20 +13,13 @@ package org.areasy.runtime.engine.structures.hybrid.itsm.foundation;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.data.NumberUtility;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.support.configuration.Configuration;
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.engine.RuntimeLogger;
-import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
-import org.areasy.runtime.engine.structures.data.cmdb.units.AssetPeople;
-import org.areasy.runtime.engine.structures.data.cmdb.units.ImpactedArea;
-import org.areasy.runtime.engine.structures.data.cmdb.units.Relationship;
-import org.areasy.runtime.engine.structures.data.cmdb.units.WorkLog;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.*;
 import org.areasy.runtime.engine.structures.hybrid.AbstractHybrid;
 import org.areasy.runtime.engine.structures.hybrid.HybridCoreItem;
@@ -256,7 +249,7 @@ public class HybridSupportGroup extends SupportGroup implements AbstractHybrid
 				try
 				{
 					if(code.indexOf("-") > 0) code = code.substring(0, code.indexOf("-", 0));
-					int partMergeType = PatternAction.getMergeTypeAndOptions(this.config.subset(code));
+					int partMergeType = FlowPatternAction.getMergeTypeAndOptions(this.config.subset(code));
 					if(partMergeType == 0) partMergeType = nMergeType;
 
 					if(mergeQualList != null)

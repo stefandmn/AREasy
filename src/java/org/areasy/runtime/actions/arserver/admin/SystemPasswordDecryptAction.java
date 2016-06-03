@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.admin.AbstractUserEnrollment;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
@@ -20,7 +21,7 @@ import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
 /**
  * Dedicated action to decrypt an AR password to get a plain string value, to decode AR System configurations
  */
-public class SystemPasswordDecryptAction extends AbstractUserEnrollmentAction
+public class SystemPasswordDecryptAction extends AbstractUserEnrollment
 {
 	/**
 	 * Execute action's workflow.

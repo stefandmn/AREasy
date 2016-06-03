@@ -550,10 +550,6 @@ public class LicensesReportAction extends AbstractAction implements RuntimeActio
 	 *
 	 * @return text message specifying the syntaxt of the current action
 	 */
-	public String help()
-	{
-		return "[-registration] [-allocation] [-usage [-showusers]]";
-	}
 
 	public final Map getUsageMap()
 	{

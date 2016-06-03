@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.system.sysmon.monitors;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.system.Sysmon;
 import org.areasy.runtime.actions.system.sysmon.*;
 import org.areasy.runtime.engine.base.AREasyException;
 
@@ -54,7 +55,7 @@ public class LinuxMonitor implements Monitor
 	{
 		if (System.getProperty("os.name").toLowerCase().startsWith("linux"))
 		{
-			SysmonAction.setMonitor(this);
+			Sysmon.setMonitor(this);
 		}
 	}
 

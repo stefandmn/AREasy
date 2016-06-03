@@ -287,16 +287,6 @@ public class LicensesMonitorAction extends LicensesReportAction implements Runti
 		return getLicensesAllocation(connection, validLicenses);
 	}
 
-	/**
-	 * Get a help text about syntaxt execution of the current action.
-	 *
-	 * @return text message specifying the syntaxt of the current action
-	 */
-	public String help()
-	{
-		return "[-usage [-user <user name>] [-license <license name> [-showusers]]] [-inventory [-showusers]] [-arserveralias <server name>]";
-	}
-
 	public class LicensesUsageData
 	{
 		private String serverName = null;

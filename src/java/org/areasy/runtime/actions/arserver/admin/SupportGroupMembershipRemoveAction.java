@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.admin.AbstractUserEnrollment;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Dedicated action to remove support group(s) for a login id
  */
-public class SupportGroupMembershipRemoveAction extends AbstractUserEnrollmentAction
+public class SupportGroupMembershipRemoveAction extends AbstractUserEnrollment
 {
 	/**
 	 * Execute the current action.

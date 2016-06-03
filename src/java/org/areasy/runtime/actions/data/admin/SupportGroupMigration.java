@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.admin;
+package org.areasy.runtime.actions.data.admin;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -25,12 +25,12 @@ import org.areasy.common.data.StringUtility;
 import java.util.List;
 
 /**
- * Action to rename an existing support group by creating a new one and the old one will become Obsolete.
+ * Action to migrate an existing support group by creating a new one and the old one will become Obsolete.
  * All members, functional roles, aliases etc. (all related details) will be transferred to the new group. Also this action has a dedicated option
  * to replace the old group details with the new group coordinates in incidents tickets, in incidents templates and other ITSM standard tickets,
  * without changing the existing status of incident tickets.
  */
-public class SupportGroupRenameAction extends AbstractAction
+public class SupportGroupMigration extends AbstractAction
 {
 	private SupportGroup oldSG = null;
 	private SupportGroup newSG = null;
@@ -199,7 +199,6 @@ public class SupportGroupRenameAction extends AbstractAction
 
 			RuntimeLogger.info("The old support group '" + getSupportGroupString(oldSG) + "' became Obsolete");
 		}
-		else RuntimeLogger.info("The old support group '" + getSupportGroupString(oldSG) + "' remained Enabled");
 	}
 
 	protected void setGroupMembers(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException

@@ -16,7 +16,7 @@ package org.areasy.runtime.engine.structures.hybrid;
 import com.bmc.arsys.api.AttachmentValue;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.RuntimeManager;
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
@@ -262,7 +262,7 @@ public class HybridCoreItem extends MultiPartItem implements AbstractHybrid
 				try
 				{
 					if(code.indexOf("-") > 0) code = code.substring(0, code.indexOf("-", 0));
-					int partMergeType = PatternAction.getMergeTypeAndOptions(this.config.subset(code));
+					int partMergeType = FlowPatternAction.getMergeTypeAndOptions(this.config.subset(code));
 					if(partMergeType == 0) partMergeType = nMergeType;
 
 					if(mergeQualList != null)

@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.system.sysmon.monitors;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.system.Sysmon;
 import org.areasy.runtime.actions.system.sysmon.*;
 
 public class WindowsMonitor implements Monitor
@@ -31,7 +32,7 @@ public class WindowsMonitor implements Monitor
 	{
 		if (monitor != null)
 		{
-			SysmonAction.setMonitor(monitor);
+			Sysmon.setMonitor(monitor);
 		}
 	}
 

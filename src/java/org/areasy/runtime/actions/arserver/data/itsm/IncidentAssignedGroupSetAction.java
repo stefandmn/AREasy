@@ -71,16 +71,4 @@ public class IncidentAssignedGroupSetAction extends AbstractAction
 		RuntimeLogger.add("Assigned Group of incident " + incidentNumber + " has been set to " + toGroup);
 
 	}
-
-
-	/**
-	 * Get a help text about syntaxt execution of the current action.
-	 *
-	 * @return text message specifying the syntaxt of the current action
-	 */
-	@Override
-	public String help()
-	{
-		return "-id <incident number> -company <assigned group company> -org <assigned group organisation> -group <assigned group>";
-	}
 }

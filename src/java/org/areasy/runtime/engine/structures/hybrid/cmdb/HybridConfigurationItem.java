@@ -16,7 +16,7 @@ package org.areasy.runtime.engine.structures.hybrid.cmdb;
 import org.areasy.common.data.NumberUtility;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.support.configuration.Configuration;
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -277,7 +277,7 @@ public class HybridConfigurationItem extends ConfigurationItem implements Abstra
 
 				//get the part prefix
 				if(code.indexOf("-") > 0) code = code.substring(0, code.indexOf("-", 0));
-				int partMergeType = PatternAction.getMergeTypeAndOptions(this.getSourceConfig().subset(code));
+				int partMergeType = FlowPatternAction.getMergeTypeAndOptions(this.getSourceConfig().subset(code));
 				if(partMergeType == 0) partMergeType = nMergeType;
 
 				CoreItem item = null;

@@ -1330,13 +1330,4 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		if(info != null) return getObjectTypeNameByObjectTypeId(info.getType()) + " '" + info.getName() + "'";
 			else return null;
 	}
-
-	public String help()
-	{
-		return "[-inputfile <file path>] [-outputfile <file path>] [-append] " +
-				"[-exclude  <obj name 1> <obj name 2> .. <obj name n>] [-prefix <string prefix> [-only-<object type>]] [-since <date time>] " +
-				"[-owner <owner name>] [-changer <changer name>] [-keyword <keyword>] " +
-				"[-forms <list>] [-filters <list>] [-activelinks <list>] [-menus <list>] [-images <list>] [-containers <list>] " +
-				"[-activelinkguides <list>] [-filterguides <list>] [-views <list>] [-fields <list>] [-webservices <list>]";
-	}
 }

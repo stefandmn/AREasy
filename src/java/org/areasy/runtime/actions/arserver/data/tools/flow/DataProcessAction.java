@@ -13,7 +13,6 @@ package org.areasy.runtime.actions.arserver.data.tools.flow;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.PatternAction;
 import org.areasy.runtime.actions.arserver.data.tools.flow.events.AbstractEvent;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.AbstractSource;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -27,7 +26,7 @@ import java.util.Map;
  * This is an Advanced Automation class that is called from Remedy GUI to import data according to the configuration
  * managed by Remedy forms from AAR application.
  */
-public class DataProcessAction extends PatternAction
+public class DataProcessAction extends FlowPatternAction
 {
 	private static Map events = new Hashtable();
 
@@ -82,7 +81,7 @@ public class DataProcessAction extends PatternAction
 	 * @return a final data import event having signature <code>AbstractEvent</code> structure
 	 * @throws org.areasy.runtime.engine.base.AREasyException if any error occurs
 	 */
-	protected final AbstractEvent getEvent(PatternAction action) throws AREasyException
+	protected final AbstractEvent getEvent(FlowPatternAction action) throws AREasyException
 	{
 		AbstractEvent event = null;
 
@@ -122,15 +121,5 @@ public class DataProcessAction extends PatternAction
 		else throw new AREasyException("Data import event is null");
 
 		return event;
-	}
-
-	/**
-	 * Get a help text about syntax execution of the current action.
-	 *
-	 * @return text message specifying the syntax of the current action
-	 */
-	public String help()
-	{
-		return help(null, null, null);
 	}
 }

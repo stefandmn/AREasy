@@ -32,7 +32,7 @@ import java.util.List;
  * During creation or update process the action could trigger SVT building process.
  * @TODO - import of agreements and correlation between agreements and service targets
  */
-public class ServiceTargetImportAction extends BaseDataAction
+public class ServiceTargetAdministration extends BaseDataAction
 {
 	boolean agreement = false;
 

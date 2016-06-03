@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.data.tools.flow.sources;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
 
@@ -26,7 +26,7 @@ import java.util.Map;
 public abstract class AbstractSource
 {
 	private CoreItem item = null;
-	private PatternAction action = null;
+	private FlowPatternAction action = null;
 
 	/**
 	 * Dedicated method that has to be used internally, to set and validate the data-source configuration (<code>CoreItem</code> structure)
@@ -57,7 +57,7 @@ public abstract class AbstractSource
 	 *
 	 * @return <code>AdvancedAutomationAction</code> caller instance
 	 */
-	public final PatternAction getAction()
+	public final FlowPatternAction getAction()
 	{
 		return this.action;
 	}
@@ -78,7 +78,7 @@ public abstract class AbstractSource
 	 *
 	 * @param action <code>AdvancedAutomationAction</code> action instance
 	 */
-	public final void setAction(PatternAction action)
+	public final void setAction(FlowPatternAction action)
 	{
 		this.action = action;
 	}

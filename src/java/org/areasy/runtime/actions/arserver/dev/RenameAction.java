@@ -218,9 +218,4 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 			object.setNewName(newname);
 		}
 	}
-
-	public String help()
-	{
-		return "-oldname <old name value> -newname <new name value> -type <form|menu|activelink|filter|escalation|container|activelinkguide|filterguide|webservice|field|view> [-relatedform <form name>] [-insert <string>] [-append <string>] [-replace <string/string>]";
-	}
 }

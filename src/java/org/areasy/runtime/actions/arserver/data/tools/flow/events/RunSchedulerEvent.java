@@ -16,7 +16,7 @@ package org.areasy.runtime.actions.arserver.data.tools.flow.events;
 import com.bmc.arsys.api.DateInfo;
 import com.bmc.arsys.api.Time;
 import com.bmc.arsys.api.Timestamp;
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.engine.RuntimeClient;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -43,7 +43,7 @@ public class RunSchedulerEvent extends AbstractEvent
 		//disable notification
 		getAction().getConfiguration().setKey("notification", "false");
 
-		PatternAction.JobEntry jobSearch = getAction().getJobEntryInstance();
+		FlowPatternAction.JobEntry jobSearch = getAction().getJobEntryInstance();
 		jobSearch.setAttribute(7, new Integer(0));
 		jobSearch.setAttribute(2432, new Integer(1));
 		jobSearch.setAttribute(536871134, new Integer(0));
@@ -52,7 +52,7 @@ public class RunSchedulerEvent extends AbstractEvent
 
 		for(int i = 0; jobs != null && i < jobs.size(); i++)
 		{
-			CoreItem job = (PatternAction.JobEntry) jobs.get(i);
+			CoreItem job = (FlowPatternAction.JobEntry) jobs.get(i);
 
 			if(isReadyForFire(job)) fireJob(job);
 				else logger.debug("Scheduled job didn't fire: " + job);

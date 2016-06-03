@@ -14,7 +14,7 @@ package org.areasy.runtime;
  */
 
 import org.areasy.runtime.actions.SystemAction;
-import org.areasy.runtime.actions.system.VersionAction;
+import org.areasy.runtime.actions.system.Version;
 import org.areasy.runtime.engine.RuntimeClient;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.RuntimeServer;
@@ -1233,12 +1233,12 @@ public class RuntimeManager
 	public List getRuntimeModules()
 	{
 		List list = new Vector();
-		Manifest manifests[] = VersionAction.getManifests("areasy");
+		Manifest manifests[] = Version.getManifests("areasy");
 
 		for(int i = 0; i < manifests.length; i++)
 		{
-			String name = VersionAction.getProductName(manifests[i]);
-			String version = VersionAction.getProductVersion(manifests[i]);
+			String name = Version.getProductName(manifests[i]);
+			String version = Version.getProductVersion(manifests[i]);
 
 			list.add(name + "/" + version);
 		}

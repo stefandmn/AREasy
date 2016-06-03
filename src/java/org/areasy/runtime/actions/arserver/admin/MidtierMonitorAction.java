@@ -14,13 +14,14 @@ package org.areasy.runtime.actions.arserver.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.actions.data.admin.AbstractSystemMonitor;
 
 /**
  * Dedicated action to monitor if server instances are working.
  * todo - implement me
  *
  */
-public class MidtierMonitorAction extends AbstractSystemMonitorAction implements RuntimeAction
+public class MidtierMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {
 	/**
 	 * Execute action's for monitoring.
@@ -40,15 +41,5 @@ public class MidtierMonitorAction extends AbstractSystemMonitorAction implements
 	protected String getDefaultMessageSubject()
 	{
 		return "MidTier Monitoring Alert";
-	}
-
-	/**
-	 * Get a help text about syntaxt execution of the current action.
-	 *
-	 * @return text message specifying the syntaxt of the current action
-	 */
-	public String help()
-	{
-		return "[-arremoteserver <list of servers>]";
 	}
 }

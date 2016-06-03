@@ -16,7 +16,6 @@ package org.areasy.runtime.actions.arserver.data.tools.flow;
 import com.bmc.arsys.api.Constants;
 import com.bmc.arsys.api.Field;
 import com.bmc.arsys.api.SortInfo;
-import org.areasy.runtime.actions.PatternAction;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.AbstractSource;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.RemedySource;
 import org.areasy.runtime.engine.structures.hybrid.AbstractHybrid;
@@ -45,7 +44,7 @@ import java.util.*;
  * General library used for data development. This is a framework action used to manage any
  * kind of data transfer from a source to a target <code>CoreItem</code> structure.
  */
-public class DataTransferAction extends PatternAction
+public class DataTransferAction extends FlowPatternAction
 {
 	private AbstractSource dataSource = null;
 	private ServerConnection remoteConnection = null;
@@ -1111,14 +1110,5 @@ public class DataTransferAction extends PatternAction
 			return content;
 		}
 		else return null;
-	}
-
-	public String help()
-	{
-		return "[-automap] [-mappingfile <file path>] [-addmaps <dest fieldId=src fieldId>|<dest fieldId=constant:value>] [-delmaps <dest fieldId>] " +
-				"[-formname <dest form name>] [-remoteformname <src form name>] [-operation <merge|commit>] [-lookupdata <fieldid>] " +
-				"[-mergetype <duperror|dupnewid|dupoverwrite|dupupdate>] [-mergeoptions <norequired|nopattern|noworkflow>] [-mergematchingfieldids ]" +
-				"[-transformationfile <velocity transform file path>] [-remotequalification <string qual to select source data>] " +
-				"[-entity <company|organisation|site|people|sgroup|productc|operationalc|..>] [-force]";
 	}
 }

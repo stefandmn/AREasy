@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.data.tools.flow.events;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.PatternAction;
+import org.areasy.runtime.actions.arserver.data.tools.flow.FlowPatternAction;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.AbstractSource;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -31,7 +31,7 @@ public abstract class AbstractEvent implements ARDictionary
 	protected static Logger logger = LoggerFactory.getLog(AbstractEvent.class);
 
 	/** Caller action instance */
-	private PatternAction action = null;
+	private FlowPatternAction action = null;
 
 	/** Associated data source */
 	private AbstractSource source = null;
@@ -48,7 +48,7 @@ public abstract class AbstractEvent implements ARDictionary
 	 *
 	 * @return <code>AdvancedAutomationAction</code> action instance
 	 */
-	public final PatternAction getAction()
+	public final FlowPatternAction getAction()
 	{
 		return action;
 	}
@@ -58,7 +58,7 @@ public abstract class AbstractEvent implements ARDictionary
 	 *
 	 * @param action <code>AdvancedAutomationAction</code> action instance
 	 */
-	public final void setAction(PatternAction action)
+	public final void setAction(FlowPatternAction action)
 	{
 		this.action = action;
 	}

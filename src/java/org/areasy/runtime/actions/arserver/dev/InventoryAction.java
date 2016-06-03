@@ -103,8 +103,4 @@ public class InventoryAction extends DefinitionAction implements RuntimeAction
 		}
 	}
 
-	public String help()
-	{
-		return super.help() + " -inventory";
-	}
 }

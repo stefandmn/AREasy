@@ -291,9 +291,4 @@ public class ExportAction extends DefinitionAction implements RuntimeAction
 
 		return fileName;
 	}
-
-	public String help()
-	{
-		return super.help() + " [-inventory] [-format <def|xml|bin>] [-formsubstructures <on|off>]";
-	}
 }

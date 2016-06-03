@@ -335,9 +335,4 @@ public class ImportAction extends DefinitionAction implements RuntimeAction
 
 		return options;
 	}
-
-	public String help()
-	{
-		return super.help() + " [onlyoverlays] [-overwrite [-delexcessfields] [-delexcessviews] [-overwritepermissions]] [-conflict <noaction|error|overwrite>]";
-	}
 }

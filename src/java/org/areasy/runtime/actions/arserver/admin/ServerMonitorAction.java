@@ -14,6 +14,7 @@ package org.areasy.runtime.actions.arserver.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.actions.data.admin.AbstractSystemMonitor;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.common.support.configuration.Configuration;
@@ -23,7 +24,7 @@ import org.areasy.common.support.configuration.base.BaseConfiguration;
  * Dedicated action to monitor if server instances are working.
  *
  */
-public class ServerMonitorAction extends AbstractSystemMonitorAction implements RuntimeAction
+public class ServerMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {
 	/**
 	 * Execute action's for monitoring.
@@ -121,7 +122,7 @@ public class ServerMonitorAction extends AbstractSystemMonitorAction implements 
 	 *
 	 * @return text message specifying the syntaxt of the current action
 	 */
-	public String help()
+	public String getHelp()
 	{
 		return "[-arremoteserver<index> <server_name>] [-arremoteuser<index> <user_name>] [-arremotepassword<index> <user_password>]";
 	}

@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.admin;
+package org.areasy.runtime.actions.data.admin;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -26,7 +26,7 @@ import java.util.Vector;
 /**
  * Abstract class definition for user enrollment.
  */
-public abstract class AbstractUserEnrollmentAction extends AbstractAction implements RuntimeAction
+public abstract class AbstractUserEnrollment extends AbstractAction implements RuntimeAction
 {
 	private List<String> usernames = null;
 

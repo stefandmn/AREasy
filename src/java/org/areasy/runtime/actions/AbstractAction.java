@@ -34,10 +34,7 @@ import org.areasy.common.velocity.context.Context;
 import org.areasy.common.velocity.context.VelocityContext;
 
 import java.io.*;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
+import java.util.*;
 
 
 /**
@@ -72,6 +69,9 @@ public abstract class AbstractAction implements RuntimeAction
 	/** Flag to inform action's workers that the action was softly interrupted */
 	private boolean interrupted = false;
 
+	/** Help document */
+	private HelpDoc help = new HelpDoc(getClass());
+
 	/**
 	 * Default runtime action constructor.
 	 */
@@ -91,27 +91,8 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
-	 * Initialize action instance and set all basic attributes: action signature (code), configuration structure, and the inherited runtime
-	 * manager instance. Also this method will initiate an AR server connection based on the following parametrization:
-	 *
-	 * <table border="1">
-	 * 	<tr>
-	 * 		<td><b>-arserver</b></td>
-	 * 		<td>Server name - required login parameter that specifies the server to log in to</td>
-	 * 	</tr>
-	 * 	<tr>
-	 * 		<td><b>-aruser</b></td>
-	 * 		<td>Required login parameter that identifies the user account</td>
-	 * 	</tr>
-	 * 	<tr>
-	 * 		<td><b>-arpassword</b></td>
-	 * 		<td>Optional login parameter that identifies the user account. Omit the option if the user account has no password</td>
-	 * 	</tr>
-	 * 	<tr>
-	 * 		<td><b>-arport</b></td>
-	 * 		<td>TCP port number used to log in when the portmapper is turned off</td>
-	 * 	</tr>
-	 * </table>
+	 * Initialize action instance and set all basic attributes: action signature (code),
+	 * configuration structure, and the inherited runtime manager instance.
 	 *
 	 * <p>
 	 * These parameters are inherited by all implemented actions.
@@ -195,6 +176,7 @@ public abstract class AbstractAction implements RuntimeAction
 		//define answer structure
 		RuntimeLogger.setLevel( getConfiguration().getString("loglevel", null) );
 		RuntimeLogger.setCompact( getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()) );
+		getHelpObj().setLevel( getConfiguration().getInt("helplevel", 0) );
 
 		//execute initialization workflow
 		initWorkflow(createConnection);
@@ -224,7 +206,7 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
-	 * Chech if the current action was initialized or not
+	 * Check if the current action was initialized or not
 	 *
 	 * @return true if the action is already initialized.
 	 */
@@ -234,106 +216,24 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
-	 * Get a help text about syntax execution of the current action.
+	 * Get a help document about action syntax, execution process and examples.
 	 *
 	 * @return text message specifying the syntax of the current action
 	 */
-	public String help()
+	protected final HelpDoc getHelpObj()
 	{
-		return help(null, null, null);
+		return this.help;
 	}
 
 	/**
 	 * Get a help text about syntax execution of the current action.
 	 *
-	 * @param actionName name to be found
 	 * @return text message specifying the syntax of the current action
 	 */
-	public String help(String actionName)
+
+	public final String help()
 	{
-		return help(null, null, actionName);
-	}
-
-	/**
-	 * Get a help text about syntax execution of the current action.
-	 *
-	 * @param pathLocation where to find the help documents
-	 * @param actionName name to be found
-	 * @return text message specifying the syntax of the current action
-	 */
-	public String help(String pathLocation, String actionName)
-	{
-		return help(null, pathLocation, actionName);
-	}
-
-	/**
-	 * Get a help text about syntax execution of the current action.
-	 *
-	 * @param rootLocation is root the package name (before the "actions" sub-package) where the help documents are kept
-	 * @param pathLocation relative package name (after the "actions" sub-package) where the help documents are kept
-	 * @param actionName name to be found
-	 * @return text message specifying the syntax of the current action
-	 */
-	public String help(String rootLocation, String pathLocation, String actionName)
-	{
-		if(StringUtility.isEmpty(actionName)) actionName = getCode();
-
-		if(StringUtility.isEmpty(pathLocation) && StringUtility.isEmpty(rootLocation))
-		{
-			String packageName = getClass().getPackage().getName();
-			int indexAction = packageName.indexOf("actions");
-
-			if(indexAction > 0)
-			{
-				rootLocation = packageName.substring(0, indexAction)  + "utilities.resources.help";
-				pathLocation = packageName.substring(indexAction + "actions".length());
-			}
-			else
-			{
-				rootLocation = "org.areasy.runtime.utilities.resources.help";
-
-				indexAction = packageName.indexOf("areasy");
-				if(indexAction > 0) pathLocation = packageName.substring(indexAction + "areasy".length());
-			}
-
-			if(StringUtility.isEmpty(pathLocation)) pathLocation = rootLocation;
-				else pathLocation = rootLocation + pathLocation;
-		}
-		else
-		{
-			if(StringUtility.isEmpty(pathLocation)) pathLocation = rootLocation;
-		}
-
-		pathLocation = pathLocation.replace('.', '/') + "/" + actionName + ".info";
-		InputStream resource = AbstractAction.class.getClassLoader().getResourceAsStream(pathLocation);
-
-		if (resource != null)
-		{
-			Writer writer = new StringWriter();
-			char[] buffer = new char[1024];
-
-			try
-			{
-				Reader reader = new BufferedReader(new InputStreamReader(resource, "UTF-8"));
-				int n;
-
-				while ((n = reader.read(buffer)) != -1)
-				{
-					writer.write(buffer, 0, n);
-				}
-			}
-			catch(Throwable th)
-			{
-				//nothing here
-			}
-			finally
-			{
-				try { resource.close(); } catch(Throwable th) {}
-			}
-
-			return writer.toString();
-		}
-		else return "";
+		return getHelpObj().getPlainTextDocument();
 	}
 
 	/**
@@ -991,7 +891,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 * 
 	 * @param fileOut output file location
 	 * @param text file content
-	 * @return true if operation succeded
+	 * @return true if operation succeeded
 	 */
 	public static boolean writeTextFile(File fileOut, String text)
 	{
@@ -1176,26 +1076,251 @@ public abstract class AbstractAction implements RuntimeAction
 		return targetServerName;
 	}
 
-	protected ServerConnection getSecondRemoteServerConnection() throws AREasyException
+	final public class HelpDoc
 	{
-		ServerConnection connection = null;
+		private String name = null;
+		private String description = null;
 
-		if(getConfiguration().getString("ar2remoteserver", null) != null && !StringUtility.equalsIgnoreCase(getConfiguration().getString("arremoteserver", null), getServerConnection().getServerName()))
+		private String syntax = null;
+		private HashMap options = new HashMap();
+		private HashMap optionsC1 = new HashMap();
+		private HashMap optionsC2 = new HashMap();
+		private HashMap optionsE1 = new HashMap();
+		private HashMap optionsE2 = new HashMap();
+		private HashMap examples = new HashMap();
+
+		private int level = 0;
+
+		public HelpDoc(Class clazz)
 		{
-			String arserver = getConfiguration().getString("ar2remoteserver");
-			String aruser = getConfiguration().getString("ar2remoteuser", getServerConnection().getUserName());
-			String arpassword = getConfiguration().getString("ar2remotepassword", getServerConnection().getUserPassword());
-			int arport = getConfiguration().getInt("ar2remoteport", getServerConnection().getServerPort());
-			int arrpc = getConfiguration().getInt("ar2remoterpc", getServerConnection().getServerPort());
-			String armode = getConfiguration().getString("ar2remotemode", getServerConnection().getMode());
 
-			connection = new ServerConnection();
-			connection.connect(arserver, aruser, arpassword, arport, arrpc, armode);
-
-			if(logger.isDebugEnabled()) logger.debug("Connected to second server: " + connection);
 		}
-		else connection = getServerConnection();
 
-		return connection;
+		public String getName()
+		{
+			return this.name;
+		}
+
+		public void setName(String name)
+		{
+			this.name = name;
+		}
+
+		public String getDescription()
+		{
+			return this.description;
+		}
+
+		public String getSyntax()
+		{
+			return this.syntax;
+		}
+
+		public void setSyntax(String syntax)
+		{
+			this.syntax = syntax;
+		}
+
+		public void setDescription(String description)
+		{
+			this.description = description;
+		}
+
+		public void addOption(String option, String details)
+		{
+			this.options.put(option, details);
+		}
+
+		public void addOptionC1(String option, String details)
+		{
+			this.optionsC1.put(option, details);
+		}
+
+		public void addOptionC2(String option, String details)
+		{
+			this.optionsC2.put(option, details);
+		}
+
+		public void addOptionE1(String option, String details)
+		{
+			this.optionsE1.put(option, details);
+		}
+
+		public void addOptionE2(String option, String details)
+		{
+			this.optionsE2.put(option, details);
+		}
+
+		public void addExample(String example, String documentation)
+		{
+			this.examples.put(example, documentation);
+		}
+
+		public String getOptionDetails(String option)
+		{
+			return (String) this.options.get(option);
+		}
+
+		public Map getOptions()
+		{
+			return this.options;
+		}
+
+		public Map getOptionsC1()
+		{
+			return this.optionsC1;
+		}
+
+		public Map getOptionsC2()
+		{
+			return this.optionsC2;
+		}
+
+		public Map getOptionsE1()
+		{
+			return this.optionsE1;
+		}
+
+		public Map getOptionsE2()
+		{
+			return this.optionsE2;
+		}
+
+		public Map getExamples()
+		{
+			return this.examples;
+		}
+
+		public String getMarkdownDocument()
+		{
+			String content = "";
+
+			if(getName() != null) content += "# " + getName() + "\n";
+			if(getDescription() != null ) content += "\n" + getDescription() + "\n";
+
+			if(getSyntax() != null)
+			{
+				content += "\n\n__SYNTAX:__\n\n";
+				content += "\t" + getSyntax() + "\n";
+			}
+
+			if(getOptions().isEmpty())
+			{
+				content += "\n\n__OPTIONS:__\n\n";
+				content += "| Parameter | Description |\n";
+				content += "| --------- | ----------- |\n";
+
+				content += addOptionsMarkdownContent(getOptions());
+
+				if(getLevel() <= 1 && !getOptionsC1().isEmpty()) content += addOptionsMarkdownContent(getOptionsC1());
+				if(getLevel() <= 1 && !getOptionsE1().isEmpty()) content += addOptionsMarkdownContent(getOptionsE1());
+				if(getLevel() <= 2 && !getOptionsC2().isEmpty()) content += addOptionsMarkdownContent(getOptionsC2());
+				if(getLevel() <= 2 && !getOptionsE2().isEmpty()) content += addOptionsMarkdownContent(getOptionsE2());
+			}
+
+			if(!getExamples().isEmpty())
+			{
+				content += "\n\n__EXAMPLES__\n\n";
+
+				for (Object exObj : getExamples().keySet())
+				{
+					String exampleCommand = (String) exObj;
+					String exampleDocumentation = getOptionDetails(exampleCommand);
+
+					content += "\t" + exampleCommand + "\n";
+					content += "= " + exampleDocumentation + "\n\n";
+				}
+			}
+
+			return content;
+		}
+
+		public String getPlainTextDocument()
+		{
+			String content = "";
+
+			if(getName() != null) content += getName() + "\n";
+			if(getDescription() != null ) content += "\n" + getDescription() + "\n";
+
+			if(getSyntax() != null)
+			{
+				content += "\n\nSYNTAX:\n\n";
+				content += getSyntax() + "\n";
+			}
+
+			if(!getOptions().isEmpty())
+			{
+				content += "\n\nOPTIONS:\n\n";
+
+				content += addOptionsPlainTextContent(getOptions());
+
+				if(getLevel() <= 1 && !getOptionsC1().isEmpty()) content += addOptionsPlainTextContent(getOptionsC1());
+				if(getLevel() <= 1 && !getOptionsE1().isEmpty()) content += addOptionsPlainTextContent(getOptionsE1());
+				if(getLevel() <= 2 && !getOptionsC2().isEmpty()) content += addOptionsPlainTextContent(getOptionsC2());
+				if(getLevel() <= 2 && !getOptionsE2().isEmpty()) content += addOptionsPlainTextContent(getOptionsE2());
+			}
+
+			if(!getExamples().isEmpty())
+			{
+				content += "\n\nEXAMPLES:\n\n";
+
+				for (Object exObj : getExamples().keySet())
+				{
+					String exampleCommand = (String) exObj;
+					String exampleDocumentation = getOptionDetails(exampleCommand);
+
+					content += " > " + exampleCommand + "\n";
+					content += " = " + exampleDocumentation + "\n\n";
+				}
+			}
+
+			return content;
+		}
+
+		private String addOptionsMarkdownContent(Map options)
+		{
+			String content = "";
+
+			if(options != null && !options.isEmpty())
+			{
+				for (Object optObj : options.keySet())
+				{
+					String optionParameter = (String) optObj;
+					String optionDetails = getOptionDetails(optionParameter);
+
+					content += "| " + optionParameter + " | " + optionDetails + " |\n";
+				}
+			}
+
+			return content;
+		}
+
+		private String addOptionsPlainTextContent(Map options)
+		{
+			String content = "";
+
+			if(options != null && !options.isEmpty())
+			{
+				for (Object optObj : getOptionsC1().keySet())
+				{
+					String optionParameter = (String) optObj;
+					String optionDetails = getOptionDetails(optionParameter);
+
+					content += "-" + optionParameter + "\n\t= " + optionDetails + "\n";
+				}
+			}
+
+			return content;
+		}
+
+		public int getLevel()
+		{
+			return level;
+		}
+
+		public void setLevel(int level)
+		{
+			this.level = level;
+		}
 	}
 }

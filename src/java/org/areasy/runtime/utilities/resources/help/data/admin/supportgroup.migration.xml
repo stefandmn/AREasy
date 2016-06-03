@@ -1,34 +1,76 @@
-# Rename Support Group
+<?xml version="1.0" encoding="UTF-8"?>
 
-This action is an ITSM utility, designed to rename a support group by making _Obsolete_ the original one and creating a new one with the specified details. All related details (e.g. aliases and memberships etc.) are copied to the new support group.
-Rather than this the action is able to replace the old support group with the new one in incidents, problems, known errors, changes work orders and asset relationships.
-Complementary, this action applies the specified group transformation to the configuration areas from foundation layer that refer support groups.
+<!--
+  ~ Copyright (c) 2007-2016 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software"); 
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public 
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License, 
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT, 
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
 
-The standard command line is described below:
+<!DOCTYPE help SYSTEM "action.dtd">
 
-    areasy -action admin.rename.sgroup
-    	-sgroupcompany <current support group company> -sgrouporganisation <current support group organisation> -sgroupname <current support group name>
-    	-newsgroupcompany <new support group company> -newsgrouporganisation <new support group organisation> -newsgroupname <new support group name>
-    	[-allgroupdetails]
-    	[-members] [-functionalroles] [-aliases] [-favorites] [-oncalls] [-shifts]
-    	[-allrelatedtickets]
-    	[-incidenttemplates] [-incidents [-incidentsbefore <date> | -incidentsafter <date> | -openincidents]]
-    	[-problemtemplates]	[-problems [-problemsbefore <date> | -problemsafter <date> | -openproblems]]
-    	[-knownerrors [-knownerrorsbefore <date> | -knownerrorsafter <date> | -openknownerrors]]
-    	[-changetemplates] [-changes [-changesbefore <date> | -changesafter <date> | -openchanges]]
-    	[-tasktemplates] [-tasks [-tasksbefore <date> | -tasksafter <date> | -opentasks]]
-    	[-workordertemplates] [-workorders [-workordersbefore <date> | -workorderafter <date> | -openworkorders]]
-    	[-assetrelationships] [-cmdbrelationships] [-knowledgerecords]
-    	[-approvalmappings]
+<help inherit="action.xml">
+	<name>Support Group Migration</name>
+	<description>
+This action is an ITSM utility, designed to migrate a support group by making Obsolete the original one and creating a new one with the specified options. All related details (e.g. aliases and memberships etc.) of the old support group will be copied to the new support group. Moreover, this action is able to replace the old support group with the new one in incidents, problems, known errors, changes, tasks, work orders and asset relationships.
+	</description>
+	<syntax>
+areasy -action supportgroup.migration
+		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName | [-sgroupid CurrentSupportGroupId]
+		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
+		[-allgroupdetails] | 
+		[ [-members] [-keepoldmembers] [-functionalroles] [-keepoldfunctionalroles] [-aliases] [-keepoldaiases] 
+		[-favorites] [-keepoldfavorites] [-oncalls] [-shifts] ]
+		[-allrelatedtickets] |
+		[ [-incidenttemplates] [-incidents [-incidentsbefore StartDate | -incidentsafter EndDate | -openincidents]]
+		[-problemtemplates]	[-problems [-problemsbefore StartDate | -problemsafter EndDate | -openproblems]]
+		[-knownerrors [-knownerrorsbefore StartDate | -knownerrorsafter EndDate | -openknownerrors]]
+		[-changetemplates] [-changes [-changesbefore StartDate | -changesafter EndDate| -openchanges]]
+		[-tasktemplates] [-tasks [-tasksbefore StartDate | -tasksafter EndDate | -opentasks]]
+		[-workordertemplates] [-workorders [-workordersbefore StartDate | -workorderafter EndDate | -openworkorders]]
+		[-assetrelationships] [-cmdbrelationships] [-knowledgerecords]
+		[-approvalmappings]
+	</syntax>
+	<options>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+		<option key="" description=""/>
+	</options>
+	<samples>
+		<sample code='areasy -runtime -action supportgroup.migration -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info' 
+				description='makes old support group offline, creates a new support group and transfers from old group to the new one the following entities: aliases, people accounts and application functional roles'/>
+		<sample code="" 
+				description=""/>
+		<sample code="" 
+				description=""/>
+		<sample code="" description=""/>
+	</samples>
+</help>
 
-
-__Details__
 
 | Parameter               | Description       |
 | ----------------------- | ----------------- |
 | `sgroupcompany`         | current support group company. In addition the action supports another alias for this option: `supportgroupcompany`|
 | `sgrouporganisation`    | current support group organisation. In addition the action supports another alias for this option: `supportgrouporganisation`|
 | `sgroupname`            | current support group name. In addition the action supports some aliases for this option: `sgroup`, `supportgroup`, `supportgroupname`|
+| `sgroupid`              | current support group id. In addition the action supports some aliases for this options: `supportgroupid`|
 | `newsgroupcompany`      | new support group company (company part of the new support group that will be created). In addition the action supports another alias for this option: `newsupportgroupcompany`|
 | `newsgrouporganisation` | new support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: `newsupportgrouporganisation`|
 | `newsgroupname`         | new support group name (group name part of the new support group that will be created). In addition the action supports some aliases for this option: `sgroup`, `supportgroup`, `supportgroupname`|
@@ -69,14 +111,12 @@ __Details__
 
 __Examples__
 
-    areasy -runtime -action admin.rename.sgroup -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
-= makes old support group offline, creates a new support group and transfers from old group to the new one the following entities: aliases, people accounts and application functional roles
 
-    areasy -runtime -action admin.rename.sgroup -members -aliases -incidents -incidenttemplates -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
+    areasy -runtime -action supportgroup.migration -members -aliases -incidents -incidenttemplates -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info
 = performs usual actions (mentioned in the first example) and additionally update changes in incidents and incident templates replacing old group with the new one and authoring areas is updated as well. All secondary authoring groups are evaluated for this type of change.
 
-    areasy -runtime -action admin.rename.sgroup -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
+    areasy -runtime -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
 = makes old group offline creates a new support group and transfer from old group to the new one all details. Additionally update all asset relationships where a support group is related, replacing old group with the new one.
 
-    areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action admin.rename.sgroup -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
+    areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on
 = the same target command but with an explicit connection to AR System server. The action will be executed in runtime mode (because of `-runtime` option specified in the command line) 

@@ -134,9 +134,9 @@ public class EntryUpdateAction extends EntryRemoveAction
 		}
 		else
 		{
-			for (Object entry1 : entries)
+			for (Object entryObj : entries)
 			{
-				CoreItem entry = (CoreItem) entry1;
+				CoreItem entry = (CoreItem) entryObj;
 
 				if (form != null) entry.setFormName(form);
 					else throw new AREasyException("Form name is null");

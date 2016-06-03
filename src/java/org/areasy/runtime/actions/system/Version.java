@@ -31,7 +31,7 @@ import java.util.jar.Manifest;
  * Get runtime and add-ons version(s) action implementation.
  *
  */
-public class VersionAction extends SystemAction implements RuntimeAction
+public class Version extends SystemAction implements RuntimeAction
 {
 	/**
 	 * Execute 'version' action.
@@ -41,7 +41,7 @@ public class VersionAction extends SystemAction implements RuntimeAction
 	 */
 	public void run() throws AREasyException
 	{
-		Manifest manifests[] = VersionAction.getManifests("areasy");
+		Manifest manifests[] = Version.getManifests("areasy");
 
 		for(int i = 0; i < manifests.length; i++)
 		{

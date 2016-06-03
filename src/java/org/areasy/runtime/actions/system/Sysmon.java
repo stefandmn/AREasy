@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.system.sysmon;
+package org.areasy.runtime.actions.system;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.system.sysmon;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.system.sysmon.*;
 import org.areasy.runtime.actions.system.sysmon.monitors.LinuxMonitor;
 import org.areasy.runtime.actions.system.sysmon.monitors.NullMonitor;
 import org.areasy.runtime.actions.system.sysmon.monitors.WindowsMonitor;
@@ -23,27 +24,18 @@ import java.util.List;
 
 /**
  * This class provides the main API for JavaSysMon.
- * You must instantiate this class in order to use it,
- * but it stores no state, so there is zero overhead to
- * instantiating it as many times as you like, and
- * hence no need to cache it.
+ * You must instantiate this class in order to use it, but it stores no state, so there is zero overhead to
+ * instantiating it as many times as you like, and hence no need to cache it.
  * <p/>
- * When instantiated for the first time, JavaSysMon
- * will discover which operating system it is running on
- * and attempt to load the appropriate OS-specific
- * extensions. If JavaSysMon doesn't support the OS
- * you're running on, all calls to the API will return
- * null or zero values. Probably the best one to test is
- * osName.
+ * When instantiated for the first time, JavaSysMon will discover which operating system it is running on
+ * and attempt to load the appropriate OS-specific extensions. If JavaSysMon doesn't support the OS
+ * you're running on, all calls to the API will return null or zero values. Probably the best one to test is osName.
  * <p/>
- * You can run JavaSysMon directly as a jar file, using
- * the command "java -jar javasysmon.jar", in which case
- * it will display output similar to the UNIX "top"
- * command. You can optionally specify a process id as an
- * argument, in which case JavaSysMon will attempt to
- * kill the process.
+ * You can run JavaSysMon directly as a jar file, using the command "java -jar javasysmon.jar", in which case
+ * it will display output similar to the UNIX "top" command. You can optionally specify a process id as an
+ * argument, in which case JavaSysMon will attempt to kill the process.
  */
-public class SysmonAction implements Monitor
+public class Sysmon implements Monitor
 {
 
 	private static Monitor monitor = null;
@@ -73,7 +65,7 @@ public class SysmonAction implements Monitor
 	 * the JavaSysMon API. All necessary state is kept statically
 	 * so there is zero overhead to instantiating this class.
 	 */
-	public SysmonAction()
+	public Sysmon()
 	{
 		//nothing to do here
 	}

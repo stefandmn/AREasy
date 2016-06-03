@@ -39,7 +39,7 @@ import java.util.jar.Manifest;
 /**
  * Package manager to install additional AREasy modules.
  */
-public class InstallAction extends ConfigAction
+public class Install extends Config
 {
 	/**
 	 * Execute the current action.

@@ -77,8 +77,7 @@ Execution Mode options:
 	-dserver  = runs AREasy in Server mode with debugging on server
 	-dclient  = runs AREasy in Client mode with debugging on client
 
-Note: This "execution mode" options have to be the first parameter from the command line and it is optional. If is missing AREasy starts in Client mode. In case you'll execute an action using -runtime option and the default.configuration file doesn't contain a proper remeyd server and credentials for connectivity you have to include in the command line all connectivity options (arserver, arport, aruser and arpassword).
-
+Note: This
 Attention: If any action is executed with -help switch then the action will not be executed and will return the help text message. So, the following expressions are equivalent:
 areasy -action help -call <action name> | areasy -action <action name> -help
 

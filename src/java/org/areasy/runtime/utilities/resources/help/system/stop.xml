@@ -1,0 +1,30 @@
+# Stop
+
+Start action is used to stop the local AREasy server instance or a remote instance, or to interrupt the execution process of an active action that runs on a specific channel.
+In case of you want to stop a remote instance or an action from a remote instance you have to provide admin credentials (user credentials used to connect to the AR System instance).
+
+The standard command line is described below:
+
+    areasy -action stop [-host <areasy host> -aruser <user> -arpassword <password>] [-channel <channel name or number>]
+
+
+__Options__
+
+| Parameter               | Description       |
+| ----------------------- | ----------------- |
+| `host`                  | the host name or IP address where the AREasy server is running |
+| `aruser`                | Remedy account name referred by AREasy instance. |
+| `arpassword`            | Password for Remedy account referred by AREasy instance. The password value could be plain text of obfuscated (encrypted). |
+| `channel`               | Execution channel number (i.e. 2) or channel name (i.e. areasy-2) |
+
+
+__Examples__
+
+1) areasy -action stop
+	= stop local server instance or AREasy server instance that is specified in the configuration file
+
+2) areasy -action stop -host 10.10.10.1 -aruser Demo -arpassword 1234
+	= stop local server instance or AREasy server instance that is specified in the configuration file
+
+3) areasy -action stop -channel 3
+	= interrupt execution of action that runs on channel 3

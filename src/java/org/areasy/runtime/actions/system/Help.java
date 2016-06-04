@@ -40,7 +40,7 @@ public class Help extends SystemAction implements RuntimeAction
 	public void run() throws AREasyException
 	{
 		boolean inventory = getConfiguration().getBoolean("inventory", false);
-		String call = getConfiguration().getString("subaction", getConfiguration().getString("call", null));
+		String call = getConfiguration().getString("call", getConfiguration().getString("subaction", null));
 
 		//call specific help
 		if(StringUtility.isNotEmpty(call)) callAction(call);

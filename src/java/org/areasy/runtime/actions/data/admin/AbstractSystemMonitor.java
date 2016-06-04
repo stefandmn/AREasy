@@ -35,7 +35,6 @@ import java.util.Properties;
 
 /**
  * Remedy system information
- *
  */
 public abstract class AbstractSystemMonitor extends AbstractAction implements RuntimeAction
 {

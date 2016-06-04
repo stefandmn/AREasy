@@ -1,0 +1,30 @@
+Start
+=====
+
+Start action is used to start the local AREasy server instance.
+
+The standard command line is described below:
+areasy -action start [-javaxms <val1>] [-javaxmx <val2>]
+
+Where:
+	-javaxms = initial java heap size for the server instance
+    -javaxms = maximum java heap size for the server instance
+    -javad = additional runtime options for java virtual machine (could be a list of "-D" java runtime parameters)
+
+Additionally, could be overwritten the following server parameters:
+	-host         = overwrites the value of "app.server.host" parameter
+	-port         = overwrites the value of "app.server.port" parameter
+	-arserver     = replaces the value of "app.server.default.arsystem.server.name" parameter
+	-aruser       = replaces the value of "app.server.default.arsystem.user.name" parameter
+	-arpassword   = replaces the value of "app.server.default.arsystem.user.name" parameter
+	-arport       = replaces the value of "app.server.default.arsystem.port.number" parameter
+	-loglevel     = overwrites the value of "app.runtime.logger.level" parameter
+	-logformatter = overwrites the value of "app.runtime.logger.formatter" parameter
+
+Examples:
+---------
+1) areasy -action start
+	= starts local runtime server instance
+
+2) areasy -action start -javaxms 128M -javaxmx 1024M -javad "areasy.home=/opt/areasy" "data.home=/opt/arasy/work/data"
+	= starts runtime server with xms and xmx java runtime values, plus additional java runtime "-D" values.

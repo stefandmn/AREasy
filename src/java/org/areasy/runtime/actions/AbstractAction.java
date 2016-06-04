@@ -32,7 +32,10 @@ import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.velocity.context.Context;
 import org.areasy.common.velocity.context.VelocityContext;
+import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.*;
 
@@ -70,7 +73,7 @@ public abstract class AbstractAction implements RuntimeAction
 	private boolean interrupted = false;
 
 	/** Help document */
-	private HelpDoc help = new HelpDoc(getClass());
+	private HelpDoc help = null;
 
 	/**
 	 * Default runtime action constructor.
@@ -183,6 +186,9 @@ public abstract class AbstractAction implements RuntimeAction
 
 		//mark end of initialization
 		this.initialized = true;
+
+		//initialize and load help documentation
+		help = new HelpDoc(this);
 	}
 
 	/**
@@ -1091,9 +1097,74 @@ public abstract class AbstractAction implements RuntimeAction
 
 		private int level = 0;
 
-		public HelpDoc(Class clazz)
+		public HelpDoc(RuntimeAction action) throws AREasyException
 		{
+			if(action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
 
+			String pathLocation = getActionHelpDocPath(action);
+			InputStream inputStream = getHelpDocStream(pathLocation);
+
+			try
+			{
+				DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = builderFactory.newDocumentBuilder();
+				Document xmlDocument = builder.parse(inputStream);
+
+			}
+			catch(Exception e)
+			{
+
+			}
+		}
+
+		private void load(InputStream inputStream)
+		{
+			load(inputStream, false);
+		}
+
+		private void load(InputStream inputStream, Boolean inheritance)
+		{
+			try
+			{
+				DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = builderFactory.newDocumentBuilder();
+				Document xmlDocument = builder.parse(inputStream);
+
+			}
+			catch(Exception e)
+			{
+
+			}
+		}
+
+		private String getActionHelpDocPath(RuntimeAction action) throws AREasyException
+		{
+			String pathLocation = null;
+
+			String packageName = action.getClass().getPackage().getName();
+			int indexAction = packageName.indexOf("actions", 0);
+
+			if(indexAction > 0)
+			{
+				pathLocation = packageName.substring(indexAction + "actions".length() + 1);
+			}
+			else
+			{
+				indexAction = packageName.indexOf("areasy", 0);
+				if(indexAction > 0) pathLocation = packageName.substring(indexAction + "areasy".length() + 1);
+					else throw new AREasyException("Help location could not be found");
+			}
+
+			return pathLocation + "." + action.getCode() + ".xml";
+		}
+
+		private InputStream getHelpDocStream(String xmlHelpDoc)
+		{
+			String pathLocation = "org.areasy.runtime.utilities.resources.help." + xmlHelpDoc;
+			if(xmlHelpDoc.endsWith(".xml")) pathLocation += ".xml";
+
+			pathLocation =  pathLocation.substring(0, pathLocation.indexOf(".xml")).replace('.', '/') + pathLocation.substring(pathLocation.indexOf(".xml"));
+			return AbstractAction.class.getClassLoader().getResourceAsStream(pathLocation);
 		}
 
 		public String getName()

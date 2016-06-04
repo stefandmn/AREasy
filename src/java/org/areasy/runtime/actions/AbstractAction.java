@@ -32,10 +32,10 @@ import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.velocity.context.Context;
 import org.areasy.common.velocity.context.VelocityContext;
-import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.util.*;
 
@@ -179,7 +179,6 @@ public abstract class AbstractAction implements RuntimeAction
 		//define answer structure
 		RuntimeLogger.setLevel( getConfiguration().getString("loglevel", null) );
 		RuntimeLogger.setCompact( getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()) );
-		getHelpObj().setLevel( getConfiguration().getInt("helplevel", 0) );
 
 		//execute initialization workflow
 		initWorkflow(createConnection);
@@ -222,7 +221,7 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
-	 * Get a help document about action syntax, execution process and examples.
+	 * Get a help document about action syntax, execution process and samples.
 	 *
 	 * @return text message specifying the syntax of the current action
 	 */
@@ -1090,19 +1089,18 @@ public abstract class AbstractAction implements RuntimeAction
 		private String selvalues = null;
 		private String description = null;
 
-		public HelpDocOption(String key, String type)
+		public HelpDocOption(XMLStreamReader reader)
 		{
-			this.setKey(key);
-			this.setType(type);
-		}
+			for(int i = 0; i < reader.getAttributeCount(); i++)
+			{
+				String data = reader.getAttributeValue(i).trim();
 
-		public HelpDocOption(String key, String type, String defvalue, String selvalues, String description)
-		{
-			this.setKey(key);
-			this.setType(type);
-			if(defvalue != null) this.setDefvalue(defvalue);
-			if(description != null) this.setDescription(description);
-			if(StringUtility.equalsIgnoreCase(type, "select")) this.setSelvalues(selvalues);
+				if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "key")) setKey(data);
+				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "type")) setType(data);
+				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "defvalue")) setDefaultValue(data);
+				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "selvalues")) setSelectionValues(data);
+				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
+			}
 		}
 
 		public String getKey()
@@ -1125,22 +1123,22 @@ public abstract class AbstractAction implements RuntimeAction
 			this.type = type;
 		}
 
-		public String getDefvalue()
+		public String getDefaultValue()
 		{
 			return defvalue;
 		}
 
-		public void setDefvalue(String defvalue)
+		public void setDefaultValue(String defvalue)
 		{
 			this.defvalue = defvalue;
 		}
 
-		public String getSelvalues()
+		public String getSelectionValues()
 		{
 			return selvalues;
 		}
 
-		public void setSelvalues(String selvalues)
+		public void setSelectionValues(String selvalues)
 		{
 			this.selvalues = selvalues;
 		}
@@ -1155,59 +1153,72 @@ public abstract class AbstractAction implements RuntimeAction
 			this.description = description;
 		}
 	}
+
+	public final class HelpDocSample
+	{
+		private String code = null;
+		private String description = null;
+
+		public HelpDocSample(XMLStreamReader reader)
+		{
+			for(int i = 0; i < reader.getAttributeCount(); i++)
+			{
+				String data = reader.getAttributeValue(i).trim();
+
+				if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "code")) setCode(data);
+				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
+			};
+		}
+
+		public String getCode()
+		{
+			return code;
+		}
+
+		public void setCode(String code)
+		{
+			this.code = code;
+		}
+
+		public String getDescription()
+		{
+			return description;
+		}
+
+		public void setDescription(String description)
+		{
+			this.description = description;
+		}
+	}
+
 	public final class HelpDoc
 	{
 		private String name = null;
+		private String syntax = null;
 		private String description = null;
 
-		private String syntax = null;
-		private HashMap options = new HashMap();
-		private HashMap optionsC1 = new HashMap();
-		private HashMap optionsC2 = new HashMap();
-		private HashMap optionsE1 = new HashMap();
-		private HashMap optionsE2 = new HashMap();
-		private HashMap examples = new HashMap();
+		private LinkedHashMap<String,HelpDocOption> options = new LinkedHashMap<String,HelpDocOption>();
+		private LinkedHashMap<String,HelpDocOption> options1 = new LinkedHashMap<String,HelpDocOption>();
+		private LinkedHashMap<String,HelpDocOption> options2 = new LinkedHashMap<String,HelpDocOption>();
+
+		private Vector<HelpDocSample> samples = new Vector<HelpDocSample>();
 
 		private int level = 0;
+		private int keyMaxSize = 0;
 
 		public HelpDoc(RuntimeAction action) throws AREasyException
 		{
 			if(action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
 
+			//get help level from the current action
+			if(action.getConfiguration().containsKey("helplevel")) setLevel(action.getConfiguration().getInt("helplevel", 0));
+
+			//detect help path
 			String pathLocation = getActionHelpDocPath(action);
 			InputStream inputStream = getHelpDocStream(pathLocation);
 
-			try
-			{
-				DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = builderFactory.newDocumentBuilder();
-				Document xmlDocument = builder.parse(inputStream);
-
-			}
-			catch(Exception e)
-			{
-
-			}
-		}
-
-		private void load(InputStream inputStream)
-		{
-			load(inputStream, false);
-		}
-
-		private void load(InputStream inputStream, Boolean inheritance)
-		{
-			try
-			{
-				DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder builder = builderFactory.newDocumentBuilder();
-				Document xmlDocument = builder.parse(inputStream);
-
-			}
-			catch(Exception e)
-			{
-
-			}
+			//read and load help structure
+			load(inputStream);
 		}
 
 		private String getActionHelpDocPath(RuntimeAction action) throws AREasyException
@@ -1228,16 +1239,109 @@ public abstract class AbstractAction implements RuntimeAction
 					else throw new AREasyException("Help location could not be found");
 			}
 
-			return pathLocation + "." + action.getCode() + ".xml";
+			return pathLocation.replace('.', '/') + "/" + action.getCode() + ".xml";
 		}
 
-		private InputStream getHelpDocStream(String xmlHelpDoc)
+		private InputStream getHelpDocStream(String xmlHelpDoc) throws AREasyException
 		{
-			String pathLocation = "org.areasy.runtime.utilities.resources.help." + xmlHelpDoc;
-			if(xmlHelpDoc.endsWith(".xml")) pathLocation += ".xml";
+			String pathLocation = "org/areasy/runtime/utilities/resources/help/" + xmlHelpDoc;
+			if(!xmlHelpDoc.endsWith(".xml")) pathLocation += ".xml";
 
-			pathLocation =  pathLocation.substring(0, pathLocation.indexOf(".xml")).replace('.', '/') + pathLocation.substring(pathLocation.indexOf(".xml"));
 			return AbstractAction.class.getClassLoader().getResourceAsStream(pathLocation);
+		}
+
+		private void load(InputStream inputStream) throws AREasyException
+		{
+			load(inputStream, false);
+		}
+
+		private void load(InputStream inputStream, boolean inheritanceOverwrite) throws AREasyException
+		{
+			String inheritancePath = null;
+			int optionsLevel = -1;
+			boolean textConcat = false;
+			String text = null;
+
+			try
+			{
+				XMLInputFactory factory = XMLInputFactory.newInstance();
+				XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
+
+				while (reader.hasNext())
+				{
+					switch (reader.next())
+					{
+						case XMLStreamConstants.START_ELEMENT:
+							if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "help"))
+							{
+								if (reader.getAttributeCount() > 0 && StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(0), "inherits"))
+								{
+									inheritancePath = reader.getAttributeValue(0);
+								}
+							}
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "option"))
+							{
+								HelpDocOption option = new HelpDocOption(reader);
+								keyMaxSize = Math.max(keyMaxSize, option.getKey().length());
+
+								switch (optionsLevel)
+								{
+									case 0:
+										addOption(option.getKey(), option);
+										break;
+									case 1:
+										addOption1(option.getKey(), option);
+										break;
+									case 2:
+										addOption2(option.getKey(), option);
+										break;
+								}
+
+							}
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "sample"))
+							{
+								HelpDocSample sample = new HelpDocSample(reader);
+								addSample(sample);
+							}
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options")) optionsLevel = 0;
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options1")) optionsLevel = 1;
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options2")) optionsLevel = 2;
+							else optionsLevel = -1;
+							break;
+						case XMLStreamConstants.CHARACTERS:
+						{
+							if(textConcat) text += reader.getText();
+								else text = reader.getText();
+
+							textConcat = true;
+							break;
+						}
+						case XMLStreamConstants.END_ELEMENT:
+							if(text == null) continue;
+							String data = text.trim();
+
+							if(!inheritanceOverwrite)
+							{
+								if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "name")) setName(data);
+								else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "syntax")) setSyntax(data);
+								else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "description")) setDescription(data);
+							}
+
+							textConcat = false;
+							break;
+					}
+				}
+
+				if(inheritancePath != null)
+				{
+					InputStream inheritanceInputStream = getHelpDocStream(inheritancePath);
+					load(inheritanceInputStream, inheritanceOverwrite);
+				}
+			}
+			catch(Exception e)
+			{
+				throw new AREasyException("Error loading help document: " + e.getMessage(), e);
+			}
 		}
 
 		public String getName()
@@ -1270,39 +1374,24 @@ public abstract class AbstractAction implements RuntimeAction
 			this.description = description;
 		}
 
-		public void addOption(String option, String details)
+		public void addOption(String key, HelpDocOption option)
 		{
-			this.options.put(option, details);
+			if(key != null && option != null && StringUtility.equals(key, option.getKey())) this.options.put(key, option);
 		}
 
-		public void addOptionC1(String option, String details)
+		public void addOption1(String key, HelpDocOption option)
 		{
-			this.optionsC1.put(option, details);
+			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options1.put(key, option);
 		}
 
-		public void addOptionC2(String option, String details)
+		public void addOption2(String key, HelpDocOption option)
 		{
-			this.optionsC2.put(option, details);
+			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options2.put(key, option);
 		}
 
-		public void addOptionE1(String option, String details)
+		public void addSample(HelpDocSample sample)
 		{
-			this.optionsE1.put(option, details);
-		}
-
-		public void addOptionE2(String option, String details)
-		{
-			this.optionsE2.put(option, details);
-		}
-
-		public void addExample(String example, String documentation)
-		{
-			this.examples.put(example, documentation);
-		}
-
-		public String getOptionDetails(String option)
-		{
-			return (String) this.options.get(option);
+			this.samples.add(sample);
 		}
 
 		public Map getOptions()
@@ -1310,29 +1399,19 @@ public abstract class AbstractAction implements RuntimeAction
 			return this.options;
 		}
 
-		public Map getOptionsC1()
+		public Map getOptions1()
 		{
-			return this.optionsC1;
+			return this.options1;
 		}
 
-		public Map getOptionsC2()
+		public Map getOptions2()
 		{
-			return this.optionsC2;
+			return this.options2;
 		}
 
-		public Map getOptionsE1()
+		public List<HelpDocSample> getSamples()
 		{
-			return this.optionsE1;
-		}
-
-		public Map getOptionsE2()
-		{
-			return this.optionsE2;
-		}
-
-		public Map getExamples()
-		{
-			return this.examples;
+			return this.samples;
 		}
 
 		public String getMarkdownDocument()
@@ -1356,23 +1435,18 @@ public abstract class AbstractAction implements RuntimeAction
 
 				content += addOptionsMarkdownContent(getOptions());
 
-				if(getLevel() <= 1 && !getOptionsC1().isEmpty()) content += addOptionsMarkdownContent(getOptionsC1());
-				if(getLevel() <= 1 && !getOptionsE1().isEmpty()) content += addOptionsMarkdownContent(getOptionsE1());
-				if(getLevel() <= 2 && !getOptionsC2().isEmpty()) content += addOptionsMarkdownContent(getOptionsC2());
-				if(getLevel() <= 2 && !getOptionsE2().isEmpty()) content += addOptionsMarkdownContent(getOptionsE2());
+				if(getLevel() <= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
+				if(getLevel() <= 2 && !getOptions2().isEmpty()) content += addOptionsMarkdownContent(getOptions2());
 			}
 
-			if(!getExamples().isEmpty())
+			if(!getSamples().isEmpty())
 			{
 				content += "\n\n__EXAMPLES__\n\n";
 
-				for (Object exObj : getExamples().keySet())
+				for (HelpDocSample sample : getSamples())
 				{
-					String exampleCommand = (String) exObj;
-					String exampleDocumentation = getOptionDetails(exampleCommand);
-
-					content += "\t" + exampleCommand + "\n";
-					content += "= " + exampleDocumentation + "\n\n";
+					content += "\t" + sample.getCode() + "\n";
+					content += "= " + sample.getDescription() + "\n\n";
 				}
 			}
 
@@ -1389,68 +1463,57 @@ public abstract class AbstractAction implements RuntimeAction
 			if(getSyntax() != null)
 			{
 				content += "\n\nSYNTAX:\n\n";
-				content += getSyntax() + "\n";
+				content += "\t" + getSyntax() + "\n";
 			}
 
 			if(!getOptions().isEmpty())
 			{
 				content += "\n\nOPTIONS:\n\n";
-
-				content += addOptionsPlainTextContent(getOptions());
-
-				if(getLevel() <= 1 && !getOptionsC1().isEmpty()) content += addOptionsPlainTextContent(getOptionsC1());
-				if(getLevel() <= 1 && !getOptionsE1().isEmpty()) content += addOptionsPlainTextContent(getOptionsE1());
-				if(getLevel() <= 2 && !getOptionsC2().isEmpty()) content += addOptionsPlainTextContent(getOptionsC2());
-				if(getLevel() <= 2 && !getOptionsE2().isEmpty()) content += addOptionsPlainTextContent(getOptionsE2());
+				content += addOptionsPlainTextContent(getOptions()) + "\n";
+				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsPlainTextContent(getOptions1()) + "\n";
+				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsPlainTextContent(getOptions2());
 			}
 
-			if(!getExamples().isEmpty())
+			if(!getSamples().isEmpty())
 			{
 				content += "\n\nEXAMPLES:\n\n";
 
-				for (Object exObj : getExamples().keySet())
+				for (HelpDocSample sample : getSamples())
 				{
-					String exampleCommand = (String) exObj;
-					String exampleDocumentation = getOptionDetails(exampleCommand);
-
-					content += " > " + exampleCommand + "\n";
-					content += " = " + exampleDocumentation + "\n\n";
+					content += " > " + sample.getCode() + "\n";
+					content += "\t= " + sample.getDescription() + "\n\n";
 				}
 			}
 
 			return content;
 		}
 
-		private String addOptionsMarkdownContent(Map options)
+		private String addOptionsMarkdownContent(Map<String,HelpDocOption> options)
 		{
 			String content = "";
 
 			if(options != null && !options.isEmpty())
 			{
-				for (Object optObj : options.keySet())
+				for (String optKey : options.keySet())
 				{
-					String optionParameter = (String) optObj;
-					String optionDetails = getOptionDetails(optionParameter);
-
-					content += "| " + optionParameter + " | " + optionDetails + " |\n";
+					HelpDocOption option = options.get(optKey);
+					content += "| " + StringUtility.rightPad("`" + optKey + "`", keyMaxSize) + " | " + option.getDescription() + " |\n";
 				}
 			}
 
 			return content;
 		}
 
-		private String addOptionsPlainTextContent(Map options)
+		private String addOptionsPlainTextContent(Map<String,HelpDocOption> options)
 		{
 			String content = "";
 
 			if(options != null && !options.isEmpty())
 			{
-				for (Object optObj : getOptionsC1().keySet())
+				for (String optKey : options.keySet())
 				{
-					String optionParameter = (String) optObj;
-					String optionDetails = getOptionDetails(optionParameter);
-
-					content += "-" + optionParameter + "\n\t= " + optionDetails + "\n";
+					HelpDocOption option = options.get(optKey);
+					content += " -" + StringUtility.rightPad(optKey, keyMaxSize) + " = " + option.getDescription() + "\n";
 				}
 			}
 

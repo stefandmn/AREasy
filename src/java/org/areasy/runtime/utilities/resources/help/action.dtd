@@ -12,17 +12,15 @@
   -->
 
 <!DOCTYPE help [
-		<!ELEMENT help (name|description|syntax|options|optionsC1|optionsC2|optionsE1|optionsE2|samples)*>
+		<!ELEMENT help (name|description|syntax|options|options1|options2|samples)*>
 		<!ATTLIST help
-				inherit CDATA #IMPLIED>
+				inherits CDATA #IMPLIED>
 		<!ELEMENT name (#PCDATA)>
 		<!ELEMENT syntax (#PCDATA)>
 		<!ELEMENT description (#PCDATA)>
 		<!ELEMENT options (option)*>
-		<!ELEMENT optionsC1 (option)*>
-		<!ELEMENT optionsC2 (option)*>
-		<!ELEMENT optionsE1 (option)*>
-		<!ELEMENT optionsE2 (option)*>
+		<!ELEMENT options1 (option)*>
+		<!ELEMENT options2 (option)*>
 		<!ELEMENT samples (sample)*>
 		<!ELEMENT option (#PCDATA)>
 		<!ELEMENT sample (#PCDATA)>

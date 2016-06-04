@@ -452,9 +452,9 @@ public class RuntimeManager
 		}
 		catch(Throwable th)
 		{
-			RuntimeLogger.error("Error discovering action '" + action + "': " + th.getMessage());
+			RuntimeLogger.error("Error calling action '" + action + "': " + th.getMessage());
 
-			logger.error("Error discovering action '" + action + "': " + th.getMessage());
+			logger.error("Error calling action '" + action + "': " + th.getMessage());
 			logger.debug("Exception", th);
 		}
 

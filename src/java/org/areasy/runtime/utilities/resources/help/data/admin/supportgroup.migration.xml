@@ -18,10 +18,10 @@
 <help inherit="action.xml">
 	<name>Support Group Migration</name>
 	<description>
-This action is an ITSM utility, designed to migrate a support group by making Obsolete the original one and creating a new one with the specified options. All related details (e.g. aliases and memberships etc.) of the old support group will be copied to the new support group. Moreover, this action is able to replace the old support group with the new one in incidents, problems, known errors, changes, tasks, work orders and asset relationships.
+		This action is an ITSM utility, designed to migrate a support group by making Obsolete the original one and creating a new one with the specified options. All related details (e.g. aliases and memberships etc.) of the old support group will be copied to the new support group. Moreover, this action is able to replace the old support group with the new one in incidents, problems, known errors, changes, tasks, work orders and asset relationships.
 	</description>
 	<syntax>
-areasy -action supportgroup.migration
+		areasy -action supportgroup.migration
 		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName "/> [-sgroupid CurrentSupportGroupId]
 		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
 		[-allgroupdetails] "/> 
@@ -38,46 +38,46 @@ areasy -action supportgroup.migration
 		[-approvalmappings]
 	</syntax>
 	<options>
-		<option key="sgroupcompany" description="current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
-		<option key="sgrouporganisation" description="current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>
-		<option key="sgroupname" description="current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname`"/>
-		<option key="sgroupid" description="current support group id. In addition the action supports some aliases for this options: supportgroupid"/>
-		<option key="newsgroupcompany" description="new support group company (company part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgroupcompany"/>
-		<option key="newsgrouporganisation" description="new support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgrouporganisation"/>
-		<option key="newsgroupname" description="new support group name (group name part of the new support group that will be created). In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>
-		<option key="allgroupdetails" description="transfer all related details from old support group to the new support group. Here are considered all members, alias, functional roles, oncall records, shifts, etc. (actually this option could be used in case of you want to create a mirrored support group)"/>
-		<option key="members" description="migrates to the new support group all people accounts that are members of old support group. In case the old support group was the primary group for specific accounts the primary role will be transferred to the new support group (and for the old one it will be reset)"/>
-		<option key="keepoldmembers" description="specifies if during migration process the members of old support group will be kept or not"/>
-		<option key="functionalroles" description="migrates to the new support group all functional roles found to the old support group"/>
-		<option key="keepoldfunctionalroles" description="specifies if during migration process the functional roles related to the old support group will be kept or not"/>
-		<option key="aliases" description="migrates old support group aliases to the new support group"/>
-		<option key="keepoldaiases" description="specifies if aliases that belongs to the current support group is be kept in the system or not"/>
-		<option key="favorites" description="transfer old support group favorites to the new support group"/>
-		<option key="keepoldfavorites" description="specifies if during migration the favorites setting of the old support group to be preserved"/>
-		<option key="oncalls" description="transfer old support group on-call records to the new support group"/>
-		<option key="shifts" description="transfer old support group shifts to the new support group"/>
-		<option key="allrelatedtickets" description="change all assignment types in all type of ticket managed by ITSM suite (incidents, problems, known errors, changes and asset relationships). In case of you want to convert discrete ticket types you have use the options described below (for each ticket type)"/>
-		<option key="approvalmappings" description="transfer old support group approval mappings to the new support group"/>
-		<option key="incidenttemplates" description="change the assignment and all authoring support groups in incident templates"/>
-		<option key="incidents" description="change the assignment and owner support groups in incident tickets"/>
-		<option key="incidentsbefore" description="allows you to change only incidents that are created before the specified date. This option excludes 'incidentsafter' option and vice-versa"/>
-		<option key="incidentsafter" description="allows you to change only incidents that are created after the specified date. This option excludes 'incidentsbefore' option and vice-versa"/>
-		<option key="openincidents" description="allows you to change only open incidents (all incidents that have status = Assigned, In Progress, Pending or Resolved)"/>
-		<option key="problemtemplates" description="change the assignment and all authoring support groups in problem templates"/>
-		<option key="problems" description=" change the assignment and coordinator support groups in problem tickets"/>
-		<option key="problemsbefore" description="allows you to change only problems that are created before the specified date. This option excludes 'problemsafter' option and vice-versa"/>
-		<option key="problemsafter" description="allows you to change only problems that are created after the specified date. This option excludes 'problemsbefore' option and vice-versa"/>
-		<option key="openproblems" description="allows you to change only open problems (all problems that have status = Draft, Under Review, Request For Authorization, Assigned, Under Investigation, Pending or Completed)"/>
-		<option key="knownerrors" description="change the assignment and coordinator support groups in known errors tickets"/>
-		<option key="knownerrorsbefore" description="allows you to change only known errors that are created before the specified date. This option excludes 'knownerrorssafter' option and vice-versa"/>
-		<option key="knownerrorssafter" description="allows you to change only known errors that are created after the specified date. This option excludes 'knownerrorsbefore' option and vice-versa"/>
-		<option key="openknownerrors" description="allows you to change only open known errors (all known errors that have status = Assigned, Scheduled For Correction, Assigned To Vendor, No Action Planned or Corrected)"/>
-		<option key="changetemplates" description="update the assignment and all authoring support groups in change templates"/>
-		<option key="changes" description="update the assignment, coordinator and change manager support groups in change tickets"/>
-		<option key="changesbefore" description="allows you to update only changes that are created before the specified date. This option excludes 'changesafter' option and vice-versa"/>
-		<option key="changesafter" description="allows you to update only changes that are created after the specified date. This option excludes 'changesbefore' option and vice-versa"/>
-		<option key="openchanges" description="allows you to update only open changes (all changes that have status = Draft, Request For Authorization, Request For Change, Planning In Progress, Scheduled For Review, Scheduled For Approval, Scheduled, Implementation In Progress, Pending, Rejected or Completed)"/>
-		<option key="dataaccess" description="It could take 'update' or 'append' value; the meaning of this option is related permission group id associated with a support group entity; if the new support group name and id will be updated in tickets (incidents changes, etc.) also the related permission group id has to be updated by replacing or appending the new group id"/>
+		<option key="sgroupcompany" type="string" description="current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
+		<option key="sgrouporganisation" type="string" description="current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>
+		<option key="sgroupname" type="string" description="current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname`"/>
+		<option key="sgroupid" type="string" description="current support group id. In addition the action supports some aliases for this options: supportgroupid"/>
+		<option key="newsgroupcompany" type="string" description="new support group company (company part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgroupcompany"/>
+		<option key="newsgrouporganisation" type="string" description="new support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgrouporganisation"/>
+		<option key="newsgroupname" type="string" description="new support group name (group name part of the new support group that will be created). In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>
+		<option key="allgroupdetails" type="bool" defvalue="off" description="transfer all related details from old support group to the new support group. Here are considered all members, alias, functional roles, oncall records, shifts, etc. (actually this option could be used in case of you want to create a mirrored support group)"/>
+		<option key="members" type="bool" defvalue="off" description="migrates to the new support group all people accounts that are members of old support group. In case the old support group was the primary group for specific accounts the primary role will be transferred to the new support group (and for the old one it will be reset)"/>
+		<option key="keepoldmembers" type="bool" defvalue="on" description="specifies if during migration process the members of old support group will be kept or not"/>
+		<option key="functionalroles" type="bool" defvalue="off" description="migrates to the new support group all functional roles found to the old support group"/>
+		<option key="keepoldfunctionalroles" type="bool" defvalue="on" description="specifies if during migration process the functional roles related to the old support group will be kept or not"/>
+		<option key="aliases" type="bool" defvalue="off" description="migrates old support group aliases to the new support group"/>
+		<option key="keepoldaiases" type="bool" defvalue="on" description="specifies if aliases that belongs to the current support group is be kept in the system or not"/>
+		<option key="favorites" type="bool" defvalue="off" description="transfer old support group favorites to the new support group"/>
+		<option key="keepoldfavorites" type="bool" defvalue="on" description="specifies if during migration the favorites setting of the old support group to be preserved"/>
+		<option key="oncalls" type="bool" defvalue="off" description="transfer old support group on-call records to the new support group"/>
+		<option key="shifts" type="bool" defvalue="off" description="transfer old support group shifts to the new support group"/>
+		<option key="allrelatedtickets" type="bool" defvalue="off" description="change all assignment types in all type of ticket managed by ITSM suite (incidents, problems, known errors, changes and asset relationships). In case of you want to convert discrete ticket types you have use the options described below (for each ticket type)"/>
+		<option key="approvalmappings" type="bool" defvalue="off" description="transfer old support group approval mappings to the new support group"/>
+		<option key="incidenttemplates" type="bool" defvalue="off" description="change the assignment and all authoring support groups in incident templates"/>
+		<option key="incidents" type="bool" defvalue="off" description="change the assignment and owner support groups in incident tickets"/>
+		<option key="incidentsbefore" type="date" description="allows you to change only incidents that are created before the specified date. This option excludes 'incidentsafter' option and vice-versa"/>
+		<option key="incidentsafter" type="date" description="allows you to change only incidents that are created after the specified date. This option excludes 'incidentsbefore' option and vice-versa"/>
+		<option key="openincidents" type="bool" defvalue="off" description="allows you to change only open incidents (all incidents that have status = Assigned, In Progress, Pending or Resolved)"/>
+		<option key="problemtemplates" type="bool" defvalue="off" description="change the assignment and all authoring support groups in problem templates"/>
+		<option key="problems" type="bool" defvalue="off" description=" change the assignment and coordinator support groups in problem tickets"/>
+		<option key="problemsbefore" type="date" description="allows you to change only problems that are created before the specified date. This option excludes 'problemsafter' option and vice-versa"/>
+		<option key="problemsafter" type="date" description="allows you to change only problems that are created after the specified date. This option excludes 'problemsbefore' option and vice-versa"/>
+		<option key="openproblems" type="bool" defvalue="off" description="allows you to change only open problems (all problems that have status = Draft, Under Review, Request For Authorization, Assigned, Under Investigation, Pending or Completed)"/>
+		<option key="knownerrors" type="bool" defvalue="off" description="change the assignment and coordinator support groups in known errors tickets"/>
+		<option key="knownerrorsbefore" type="date" description="allows you to change only known errors that are created before the specified date. This option excludes 'knownerrorssafter' option and vice-versa"/>
+		<option key="knownerrorssafter" type="date" description="allows you to change only known errors that are created after the specified date. This option excludes 'knownerrorsbefore' option and vice-versa"/>
+		<option key="openknownerrors" type="bool" defvalue="off" description="allows you to change only open known errors (all known errors that have status = Assigned, Scheduled For Correction, Assigned To Vendor, No Action Planned or Corrected)"/>
+		<option key="changetemplates" type="bool" defvalue="off" description="update the assignment and all authoring support groups in change templates"/>
+		<option key="changes" type="bool" defvalue="off" description="update the assignment, coordinator and change manager support groups in change tickets"/>
+		<option key="changesbefore" type="date" description="allows you to update only changes that are created before the specified date. This option excludes 'changesafter' option and vice-versa"/>
+		<option key="changesafter" type="date" description="allows you to update only changes that are created after the specified date. This option excludes 'changesbefore' option and vice-versa"/>
+		<option key="openchanges" type="bool" defvalue="off" description="allows you to update only open changes (all changes that have status = Draft, Request For Authorization, Request For Change, Planning In Progress, Scheduled For Review, Scheduled For Approval, Scheduled, Implementation In Progress, Pending, Rejected or Completed)"/>
+		<option key="dataaccess" type="select" defvalue="update" selvalues="update,append" description="It could take 'update' or 'append' value; the meaning of this option is related permission group id associated with a support group entity; if the new support group name and id will be updated in tickets (incidents changes, etc.) also the related permission group id has to be updated by replacing or appending the new group id"/>
 	</options>
 	<samples>
 		<sample code='areasy -runtime -action supportgroup.migration -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info' 

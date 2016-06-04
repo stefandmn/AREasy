@@ -1082,7 +1082,80 @@ public abstract class AbstractAction implements RuntimeAction
 		return targetServerName;
 	}
 
-	final public class HelpDoc
+	public final class HelpDocOption
+	{
+		private String key = null;
+		private String type = null;
+		private String defvalue = null;
+		private String selvalues = null;
+		private String description = null;
+
+		public HelpDocOption(String key, String type)
+		{
+			this.setKey(key);
+			this.setType(type);
+		}
+
+		public HelpDocOption(String key, String type, String defvalue, String selvalues, String description)
+		{
+			this.setKey(key);
+			this.setType(type);
+			if(defvalue != null) this.setDefvalue(defvalue);
+			if(description != null) this.setDescription(description);
+			if(StringUtility.equalsIgnoreCase(type, "select")) this.setSelvalues(selvalues);
+		}
+
+		public String getKey()
+		{
+			return key;
+		}
+
+		public void setKey(String key)
+		{
+			this.key = key;
+		}
+
+		public String getType()
+		{
+			return type;
+		}
+
+		public void setType(String type)
+		{
+			this.type = type;
+		}
+
+		public String getDefvalue()
+		{
+			return defvalue;
+		}
+
+		public void setDefvalue(String defvalue)
+		{
+			this.defvalue = defvalue;
+		}
+
+		public String getSelvalues()
+		{
+			return selvalues;
+		}
+
+		public void setSelvalues(String selvalues)
+		{
+			this.selvalues = selvalues;
+		}
+
+		public String getDescription()
+		{
+			return description;
+		}
+
+		public void setDescription(String description)
+		{
+			this.description = description;
+		}
+	}
+	public final class HelpDoc
 	{
 		private String name = null;
 		private String description = null;

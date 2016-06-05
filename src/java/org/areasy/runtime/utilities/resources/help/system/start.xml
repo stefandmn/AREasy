@@ -1,30 +1,43 @@
-Start
-=====
+<?xml version="1.0" encoding="UTF-8"?>
 
-Start action is used to start the local AREasy server instance.
+<!--
+  ~ Copyright (c) 2007-2016 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
 
-The standard command line is described below:
-areasy -action start [-javaxms <val1>] [-javaxmx <val2>]
+<!DOCTYPE help SYSTEM "action.dtd">
 
-Where:
-	-javaxms = initial java heap size for the server instance
-    -javaxms = maximum java heap size for the server instance
-    -javad = additional runtime options for java virtual machine (could be a list of "-D" java runtime parameters)
-
-Additionally, could be overwritten the following server parameters:
-	-host         = overwrites the value of "app.server.host" parameter
-	-port         = overwrites the value of "app.server.port" parameter
-	-arserver     = replaces the value of "app.server.default.arsystem.server.name" parameter
-	-aruser       = replaces the value of "app.server.default.arsystem.user.name" parameter
-	-arpassword   = replaces the value of "app.server.default.arsystem.user.name" parameter
-	-arport       = replaces the value of "app.server.default.arsystem.port.number" parameter
-	-loglevel     = overwrites the value of "app.runtime.logger.level" parameter
-	-logformatter = overwrites the value of "app.runtime.logger.formatter" parameter
-
-Examples:
----------
-1) areasy -action start
-	= starts local runtime server instance
-
-2) areasy -action start -javaxms 128M -javaxmx 1024M -javad "areasy.home=/opt/areasy" "data.home=/opt/arasy/work/data"
-	= starts runtime server with xms and xmx java runtime values, plus additional java runtime "-D" values.
+<help>
+	<name>Start</name>
+	<description>Start action is used to start the local AREasy server instance.</description>
+	<syntax>areasy -action start [-javaxms Value1] [-javaxmx Value2] [-javad param1=Value2 param2=Value2]</syntax>
+	<options>
+		<option key="javaxms" type="string" description="initial java heap size for the server instance"/>
+		<option key="javaxms" type="string" description="maximum java heap size for the server instance"/>
+		<option key="javad" type="string" description="additional runtime options for java virtual machine (could be a list of '-D' java runtime parameters)"/>
+	</options>
+	<options1>
+		<option key="host" type="string" description='Overwrites the value of "app.server.host" parameter'/>
+		<option key="port" type="string" description='Overwrites the value of "app.server.port" parameter'/>
+		<option key="arserver" type="string" description='Replaces the value of "app.server.default.arsystem.server.name" parameter'/>
+		<option key="aruser" type="string" description='Replaces the value of "app.server.default.arsystem.user.name" parameter'/>
+		<option key="arpassword" type="string" description='Replaces the value of "app.server.default.arsystem.user.name" parameter'/>
+		<option key="arport" type="string" description='Replaces the value of "app.server.default.arsystem.port.number" parameter'/>
+		<option key="loglevel" type="string" description='Overwrites the value of "app.runtime.logger.level" parameter'/>
+		<option key="logformatter" type="string" description='Overwrites the value of "app.runtime.logger.formatter" parameter'/>
+	</options1>
+	<samples>
+		<sample code='areasy -action start'
+				description="Starts local runtime server instance"/>
+		<sample code='areasy -action start -javaxms 128M -javaxmx 1024M -javad "areasy.home=/opt/areasy" "data.home=/opt/arasy/work/data"'
+				description='Starts runtime server with xms and xmx java runtime values, plus additional java runtime "-D" values'/>
+	</samples>
+</help>

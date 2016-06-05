@@ -1,28 +1,34 @@
-# Echo
+<?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ Copyright (c) 2007-2016 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<!DOCTYPE help SYSTEM "action.dtd">
+
+<help>
+	<name>Echo</name>
+	<description>
 Echo action is usually used to check if an AREasy server instance is running or not. If is running the server will return a log message having the following pattern:
-`> Echo message from <areasy server hostname>:<areasy server port>`
-
-The standard command line is described below:
-
-    areasy -action echo [-signal] [-inout]
-
-
-__Options__
-
-| Parameter               | Description       |
-| ----------------------- | ----------------- |
-| `inout`                 | it is parameter that will print out as a log message all input parameters (from command line) and their values. |
-| `signal`                | it is provided to the action to return a data value that is "0". This parameter is usually used to check in real time system interoperability for complex AREasy configuration. As an example this method could be used be AREasy FILTERAPI module in order to send a real message to the Remedy server that AREasy is online and could process external calls. |
-
-
-__Examples__
-
-    areasy -action echo
-= checks server status and returns a log message
-
-    areasy -action echo
-= checks server status and returns bit 0 as a value if the server is up (otherwise nothing) and server answer into a log message
-
-    areasy -action echo -inout
-= checks server status and returns input parameters as output value and server status as a log message
+"Echo message from AREasyHostName:AREasyPort"
+	</description>
+	<syntax>areasy -action echo [-signal] [-inout]</syntax>
+	<options>
+		<option key="inout" type="bool" defvalue="off" description="It is parameter that will print out as a log message all input parameters (from command line) and their values"/>
+		<option key="signal" type="bool" defvalue="off" description="It is provided to the action to return a data value that is '0'. This parameter is usually used to check in real time system interoperability for complex AREasy configuration. As an example this method could be used be AREasy FILTERAPI module in order to send a real message to the Remedy server that AREasy is online and could process external calls"/>
+	</options>
+	<samples>
+		<sample code="areasy -action echo" description="Checks server status and returns a log message"/>
+		<sample code="areasy -action echo -signal" description="Checks server status and returns bit 0 as a value if the server is up (otherwise nothing) and server answer into a log message"/>
+		<sample code="areasy -action echo -inout" description="Xhecks server status and returns input parameters as output value and server status as a log message"/>
+	</samples>
+</help>

@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.system;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.doclet.utilities.PDFUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.SystemAction;
@@ -112,18 +113,24 @@ public class Help extends SystemAction implements RuntimeAction
 			else
 			{
 				runtime.setHelpObj(this);
-				String fileName = getConfiguration().getString("outputfile", null);
-				if(fileName == null) fileName = runtime.getCode() + ".txt";
 
-				if(fileName.endsWith(".md"))
+				String fileName = getConfiguration().getString("outputfile", null);
+				if(fileName == null) fileName = RuntimeManager.getWorkingDirectory() + File.separator + runtime.getCode() + "." + getConfiguration().getString("exportformat", "txt");
+
+				if(fileName.endsWith(".html") || fileName.endsWith(".htm"))
+				{
+					String content = runtime.getHelpObj().getHTMLDocument();
+					StreamUtility.writeTextFile("UTF-8", fileName, content);
+				}
+				else if(fileName.endsWith(".md"))
 				{
 					String content = runtime.getHelpObj().getMarkdownDocument();
 					StreamUtility.writeTextFile("UTF-8", fileName, content);
 				}
-				else if(fileName.endsWith(".html") || fileName.endsWith(".htm"))
+				else if(fileName.endsWith(".pdf"))
 				{
 					String content = runtime.getHelpObj().getHTMLDocument();
-					StreamUtility.writeTextFile("UTF-8", fileName, content);
+					PDFUtility.Html2Pdf(new File(fileName), content, null);
 				}
 				else
 				{

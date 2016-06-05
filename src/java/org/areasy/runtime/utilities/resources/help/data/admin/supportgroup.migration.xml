@@ -22,7 +22,7 @@
 	</description>
 	<syntax>
 		areasy -action supportgroup.migration
-		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName "/> [-sgroupid CurrentSupportGroupId]
+		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName [-sgroupid CurrentSupportGroupId]
 		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
 		[-allgroupdetails] "/> 
 		[ [-members] [-keepoldmembers] [-functionalroles] [-keepoldfunctionalroles] [-aliases] [-keepoldaiases] 
@@ -40,7 +40,7 @@
 	<options>
 		<option key="sgroupcompany" type="string" description="Current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
 		<option key="sgrouporganisation" type="string" description="Current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>
-		<option key="sgroupname" type="string" description="Current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname`"/>
+		<option key="sgroupname" type="string" description="Current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>
 		<option key="sgroupid" type="string" description="Current support group id. In addition the action supports some aliases for this options: supportgroupid"/>
 		<option key="newsgroupcompany" type="string" description="New support group company (company part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgroupcompany"/>
 		<option key="newsgrouporganisation" type="string" description="New support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgrouporganisation"/>
@@ -87,6 +87,6 @@
 		<sample code='areasy -runtime -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
 				description="Makes old group offline creates a new support group and transfer from old group to the new one all details. Additionally update all asset relationships where a support group is related, replacing old group with the new one."/>
 		<sample code='areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
-				description="The same target command but with an explicit connection to AR System server. The action will be executed in runtime mode (because of `-runtime` option specified in the command line)"/>
+				description="The same target command but with an explicit connection to AR System server. The action will be executed in runtime mode (because of -runtime option specified in the command line)"/>
 	</samples>
 </help>

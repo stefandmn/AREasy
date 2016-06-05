@@ -164,7 +164,6 @@
 		</copy>
         <copy todir="${dist.cfg.dir}" overwrite="yes">
             <fileset dir="${src.dir}/cfg">
-				<exclude name=".svn/"/>
 				<include name="*.properties"/>
 			</fileset>
 		</copy>
@@ -173,7 +172,6 @@
 		</copy>
 		<copy todir="${dist.libs.dir}">
             <fileset dir="${libs.dir}">
-				<exclude name=".svn/"/>				
 				<include name="*.jar"/>
 			</fileset>
 		</copy>

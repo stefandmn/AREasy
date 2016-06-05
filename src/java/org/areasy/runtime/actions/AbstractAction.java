@@ -1336,12 +1336,14 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		protected HelpDoc(RuntimeAction action, Configuration config) throws AREasyException
 		{
+			if(config == null && action != null && action.isInit()) config = action.getConfiguration();
 			if(action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
+			if(config == null) throw new AREasyException("Runtime configuration is not loaded");
 
 			//get help level from the current action
-			if(action.getConfiguration().containsKey("helplevel")) setLevel(config.getInt("helplevel", 0));
-			if(action.getConfiguration().containsKey("helpoptions")) setShowOptions(config.getBoolean("helpoptions", true));
-			if(action.getConfiguration().containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
+			if(config.containsKey("helplevel")) setLevel(config.getInt("helplevel", 0));
+			if(config.containsKey("helpoptions")) setShowOptions(config.getBoolean("helpoptions", true));
+			if(config.containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
 
 			//detect help path
 			String pathLocation = getActionHelpDocPath(action);
@@ -1662,11 +1664,11 @@ public abstract class AbstractAction implements RuntimeAction
 				content += "\t" + getSyntax() + "\n";
 			}
 
-			if(getOptions().isEmpty() && isShowOptions())
+			if(!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\n__OPTIONS:__\n\n";
-				content += "| Parameter | Description |\n";
-				content += "| " + StringUtility.rightPad("-", keyMaxSize + 2) + " | " + StringUtility.rightPad("-", keyMaxSize + 2) + " |\n";
+				content += "| " + StringUtility.rightPad("Parameter", keyMaxSize) + " | " + StringUtility.rightPad("Description", keyMaxSize) + " |\n";
+				content += "| " + StringUtility.rightPad("-", keyMaxSize, "-") + " | " + StringUtility.rightPad("-", keyMaxSize, "-") + " |\n";
 
 				content += addOptionsMarkdownContent(getOptions());
 				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
@@ -1704,17 +1706,19 @@ public abstract class AbstractAction implements RuntimeAction
 			if(getSyntax() != null)
 			{
 				content += "\n\t\t<h3>SYNTAX:</h3>\n";
-				content += "\t\t<pre>" + getSyntax() + "</pre>\n";
+				content += "\t\t<pre>\n" + "\t" + getSyntax() + "\n\t\t</pre>\n";
 			}
 
-			if(getOptions().isEmpty() && isShowOptions())
+			if(!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\t\t<h3>OPTIONS:</h3>\n";
-				content += "\t\t<table>\n\t\t\t<tr>\n\t\t\t\t<th>Parameter</th>\n\t\t\t\t<th>Description</th>\n\t\t\t</tr>\n";
+				content += "\t\t<table border=1>\n\t\t\t<tr>\n\t\t\t\t<th>Parameter</th>\n\t\t\t\t<th>Description</th>\n\t\t\t</tr>\n";
 
 				content += addOptionsHTMLContent(getOptions());
 				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsHTMLContent(getOptions1());
 				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsHTMLContent(getOptions2());
+
+				content += "\t\t</table>\n";
 			}
 
 			if(!getSamples().isEmpty() && isShowSamples())
@@ -1725,7 +1729,7 @@ public abstract class AbstractAction implements RuntimeAction
 				for (HelpDocSample sample : getSamples())
 				{
 					content += "\t\t\t\t<dt><code>" + sample.getCode() + "</code></dt>\n";
-					content += "\t\t\t\t<dd>" + sample.getDescription() + "</dd>\n";
+					content += "\t\t\t\t<dd><b>=</b> " + sample.getDescription() + "</dd>\n";
 				}
 
 				content += "\t\t\t</dl>\n";
@@ -1810,16 +1814,15 @@ public abstract class AbstractAction implements RuntimeAction
 
 			if(options != null && !options.isEmpty())
 			{
-				content += "\t\t\t<tr>\n";
-
 				for (String optKey : options.keySet())
 				{
 					HelpDocOption option = options.get(optKey);
+
+					content += "\t\t\t<tr>\n";
 					content += "\t\t\t\t<td><code>" + optKey + "</code></td>\n";
 					content += "\t\t\t\t<td>" + option.getDescription() + "</td>\n";
+					content += "\t\t\t</tr>\n";
 				}
-
-				content += "\t\t\t</tr>";
 			}
 
 			return content;

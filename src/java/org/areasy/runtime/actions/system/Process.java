@@ -57,7 +57,7 @@ public class Process extends SystemAction
 		}
 		else
 		{
-			String command = getConfiguration().getString("call", null);
+			String command = getConfiguration().getString("cmd", null);
 
 			if(command != null) exec(command);
 				else RuntimeLogger.warn("Process command line is null");

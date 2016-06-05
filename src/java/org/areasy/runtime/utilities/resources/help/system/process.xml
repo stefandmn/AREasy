@@ -1,28 +1,36 @@
-Process
-=======
+<?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+  ~ Copyright (c) 2007-2016 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<!DOCTYPE help SYSTEM "action.dtd">
+
+<help>
+	<name>Process</name>
+	<description>
 Process action has been designed to execute external (operating system) processes.
 The process action could be called if the runtime server runs locally or if you'll provide admin credentials (user credentials used to connect to the AR System instance).
 
-The standard command line is described below:
-areasy -action process -call <command line>
-
-Where:
-	-call = it is the parameter that fully describes the external command line.
-
 Attention: if the external command wait an user input the action will remain stacked. For instance, if you'll call a GUI application the action return the control to the runtime manager only when the main process thread is die (when the GUI will be closed).
-
-
-Examples:
----------
-1) areasy -action process -process "sc start AREasy"
-	= starts AREasy windows service
-
-2) areasy -action process -process "sc stop AREasy"
-	= stops AREasy windows service
-
-3) areasy -action process -process "help"
-	= executes and display the output of 'help' Windows command
-
-4) areasy -action process -process "calc.exe"
-	= runs Windows Calculator application, waits until it will be close and then will return the control
+	</description>
+	<syntax>areasy -action process -cmd CommandLine</syntax>
+	<options>
+		<option key="cmd" type="string" description="It is the parameter that fully describes the external command line."/>
+	</options>
+	<samples>
+		<sample code='areasy -action process -cmd "sc start AREasy"' description="Starts AREasy windows service"/>
+		<sample code='areasy -action process -cmd "sc stop AREasy"' description="Stops AREasy windows service"/>
+		<sample code="areasy -action process -cmd 'help'" description="Executes and display the output of 'help' Windows command"/>
+		<sample code="areasy -action process -cmd 'calc.exe'" description="Runs Windows Calculator application, waits until it will be close and then will return the control"/>
+	</samples>
+</help>

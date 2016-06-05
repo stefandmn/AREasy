@@ -1,3 +1,0 @@
--form <form name> -id <entry id> [-Q10001 <value 1> -Q1000N <value N>] -D10001 <value 1> -D1000N <value N> [-validate] [-file <file path> -startindex <start index> [-endindex <end index>] [-pageindex <page> -force]] [-multipart] -[partforms <par1@formname1;part2@formname2;..;partx@formnamex>] [sleep <miliseconds>] [-entity <company|organisation|site|people|sgroup|productc|operationalc>]
-
-escape $ in unix terminal

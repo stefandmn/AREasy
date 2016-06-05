@@ -1,3 +1,11 @@
+3.0.1
+======
+04. Update file.wrapper action
+03. Implement supportgroup.migration action
+02. Export help documents in plain text and wiki (md) and html formats
+01. Design and implement new help model
+
+
 3.0
 ======
 03. Develop new action DEV area to set/associate forms for workflow objects

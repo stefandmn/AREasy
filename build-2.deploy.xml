@@ -62,7 +62,7 @@
     <!--Add JSCH jar to the classpath-->
     <classloader loader="system">
         <classpath>
-            <fileset dir="${libs.dir}/tools" includes="jsch*.jar"/>
+            <fileset dir="${libs.dir}" includes="jsch*.jar"/>
         </classpath>
     </classloader>
 

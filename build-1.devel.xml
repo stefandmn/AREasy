@@ -173,6 +173,7 @@
 		<copy todir="${dist.libs.dir}">
             <fileset dir="${libs.dir}">
 				<include name="*.jar"/>
+				<include name="databases/*.jar"/>
 			</fileset>
 		</copy>
 	</target>

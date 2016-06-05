@@ -14,12 +14,15 @@ package org.areasy.runtime.actions.system;
  */
 
 import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.SystemAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.common.data.BooleanUtility;
 import org.areasy.common.data.StringUtility;
+import org.areasy.runtime.utilities.StreamUtility;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -48,7 +51,7 @@ public class Help extends SystemAction implements RuntimeAction
 				else callHelp();
 	}
 
-	protected void callHelp()
+	protected void callHelp() throws AREasyException
 	{
 		RuntimeLogger.add(help());
 	}
@@ -61,14 +64,13 @@ public class Help extends SystemAction implements RuntimeAction
 			else data = getManager().getRuntimeActions();
 
 		List keys = new Vector();
-		while (data.hasNext()) keys.add(data.next());
+		while (data != null && data.hasNext()) keys.add(data.next());
 
-		Collections.sort(keys);
-		Iterator iterator = keys.iterator();
-
-		if(iterator != null)
+		if(!keys.isEmpty())
 		{
 			int index = 1;
+			Collections.sort(keys);
+			Iterator iterator = keys.iterator();
 			RuntimeLogger.add("Runtime actions registered on the server: ");
 
 			while(iterator.hasNext())
@@ -83,7 +85,9 @@ public class Help extends SystemAction implements RuntimeAction
 
 	protected void callAction(String action)
 	{
+		RuntimeAction runtime = null;
 		boolean actionBool = BooleanUtility.toBoolean(action);
+		boolean export = getConfiguration().getBoolean("export", false);
 		
 		if(StringUtility.isEmpty(action) || actionBool)
 		{
@@ -91,18 +95,42 @@ public class Help extends SystemAction implements RuntimeAction
 			return;
 		}
 
-		RuntimeAction runtime = null;
-
 		try
 		{
 			//instantiate a new runtime action
 			if(SystemAction.isSystemAction(action)) runtime = SystemAction.getRuntimeAction(getServer(), action);
 				else runtime = getServer() != null ? getServer().getManager().getRuntimeAction(action) : getManager().getRuntimeAction(action);
 
-			String help = runtime.help();
+			if(!export)
+			{
+				runtime.setHelpObj(this);
+				String help = runtime.help();
 
-			if(StringUtility.isEmpty(help)) RuntimeLogger.warn("No available help text for action '" + action + "'");
-				else RuntimeLogger.add(help);
+				if (StringUtility.isEmpty(help)) RuntimeLogger.warn("No available help text for action '" + action + "'");
+					else RuntimeLogger.add(help);
+			}
+			else
+			{
+				runtime.setHelpObj(this);
+				String fileName = getConfiguration().getString("outputfile", null);
+				if(fileName == null) fileName = runtime.getCode() + ".txt";
+
+				if(fileName.endsWith(".md"))
+				{
+					String content = runtime.getHelpObj().getMarkdownDocument();
+					StreamUtility.writeTextFile("UTF-8", fileName, content);
+				}
+				else if(fileName.endsWith(".html") || fileName.endsWith(".htm"))
+				{
+					String content = runtime.getHelpObj().getHTMLDocument();
+					StreamUtility.writeTextFile("UTF-8", fileName, content);
+				}
+				else
+				{
+					String content = runtime.getHelpObj().getPlainTextDocument();
+					StreamUtility.writeTextFile("UTF-8", fileName, content);
+				}
+			}
 		}
 		catch(Throwable th)
 		{
@@ -111,7 +139,5 @@ public class Help extends SystemAction implements RuntimeAction
 			getLogger().error("Error reading action '" + action + "': " + th.getMessage());
 			getLogger().debug("Exception", th);
 		}
-
-		runtime = null;
 	}
 }

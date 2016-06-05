@@ -20,11 +20,11 @@
 	<description>Clean action runs only in server mode and it executes garbage collector, removes temporary files, log files and also removes the cache objects.</description>
 	<syntax>areasy -action clean [-olderthan 10|20|..(in days)] [-force]</syntax>
 	<options>
-		<option key="force" type="bool" defvalue="off" description="force to remove all objects from the cache layer. Otherwise will remove only expired objects."/>
-		<option key="olderthan" type="number" description="specify a period (in days) that will be considered to remove the log files and also the temporary files"/>
+		<option key="force" type="bool" defvalue="off" description="Force to remove all objects from the cache layer. Otherwise will remove only expired objects."/>
+		<option key="olderthan" type="number" description="Specifies a period (in days) that will be considered to remove the log files and also the temporary files"/>
 	</options>
 	<samples>
-		<sample code="areasy -action clean" description="removes all expired objects from cache"/>
-		<sample code="areasy -action clean -force" description="removes all objects from cache"/>
+		<sample code="areasy -action clean" description="Removes all expired objects from cache"/>
+		<sample code="areasy -action clean -force" description="Removes all objects from cache"/>
 	</samples>
 </help>

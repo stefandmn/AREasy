@@ -103,9 +103,4 @@ public class StatusAction extends DefinitionAction implements RuntimeAction
 		disable = true;
 		enable = false;
 	}
-
-	public String getHelp()
-	{
-		return super.help() + " [-enable|-disable]";
-	}
 }

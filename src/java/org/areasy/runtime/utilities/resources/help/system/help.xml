@@ -22,23 +22,23 @@ Help action shows and describes standard command line and related parameters. Al
 If in the command line will be included [-call ActionName] will be displayed the help text of returned by that specified action name.
 In case of [-call ...] parameter is not specified, Help action displays this text.
 	</description>
-	<syntax>areasy [-runtime] -action help [-param1 value1] [-param2 value2] ... [-paramN valueN valueM]</syntax>
+	<syntax>areasy [-runtime] -action help [-call [WrappedAction] -export [-outputfile FileName]]</syntax>
 	<options>
-		<option key="inventory" type="bool" defvalue="off" description=""/>
-		<option key="call" type="string" description=""/>
+		<option key="inventory" type="bool" defvalue="off" description="Returns a list of all registered actions"/>
+		<option key="call" type="string" description="Specifies registered class that is called to retrieve the help document. 'subaction' parameter alias could be used in order to obtain the same thing"/>
 		<option key="export" type="bool" defvalue="off" description=""/>
 		<option key="outputfile" type="string" description=""/>
 	</options>
 	<samples>
 		<sample code='areasy -action help'
-				description="displays the whole help text of Help action called from AREasy server. This is a client call to the server that is described in the configuration file"/>
+				description="Displays the whole help text of Help action called from AREasy server. This is a client call to the server that is described in the configuration file"/>
 		<sample code='areasy -action help -inventory'
-				description="displays the list of registered action on the AREasy server. This is a client call to the server that is described in the configuration file"/>
+				description="Displays the list of registered action on the AREasy server. This is a client call to the server that is described in the configuration file"/>
 		<sample code='areasy -action help -call file.wrapper'
-				description="displays the help text delivered by the data.wrapper.file action, from the server instance described in the configuration file"/>
+				description="Displays the help text delivered by the data.wrapper.file action, from the server instance described in the configuration file"/>
 		<sample code='areasy -runtime -action help -inventory'
-				description="display the list of registered action on the local AREasy distribution, called as a Runtime instance"/>
+				description="Display the list of registered action on the local AREasy distribution, called as a Runtime instance"/>
 		<sample code='areasy -host localhost -action help'
-				description="displays the complete help text of Help action called from 'localhost' AREasy server instance. The action is execute on that server and the answer (this help text) is returned in the client console (where this command has been executed)"/>
+				description="Displays the complete help text of Help action called from 'localhost' AREasy server instance. The action is execute on that server and the answer (this help text) is returned in the client console (where this command has been executed)"/>
 	</samples>
 </help>

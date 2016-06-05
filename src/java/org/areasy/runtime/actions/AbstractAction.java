@@ -221,11 +221,24 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
+	 * Set/load help document for the current action using the configuration of a host/wrapper action instance.
+	 *
+	 * @param action host action to be used to detect the current help document
+	 */
+	public final void setHelpObj(RuntimeAction action) throws AREasyException
+	{
+		if(help == null && action != null && action.isInit())
+		{
+			help = new HelpDoc(this, action.getConfiguration());
+		}
+	}
+
+	/**
 	 * Get a help document about action syntax, execution process and samples.
 	 *
 	 * @return text message specifying the syntax of the current action
 	 */
-	protected final HelpDoc getHelpObj()
+	public final HelpDoc getHelpObj()
 	{
 		return this.help;
 	}
@@ -236,9 +249,10 @@ public abstract class AbstractAction implements RuntimeAction
 	 * @return text message specifying the syntax of the current action
 	 */
 
-	public final String help()
+	public final String help() throws AREasyException
 	{
-		return getHelpObj().getPlainTextDocument();
+		if(getHelpObj() != null) return getHelpObj().getPlainTextDocument();
+			else throw new AREasyException("Action '" + getCode() + "' is not yet initialized to provide help documentation");
 	}
 
 	/**
@@ -1081,6 +1095,9 @@ public abstract class AbstractAction implements RuntimeAction
 		return targetServerName;
 	}
 
+	/**
+	 * Dedicated class to manage help options for a specific action
+	 */
 	public final class HelpDocOption
 	{
 		private String key = null;
@@ -1089,6 +1106,11 @@ public abstract class AbstractAction implements RuntimeAction
 		private String selvalues = null;
 		private String description = null;
 
+		/**
+		 * Load specific help option from and XML structure
+		 *
+		 * @param reader <code>XMLStreamReader</code> reader instance that contains data for a help option structure
+		 */
 		public HelpDocOption(XMLStreamReader reader)
 		{
 			for(int i = 0; i < reader.getAttributeCount(); i++)
@@ -1103,62 +1125,120 @@ public abstract class AbstractAction implements RuntimeAction
 			}
 		}
 
+		/**
+		 * Get option key
+		 *
+		 * @return option key
+		 */
 		public String getKey()
 		{
 			return key;
 		}
 
+		/**
+		 * Set option key
+		 *
+		 * @param key option key
+		 */
 		public void setKey(String key)
 		{
 			this.key = key;
 		}
 
+		/**
+		 * Get option data type
+		 *
+		 * @return data type (number, string, date, bool or select) for an input option
+		 */
 		public String getType()
 		{
 			return type;
 		}
 
+		/**
+		 * Set option data type
+		 *
+		 * @param type option data type; the possible options are: string, number, bool, data and select (for selection list)
+		 */
 		public void setType(String type)
 		{
 			this.type = type;
 		}
 
+		/**
+		 * Get default value for an option
+		 *
+		 * @return option default value
+		 */
 		public String getDefaultValue()
 		{
 			return defvalue;
 		}
 
+		/**
+		 * Set default value for for an option
+		 *
+		 * @param defvalue option default value
+		 */
 		public void setDefaultValue(String defvalue)
 		{
 			this.defvalue = defvalue;
 		}
 
+		/**
+		 * Get list of possible options for an option
+		 *
+		 * @return list of possible option aggregated into a string delimited by comma
+		 */
 		public String getSelectionValues()
 		{
 			return selvalues;
 		}
 
+		/**
+		 * Set  list of values for and option, aggregated into a string delimited by comma
+		 *
+		 * @param selvalues list of values delimited by comma
+		 */
 		public void setSelectionValues(String selvalues)
 		{
 			this.selvalues = selvalues;
 		}
 
+		/**
+		 * Get action description
+		 *
+		 * @return action description
+		 */
 		public String getDescription()
 		{
 			return description;
 		}
 
+		/**
+		 * Set action description
+		 *
+		 * @param description action description
+		 */
 		public void setDescription(String description)
 		{
 			this.description = description;
 		}
 	}
 
+	/**
+	 * Dedicated class to manage help samples for a specific action
+	 */
 	public final class HelpDocSample
 	{
 		private String code = null;
 		private String description = null;
 
+		/**
+		 * Load specific help sample from and XML structure
+		 *
+		 * @param reader <code>XMLStreamReader</code> reader instance that contains data for a help sample structure
+		 */
 		public HelpDocSample(XMLStreamReader reader)
 		{
 			for(int i = 0; i < reader.getAttributeCount(); i++)
@@ -1170,27 +1250,51 @@ public abstract class AbstractAction implements RuntimeAction
 			};
 		}
 
+		/**
+		 * Get sample code
+		 *
+		 * @return sample code
+		 */
 		public String getCode()
 		{
 			return code;
 		}
 
+		/**
+		 * Set sample code
+		 *
+		 * @param code sample code
+		 */
 		public void setCode(String code)
 		{
 			this.code = code;
 		}
 
+		/**
+		 * Get sample description correlated with the specified code
+		 *
+		 * @return sample code
+		 */
 		public String getDescription()
 		{
 			return description;
 		}
 
+		/**
+		 * Set sample description correlated with tha sample code
+		 *
+		 * @param description sample description
+		 */
 		public void setDescription(String description)
 		{
 			this.description = description;
 		}
 	}
 
+	/**
+	 * This is the action help documentation engine that loads and returns the help documentation
+	 * from AREasy libraries
+	 */
 	public final class HelpDoc
 	{
 		private String name = null;
@@ -1205,13 +1309,39 @@ public abstract class AbstractAction implements RuntimeAction
 
 		private int level = 0;
 		private int keyMaxSize = 0;
+		private boolean showOptions = true;
+		private boolean showSamples = true;
 
+		/**
+		 * Initialize help document engine using the current action instance to load the
+		 * corresponding help structure.
+		 *
+		 * @param action runtime action to be used to initialize and to load help document
+		 * @throws AREasyException in case any error occurs
+		 */
 		public HelpDoc(RuntimeAction action) throws AREasyException
+		{
+			this(action, action.getConfiguration());
+		}
+		/**
+		 * Initialize help document engine using the current action instance and a specific configuration structure,
+		 * perhaps from a wrapper/host action. This method has a limited access and usually is used when the associated
+		 * action is not yet initialized by the wrapper (or host) action
+		 *
+		 * @param action runtime action to be used to initialize and to load help document
+		 * @param config action configuration to be used to detect the values of help engine parameters.
+		 *               This configuration could come from wrapper action in case the current action is not
+		 *               yet initialized.
+		 * @throws AREasyException in case any error occurs
+		 */
+		protected HelpDoc(RuntimeAction action, Configuration config) throws AREasyException
 		{
 			if(action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
 
 			//get help level from the current action
-			if(action.getConfiguration().containsKey("helplevel")) setLevel(action.getConfiguration().getInt("helplevel", 0));
+			if(action.getConfiguration().containsKey("helplevel")) setLevel(config.getInt("helplevel", 0));
+			if(action.getConfiguration().containsKey("helpoptions")) setShowOptions(config.getBoolean("helpoptions", true));
+			if(action.getConfiguration().containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
 
 			//detect help path
 			String pathLocation = getActionHelpDocPath(action);
@@ -1221,6 +1351,13 @@ public abstract class AbstractAction implements RuntimeAction
 			load(inputStream);
 		}
 
+		/**
+		 * Get action path of help document (inside of AReasy library)
+		 *
+		 * @param action associated action to the current help structure
+		 * @return the simplified (short) action help document path
+		 * @throws AREasyException in case any error occurs
+		 */
 		private String getActionHelpDocPath(RuntimeAction action) throws AREasyException
 		{
 			String pathLocation = null;
@@ -1242,6 +1379,13 @@ public abstract class AbstractAction implements RuntimeAction
 			return pathLocation.replace('.', '/') + "/" + action.getCode() + ".xml";
 		}
 
+		/**
+		 * Get input stream instance using the full action help document path.
+		 *
+		 * @param xmlHelpDoc short help document path
+		 * @return input stream structure
+		 * @throws AREasyException in case any error occurs
+		 */
 		private InputStream getHelpDocStream(String xmlHelpDoc) throws AREasyException
 		{
 			String pathLocation = "org/areasy/runtime/utilities/resources/help/" + xmlHelpDoc;
@@ -1250,11 +1394,25 @@ public abstract class AbstractAction implements RuntimeAction
 			return AbstractAction.class.getClassLoader().getResourceAsStream(pathLocation);
 		}
 
+		/**
+		 * Load action help document from an input stream instance
+		 *
+		 * @param inputStream input stream from action help document path
+		 * @throws AREasyException in case any error occurs
+		 */
 		private void load(InputStream inputStream) throws AREasyException
 		{
 			load(inputStream, false);
 		}
 
+		/**
+		 * Load action help document from an input stream instance with specific restriction in case
+		 * inheritance rules are applied
+		 *
+		 * @param inputStream input stream from action help document path
+		 * @param inheritanceOverwrite if inheritance will allow to overwrite the main help document parts
+		 * @throws AREasyException in case any error occurs
+		 */
 		private void load(InputStream inputStream, boolean inheritanceOverwrite) throws AREasyException
 		{
 			String inheritancePath = null;
@@ -1344,76 +1502,153 @@ public abstract class AbstractAction implements RuntimeAction
 			}
 		}
 
+		/**
+		 * The get name of the help document.
+		 *
+		 * @return name of the help document
+		 */
 		public String getName()
 		{
 			return this.name;
 		}
 
+		/**
+		 * Set name of the help document
+		 *
+		 * @param name name of the help document
+		 */
 		public void setName(String name)
 		{
 			this.name = name;
 		}
 
+		/**
+		 * Get help description
+		 *
+		 * @return help description
+		 */
 		public String getDescription()
 		{
 			return this.description;
 		}
 
+		/**
+		 * Get help syntax
+		 *
+		 * @return help syntax
+		 */
 		public String getSyntax()
 		{
 			return this.syntax;
 		}
 
+		/**
+		 * Set help syntax
+		 *
+		 * @param syntax help syntax
+		 */
 		public void setSyntax(String syntax)
 		{
 			this.syntax = syntax;
 		}
 
+		/**
+		 * Set help document
+		 *
+		 * @param description help document
+		 */
 		public void setDescription(String description)
 		{
 			this.description = description;
 		}
 
+		/**
+		 * Add an option level 0 to the current help document
+		 *
+		 * @param key option key
+		 * @param option option details provided by <code>HelpDocOption</code> structure.
+		 */
 		public void addOption(String key, HelpDocOption option)
 		{
 			if(key != null && option != null && StringUtility.equals(key, option.getKey())) this.options.put(key, option);
 		}
 
+		/**
+		 * Add an option level 1 to the current help document
+		 *
+		 * @param key option key
+		 * @param option option details provided by <code>HelpDocOption</code> structure.
+		 */
 		public void addOption1(String key, HelpDocOption option)
 		{
 			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options1.put(key, option);
 		}
 
+		/**
+		 * Add an option level 20 to the current help document
+		 *
+		 * @param key option key
+		 * @param option option details provided by <code>HelpDocOption</code> structure.
+		 */
 		public void addOption2(String key, HelpDocOption option)
 		{
 			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options2.put(key, option);
 		}
 
+		/**
+		 * Add sample (example) structure to be current help document
+		 * @param sample sample structure provided by <code>HelpDocSample</code> structure
+		 */
 		public void addSample(HelpDocSample sample)
 		{
 			this.samples.add(sample);
 		}
 
-		public Map getOptions()
+		/**
+		 * Returns the level 0 options map of the current help document.
+		 *
+		 * @return map structure with level 0 options
+		 */
+		public Map<String,HelpDocOption> getOptions()
 		{
 			return this.options;
 		}
 
-		public Map getOptions1()
+		/**
+		 * Returns the level 1 options map of the current help document.
+		 *
+		 * @return map structure with level 1 options
+		 */
+		public Map<String,HelpDocOption> getOptions1()
 		{
 			return this.options1;
 		}
 
-		public Map getOptions2()
+		/**
+		 * Returns the level 2 options map of the current help document.
+		 *
+		 * @return map structure with level 2 options
+		 */
+		public Map<String,HelpDocOption> getOptions2()
 		{
 			return this.options2;
 		}
 
+		/**
+		 * Returns the list of samples of the corresponding help document
+		 *
+		 * @return samples list
+		 */
 		public List<HelpDocSample> getSamples()
 		{
 			return this.samples;
 		}
 
+		/**
+		 * Generates and returns the help document content in <Code>Markdown</Code> format
+		 *
+		 * @return help document content in <Code>Markdown</Code> format
+		 */
 		public String getMarkdownDocument()
 		{
 			String content = "";
@@ -1427,19 +1662,18 @@ public abstract class AbstractAction implements RuntimeAction
 				content += "\t" + getSyntax() + "\n";
 			}
 
-			if(getOptions().isEmpty())
+			if(getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\n__OPTIONS:__\n\n";
 				content += "| Parameter | Description |\n";
-				content += "| --------- | ----------- |\n";
+				content += "| " + StringUtility.rightPad("-", keyMaxSize + 2) + " | " + StringUtility.rightPad("-", keyMaxSize + 2) + " |\n";
 
 				content += addOptionsMarkdownContent(getOptions());
-
-				if(getLevel() <= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
-				if(getLevel() <= 2 && !getOptions2().isEmpty()) content += addOptionsMarkdownContent(getOptions2());
+				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
+				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsMarkdownContent(getOptions2());
 			}
 
-			if(!getSamples().isEmpty())
+			if(!getSamples().isEmpty() && isShowSamples())
 			{
 				content += "\n\n__EXAMPLES__\n\n";
 
@@ -1453,6 +1687,59 @@ public abstract class AbstractAction implements RuntimeAction
 			return content;
 		}
 
+		/**
+		 * Generates and returns the help document content in <Code>HTML</Code> format
+		 *
+		 * @return help document content in <Code>HTML</Code> format
+		 */
+		public String getHTMLDocument()
+		{
+			String content = "<html>\n\t<head>\n";
+			if(getName() != null) content += "\t\t<title>" + getName() + "</title>\n";
+			content += "\t</head>\n\t<body>\n";
+
+			if(getName() != null) content += "\t\t<h1>" + getName() + "</h1>\n";
+			if(getDescription() != null ) content += "\t\t<p>" + getDescription() + "</p>\n";
+
+			if(getSyntax() != null)
+			{
+				content += "\n\t\t<h3>SYNTAX:</h3>\n";
+				content += "\t\t<pre>" + getSyntax() + "</pre>\n";
+			}
+
+			if(getOptions().isEmpty() && isShowOptions())
+			{
+				content += "\n\t\t<h3>OPTIONS:</h3>\n";
+				content += "\t\t<table>\n\t\t\t<tr>\n\t\t\t\t<th>Parameter</th>\n\t\t\t\t<th>Description</th>\n\t\t\t</tr>\n";
+
+				content += addOptionsHTMLContent(getOptions());
+				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsHTMLContent(getOptions1());
+				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsHTMLContent(getOptions2());
+			}
+
+			if(!getSamples().isEmpty() && isShowSamples())
+			{
+				content += "\n\t\t<h3>EXAMPLES:</h3>\n";
+				content += "\t\t\t<dl>\n";
+
+				for (HelpDocSample sample : getSamples())
+				{
+					content += "\t\t\t\t<dt><code>" + sample.getCode() + "</code></dt>\n";
+					content += "\t\t\t\t<dd>" + sample.getDescription() + "</dd>\n";
+				}
+
+				content += "\t\t\t</dl>\n";
+			}
+
+			content += "\t</body>\n<html>";
+			return content;
+		}
+
+		/**
+		 * Generates and returns the help document content in plain text format
+		 *
+		 * @return help document content in plain text format
+		 */
 		public String getPlainTextDocument()
 		{
 			String content = "";
@@ -1466,15 +1753,16 @@ public abstract class AbstractAction implements RuntimeAction
 				content += "\t" + getSyntax() + "\n";
 			}
 
-			if(!getOptions().isEmpty())
+			if(!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\nOPTIONS:\n\n";
+
 				content += addOptionsPlainTextContent(getOptions()) + "\n";
 				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsPlainTextContent(getOptions1()) + "\n";
 				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsPlainTextContent(getOptions2());
 			}
 
-			if(!getSamples().isEmpty())
+			if(!getSamples().isEmpty() && isShowSamples())
 			{
 				content += "\n\nEXAMPLES:\n\n";
 
@@ -1488,6 +1776,12 @@ public abstract class AbstractAction implements RuntimeAction
 			return content;
 		}
 
+		/**
+		 * Dedicated method to generate the string content of help options map in <code>Markdown</code> format
+		 *
+		 * @param options map of help document options
+		 * @return options map content in <code>Markdown</code> format
+		 */
 		private String addOptionsMarkdownContent(Map<String,HelpDocOption> options)
 		{
 			String content = "";
@@ -1504,7 +1798,39 @@ public abstract class AbstractAction implements RuntimeAction
 			return content;
 		}
 
-		private String addOptionsPlainTextContent(Map<String,HelpDocOption> options)
+		/**
+		 * Dedicated method to generate the string content of help options map in <code>HTML</code> format
+		 *
+		 * @param options map of help document options
+		 * @return options map content in <code>HTML</code> format
+		 */
+		private String addOptionsHTMLContent(Map<String,HelpDocOption> options)
+		{
+			String content = "";
+
+			if(options != null && !options.isEmpty())
+			{
+				content += "\t\t\t<tr>\n";
+
+				for (String optKey : options.keySet())
+				{
+					HelpDocOption option = options.get(optKey);
+					content += "\t\t\t\t<td><code>" + optKey + "</code></td>\n";
+					content += "\t\t\t\t<td>" + option.getDescription() + "</td>\n";
+				}
+
+				content += "\t\t\t</tr>";
+			}
+
+			return content;
+		}
+
+		/**
+		 * Dedicated method to generate the string content of help options map in plain text format
+		 *
+		 * @param options map of help document options
+		 * @return options map content in plain text format
+		 */		private String addOptionsPlainTextContent(Map<String,HelpDocOption> options)
 		{
 			String content = "";
 
@@ -1520,14 +1846,68 @@ public abstract class AbstractAction implements RuntimeAction
 			return content;
 		}
 
+		/**
+		 * Get help document level. This parameter typically is read from the action's configuration
+		 *
+		 * @return help level
+		 */
 		public int getLevel()
 		{
 			return level;
 		}
 
+		/**
+		 * Set help document level
+		 *
+		 * @param level help document level
+		 */
 		public void setLevel(int level)
 		{
 			this.level = level;
+		}
+
+		/**
+		 * Specified if the options are included in the help document. Also this parameter is typically read from
+		 * action's configuration
+		 *
+		 * @return true is the options are include in the document
+		 */
+		public boolean isShowOptions()
+		{
+			return showOptions;
+		}
+
+		/**
+		 * Set help document engine to include or not in the help printout also the options of the current
+		 * help document structure.
+		 *
+		 * @param showOptions flag to specify if the options are include or not
+		 */
+		public void setShowOptions(boolean showOptions)
+		{
+			this.showOptions = showOptions;
+		}
+
+		/**
+		 * Specified if the samples are included in the help document. Also this parameter is typically read from
+		 * action's configuration
+		 *
+		 * @return true is the samples are include in the document
+		 */
+		public boolean isShowSamples()
+		{
+			return showSamples;
+		}
+
+		/**
+		 * Set help document engine to include or not in the help printout also the samples of the current
+		 * help document structure.
+		 *
+		 * @param showSamples flag to specify if the samples are include or not
+		 */
+		public void setShowSamples(boolean showSamples)
+		{
+			this.showSamples = showSamples;
 		}
 	}
 }

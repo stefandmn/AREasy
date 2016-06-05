@@ -116,12 +116,26 @@ public interface RuntimeAction
 	void run() throws AREasyException;
 
 	/**
+	 * Set/load help document for the current action using the configuration of a host action instance.
+	 *
+	 * @param action host action to be used to detect the current help document
+	 */
+	void setHelpObj(RuntimeAction action) throws AREasyException;
+
+	/**
+	 * Get a help document about action syntax, execution process and samples.
+	 *
+	 * @return text message specifying the syntax of the current action
+	 */
+	AbstractAction.HelpDoc getHelpObj();
+
+	/**
 	 * Get a help text about syntax execution of the current action.
 	 * This method should be executed without action initialization.
 	 *
 	 * @return text message specifying the syntax of the current action
 	 */
-	String help();
+	String help() throws AREasyException;
 
 	/**
 	 * This method it is used to execute send a notification with data and log messages. The default implementation

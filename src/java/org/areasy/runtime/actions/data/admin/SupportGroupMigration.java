@@ -189,7 +189,7 @@ public class SupportGroupMigration extends AbstractAction
 
 	protected void disableOldSupportGroup() throws AREasyException
 	{
-		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", !getConfiguration().containsKey("keepoldmembers") || !getConfiguration().getBoolean("keepoldmembers", true));
+		boolean keepoldgroupenabled = getConfiguration().getBoolean("keepoldgroupenabled", !getConfiguration().getBoolean("keepoldmembers", true));
 
 		if(!keepoldgroupenabled)
 		{
@@ -629,7 +629,7 @@ public class SupportGroupMigration extends AbstractAction
 			try
 			{
 				approval.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				approval.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
+				approval.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
 				RuntimeLogger.debug("Group approval mapping '" + approval.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -756,7 +756,7 @@ public class SupportGroupMigration extends AbstractAction
 				relation.setAttribute(301104200, toGroup.getInstanceId());
 				relation.setAttribute(260100003, toGroup.getCompanyName() + "->" + toGroup.getOrganisationName() + "->" + toGroup.getSupportGroupName());
 
-				relation.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
+				relation.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
 				RuntimeLogger.debug("Asset relationship record '" + relation.getEntryId() + "' has been updated to take the new support group");
 				correct++;
 
@@ -772,7 +772,7 @@ public class SupportGroupMigration extends AbstractAction
 						setDataAccess(ci);
 						setDataAccess(ci, "60513");
 
-						ci.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_OVERWRITE);
+						ci.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
 						RuntimeLogger.debug("Related configuration item '" + ci.getEntryId() + "' has been updated to take the new support group");
 					}
 				}
@@ -833,7 +833,7 @@ public class SupportGroupMigration extends AbstractAction
 				if(gName > 0) template.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
 				if(gId > 0) template.setAttribute(gId, toGroup.getEntryId());	 				 //Assigned Group Id
 
-				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
+				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " template '" + template.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -896,7 +896,7 @@ public class SupportGroupMigration extends AbstractAction
 				setDataAccess(ticket, "60900");
 				setDataAccess(ticket, "60903");
 
-				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE);
+				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " '" + ticket.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}

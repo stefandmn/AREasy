@@ -1308,9 +1308,11 @@ public abstract class AbstractAction implements RuntimeAction
 		private Vector<HelpDocSample> samples = new Vector<HelpDocSample>();
 
 		private int level = 0;
-		private int keyMaxSize = 0;
 		private boolean showOptions = true;
 		private boolean showSamples = true;
+
+		private int keyMaxSize = 0;
+		private String loadHelpPath = null;
 
 		/**
 		 * Initialize help document engine using the current action instance to load the
@@ -1346,8 +1348,8 @@ public abstract class AbstractAction implements RuntimeAction
 			if(config.containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
 
 			//detect help path
-			String pathLocation = getActionHelpDocPath(action);
-			InputStream inputStream = getHelpDocStream(pathLocation);
+			setActionHelpDocPath(action);
+			InputStream inputStream = getHelpDocStream();
 
 			//read and load help structure
 			load(inputStream);
@@ -1357,28 +1359,33 @@ public abstract class AbstractAction implements RuntimeAction
 		 * Get action path of help document (inside of AReasy library)
 		 *
 		 * @param action associated action to the current help structure
-		 * @return the simplified (short) action help document path
 		 * @throws AREasyException in case any error occurs
 		 */
-		private String getActionHelpDocPath(RuntimeAction action) throws AREasyException
+		private void setActionHelpDocPath(RuntimeAction action) throws AREasyException
 		{
-			String pathLocation = null;
-
 			String packageName = action.getClass().getPackage().getName();
 			int indexAction = packageName.indexOf("actions", 0);
 
 			if(indexAction > 0)
 			{
-				pathLocation = packageName.substring(indexAction + "actions".length() + 1);
+				this.loadHelpPath = packageName.substring(0, indexAction) +
+						"utilities.resources.help" +
+						packageName.substring(indexAction + "actions".length());
 			}
-			else
-			{
-				indexAction = packageName.indexOf("areasy", 0);
-				if(indexAction > 0) pathLocation = packageName.substring(indexAction + "areasy".length() + 1);
-					else throw new AREasyException("Help location could not be found");
-			}
+			else throw new AREasyException("Help location could not be detected");
 
-			return pathLocation.replace('.', '/') + "/" + action.getCode() + ".xml";
+			this.loadHelpPath = "/"+ this.loadHelpPath.replace('.', '/') + "/" + action.getCode() + ".xml";
+		}
+
+		/**
+		 * Get input stream instance using the full action help document path.
+		 *
+		 * @return input stream structure
+		 * @throws AREasyException in case any error occurs
+		 */
+		private InputStream getHelpDocStream() throws AREasyException
+		{
+			return getHelpDocStream(loadHelpPath);
 		}
 
 		/**
@@ -1390,10 +1397,24 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		private InputStream getHelpDocStream(String xmlHelpDoc) throws AREasyException
 		{
-			String pathLocation = "org/areasy/runtime/utilities/resources/help/" + xmlHelpDoc;
-			if(!xmlHelpDoc.endsWith(".xml")) pathLocation += ".xml";
+			if(xmlHelpDoc != null)
+			{
+				if(!xmlHelpDoc.endsWith(".xml")) xmlHelpDoc += ".xml";
 
-			return AbstractAction.class.getClassLoader().getResourceAsStream(pathLocation);
+				if(!xmlHelpDoc.startsWith("/"))
+				{
+					int indexHelp = loadHelpPath.indexOf("help", 0);
+					if(indexHelp > 0) xmlHelpDoc = loadHelpPath.substring(0, indexHelp + "help".length()) + "/" + xmlHelpDoc;
+						else throw new AREasyException("Help location was not loaded or doesn't comply with standard path rules");
+				}
+
+				InputStream inputStream = AbstractAction.class.getClassLoader().getResourceAsStream(xmlHelpDoc.substring(1));
+				if(inputStream == null) throw new AREasyException("Help location could not be read: " + xmlHelpDoc);
+					else loadHelpPath = xmlHelpDoc;
+
+				return inputStream;
+			}
+			else throw new AREasyException("Help location could not be detected");
 		}
 
 		/**
@@ -1404,7 +1425,7 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		private void load(InputStream inputStream) throws AREasyException
 		{
-			load(inputStream, false);
+			load(inputStream, true);
 		}
 
 		/**
@@ -1412,10 +1433,10 @@ public abstract class AbstractAction implements RuntimeAction
 		 * inheritance rules are applied
 		 *
 		 * @param inputStream input stream from action help document path
-		 * @param inheritanceOverwrite if inheritance will allow to overwrite the main help document parts
+		 * @param rootDoc specify if the current input corresponds with the root help document
 		 * @throws AREasyException in case any error occurs
 		 */
-		private void load(InputStream inputStream, boolean inheritanceOverwrite) throws AREasyException
+		private void load(InputStream inputStream, boolean rootDoc) throws AREasyException
 		{
 			String inheritancePath = null;
 			int optionsLevel = -1;
@@ -1456,9 +1477,8 @@ public abstract class AbstractAction implements RuntimeAction
 										addOption2(option.getKey(), option);
 										break;
 								}
-
 							}
-							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "sample"))
+							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "sample") && rootDoc)
 							{
 								HelpDocSample sample = new HelpDocSample(reader);
 								addSample(sample);
@@ -1480,7 +1500,7 @@ public abstract class AbstractAction implements RuntimeAction
 							if(text == null) continue;
 							String data = text.trim();
 
-							if(!inheritanceOverwrite)
+							if(rootDoc)
 							{
 								if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "name")) setName(data);
 								else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "syntax")) setSyntax(data);
@@ -1495,7 +1515,7 @@ public abstract class AbstractAction implements RuntimeAction
 				if(inheritancePath != null)
 				{
 					InputStream inheritanceInputStream = getHelpDocStream(inheritancePath);
-					load(inheritanceInputStream, inheritanceOverwrite);
+					load(inheritanceInputStream, false);
 				}
 			}
 			catch(Exception e)

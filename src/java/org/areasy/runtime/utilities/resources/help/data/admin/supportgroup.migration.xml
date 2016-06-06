@@ -24,18 +24,17 @@
 		areasy -action supportgroup.migration
 		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName [-sgroupid CurrentSupportGroupId]
 		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
-		[-allgroupdetails] "/> 
+		[-allgroupdetails] |
 		[ [-members] [-keepoldmembers] [-functionalroles] [-keepoldfunctionalroles] [-aliases] [-keepoldaiases] 
 		[-favorites] [-keepoldfavorites] [-oncalls] [-shifts] ]
-		[-allrelatedtickets] "/>
-		[ [-incidenttemplates] [-incidents [-incidentsbefore StartDate "/> -incidentsafter EndDate "/> -openincidents]]
-		[-problemtemplates]	[-problems [-problemsbefore StartDate "/> -problemsafter EndDate "/> -openproblems]]
-		[-knownerrors [-knownerrorsbefore StartDate "/> -knownerrorsafter EndDate "/> -openknownerrors]]
-		[-changetemplates] [-changes [-changesbefore StartDate "/> -changesafter EndDate"/> -openchanges]]
-		[-tasktemplates] [-tasks [-tasksbefore StartDate "/> -tasksafter EndDate "/> -opentasks]]
-		[-workordertemplates] [-workorders [-workordersbefore StartDate "/> -workorderafter EndDate "/> -openworkorders]]
-		[-assetrelationships] [-cmdbrelationships] [-knowledgerecords]
-		[-approvalmappings]
+		[-allrelatedtickets] |
+		[ [-incidenttemplates] [-incidents [-incidentsbefore StartDate] [-incidentsafter EndDate] -openincidents]]
+		[-problemtemplates]	[-problems [-problemsbefore StartDate] [-problemsafter EndDate] [-openproblems]]
+		[-knownerrors [-knownerrorsbefore StartDate] [-knownerrorsafter EndDate] [-openknownerrors]]
+		[-changetemplates] [-changes [-changesbefore StartDate] [-changesafter EndDate] [-openchanges]]
+		[-tasktemplates] [-tasks [-tasksbefore StartDate] [-tasksafter EndDate] -opentasks]]
+		[-workordertemplates] [-workorders [-workordersbefore StartDate] [-workorderafter EndDate] -openworkorders]]
+		[-assetrelationships] [-cmdbrelationships] [-knowledgerecords] [-approvalmappings] ]
 	</syntax>
 	<options>
 		<option key="sgroupcompany" type="string" description="Current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>

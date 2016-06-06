@@ -36,8 +36,8 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		String mode = getConfiguration().getString("mode", "setentity");
 
 		if(StringUtility.equalsIgnoreCase(mode, "setentity")) setEntity();
-			else if(StringUtility.equalsIgnoreCase(mode, "setmember")) setMembers();
-				else if(StringUtility.equalsIgnoreCase(mode, "delmember")) delMembers();
+			else if(StringUtility.equalsIgnoreCase(mode, "setmembers")) setMembers();
+				else if(StringUtility.equalsIgnoreCase(mode, "delmembers")) delMembers();
 					else throw new AREasyException("Invalid execution mode: " + mode);
 	}
 
@@ -54,7 +54,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		String groupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
 
 		String groupRole = getConfiguration().getString("role", null);
-		String groupStatus = getConfiguration().getString("groupStatus", null);
+		String groupStatus = getConfiguration().getString("status", null);
 		List groupAliases = getConfiguration().getList("alias", new ArrayList());
 
 		SupportGroup group = new SupportGroup();
@@ -138,8 +138,8 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		String groupName = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
 		String groupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
 
-		String groupRole = getConfiguration().getString("groupRole", "Member");
-		boolean defaultGroup = getConfiguration().getBoolean("default",false);
+		String groupRole = getConfiguration().getString("role", "Member");
+		boolean defaultGroup = getConfiguration().getBoolean("default", false);
 		boolean supportStaff = getConfiguration().getBoolean("supportstaff", true);
 
 		SupportGroup sgroup = new SupportGroup();

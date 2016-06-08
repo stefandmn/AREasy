@@ -23,7 +23,8 @@ import java.util.List;
 
 /**
  * Dedicated library to perform all standard operations (data transactions) for a Remedy form.
- * This action is usually combined with file.wrapper runtime action
+ * This action is usually combined with file.wrapper runtime action in order to process data from
+ * a data file (excel csv, text delimited, etc. - all files supported by parser engine)
  */
 public class FormData extends BaseData
 {
@@ -41,40 +42,114 @@ public class FormData extends BaseData
 		String formName = getConfiguration().getString("form", getConfiguration().getString("formname", null));
 		if(formName == null) throw new AREasyException("Form name is null");
 
+		//check if there are registered data-maps and load them
+		setDataMaps();
+
+		//read all ignored null field values.
+		setIgnoreNullFields();
+
+		CoreItem searchEntry = getEntity();
+		searchEntry.setFormName(formName);
+
 		//run operation procedure
-		operation();
+		operation(searchEntry);
 	}
 
-	protected void operation() throws AREasyException
+	/**
+	 * This is the recursive operation method aimed to search or read data from Remedy and then to apply
+	 * requested operation (transaction)
+	 *
+	 * @param searchEntry empty <code>CoreItem</code> structure used by read or search process
+	 * @throws AREasyException in case any error occurs
+	 */
+	protected void operation(CoreItem searchEntry) throws AREasyException
 	{
-		CoreItem searchEntry = getEntity();
-		searchEntry.setFormName(getConfiguration().getString("form", getConfiguration().getString("formname", null)));
-
-		List entries = search(searchEntry);
-
-		if(entries == null || entries.size() == 0)
+		if(getConfiguration().getBoolean("firstmatchreading", false) || getConfiguration().getBoolean("exactmatchreading", false))
 		{
-			run(searchEntry);
+			CoreItem entry = readData(searchEntry);
+			run(entry);
 		}
 		else
 		{
-			int chunk = getConfiguration().getInt("chunk", 0);
-			boolean nextChunk = chunk > 0 && chunk < entries.size();
+			List entries = searchData(searchEntry);
 
-			for(int i = 0; i < entries.size(); i++)
+			if (entries == null || entries.size() == 0)
 			{
-				CoreItem entry = (CoreItem) entries.get(i);
-				if(nextChunk) getConfiguration().setKey("nextchunkid", entry.getEntryId());
-
-				run(entry);
+				run(searchEntry);
 			}
+			else
+			{
+				int chunk = getConfiguration().getInt("chunk", 0);
+				boolean nextChunk = chunk > 0 && entries.size() > 0;
 
-			// run for next chunk
-			operation();
+				for (Object entryObj : entries)
+				{
+					CoreItem entry = (CoreItem) entryObj;
+					if (nextChunk) getConfiguration().setKey("nextchunkid", entry.getEntryId());
+
+					try
+					{
+						run(entry);
+					}
+					catch (Throwable th)
+					{
+						setErrorsCounter();
+
+						if (isForced())
+						{
+							RuntimeLogger.error("Error updating data: " + th.getMessage());
+						}
+						else
+						{
+							if (th instanceof AREasyException) throw (AREasyException) th;
+								else throw new AREasyException(th);
+						}
+					}
+
+					//execution counter incrementation
+					setRecordsCounter();
+				}
+
+				// run for next chunk
+				operation(searchEntry);
+			}
 		}
 	}
 
-	protected List search(CoreItem entry) throws AREasyException
+	/**
+	 * Read data from Remedy search and in case of matching it will return only one record
+	 *
+	 * @param entry <code>CoreItem</code> structure used by read or search process
+	 * @return <code>CoreItem</code> structure returned by read operation
+	 * @throws AREasyException in case any error occurs
+	 */
+	protected CoreItem readData(CoreItem entry) throws AREasyException
+	{
+		String id = getConfiguration().getString("id", null);
+		if(StringUtility.isNotEmpty(id)) entry.setAttribute(1, id);
+
+		if(getConfiguration().getString("qualification", null) == null)
+		{
+			setQueryFields(entry);
+			entry.read(getServerConnection());
+		}
+		else
+		{
+			String qualification = getTranslatedQualification(getConfiguration().getString("qualification", null));
+			entry.read(getServerConnection(), qualification);
+		}
+
+		return entry;
+	}
+
+	/**
+	 * Search data from Remedy search and in case of matching it will return a list of records
+	 *
+	 * @param entry <code>CoreItem</code> structure used by read or search process
+	 * @return <code>CoreItem</code> structure returned by read operation
+	 * @throws AREasyException in case any error occurs
+	 */
+	protected List searchData(CoreItem entry) throws AREasyException
 	{
 		String id = getConfiguration().getString("id", null);
 		if(StringUtility.isNotEmpty(id)) entry.setAttribute(1, id);
@@ -142,8 +217,8 @@ public class FormData extends BaseData
 			//set data values
 			setDataFields(entry);
 
+			RuntimeLogger.debug("Creating data entry: " + entry.toFullString());
 			entry.create(getServerConnection());
-			RuntimeLogger.debug("Created data entry: " + entry);
 
 			if(getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
 			{
@@ -164,8 +239,8 @@ public class FormData extends BaseData
 			//set data values
 			setDataFields(entry);
 
+			RuntimeLogger.debug("Updating data entry: " + entry.toFullString());
 			entry.update(getServerConnection());
-			RuntimeLogger.debug("Updated data entry: " + entry);
 
 			if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
 			{
@@ -199,6 +274,7 @@ public class FormData extends BaseData
 				((MultiPartItem) entry).removeParts(getServerConnection());
 			}
 
+			RuntimeLogger.debug("Removing data entry: " + entry.toFullString());
 			entry.remove(getServerConnection());
 		}
 	}
@@ -210,9 +286,8 @@ public class FormData extends BaseData
 
 		List qualList = getConfiguration().getList("mergematchingfieldids", null);
 
+		RuntimeLogger.debug("Merging data entry: " + entry.toFullString());
 		if(qualList != null) entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()), qualList);
 			else entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()));
-
-		RuntimeLogger.debug("Merged data entry: " + entry);
 	}
 }

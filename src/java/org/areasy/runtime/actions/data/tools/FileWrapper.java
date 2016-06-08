@@ -15,10 +15,12 @@ package org.areasy.runtime.actions.data.tools;
 
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.AbstractAction;
+import org.areasy.runtime.actions.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
 import org.areasy.runtime.engine.services.status.BaseStatus;
+import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
 import org.areasy.common.data.StopWatchUtility;
 import org.areasy.common.data.StringUtility;
@@ -28,13 +30,8 @@ import org.areasy.common.data.StringUtility;
  *
  * This action will allow you to run a normal action (command) but with the input from a file
  */
-public class FileWrapper extends AbstractAction
+public class FileWrapper extends BaseData
 {
-	private int recordsCounter = 0;
-	private int errorsCounter = 0;
-
-	private StopWatchUtility cron = new StopWatchUtility();
-
 	/**
 	 * Execute the current action.
 	 *
@@ -50,7 +47,6 @@ public class FileWrapper extends AbstractAction
 
 		String file = getConfiguration().getString("parserfile", getConfiguration().getString("inputfile", getConfiguration().getString("file", null)));
 		String call = getConfiguration().getString("call", getConfiguration().getString("subaction", getConfiguration().getString("command", null)));
-		boolean force = getConfiguration().getBoolean("force", false);
 
 		//validate and set parser-type parameter
 		if((getConfiguration().containsKey("file") || getConfiguration().containsKey("inputfile") || getConfiguration().containsKey("parserfile")) && !getConfiguration().containsKey("parsertype"))
@@ -124,14 +120,16 @@ public class FileWrapper extends AbstractAction
 						command.run();
 
 						//execution counter incrementation
-						setRecordsCounter();
+						if((command instanceof BaseData) && ((BaseData)command).getRecordsCounter() > 0) addRecordsCounter( ((BaseData)command).getRecordsCounter() );
+							else setRecordsCounter();
 					}
 					else emptyDataCounter++;
 				}
 				catch(Throwable th)
 				{
 					errorFlag = true;
-					setErrorsCounter();
+					if((command instanceof BaseData) && ((BaseData)command).getErrorsCounter() > 0) addErrorsCounter( ((BaseData)command).getErrorsCounter() );
+						else setErrorsCounter();
 
 					String errorMsg = "Error running action using data extracted from line '" + parser.getParser().getCurrentIndex() + "'";
 					errorMsg += ": " + th.getMessage();
@@ -155,7 +153,7 @@ public class FileWrapper extends AbstractAction
 
 				//set session flags
 				errorFlag = RuntimeLogger.hasErrors();
-				if(force && errorFlag) errorFlag = false;
+				if(isForced() && errorFlag) errorFlag = false;
 
 				//limitation to 10 empty lines, to cancel the process.
 				if(emptyDataCounter >= 3) errorFlag = true;
@@ -207,84 +205,8 @@ public class FileWrapper extends AbstractAction
 		}
 	}
 
-	protected boolean isDataEmpty(String[] data)
+	public void run(CoreItem item) throws AREasyException
 	{
-		if(data == null || data.length == 0) return true;
-		else
-		{
-			boolean empty = true;
-
-			for (int i = 0; empty && i < data.length; i++)
-			{
-				empty = StringUtility.isEmpty(data[i]);
-			}
-
-			return empty;
-		}
-	}
-
-	public int setRecordsCounter()
-	{
-		return this.recordsCounter++;
-	}
-
-	public int setErrorsCounter()
-	{
-		return this.errorsCounter++;
-	}
-
-	public int getRecordsCounter()
-	{
-		return this.recordsCounter;
-	}
-
-	public int getErrorsCounter()
-	{
-		return this.errorsCounter;
-	}
-
-	@Override
-	public BaseStatus getCurrentStatus()
-	{
-		return new WrapperStatus(this);
-	}
-
-	protected StopWatchUtility getCron()
-	{
-		return cron;
-	}
-
-	protected String getCronTime()
-	{
-		return cron.toString();
-	}
-
-	/**
-	 * To change this template use File | Settings | File Templates.
-	 */
-	public class WrapperStatus extends BaseStatus
-	{
-		FileWrapper action;
-
-		public WrapperStatus(FileWrapper action)
-		{
-			this.action = action;
-		}
-
-		protected String getMessage()
-		{
-			String message;
-
-			if (action.getRecordsCounter() > 0)
-			{
-				message = "Wrapper action processed " + action.getRecordsCounter() + " records";
-
-				if (action.getErrorsCounter() > 0) message += " and discovered " + action.getErrorsCounter() + " errors in " + getCronTime();
-					else message += " without errors, in " + getCronTime();
-			}
-			else message = "Wrapper action didn't start to process data-source records";
-
-			return message;
-		}
+		//nothing to do here
 	}
 }

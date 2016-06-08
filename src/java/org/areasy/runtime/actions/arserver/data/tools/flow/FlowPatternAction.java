@@ -268,9 +268,9 @@ public abstract class FlowPatternAction extends BaseData implements RuntimeActio
 	 *
 	 * @return <code>BaseStatus</code> structure and in the current implementation is returning a null value.
 	 */
-	public EntryDataStatus getCurrentStatus()
+	public BaseDataStatus getCurrentStatus()
 	{
-		EntryDataStatus status = getCurrentBaseStatus();
+		BaseDataStatus status = getCurrentBaseStatus();
 
 		if(jobLogger != null && jobLogger.exists() && !getConfiguration().getBoolean("notracks", false))
 		{
@@ -294,9 +294,9 @@ public abstract class FlowPatternAction extends BaseData implements RuntimeActio
 		return status;
 	}
 
-	protected EntryDataStatus getCurrentBaseStatus()
+	protected BaseDataStatus getCurrentBaseStatus()
 	{
-		return (EntryDataStatus) super.getCurrentStatus();
+		return (BaseDataStatus) super.getCurrentStatus();
 	}
 
 	/**

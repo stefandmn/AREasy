@@ -42,7 +42,7 @@ import java.util.*;
 public abstract class BaseData extends AbstractAction implements CoreData
 {
 	/** action process status class */
-	protected EntryDataStatus status = null;
+	protected BaseDataStatus status = null;
 
 	/** Identifier for query parameter: <code>Q + </code><field id> (number)</code> */
 	public static final String FQUERY = "Q";
@@ -503,6 +503,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			if(getConfiguration().containsKey("ignorenullvalues")) item.setIgnoreNullValues(getConfiguration().getBoolean("ignorenullvalues"));
 			if(getConfiguration().containsKey("ignoreunchangedvalues")) item.setIgnoreUnchangedValues(getConfiguration().getBoolean("ignoreunchangedvalues"));
 			if(getConfiguration().containsKey("simplified")) item.setSimplifiedStructure(getConfiguration().getBoolean("simplified"));
+			if(getConfiguration().containsKey("firstmatchreading")) item.setFirstMatchReading();
+			if(getConfiguration().containsKey("exactmatchreading")) item.setExactMatchReading();
 		}
 
 		return item;
@@ -830,9 +832,19 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		return this.force.booleanValue();
 	}
 
+	public int addRecordsCounter(int counter)
+	{
+		return this.recordsCounter += counter;
+	}
+
 	public int setRecordsCounter()
 	{
 		return this.recordsCounter++;
+	}
+
+	public int addErrorsCounter(int counter)
+	{
+		return this.errorsCounter += counter;
 	}
 
 	public int setErrorsCounter()
@@ -878,14 +890,6 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		RuntimeLogger.add(buffer.toString());
 	}
 
-	@Override
-	public BaseStatus getCurrentStatus()
-	{
-		if(status == null) status = new EntryDataStatus(this);
-
-		return status;
-	}
-
 	/**
 	 * Get merge combination using input parameters.
 	 *
@@ -922,10 +926,18 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		return type;
 	}
 
+	@Override
+	public BaseStatus getCurrentStatus()
+	{
+		if(status == null) status = new BaseDataStatus(this);
+
+		return status;
+	}
+
 	/**
 	 * To change this template use File | Settings | File Templates.
 	 */
-	public class EntryDataStatus extends BaseStatus
+	public class BaseDataStatus extends BaseStatus
 	{
 		BaseData action;
 
@@ -933,7 +945,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		private String execMessage = null;
 		private String noexecMessage = null;
 
-		public EntryDataStatus(BaseData action)
+		public BaseDataStatus(BaseData action)
 		{
 			this.action = action;
 		}
@@ -952,7 +964,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			{
 				if(execMessage == null)
 				{
-					message = prefix + "Data action processed " + action.getRecordsCounter() + " entries in " + action.getCronTime();
+					message = prefix + "Action processed " + action.getRecordsCounter() + " entries in " + action.getCronTime();
 
 					if (action.getErrorsCounter() > 0) message += " and discovered " + action.getErrorsCounter() + " errors.";
 						else message += " without errors";

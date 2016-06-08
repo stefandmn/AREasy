@@ -15,22 +15,14 @@
 
 <!DOCTYPE help SYSTEM "action.dtd">
 
-<help inherits="data/basedata.xml">
-	<name>File Wrapper</name>
-	<description>File</description>
-	<syntax>
-		areasy -action file.wrapper
-		-form FormName -id EntryId [-Q10001 Values1 .. -Q1000N ValuesN]
-		-D10001 Values1 .. -D1000N ValuesN [-validate] [-file FilePathAndName -startindex StartIndex [-endindex EndIndex]
-		[-pageindex FileWorksheet -force]] [-multipart] -[partforms Par1@FormName1;Part2@FormName2;..;PartX@FormNameX]
-		[sleep SleepInMilliseconds] [-entity company|organisation|site|people|sgroup|productc|operationalc]
-	</syntax>
+<help inherits="action.xml">
 	<options>
-		<option key="" type="string" description=""/>
-		<option key="" type="string" description=""/>
+		<option key="login" type="string" description="username"/>
+		<option key="logins" type="string" description="usernames"/>
+		<option key="userfieldid" type="string" description=""/>
+		<option key="userfieldvalue" type="string" description=""/>
+		<option key="userqualification" type="string" description=""/>
+		<option key="userform" type="string" description="userformname"/>
+		<option key="excludeusers" type="string" description=""/>
 	</options>
-	<samples>
-		<sample code="" description=""/>
-		<sample code="" description=""/>
-	</samples>
 </help>

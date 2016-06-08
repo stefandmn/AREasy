@@ -14,7 +14,6 @@ package org.areasy.runtime.actions.data.admin;
  */
 
 import org.areasy.common.data.StringUtility;
-import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -23,7 +22,6 @@ import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

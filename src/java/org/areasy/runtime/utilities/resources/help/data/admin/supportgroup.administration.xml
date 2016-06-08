@@ -15,7 +15,7 @@
 
 <!DOCTYPE help SYSTEM "action.dtd">
 
-<help inherits="action.xml">
+<help inherits="data/admin/base.enrollment.xml">
 	<name>Support Group Administration</name>
 	<description>
 		This action is an ITSM utility, designed to create or update support groups and to manage their members and related details.
@@ -25,5 +25,15 @@
 	</syntax>
 	<options>
 		<option key="operation" type="select" selvalues="setentity,setmembers,delmembers" defvalue="setentity" description="Execution mode or this action:"/>
+		<option key="sgroupcompany" type="string" description="Current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
+		<option key="sgrouporganisation" type="string" description="Current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>
+		<option key="sgroupname" type="string" description="Current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>
+		<option key="sgroupid" type="string" description="Current support group id. In addition the action supports some aliases for this options: supportgroupid"/>
+		<option key="role" type="string" description=""/>
+		<option key="status" type="string" description=""/>
+		<option key="alias" type="string" description=""/>
+		<option key="default" type="bool" description=""/>
+		<option key="supportstaff" type="bool" description=""/>
+		<option key="findusers" type="bool" description=""/>
 	</options>
 </help>

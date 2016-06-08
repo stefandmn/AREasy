@@ -919,8 +919,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			String option = (String) mergeoptions.get(i);
 
 			if(StringUtility.equals(option, "norequired")) type = type | Constants.AR_MERGE_NO_REQUIRED_INCREMENT;
-			else if(StringUtility.equals(option, "nopattern")) type = type | Constants.AR_MERGE_NO_PATTERNS_INCREMENT;
-			else if(StringUtility.equals(option, "noworkflow")) type = type | Constants.AR_MERGE_NO_WORKFLOW_FIRED;
+			if(StringUtility.equals(option, "nopattern")) type = type | Constants.AR_MERGE_NO_PATTERNS_INCREMENT;
+			if(StringUtility.equals(option, "noworkflow")) type = type | Constants.AR_MERGE_NO_WORKFLOW_FIRED;
 		}
 
 		return type;

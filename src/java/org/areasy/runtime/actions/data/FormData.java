@@ -197,7 +197,7 @@ public class FormData extends BaseData
 	{
 		String operation = getConfiguration().getString("operation", null);
 
-		if(StringUtility.equalsIgnoreCase(operation, "create") || StringUtility.equalsIgnoreCase(operation, "insert")) runCreate(entry);
+		if(StringUtility.equalsIgnoreCase(operation, "insert") || StringUtility.equalsIgnoreCase(operation, "create")) runCreate(entry);
 		else if(StringUtility.equalsIgnoreCase(operation, "update") || StringUtility.equalsIgnoreCase(operation, "modify")) runUpdate(entry);
 		else if(StringUtility.equalsIgnoreCase(operation, "delete") || StringUtility.equalsIgnoreCase(operation, "remove")) runRemove(entry);
 		else if(StringUtility.equalsIgnoreCase(operation, "merge")) runMerge(entry);

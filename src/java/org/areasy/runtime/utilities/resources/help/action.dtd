@@ -26,7 +26,7 @@
 		<!ELEMENT sample (#PCDATA)>
 		<!ATTLIST option
 				key CDATA #REQUIRED
-				type (string|number|date|bool|select) #REQUIRED
+				type (string|number|date|bool|list|select) #REQUIRED
 				defvalue CDATA #IMPLIED
 				selvalues CDATA #IMPLIED
 				description CDATA #IMPLIED>

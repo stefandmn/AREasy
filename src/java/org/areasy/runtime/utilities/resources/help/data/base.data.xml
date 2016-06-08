@@ -15,19 +15,37 @@
 
 <!DOCTYPE help SYSTEM "action.dtd">
 
-<help inherits="data/basedata.xml">
+<help inherits="action.xml">
 	<name>File Wrapper</name>
 	<description>File</description>
 	<syntax>
-		areasy -action file.wrapper
+		areasy -action formdata.operation
 		-form FormName -id EntryId [-Q10001 Values1 .. -Q1000N ValuesN]
 		-D10001 Values1 .. -D1000N ValuesN [-validate] [-file FilePathAndName -startindex StartIndex [-endindex EndIndex]
 		[-pageindex FileWorksheet -force]] [-multipart] -[partforms Par1@FormName1;Part2@FormName2;..;PartX@FormNameX]
 		[sleep SleepInMilliseconds] [-entity company|organisation|site|people|sgroup|productc|operationalc]
 	</syntax>
 	<options>
-		<option key="" type="string" description=""/>
-		<option key="" type="string" description=""/>
+		<option key="Q" type="string" description=""/>
+		<option key="D" type="string" description=""/>
+		<option key="ignorenullquery" type="string" description=""/>
+		<option key="ignorenulldata" type="string" description=""/>
+		<option key="multipart" type="bool" description=""/>
+		<option key="ignorenullpartquery" type="string" description=""/>
+		<option key="ignorenullpartquery" type="string" description=""/>
+		<option key="firstmatchreading" type="string" description=""/>
+		<option key="exactmatchreading" type="string" description=""/>
+		<option key="entity" type="string" description=""/>
+		<option key="classid" type="string" description=""/>
+		<option key="form" type="string" description="formname"/>
+		<option key="ignorenullvalues" type="string" description=""/>
+		<option key="ignoreunchangedvalues" type="string" description=""/>
+		<option key="simplified" type="string" description=""/>
+		<option key="ignorenulls" type="bool" description=""/>
+		<option key="force" type="bool" description=""/>
+		<option key="mergetype" type="select" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description=""/>
+		<option key="mergeoptions" type="list" selvalues="norequired,nopattern,noworkflow" description=""/>
+		<option key="datamaps" type="list" description=""/>
 	</options>
 	<samples>
 		<sample code="" description=""/>

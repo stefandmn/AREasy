@@ -33,12 +33,12 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 {
 	public void run() throws AREasyException
 	{
-		String mode = getConfiguration().getString("mode", "setentity");
+		String operation = getConfiguration().getString("operation", "setentity");
 
-		if(StringUtility.equalsIgnoreCase(mode, "setentity")) setEntity();
-			else if(StringUtility.equalsIgnoreCase(mode, "setmembers")) setMembers();
-				else if(StringUtility.equalsIgnoreCase(mode, "delmembers")) delMembers();
-					else throw new AREasyException("Invalid execution mode: " + mode);
+		if(StringUtility.equalsIgnoreCase(operation, "setentity")) setEntity();
+			else if(StringUtility.equalsIgnoreCase(operation, "setmembers")) setMembers();
+				else if(StringUtility.equalsIgnoreCase(operation, "delmembers")) delMembers();
+					else throw new AREasyException("Invalid execution operation: " + operation);
 	}
 
 	/**

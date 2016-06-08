@@ -38,6 +38,8 @@ public class SupportGroupMigration extends AbstractAction
 	private String oldPermId = null;
 	private String newPermId = null;
 
+	private boolean skip = false;
+
 	public void run() throws AREasyException
 	{
 		boolean allgroupdetails = getConfiguration().getBoolean("allgroupdetails", false);
@@ -65,6 +67,7 @@ public class SupportGroupMigration extends AbstractAction
 
 		//Detect old support group and create/update the new support group
 		setSupportGroups();
+		if(isSkipped()) return;
 
 		//update/create all related details
 		if(members || allgroupdetails) setGroupMembers(getOldSupportGroup(), getNewSupportGroup());
@@ -108,11 +111,11 @@ public class SupportGroupMigration extends AbstractAction
 		if(approvalmappings || allrelatedtickets) updateApprovalMappings(getOldSupportGroup(), getNewSupportGroup());
 	}
 
-	protected void setSupportGroups() throws AREasyException
+	protected boolean setSupportGroups() throws AREasyException
 	{
 		String oldCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
 		String oldOrganisation = getConfiguration().getString("sgrouporganisation", getConfiguration().getString("supportgrouporganisation", null));
-		String oldGroup = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
+		String oldGroupName = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
 		String oldGroupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
 
 		String newCompany = getConfiguration().getString("newsgroupcompany", getConfiguration().getString("newsupportgroupcompany", null));
@@ -120,33 +123,10 @@ public class SupportGroupMigration extends AbstractAction
 		String newGroup = getConfiguration().getString("newsgroup", getConfiguration().getString("newsgroupname", getConfiguration().getString("newsupportgroup", getConfiguration().getString("newsupportgroupname", null))));
 
 		oldSG = new SupportGroup();
-		oldSG.setCompanyName(oldCompany);
-		oldSG.setOrganisationName(oldOrganisation);
-		oldSG.setSupportGroupName(oldGroup);
+		if(oldCompany != null) oldSG.setCompanyName(oldCompany);
+		if(oldOrganisation != null) oldSG.setOrganisationName(oldOrganisation);
+		if(oldGroupName != null) oldSG.setSupportGroupName(oldGroupName);
 		if(oldGroupId != null) oldSG.setAttribute(1, oldGroupId);
-
-		newSG = new SupportGroup();
-		newSG.setCompanyName(newCompany);
-		newSG.setOrganisationName(newOrganisation);
-		newSG.setSupportGroupName(newGroup);
-
-		if(StringUtility.equals(newSG.getCompanyName(), oldSG.getCompanyName()) &&
-				StringUtility.equals(newSG.getOrganisationName(), oldSG.getOrganisationName()) &&
-				StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
-		{
-			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
-			return;
-		}
-		
-		boolean create = true;
-		newSG.read(getServerConnection());
-
-		if (newSG.exists())
-		{
-			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' already exists; enabling and updating it");
-			newSG.setStatus("Enabled");
-			create = false;
-		}
 
 		oldSG.setAttribute(7, new Integer(1));
 		oldSG.read(getServerConnection());
@@ -157,6 +137,29 @@ public class SupportGroupMigration extends AbstractAction
 			oldSG.read(getServerConnection());
 
 			if(!oldSG.exists()) throw new AREasyException("Support group '" + getSupportGroupString(oldSG) + "' doesn't exist");
+		}
+
+		newSG = new SupportGroup();
+		newSG.setCompanyName(newCompany);
+		newSG.setOrganisationName(newOrganisation);
+		newSG.setSupportGroupName(newGroup);
+
+		if(StringUtility.equals(newSG.getCompanyName(), oldSG.getCompanyName()) &&
+			StringUtility.equals(newSG.getOrganisationName(), oldSG.getOrganisationName()) &&
+			StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
+		{
+			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
+			skip();
+		}
+		
+		boolean create = true;
+		newSG.read(getServerConnection());
+
+		if (newSG.exists())
+		{
+			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' already exists; enabling and updating it");
+			newSG.setStatus("Enabled");
+			create = false;
 		}
 
 		newSG.setRole(oldSG.getRole());
@@ -170,12 +173,12 @@ public class SupportGroupMigration extends AbstractAction
 		newSG.setAttribute(1000000571, oldSG.getStringAttributeValue(1000000571));	//uses SLA
 		newSG.setAttribute(1000000572, oldSG.getStringAttributeValue(1000000572));	//uses OLA
 
-		if (create)
+		if (create && getConfiguration().getBoolean("creategroup", true))
 		{
 			newSG.create(getServerConnection());
 			RuntimeLogger.info("Support group '" + getSupportGroupString(newSG) + "' has been created");
 		}
-		else
+		else if(getConfiguration().getBoolean("updategroup", true))
 		{
 			newSG.setIgnoreNullValues(false);
 			newSG.update(getServerConnection());
@@ -185,6 +188,7 @@ public class SupportGroupMigration extends AbstractAction
 		//read permissions from new group and from old one
 		oldPermId = oldSG.getRelatedSystemGroup(getServerConnection()).getStringAttributeValue(1000001579);
 		newPermId = newSG.getRelatedSystemGroup(getServerConnection()).getStringAttributeValue(1000001579);
+		return false;
 	}
 
 	protected void disableOldSupportGroup() throws AREasyException
@@ -968,5 +972,15 @@ public class SupportGroupMigration extends AbstractAction
 	protected String getSupportGroupString(SupportGroup group)
 	{
 		return group.getCompanyName() + ">" + group.getOrganisationName() + ">" + group.getSupportGroupName();
+	}
+
+	public boolean isSkipped()
+	{
+		return skip;
+	}
+
+	public void skip()
+	{
+		this.skip = true;
 	}
 }

@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.arserver.data.BaseDataAction;
+import org.areasy.runtime.actions.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.Attribute;
@@ -32,7 +32,7 @@ import java.util.List;
  * During creation or update process the action could trigger SVT building process.
  * @TODO - import of agreements and correlation between agreements and service targets
  */
-public class ServiceTargetAdministration extends BaseDataAction
+public class ServiceTargetAdministration extends BaseData
 {
 	boolean agreement = false;
 

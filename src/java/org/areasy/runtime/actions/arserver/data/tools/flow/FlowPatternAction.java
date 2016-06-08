@@ -16,7 +16,7 @@ package org.areasy.runtime.actions.arserver.data.tools.flow;
 import com.bmc.arsys.api.*;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.AbstractSource;
 import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.arserver.data.BaseDataAction;
+import org.areasy.runtime.actions.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -42,7 +42,7 @@ import java.util.*;
  * has to derive this class. This action is able to start an AAR workflow that record the execution startup, execute
  * proper sub-action and record the entire execution journal. All logging info are manage in some specific Remedy forms.
  */
-public abstract class FlowPatternAction extends BaseDataAction implements RuntimeAction, ARDictionary
+public abstract class FlowPatternAction extends BaseData implements RuntimeAction, ARDictionary
 {
 	/** Library logger */
 	protected static Logger logger = LoggerFactory.getLog(FlowPatternAction.class);

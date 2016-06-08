@@ -24,6 +24,6 @@
 		areasy -action supportgroup.administration
 	</syntax>
 	<options>
-		<option key="mode" type="select" selvalues="setentity,setmembers,delmembers" defvalue="setentity" description="Execution mode or this action:"/>
+		<option key="operation" type="select" selvalues="setentity,setmembers,delmembers" defvalue="setentity" description="Execution mode or this action:"/>
 	</options>
 </help>

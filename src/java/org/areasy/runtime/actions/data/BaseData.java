@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data;
+package org.areasy.runtime.actions.data;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -39,7 +39,7 @@ import java.util.*;
 /**
  * Abstract library that publish a shared API for all common action that use Remedy interrogation.
  */
-public abstract class BaseDataAction extends AbstractAction implements CoreDataAction
+public abstract class BaseData extends AbstractAction implements CoreData
 {
 	/** action process status class */
 	protected EntryDataStatus status = null;
@@ -468,6 +468,8 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 		if(getConfiguration().containsKey("ignorenullvalues")) item.setIgnoreNullValues(getConfiguration().getBoolean("ignorenullvalues"));
 		if(getConfiguration().containsKey("ignoreunchangedvalues")) item.setIgnoreUnchangedValues(getConfiguration().getBoolean("ignoreunchangedvalues"));
 		if(getConfiguration().containsKey("simplified")) item.setSimplifiedStructure(getConfiguration().getBoolean("simplified"));
+		if(getConfiguration().containsKey("firstmatchreading")) item.setFirstMatchReading();
+		if(getConfiguration().containsKey("exactmatchreading")) item.setExactMatchReading();
 
 		return item;
 	}
@@ -912,9 +914,9 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 		{
 			String option = (String) mergeoptions.get(i);
 
-			if(StringUtility.equals(option, "norequired")) type = type + Constants.AR_MERGE_NO_REQUIRED_INCREMENT;
-			else if(StringUtility.equals(option, "nopattern")) type = type + Constants.AR_MERGE_NO_PATTERNS_INCREMENT;
-			else if(StringUtility.equals(option, "noworkflow")) type = type + Constants.AR_MERGE_NO_WORKFLOW_FIRED;
+			if(StringUtility.equals(option, "norequired")) type = type | Constants.AR_MERGE_NO_REQUIRED_INCREMENT;
+			else if(StringUtility.equals(option, "nopattern")) type = type | Constants.AR_MERGE_NO_PATTERNS_INCREMENT;
+			else if(StringUtility.equals(option, "noworkflow")) type = type | Constants.AR_MERGE_NO_WORKFLOW_FIRED;
 		}
 
 		return type;
@@ -925,13 +927,13 @@ public abstract class BaseDataAction extends AbstractAction implements CoreDataA
 	 */
 	public class EntryDataStatus extends BaseStatus
 	{
-		BaseDataAction action;
+		BaseData action;
 
 		private String signature = null;
 		private String execMessage = null;
 		private String noexecMessage = null;
 
-		public EntryDataStatus(BaseDataAction action)
+		public EntryDataStatus(BaseData action)
 		{
 			this.action = action;
 		}

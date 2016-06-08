@@ -45,6 +45,7 @@ public class CoreItem implements ARDictionary
 	private boolean ignoreNullValues = true;
 	private boolean ignoreUnchangedValues = true;
 	private boolean simplifiedStructure = false;
+	private boolean readFirstMatch = false;
 
 	private String operatorStrings[] = { "%", ">=", ">", "<=", "<", "!=" };
 	private int operatorIndex[] = {Constants.AR_REL_OP_LIKE, Constants.AR_REL_OP_GREATER_EQUAL, Constants.AR_REL_OP_GREATER, Constants.AR_REL_OP_LESS_EQUAL, Constants.AR_REL_OP_LESS, Constants.AR_REL_OP_NOT_EQUAL };
@@ -1456,9 +1457,9 @@ public class CoreItem implements ARDictionary
 
 			if(objects != null)
 			{
-				if(objects.size() == 1) fetch(arsession, (Entry)objects.get(0));
-					else if(objects.size() > 1) logger.debug("Multiple requests match for structure: " + this);
-						else if(objects.size() == 0) logger.debug("No match found: " + this); 
+				if((objects.size() == 1) || (objects.size() > 1 && isFirstMatchReading())) fetch(arsession, (Entry)objects.get(0));
+					else if(objects.size() > 1 && !isFirstMatchReading()) logger.debug("Multiple matches for structure: " + this);
+						else if(objects.size() == 0) logger.debug("No match found: " + this);
 			}
 			else logger.debug("No requests match for structure: " + this);
 		}
@@ -2552,5 +2553,31 @@ public class CoreItem implements ARDictionary
 	public void simulate()
 	{
 		this.simulation = true;
+	}
+
+	/**
+	 * Check if read operation will consider the first match record or is asking for exact match.
+	 *
+	 * @return true if the first match operation is used
+	 */
+	public boolean isFirstMatchReading()
+	{
+		return readFirstMatch;
+	}
+
+	/**
+	 * Activate exact match operation and disable first match opeartion
+	 */
+	public void setExactMatchReading()
+	{
+		this.readFirstMatch = false;
+	}
+
+	/**
+	 * Activate first match operation and disable exact match opeartion
+	 */
+	public void setFirstMatchReading()
+	{
+		this.readFirstMatch = true;
 	}
 }

@@ -15,8 +15,8 @@ package org.areasy.runtime.actions.arserver.data.tools.flow.events;
 
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.RuntimeManager;
-import org.areasy.runtime.actions.arserver.data.BaseDataAction;
-import org.areasy.runtime.actions.arserver.data.CoreDataAction;
+import org.areasy.runtime.actions.data.BaseData;
+import org.areasy.runtime.actions.data.CoreData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -177,7 +177,7 @@ public class RunDataWorkflowEvent extends AbstractEvent
 							RuntimeAction action = (RuntimeAction) actions.get(i);
 							logger.debug("Processing Step 1 - Found action: " + action);
 
-							if(action != null && action instanceof CoreDataAction)
+							if(action != null && action instanceof CoreData)
 							{
 								//get action's specific configuration
 								Configuration config = getActionConfiguration(action.getCode(), jobMapping, sourceMap);
@@ -185,7 +185,7 @@ public class RunDataWorkflowEvent extends AbstractEvent
 
 								//initialize action.
 								action.init(config, getAction().getManager(), getRunnerServerConnection());
-								if(target == null) target = getTargetStructure(context, config, (CoreDataAction)action);
+								if(target == null) target = getTargetStructure(context, config, (CoreData)action);
 								logger.debug("Processing Step 2 - Action initialized and Target created: " + target);
 
 								//run data transformation before commit - apply scripting data transformation
@@ -194,7 +194,7 @@ public class RunDataWorkflowEvent extends AbstractEvent
 								//run action (if wasn't skipped by Velocity injection)
 								if(!skip)
 								{
-									((CoreDataAction)action).run(target);
+									((CoreData)action).run(target);
 									logger.debug("Processing Step 3 - Action executed");
 								}
 								else RuntimeLogger.debug("Action '" + action.getCode() + "' has been skipped because of data transformation script attached to the job definition. The following target structure has been skipped: " + target);
@@ -371,7 +371,7 @@ public class RunDataWorkflowEvent extends AbstractEvent
 						RuntimeLogger.debug("Data transformation rule '" + rule + "' returns: " + fieldValueRule);
 
 						//set value
-						if(NumberUtility.isNumber(fieldIdRule)) actionConfig.setKey(BaseDataAction.FDATA + fieldIdRule, fieldValueRule);
+						if(NumberUtility.isNumber(fieldIdRule)) actionConfig.setKey(BaseData.FDATA + fieldIdRule, fieldValueRule);
 							else actionConfig.setKey(fieldIdRule, fieldValueRule);
 					}
 					catch(Exception e)
@@ -394,7 +394,7 @@ public class RunDataWorkflowEvent extends AbstractEvent
 	 * @return <code>HybridConfigurationItem</code> structure
 	 * @throws AREasyException is any error will occur
 	 */
-	protected CoreItem getTargetStructure(Context context, Configuration config, CoreDataAction action) throws AREasyException
+	protected CoreItem getTargetStructure(Context context, Configuration config, CoreData action) throws AREasyException
 	{
 		CoreItem target = null;
 		String entity = config.getString("entity", null);
@@ -490,8 +490,8 @@ public class RunDataWorkflowEvent extends AbstractEvent
 
 			if(entity < 2)
 			{
-				if(type == 1) config.setKey(BaseDataAction.FQUERY + targetKey, targetValue);
-					else config.setKey(BaseDataAction.FDATA  + targetKey, targetValue);
+				if(type == 1) config.setKey(BaseData.FQUERY + targetKey, targetValue);
+					else config.setKey(BaseData.FDATA  + targetKey, targetValue);
 			}
 			else if(entity == 2 && StringUtility.equals(action, actionName))
 			{

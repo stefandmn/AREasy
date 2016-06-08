@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.arserver.data;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.actions.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
@@ -26,7 +27,7 @@ import java.util.List;
 /**
  * Add one entry in form.
  */
-public class EntryAddAction extends BaseDataAction
+public class EntryAddAction extends BaseData
 {
 	/**
 	 * Execute the current action.

@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.arserver.data;
+package org.areasy.runtime.actions.data;
 
 /*
  * Copyright (c) 2007-2016 AREasy Runtime
@@ -24,7 +24,7 @@ import java.util.Map;
  * The difference between standard action is that this library expose an additional method to have possibility to
  * define workflows, executing a chain of actions (which are instance of this interface) for a specific data structure.
  */
-public interface CoreDataAction extends RuntimeAction
+public interface CoreData extends RuntimeAction
 {
 	/**
 	 * Execute an action for a specific <code>CoreItem</code>. This item must be identified previously and then the method

@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.data.cmdb;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.arserver.data.CoreDataAction;
+import org.areasy.runtime.actions.data.CoreData;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
 
@@ -22,7 +22,7 @@ import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
  * The difference between standard action is that this library expose an additional method to have possibility to
  * define workflows, executing a chain of actions (which are instance of this interface) for a clear identified asset (CI).
  */
-public interface ConfigurationItemAction extends CoreDataAction
+public interface ConfigurationItemAction extends CoreData
 {
 	/**
 	 * Execute an action for a specific CI. This CI must be identified previously and then the method

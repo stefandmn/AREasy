@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class OverlayAction extends DefinitionAction implements RuntimeAction
 {
-		/**
+	/**
 	 * Commit changes made in the specified structure info instance.
 	 *
 	 * @param objectInfo managed <code>StructItemInfo</code> instance.

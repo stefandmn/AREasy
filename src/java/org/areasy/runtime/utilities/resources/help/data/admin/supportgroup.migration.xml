@@ -24,6 +24,7 @@
 		areasy -action supportgroup.migration
 		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName [-sgroupid CurrentSupportGroupId]
 		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
+		[-creategroup] [-updategroup]
 		[-allgroupdetails] |
 		[ [-members] [-keepoldmembers] [-functionalroles] [-keepoldfunctionalroles] [-aliases] [-keepoldaiases] 
 		[-favorites] [-keepoldfavorites] [-oncalls] [-shifts] ]
@@ -44,6 +45,8 @@
 		<option key="newsgroupcompany" type="string" description="New support group company (company part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgroupcompany"/>
 		<option key="newsgrouporganisation" type="string" description="New support group organisation (organisation part of the new support group that will be created). In addition the action supports another alias for this option: newsupportgrouporganisation"/>
 		<option key="newsgroupname" type="string" description="New support group name (group name part of the new support group that will be created). In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>
+		<option key="creategroup" type="bool" defvalue="on" description="Allows to create the new group (in case it is not found in in the system)"/>
+		<option key="updategroup" type="bool" defvalue="on" description="Allows to update the new group (in case it is already registered in the system)"/>
 		<option key="allgroupdetails" type="bool" defvalue="off" description="Transfer all related details from old support group to the new support group. Here are considered all members, alias, functional roles, oncall records, shifts, etc. (actually this option could be used in case of you want to create a mirrored support group)"/>
 		<option key="members" type="bool" defvalue="off" description="Migrates to the new support group all people accounts that are members of old support group. In case the old support group was the primary group for specific accounts the primary role will be transferred to the new support group (and for the old one it will be reset)"/>
 		<option key="keepoldmembers" type="bool" defvalue="on" description="Specifies if during migration process the members of old support group will be kept or not"/>

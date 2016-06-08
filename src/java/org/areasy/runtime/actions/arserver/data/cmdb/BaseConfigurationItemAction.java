@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.arserver.data.cmdb;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.arserver.data.BaseDataAction;
+import org.areasy.runtime.actions.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -27,7 +27,7 @@ import java.util.Vector;
 /**
  * Abstract library that is used by all CMDB actions.
  */
-public abstract class BaseConfigurationItemAction extends BaseDataAction implements ConfigurationItemAction
+public abstract class BaseConfigurationItemAction extends BaseData implements ConfigurationItemAction
 {
 	public void run() throws AREasyException
 	{

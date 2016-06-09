@@ -26,8 +26,11 @@
 		[sleep SleepInMilliseconds] [-entity company|organisation|site|people|sgroup|productc|operationalc]
 	</syntax>
 	<options>
-		<option key="" type="string" description=""/>
-		<option key="" type="string" description=""/>
+		<option key="inputfile" type="string" description="parserfile, file"/>
+		<option key="parsertype" type="string" description=""/>
+		<option key="call" type="string" description="subaction"/>
+		<option key="limit" type="number" description=""/>
+		<option key="sleep" type="number" description=""/>
 	</options>
 	<samples>
 		<sample code="" description=""/>

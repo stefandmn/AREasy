@@ -26,7 +26,7 @@
 		[sleep SleepInMilliseconds] [-entity company|organisation|site|people|sgroup|productc|operationalc]
 	</syntax>
 	<options>
-		<option key="operation" type="select" selvalues="insert,update,delete,merge" description=""/>
+		<option key="operation" type="string" selvalues="insert,update,delete,merge" description=""/>
 		<option key="firstmatchreading" type="string" description=""/>
 		<option key="exactmatchreading" type="string" description=""/>
 		<option key="nextchunkid" type="string" description=""/>

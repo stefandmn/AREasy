@@ -18,11 +18,11 @@
 <help inherits="action.xml">
 	<options>
 		<option key="login" type="string" description="username"/>
-		<option key="logins" type="string" description="usernames"/>
+		<option key="logins" type="list" description="usernames"/>
 		<option key="userfieldid" type="string" description=""/>
 		<option key="userfieldvalue" type="string" description=""/>
 		<option key="userqualification" type="string" description=""/>
 		<option key="userform" type="string" description="userformname"/>
-		<option key="excludeusers" type="string" description=""/>
+		<option key="excludeusers" type="list" description=""/>
 	</options>
 </help>

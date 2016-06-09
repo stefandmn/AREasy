@@ -28,22 +28,19 @@
 	<options>
 		<option key="Q" type="string" description=""/>
 		<option key="D" type="string" description=""/>
-		<option key="ignorenullquery" type="string" description=""/>
-		<option key="ignorenulldata" type="string" description=""/>
+		<option key="partforms" type="list" description=""/>
 		<option key="multipart" type="bool" description=""/>
-		<option key="ignorenullpartquery" type="string" description=""/>
-		<option key="ignorenullpartquery" type="string" description=""/>
-		<option key="firstmatchreading" type="string" description=""/>
-		<option key="exactmatchreading" type="string" description=""/>
+		<option key="ignorenullvalues" type="bool" description=""/>
+		<option key="ignoreunchangedvalues" type="bool" description=""/>
+		<option key="simplified" type="bool" description=""/>
+		<option key="firstmatchreading" type="bool" description=""/>
+		<option key="exactmatchreading" type="bool" description=""/>
 		<option key="entity" type="string" description=""/>
 		<option key="classid" type="string" description=""/>
-		<option key="form" type="string" description="formname"/>
-		<option key="ignorenullvalues" type="string" description=""/>
-		<option key="ignoreunchangedvalues" type="string" description=""/>
-		<option key="simplified" type="string" description=""/>
-		<option key="ignorenulls" type="bool" description=""/>
+		<option key="formname" type="string" description="form"/>
+		<option key="ignorenulls" type="list" description=""/>
 		<option key="force" type="bool" description=""/>
-		<option key="mergetype" type="select" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description=""/>
+		<option key="mergetype" type="string" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description=""/>
 		<option key="mergeoptions" type="list" selvalues="norequired,nopattern,noworkflow" description=""/>
 		<option key="datamaps" type="list" description=""/>
 	</options>

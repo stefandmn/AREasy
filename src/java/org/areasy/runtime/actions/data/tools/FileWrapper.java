@@ -46,7 +46,7 @@ public class FileWrapper extends BaseData
 		ParserEngine parser = null;
 
 		String file = getConfiguration().getString("parserfile", getConfiguration().getString("inputfile", getConfiguration().getString("file", null)));
-		String call = getConfiguration().getString("call", getConfiguration().getString("subaction", getConfiguration().getString("command", null)));
+		String call = getConfiguration().getString("call", getConfiguration().getString("subaction", null));
 
 		//validate and set parser-type parameter
 		if((getConfiguration().containsKey("file") || getConfiguration().containsKey("inputfile") || getConfiguration().containsKey("parserfile")) && !getConfiguration().containsKey("parsertype"))

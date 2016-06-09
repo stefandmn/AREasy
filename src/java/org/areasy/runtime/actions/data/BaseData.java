@@ -656,7 +656,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 						config.setConfigurationEntry(new PropertiesEntry(part));
 					}
 
-					String schema = config.getString("schema", null);
+					String schema = config.getString("schema", config.getString("form", null));
 					String map = config.getString("map", null);
 
 					if(StringUtility.isNotEmpty(schema))

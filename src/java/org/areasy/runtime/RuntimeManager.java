@@ -405,8 +405,8 @@ public class RuntimeManager
 
 						if(aAlias != null)
 						{
-							this.actions.put(aAlias, actionClass);
-							logger.trace("Action '" + aAlias + "' has been loaded using class: " + actionClass);
+							this.actions.put("alias." + aAlias, aName);
+							logger.trace("Alias '" + aAlias + "' has been registered for action name: " + aName);
 						}
 					}
 				}
@@ -485,7 +485,15 @@ public class RuntimeManager
 
 		if(StringUtility.isNotEmpty(action))
 		{
-			Class classAction = (Class) actions.get(action);
+			Class classAction = null;
+
+			if(actions.containsKey(action)) classAction = (Class) actions.get(action);
+			else if(actions.containsKey("alias." + action))
+			{
+				action = (String) actions.get("alias." + action);
+				classAction = (Class) actions.get(action);
+			}
+
 			if(classAction == null) throw new AREasyException("Runtime action '" + action  + "' is not registered!");
 
 			try

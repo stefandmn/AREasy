@@ -15,7 +15,7 @@
 
 <!DOCTYPE help SYSTEM "action.dtd">
 
-<help inherits="data/basedata.xml">
+<help inherits="data/base.data.xml">
 	<name>File Wrapper</name>
 	<description>File</description>
 	<syntax>

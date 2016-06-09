@@ -49,6 +49,7 @@ public class SupportGroupMigration extends AbstractAction
 		boolean favorites = getConfiguration().getBoolean("favorites", false);
 		boolean oncalls = getConfiguration().getBoolean("oncalls", false);
 		boolean shifts = getConfiguration().getBoolean("shifts", false);
+		boolean autoassignments = getConfiguration().getBoolean("autoassignments", false);
 		boolean approvalmappings = getConfiguration().getBoolean("approvalmappings", false);
 		boolean allrelatedtickets = getConfiguration().getBoolean("allrelatedtickets", false);
 		boolean incidents = getConfiguration().getBoolean("incidents", false);
@@ -76,6 +77,8 @@ public class SupportGroupMigration extends AbstractAction
 		if(favorites || allgroupdetails) setGroupFavorites(getOldSupportGroup(), getNewSupportGroup());
 		if(oncalls || allgroupdetails) setGroupOnCallRecords(getOldSupportGroup(), getNewSupportGroup());
 		if(shifts || allgroupdetails) setGroupShifts(getOldSupportGroup(), getNewSupportGroup());
+		if(autoassignments || allgroupdetails) setGroupAutoAssignments(getOldSupportGroup(), getNewSupportGroup());
+		if(approvalmappings || allgroupdetails) setApprovalMappings(getOldSupportGroup(), getNewSupportGroup());
 
 		//make the old support group unavailable
 		disableOldSupportGroup();
@@ -106,9 +109,6 @@ public class SupportGroupMigration extends AbstractAction
 
 		//update KRs
 		if(knowledgerecords || allrelatedtickets) updateKnowledgeRecords(getOldSupportGroup(), getNewSupportGroup());
-
-		//update the approval mapping
-		if(approvalmappings || allrelatedtickets) updateApprovalMappings(getOldSupportGroup(), getNewSupportGroup());
 	}
 
 	protected boolean setSupportGroups() throws AREasyException
@@ -613,9 +613,47 @@ public class SupportGroupMigration extends AbstractAction
 		RuntimeLogger.info("Support Group > Shifts - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
-	protected void updateApprovalMappings(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	protected void setGroupAutoAssignments(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
-		RuntimeLogger.info("Approval > Mapping - Start migration procedure..");
+		RuntimeLogger.info("Support Group > AutoAssignment - Start migration procedure..");
+
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName("CFG:Assignment");
+		searchMask.setAttribute(ARDictionary.CTM_SGROUPID, fromGroup.getEntryId()); //Support Group ID
+		List assignments = searchMask.search(getServerConnection());
+
+		RuntimeLogger.info("Found " + assignments.size() + " records");
+		int correct = 0;
+		int errors = 0;
+
+		for (Object assignObj : assignments)
+		{
+			CoreItem assign = (CoreItem) assignObj;
+
+			try
+			{
+				assign.setAttribute(1000000251, toGroup.getCompanyName());
+				assign.setAttribute(1000000014, toGroup.getOrganisationName());
+				assign.setAttribute(1000000217, toGroup.getSupportGroupName());
+				assign.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
+				assign.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				RuntimeLogger.debug("Group auto-assignment '" + assign.getEntryId() + "' has been migrated to the new support group");
+				correct++;
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error migrating the auto-assignment '" + assign.getEntryId() + "' to the new support group: " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info("Support Group > AutoAssignment - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
+	}
+
+	protected void setApprovalMappings(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
+	{
+		RuntimeLogger.info("Support Group > ApprovalMapping - Start migration procedure..");
 
 		CoreItem searchMask = new CoreItem();
 		searchMask.setFormName("APR:Approver Lookup");
@@ -645,7 +683,7 @@ public class SupportGroupMigration extends AbstractAction
 			}
 		}
 
-		RuntimeLogger.info("Approval > Mapping - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
+		RuntimeLogger.info("Support Group > ApprovalMapping - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
 	protected void updateIncidentTemplates(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException

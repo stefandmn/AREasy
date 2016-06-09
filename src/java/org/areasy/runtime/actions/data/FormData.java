@@ -80,7 +80,7 @@ public class FormData extends BaseData
 			else
 			{
 				int chunk = getConfiguration().getInt("chunk", 0);
-				boolean nextChunk = chunk > 0 && entries.size() > 0;
+				boolean nextChunk = chunk > 0 && entries.size() == chunk;
 
 				for (Object entryObj : entries)
 				{
@@ -111,7 +111,7 @@ public class FormData extends BaseData
 				}
 
 				// run for next chunk
-				operation(searchEntry);
+				if (nextChunk) operation(searchEntry);
 			}
 		}
 	}

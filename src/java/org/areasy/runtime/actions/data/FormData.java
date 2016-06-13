@@ -281,6 +281,12 @@ public class FormData extends BaseData
 
 	public void runMerge(CoreItem entry) throws AREasyException
 	{
+		if (getConfiguration().getBoolean("mergevaliddata", false) && !entry.exists())
+		{
+			RuntimeLogger.debug("Skip merging because data was not validated: " + entry.toFullString());
+			return;
+		}
+
 		//set data values
 		setDataFields(entry);
 

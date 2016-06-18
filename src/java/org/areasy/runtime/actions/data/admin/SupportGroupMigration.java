@@ -149,8 +149,9 @@ public class SupportGroupMigration extends AbstractAction
 			StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
 		{
 			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
-			skip();
+			this.skip = true;
 		}
+		else this.skip = false;
 		
 		boolean create = true;
 		newSG.read(getServerConnection());
@@ -1015,10 +1016,5 @@ public class SupportGroupMigration extends AbstractAction
 	public boolean isSkipped()
 	{
 		return skip;
-	}
-
-	public void skip()
-	{
-		this.skip = true;
 	}
 }

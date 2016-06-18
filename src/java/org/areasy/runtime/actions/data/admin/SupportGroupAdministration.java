@@ -34,9 +34,11 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		String operation = getConfiguration().getString("operation", "setentity");
 
 		if(StringUtility.equalsIgnoreCase(operation, "setentity")) setEntity();
-			else if(StringUtility.equalsIgnoreCase(operation, "setmembers")) setMembers();
-				else if(StringUtility.equalsIgnoreCase(operation, "delmembers")) delMembers();
-					else throw new AREasyException("Invalid execution operation: " + operation);
+		else if(StringUtility.equalsIgnoreCase(operation, "setmembers")) setMembers();
+		else if(StringUtility.equalsIgnoreCase(operation, "delmembers")) delMembers();
+		else if(StringUtility.equalsIgnoreCase(operation, "setfrole")) setFunctionalRole();
+		else if(StringUtility.equalsIgnoreCase(operation, "delfrole")) delFunctionalRole();
+		else throw new AREasyException("Invalid execution operation: " + operation);
 	}
 
 	/**
@@ -91,36 +93,6 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 				String alias = (String) aliasObj;
 				createAlias(group.getEntryId(), alias);
 			}
-		}
-	}
-
-	/**
-	 * Create alias for support group. If alias exists and enableIfExists is true it is enabled.
-	 * If alias exists and enableIfExists is false nothing is done.
-	 *
-	 * @param supportGroupId Id of support group
-	 * @param alias alias
-	 * @throws AREasyException when error occurs
-	 */
-	private void createAlias(String supportGroupId, String alias) throws AREasyException
-	{
-		CoreItem entry = new CoreItem();
-		entry.setFormName("CTM:Support Group Alias");
-		entry.setAttribute(ARDictionary.CTM_SGROUPID, supportGroupId);
-		entry.setAttribute(ARDictionary.CTM_SGROUPALIAS, alias);
-
-		entry.read(getServerConnection());
-
-		if (entry.exists())
-		{
-			entry.setAttribute(7, "Enabled");
-			entry.update(getServerConnection());
-			RuntimeLogger.add("Support Group Alias " + alias + " enabled");
-		}
-		else
-		{
-			entry.create(getServerConnection());
-			RuntimeLogger.add("Support Group Alias " + alias + " created");
 		}
 	}
 
@@ -227,23 +199,6 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		}
 	}
 
-
-	/**
-	 * Checks whether a person is member of at least one Support Group.
-	 * @param personID the person to check
-	 * @return true if the person is member of at least one Support Group; false otherwise
-	 * @throws AREasyException when error occurs
-	 */
-	private boolean hasMemberships(String personID) throws AREasyException
-	{
-		CoreItem searchMask = new CoreItem();
-		searchMask.setFormName("CTM:Support Group Association");
-		searchMask.setAttribute(ARDictionary.CTM_PERSONID, personID);
-		List otherMemberships = searchMask.search(getServerConnection());
-
-		return otherMemberships.size() > 0;
-	}
-
 	public void delMembers() throws AREasyException
 	{
 		String groupCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
@@ -346,6 +301,247 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		}
 	}
 
+	public void setFunctionalRole() throws AREasyException
+	{
+		//get the application permission and role
+		String role = getConfiguration().getString("role", null);
+		String sgroupCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
+		String sgroupOrganisation = getConfiguration().getString("sgrouporganisation", getConfiguration().getString("supportgrouporganisation", null));
+		String sgroupName = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
+		String sgroupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
+		String appCode = getConfiguration().getString("appcode", getConfiguration().getString("applicationcode", null));
+
+		SupportGroup sgroup = new SupportGroup();
+		if(sgroupCompany != null) sgroup.setCompanyName(sgroupCompany);
+		if(sgroupOrganisation != null) sgroup.setOrganisationName(sgroupOrganisation);
+		if(sgroupName != null) sgroup.setSupportGroupName(sgroupName);
+		if(sgroupId != null) sgroup.setAttribute(1, sgroupId);
+		sgroup.read(getServerConnection());
+		if(!sgroup.exists()) throw new AREasyException("No support group found: " + sgroup);
+
+		//get real role name
+		if(role.equals(role.toLowerCase())) role = StringUtility.capitalizeAll(role);
+
+		//get real application name
+		if(appCode != null && appCode.equals(appCode.toLowerCase())) appCode = StringUtility.capitalizeAll(appCode);
+
+		CoreItem item = new CoreItem();
+		item.setFormName("SYS:Menu Items");
+		item.setAttribute(1000000007, "Functional Role");
+		item.setAttribute(1000000008, role);
+		item.setAttribute(1000000009, role);
+		if(appCode != null) item.setAttribute(1000003698, appCode);
+		item.read(getServerConnection());
+		if(!item.exists()) throw new AREasyException("No '" + role + "' functional role registered in 'Menu Items' form");
+
+		//execute the requested action for each user
+		for(int i = 0; i < getUsers().size(); i++)
+		{
+			String username = getUsers().get(i);
+
+			try
+			{
+				People person = new People();
+				person.setLoginId(username);
+				person.read(getServerConnection());
+
+				if(person.exists())
+				{
+					CoreItem entry = new CoreItem();
+					entry.setFormName("CTM:SupportGroupFunctionalRole");
+					entry.setAttribute(1000001859, item.getAttributeValue(1000004336));
+					entry.setAttribute(1000000171, item.getStringAttributeValue(1000001809));
+					entry.setAttribute(1000000079, sgroup.getEntryId());
+					entry.setAttribute(4, person.getLoginId());
+					entry.setAttribute(1000000080, person.getEntryId());
+
+					entry.read(getServerConnection());
+
+					if(!entry.exists())
+					{
+						entry.setAttribute(1000000346, new Integer(0)); //assignment availability
+						entry.setAttribute(1000000017, person.getFullName());
+						entry.setAttribute(7, "Enabled");
+
+						entry.create(getServerConnection());
+
+						RuntimeLogger.info("Functional role '" + role + "' was configured for user '" + username + "'");
+					}
+					else RuntimeLogger.warn("Functional role '" + role + "' is already configured for user '" + username + "'");
+				}
+				else RuntimeLogger.error("People structure wasn't found: " + person);
+			}
+			catch(Throwable th)
+			{
+				RuntimeLogger.error("Error configuring functional role '" + role + "' for user '" + username + "': " + th.getMessage());
+				getLogger().debug("Exception", th);
+			}
+
+			// check interruption and and exit if the execution was really interrupted
+			if(isInterrupted())
+			{
+				RuntimeLogger.warn("Execution interrupted by user");
+				return;
+			}
+		}
+	}
+
+	public void delFunctionalRole() throws AREasyException
+	{
+		CoreItem role = new CoreItem();
+		SupportGroup group = new SupportGroup();
+
+		String sgroupCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
+		String sgroupOrganisation = getConfiguration().getString("sgrouporganisation", getConfiguration().getString("supportgrouporganisation", null));
+		String sgroupName = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
+		String sgroupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
+
+		if(sgroupCompany != null || sgroupOrganisation != null || sgroupName != null || sgroupId != null)
+		{
+			if(sgroupCompany != null) group.setCompanyName(sgroupCompany);
+			if(sgroupOrganisation != null) group.setOrganisationName(sgroupOrganisation);
+			if(sgroupName != null) group.setSupportGroupName(sgroupName);
+			if(sgroupId != null) group.setAttribute(1, sgroupId);
+
+			group.read(getServerConnection());
+			if(!group.exists()) throw new AREasyException("Support group '" + group + "' does not exist");
+		}
+
+		//get the application role
+		String roleName = getConfiguration().getString("role", null);
+		if(roleName != null && roleName.equals(roleName.toLowerCase())) roleName = StringUtility.capitalizeAll(roleName);
+
+		String appCode = getConfiguration().getString("appcode", getConfiguration().getString("applicationcode", null));
+		if(appCode != null && appCode.equals(appCode.toLowerCase())) appCode = StringUtility.capitalizeAll(appCode);
+
+		if(roleName != null || appCode != null)
+		{
+			role.setFormName("SYS:Menu Items");
+			role.setAttribute(1000000007, "Functional Role");
+
+			if(roleName != null)
+			{
+				role.setAttribute(1000000008, roleName);
+				role.setAttribute(1000000009, roleName);
+			}
+
+			if(appCode != null) role.setAttribute(1000003698, appCode);
+
+			role.read(getServerConnection());
+			if(!role.exists()) throw new AREasyException("No '" + role + "' functional role registered in 'Menu Items' form");
+		}
+
+		//check if it was specified to find all existing users and to apply action's workflow to this users
+		if(role.exists()) setDiscoveredUsers(role.getStringAttributeValue(1000000008), group.getEntryId());
+
+		//execute the requested action for each user
+		for(int i = 0; i < getUsers().size(); i++)
+		{
+			String username = getUsers().get(i);
+
+			try
+			{
+				People people = new People();
+				people.setLoginId(username);
+				people.read(getServerConnection());
+
+				if (!people.exists())
+				{
+					RuntimeLogger.error("People structure wasn't found: " + people);
+					continue;
+				}
+
+				CoreItem search = new CoreItem();
+				search.setFormName("CTM:SupportGroupFunctionalRole");
+				search.setAttribute(4, people.getLoginId());
+				search.setAttribute(1000000080, people.getEntryId());
+
+				if(role.exists())
+				{
+					search.setAttribute(1000001859, role.getAttributeValue(1000004336));
+					search.setAttribute(1000000171, role.getStringAttributeValue(1000001809));
+				}
+
+				if(group.exists())
+				{
+					search.setAttribute(1000000079, group.getEntryId());
+				}
+
+				List list = search.search(getServerConnection());
+
+				for(int x = 0; list != null && x < list.size(); x++)
+				{
+					CoreItem entry = (CoreItem) list.get(x);
+					String objName1 = entry.getStringAttributeValue(1000000171);
+					String objName2 = entry.getStringAttributeValue(1000000079);
+
+					entry.setAttribute(1000000076, "DELETE");
+					entry.update(getServerConnection());
+
+					RuntimeLogger.info("Functional role '" + objName1 + "' has been removed for user '" + username + "' and support group '" + objName2 + "'");
+				}
+			}
+			catch(Throwable th)
+			{
+				RuntimeLogger.error("Error removing functional role '" + role + "' for user '" + username + "': " + th.getMessage());
+				getLogger().debug("Exception", th);
+			}
+
+			// check interruption and and exit if the execution was really interrupted
+			if(isInterrupted())
+			{
+				RuntimeLogger.warn("Execution interrupted by user");
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Create alias for support group. If alias exists and enableIfExists is true it is enabled.
+	 * If alias exists and enableIfExists is false nothing is done.
+	 *
+	 * @param supportGroupId Id of support group
+	 * @param alias alias
+	 * @throws AREasyException when error occurs
+	 */
+	private void createAlias(String supportGroupId, String alias) throws AREasyException
+	{
+		CoreItem entry = new CoreItem();
+		entry.setFormName("CTM:Support Group Alias");
+		entry.setAttribute(ARDictionary.CTM_SGROUPID, supportGroupId);
+		entry.setAttribute(ARDictionary.CTM_SGROUPALIAS, alias);
+
+		entry.read(getServerConnection());
+
+		if (entry.exists())
+		{
+			entry.setAttribute(7, "Enabled");
+			entry.update(getServerConnection());
+			RuntimeLogger.add("Support Group Alias " + alias + " enabled");
+		}
+		else
+		{
+			entry.create(getServerConnection());
+			RuntimeLogger.add("Support Group Alias " + alias + " created");
+		}
+	}
+
+	/**
+	 * Checks whether a person is member of at least one Support Group.
+	 * @param personID the person to check
+	 * @return true if the person is member of at least one Support Group; false otherwise
+	 * @throws AREasyException when error occurs
+	 */
+	private boolean hasMemberships(String personID) throws AREasyException
+	{
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName("CTM:Support Group Association");
+		searchMask.setAttribute(ARDictionary.CTM_PERSONID, personID);
+		List otherMemberships = searchMask.search(getServerConnection());
+
+		return otherMemberships.size() > 0;
+	}
+
 	protected void setDiscoveredUsers(String groupId) throws AREasyException
 	{
 		if(getConfiguration().getBoolean("findusers", false))
@@ -353,6 +549,30 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			CoreItem item = new CoreItem();
 			item.setFormName("CTM:Support Group Association");
 			item.setAttribute(ARDictionary.CTM_SGROUPID, groupId);
+			List list = item.search(getServerConnection());
+
+			for(int i = 0; i < list.size(); i++)
+			{
+				CoreItem entry = (CoreItem) list.get(i);
+				String loginId = entry.getStringAttributeValue(4);
+
+				addUser(loginId);
+			}
+
+			setExcludedUsers();
+		}
+	}
+
+	protected void setDiscoveredUsers(String role, String groupId) throws AREasyException
+	{
+		if(getConfiguration().getBoolean("findusers", false))
+		{
+			CoreItem item = new CoreItem();
+			item.setFormName("CTM:SupportGroupFunctionalRole");
+			item.setAttribute(1000000171, role);
+
+			if(groupId != null) item.setAttribute(1000000079, groupId);
+
 			List list = item.search(getServerConnection());
 
 			for(int i = 0; i < list.size(); i++)

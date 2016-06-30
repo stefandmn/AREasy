@@ -33,7 +33,9 @@
         <or>
 			<os name="Windows 7"/>
 			<os name="Windows 8"/>
+			<os name="Windows 8.1"/>
             <os name="Windows XP"/>
+			<os name="Windows_NT"/>
         </or>
     </condition>
 
@@ -255,7 +257,7 @@
 
 
     <target name="3.3.1.Package.EXE.Win" if="isWindows">
-        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.temp.dir}/installer.nsi"/>
+        <copy file="${src.dir}/nsis/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
@@ -272,7 +274,7 @@
     </target>
 
     <target name="3.3.1.Package.EXE.Unix" if="isUnix">
-        <copyfile src="${src.dir}/nsis/installer.nsi" dest="${build.temp.dir}/installer.nsi"/>
+		<copy file="${src.dir}/nsis/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
         <replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>

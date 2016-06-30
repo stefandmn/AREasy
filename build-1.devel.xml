@@ -50,6 +50,8 @@
         <echo message=""/>
         <echo message="basedir = ${basedir}"/>
 		<echo message="java.home = ${java.home}"/>
+		<echo message="user = ${username}"/>
+		<echo message="os = ${os.name}"/>
 	</target>
 
 
@@ -105,8 +107,8 @@
 	<!-- Generates the module's API documentation -->
     <target name="3.Doc" depends="1.Init, 2.Bin" unless="uptodate-doc" description="Generates API documentation">
 
-		<copyfile src="${src.doc.dir}/doclet.properties" dest="${build.temp.dir}/doclet.properties"/>
-		<copyfile src="${src.doc.dir}/documentation.html" dest="${build.temp.dir}/documentation.html"/>
+		<copy file="${src.doc.dir}/doclet.properties" tofile="${build.temp.dir}/doclet.properties" force="yes" overwrite="yes"/>
+		<copy file="${src.doc.dir}/documentation.html" tofile="${build.temp.dir}/documentation.html" force="yes" overwrite="yes"/>
 
         <replace file="${build.temp.dir}/doclet.properties" token="%year%" value="${project.years}"/>
         <replace file="${build.temp.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>

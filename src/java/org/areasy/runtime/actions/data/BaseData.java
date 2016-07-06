@@ -91,6 +91,15 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		return setDataFields(entry, false, false);
 	}
 
+	/**
+	 * Collect data input parameters and publish them into a <code>CoreItem</code> structure.
+	 *
+	 * @param create handle also special parameters for CREATE transactions, drove by "DC" field prefix
+	 * @param update handle also special parameters for UPDATE transactions, drove by "DU" field prefix
+	 * @param entry <code>CoreItem</code> structure.
+	 * @return true if at least one corresponding configuration data has been used to map a <code>CoreItem</code> attribute.
+	 * @throws AREasyException is any error will occur
+	 */
 	public boolean setDataFields(CoreItem entry, boolean create, boolean update) throws AREasyException
 	{
 		boolean set = false;

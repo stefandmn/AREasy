@@ -50,6 +50,12 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Identifier for data parameter: <code>D + </code><field id> (number)</code> */
 	public static final String FDATA = "D";
 
+	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code> */
+	public static final String FDATAC = "DC";
+
+	/** Identifier for data parameter: <code>DU + </code><field id> (number)</code> */
+	public static final String FDATAU = "DU";
+
 	/** start token  */
 	protected static final String START_TOKEN = "@[";
 
@@ -82,6 +88,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 */
 	public boolean setDataFields(CoreItem entry) throws AREasyException
 	{
+		return setDataFields(entry, false, false);
+	}
+
+	public boolean setDataFields(CoreItem entry, boolean create, boolean update) throws AREasyException
+	{
 		boolean set = false;
 		List<String> list = new Vector<String>();
 		Iterator ids = getConfiguration().getKeys();
@@ -90,7 +101,17 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		{
 			String id = (String)ids.next();
 
-			if(id != null && id.startsWith(FDATA))
+			if(create && id != null && id.startsWith(FDATAC))
+			{
+				String key = id.substring(2);
+				if( NumberUtility.isNumber(key) ) list.add(id);
+			}
+			else if(update && id != null && id.startsWith(FDATAU))
+			{
+				String key = id.substring(2);
+				if( NumberUtility.isNumber(key) ) list.add(id);
+			}
+			else if(id != null && id.startsWith(FDATA))
 			{
 				String key = id.substring(1);
 				if( NumberUtility.isNumber(key) ) list.add(id);
@@ -101,6 +122,9 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		{
 			String id = list.get(i);
 			String key = id.substring(1);
+
+			//check if it is about a transaction exception
+			if(id.startsWith(FDATAC) || id.startsWith(FDATAC)) key = id.substring(2);
 
 			Object value = getConfiguration().getKey(id);
 			if(value instanceof String && (((String)value).startsWith("$") || ((String)value).indexOf("${") >= 0)) value = getConfiguration().getString(id);

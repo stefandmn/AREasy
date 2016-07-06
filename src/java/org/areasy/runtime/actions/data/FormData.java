@@ -215,7 +215,7 @@ public class FormData extends BaseData
 		if(!entry.exists())
 		{
 			//set data values
-			setDataFields(entry);
+			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
 
 			RuntimeLogger.debug("Creating data entry: " + entry.toFullString());
 			entry.create(getServerConnection());
@@ -237,7 +237,7 @@ public class FormData extends BaseData
 		if(entry.exists())
 		{
 			//set data values
-			setDataFields(entry);
+			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
 
 			RuntimeLogger.debug("Updating data entry: " + entry.toFullString());
 			entry.update(getServerConnection());

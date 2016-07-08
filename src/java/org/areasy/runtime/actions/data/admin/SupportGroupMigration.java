@@ -711,7 +711,7 @@ public class SupportGroupMigration extends AbstractAction
 
 			try
 			{
-				template.setAttribute(1000000014, template.getAttributeValue(302126600));	 				 //Assigned Group Id
+				template.setAttribute(1000000014, template.getAttributeValue(302126600));
 
 				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug("Assignment of incident template '" + template.getEntryId() + "' has been correlated for the new support organisation");

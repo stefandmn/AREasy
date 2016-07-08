@@ -768,6 +768,7 @@ public class SupportGroupMigration extends AbstractAction
 
 	protected void updateChanges(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
 	{
+		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000003254, 1000003255, 1000003256, 1000003259, "Change", "Implementor Assignment");
 		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000003228, 1000003227, 1000003229, 1000003234, "Change", "Coordinator Assignment");
 		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000000251, 1000000014, 1000000015, 1000000079, "Change", "Manager Assignment");
 		updateTickets(fromGroup, toGroup, "CHG:Infrastructure Change", "changes", 11, 1000000082, 1000000342, 1000000341, 1000000427, "Change", "Requester Support Group");

@@ -149,7 +149,7 @@ public class SupportGroupMigration extends AbstractAction
 			StringUtility.equals(newSG.getSupportGroupName(), oldSG.getSupportGroupName()))
 		{
 			RuntimeLogger.warn("New support group (" + getSupportGroupString(newSG) + ") has the same name and structure with the old support group: " + getSupportGroupString(oldSG));
-			this.skip = true;
+			if(!getConfiguration().getBoolean("allowcircleupdate", false)) this.skip = true;
 		}
 		else this.skip = false;
 		
@@ -637,7 +637,7 @@ public class SupportGroupMigration extends AbstractAction
 				assign.setAttribute(1000000014, toGroup.getOrganisationName());
 				assign.setAttribute(1000000217, toGroup.getSupportGroupName());
 				assign.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				assign.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				assign.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug("Group auto-assignment '" + assign.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -672,7 +672,7 @@ public class SupportGroupMigration extends AbstractAction
 			try
 			{
 				approval.setAttribute(ARDictionary.CTM_SGROUPID, toGroup.getEntryId());
-				approval.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				approval.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug("Group approval mapping '" + approval.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -693,6 +693,39 @@ public class SupportGroupMigration extends AbstractAction
 		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000000396, 1000003662, 1000003663, 0, "Incident", "Vendor Assignment");
 		updateTemplates(fromGroup, toGroup, "HPD:Template", 1000001341, 1000001340, 1000001339, 1000000828, "Incident", "Authoring Assignment");
 		updateTemplates(fromGroup, toGroup, "HPD:TemplateSPGAssoc", 1000000001, 1000000014, 1000000015, 1000000079, "IncidentAuthoring", "Support Group");
+
+		RuntimeLogger.info("Incident Templates > Correlate Support Organisation Assignment - Start migration procedure..");
+
+		CoreItem searchMask = new CoreItem();
+		searchMask.setFormName("HPD:Template");
+
+		List templates = searchMask.search(getServerConnection(), "'302126600' != '1000000014'");
+		RuntimeLogger.info("Found " + templates.size() + " incident templates");
+
+		int correct = 0;
+		int errors = 0;
+
+		for (Object tmplObject : templates)
+		{
+			CoreItem template = (CoreItem) tmplObject;
+
+			try
+			{
+				template.setAttribute(1000000014, template.getAttributeValue(302126600));	 				 //Assigned Group Id
+
+				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
+				RuntimeLogger.debug("Assignment of incident template '" + template.getEntryId() + "' has been correlated for the new support organisation");
+				correct++;
+			}
+			catch (AREasyException are)
+			{
+				RuntimeLogger.error("Error correlating assignment of incident template '" + template.getEntryId() + "': " + are.getMessage());
+				logger.debug("Exception", are);
+				errors++;
+			}
+		}
+
+		RuntimeLogger.info("Incident Templates > Correlate Support Organisation Assignment - End of migration procedure: " + correct + " update(s) and " + errors + " error(s)");
 	}
 
 	protected void updateIncidents(SupportGroup fromGroup, SupportGroup toGroup) throws AREasyException
@@ -799,7 +832,7 @@ public class SupportGroupMigration extends AbstractAction
 				relation.setAttribute(301104200, toGroup.getInstanceId());
 				relation.setAttribute(260100003, toGroup.getCompanyName() + "->" + toGroup.getOrganisationName() + "->" + toGroup.getSupportGroupName());
 
-				relation.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				relation.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug("Asset relationship record '" + relation.getEntryId() + "' has been updated to take the new support group");
 				correct++;
 
@@ -815,7 +848,7 @@ public class SupportGroupMigration extends AbstractAction
 						setDataAccess(ci);
 						setDataAccess(ci, "60513");
 
-						ci.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+						ci.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 						RuntimeLogger.debug("Related configuration item '" + ci.getEntryId() + "' has been updated to take the new support group");
 					}
 				}
@@ -876,7 +909,7 @@ public class SupportGroupMigration extends AbstractAction
 				if(gName > 0) template.setAttribute(gName, toGroup.getSupportGroupName());       //Assigned Group Name
 				if(gId > 0) template.setAttribute(gId, toGroup.getEntryId());	 				 //Assigned Group Id
 
-				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				template.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " template '" + template.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}
@@ -939,7 +972,7 @@ public class SupportGroupMigration extends AbstractAction
 				setDataAccess(ticket, "60900");
 				setDataAccess(ticket, "60903");
 
-				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED);
+				ticket.merge(getServerConnection(), Constants.AR_MERGE_ENTRY_DUP_MERGE | Constants.AR_MERGE_NO_WORKFLOW_FIRED | Constants.AR_MERGE_NO_PATTERNS_INCREMENT);
 				RuntimeLogger.debug(assignmentName + " of " + ticketName + " '" + ticket.getEntryId() + "' has been migrated to the new support group");
 				correct++;
 			}

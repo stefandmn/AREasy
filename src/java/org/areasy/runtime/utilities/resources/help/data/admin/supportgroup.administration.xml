@@ -24,7 +24,7 @@
 		areasy -action supportgroup.administration
 	</syntax>
 	<options>
-		<option key="operation" type="string" selvalues="setentity,setmembers,delmembers,setfrole,delfrole" defvalue="setentity" description="Execution mode or this action:"/>
+		<option key="operation" type="string" selvalues="setentity,setmembers,delmembers,setfrole,delfrole" defvalue="setentity" description="Execution mode or this action"/>
 		<option key="sgroupcompany" type="string" description="Current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
 		<option key="sgrouporganisation" type="string" description="Current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>
 		<option key="sgroupname" type="string" description="Current support group name. In addition the action supports some aliases for this option: sgroup, supportgroup, supportgroupname"/>

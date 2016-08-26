@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2007-2016 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<!DOCTYPE help SYSTEM "action.dtd">
+
+<help inherits="action.xml">
+	<name>Keypass Administration</name>
+	<description>
+		This action is an ITSM utility, designed to encrypt or to decrypt AR configuration keys or passwords. Please notice that this action needs connection to the server that manages that key or password.
+	</description>
+	<syntax>
+		areasy -action keypass.administration -entity encrypt|decrypt -password [KeyOrPassword]
+	</syntax>
+	<options>
+		<option key="operation" type="string" selvalues="encrypt,decrypt" defvalue="" description="Execution mode or this action (encrypt or decrypt keys and passwords)"/>
+		<option key="password" type="string" description="Key or password that will be applied to encryption or decryption procedure"/>
+	</options>
+</help>

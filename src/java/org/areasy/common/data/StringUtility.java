@@ -3879,7 +3879,7 @@ outer:
 			String word = text[i].toLowerCase();
 
 			buff.append(capitalize(word));
-			buff.append("-");
+			if(i < text.length - 1) buff.append("-");
 		}
 
 		return buff.toString().trim();

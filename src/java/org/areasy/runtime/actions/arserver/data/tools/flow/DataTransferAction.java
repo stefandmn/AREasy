@@ -18,8 +18,6 @@ import com.bmc.arsys.api.Field;
 import com.bmc.arsys.api.SortInfo;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.AbstractSource;
 import org.areasy.runtime.actions.arserver.data.tools.flow.sources.RemedySource;
-import org.areasy.runtime.engine.structures.hybrid.AbstractHybrid;
-import org.areasy.runtime.engine.structures.hybrid.HybridCoreItem;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
@@ -910,41 +908,15 @@ public class DataTransferAction extends FlowPatternAction
 		if(target == null || source == null) throw new AREasyException("Target or source object is null");
 
 		//read all related sub-structure in case of the structure instance is 'Related'
-		if(source instanceof AbstractHybrid)
+		if(dataSource != null && dataSource instanceof RemedySource)
 		{
-			if(dataSource != null && dataSource instanceof RemedySource)
-			{
-				//find all related substructure
-				((AbstractHybrid)source).relate( ((RemedySource)dataSource).getTargetServerConnection(), getConfiguration().subset("part"));
-
-				//add custom multiparts
-				setCustomMultiParts((MultiPartItem)source, ((RemedySource)dataSource).getTargetServerConnection());
-
-				//execute mapping and transfer all related sub-structure to the target instance
-				((AbstractHybrid)source).transfer(target, map, ((RemedySource)dataSource).getTargetServerConnection(), getConfiguration().subset("part"));
-			}
-			else
-			{
-				//find all related sub-structures
-				((AbstractHybrid)source).relate(getRemoteServerConnection(), getConfiguration().subset("part"));
-
-				//add custom multiparts
-				setCustomMultiParts((MultiPartItem)source, getRemoteServerConnection());
-
-				//execute mapping and transfer all related sub-structure to the target instance
-				((AbstractHybrid)source).transfer(target, map, getRemoteServerConnection(), getConfiguration().subset("part"));
-			}
+			//add custom multiparts
+			setCustomMultiParts((MultiPartItem)source, ((RemedySource)dataSource).getTargetServerConnection());
 		}
 		else
 		{
-			if(dataSource != null && dataSource instanceof RemedySource)
-			{
-				HybridCoreItem.setTarget(target, (CoreItem) source, map, ((RemedySource)dataSource).getTargetServerConnection() ); //do the mapping
-			}
-			else
-			{
-				HybridCoreItem.setTarget(target, (CoreItem) source, map, getRemoteServerConnection()); //do the mapping
-			}
+			//add custom multiparts
+			setCustomMultiParts((MultiPartItem)source, getRemoteServerConnection());
 		}
 	}
 

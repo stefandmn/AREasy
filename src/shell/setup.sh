@@ -217,12 +217,12 @@ echo "------------------------------------------------"
 echo
 echo
 echo "Configuring AREasy runtime instance.."
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.server.name" -value "$optARSystemServerValue" > /dev/null 2>&1
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.port.number" -value "$optARSystemPortValue" > /dev/null 2>&1
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.user.name" -value "$optARSystemUserNameValue" > /dev/null 2>&1
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.user.password" -value "$optARSystemPasswordValue" > /dev/null 2>&1
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.host" -value "$optAREasyServerValue" > /dev/null 2>&1
-$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot-1.1.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.port" -value "$optAREasyPortValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.server.name" -value "$optARSystemServerValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.port.number" -value "$optARSystemPortValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.user.name" -value "$optARSystemUserNameValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.default.arsystem.user.password" -value "$optARSystemPasswordValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.host" -value "$optAREasyServerValue" > /dev/null 2>&1
+$JAVA_HOME/bin/java -jar "$INSTDIR/bin/boot.jar" -config "$INSTDIR/cfg/default.properties" -runtime -action config -property "app.server.port" -value "$optAREasyPortValue" > /dev/null 2>&1
 echo
 echo
 

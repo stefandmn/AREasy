@@ -100,7 +100,7 @@ if [ "$EXEC" = "debug" ]
 		COMMAND=`echo $COMMAND -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=${JPDA_TRANSPORT},server=y,suspend=${JPDA_SUSPEND},address=${JPDA_ADDRESS}`
 fi
 
-COMMAND=`echo $COMMAND -jar "$_APP_HOME/bin/boot-1.1.jar" $CMDVERBOSE "-config" "$_APP_HOME/cfg/default.properties"`
+COMMAND=`echo $COMMAND -jar "$_APP_HOME/bin/boot.jar" $CMDVERBOSE "-config" "$_APP_HOME/cfg/default.properties"`
 
 
 if [ "$MODE" = "server" ]

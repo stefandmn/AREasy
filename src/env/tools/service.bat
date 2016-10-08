@@ -82,7 +82,7 @@ echo Using JAVA_HOME:       "%JAVA_HOME%"
 rem Each command line option is prefixed with PR_
 set "PR_INSTALL=%EXECUTABLE%"
 set "PR_LOGPATH=%_APP_HOM%\logs"
-set "PR_CLASSPATH=%_APP_BIN%\boot-1.1.jar"
+set "PR_CLASSPATH=%_APP_BIN%\boot.jar"
 rem Set the server jvm from JAVA_HOME
 set "PR_JVM=%JAVA_HOME%\jre\bin\server\jvm.dll"
 if exist "%PR_JVM%" goto foundJvm

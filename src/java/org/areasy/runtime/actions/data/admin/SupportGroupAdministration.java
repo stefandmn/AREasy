@@ -360,6 +360,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 					if(!entry.exists())
 					{
 						entry.setAttribute(1000000346, new Integer(0)); //assignment availability
+						entry.setAttribute(1000000347, new Integer(0)); //assignment hold
 						entry.setAttribute(1000000017, person.getFullName());
 						entry.setAttribute(7, "Enabled");
 

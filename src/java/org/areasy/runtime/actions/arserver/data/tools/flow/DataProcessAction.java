@@ -34,7 +34,7 @@ public class DataProcessAction extends FlowPatternAction
 	{
 		events.put("readheaders", "org.areasy.runtime.actions.arserver.data.tools.flow.events.ReadHeadersEvent");
 		events.put("actionlist", "org.areasy.runtime.actions.arserver.data.tools.flow.events.ReadActionlistEvent");
-		events.put("runworkflow", "org.areasy.runtime.actions.arserver.data.tools.flow.events.RunDataWorkflowEvent");
+		events.put("runworkflow", "org.areasy.runtime.actions.arserver.data.tools.flow.events.RunWorkflowEvent");
 		events.put("loadmetadata", "org.areasy.runtime.actions.arserver.data.tools.flow.events.LoadMetadataEvent");
 		events.put("runscheduler", "org.areasy.runtime.actions.arserver.data.tools.flow.events.RunSchedulerEvent");
 		events.put("runautomap", "org.areasy.runtime.actions.arserver.data.tools.flow.events.RunAutomapEvent");

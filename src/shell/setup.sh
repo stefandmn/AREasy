@@ -151,7 +151,7 @@ if [ -d "$AREASY_HOME" ]
 		INSTDIR=$AREASY_HOME
 		echo "AREasy installation folder is already defined: $INSTDIR"
 	else
-		INSTDIR="/opt/snt/areasy"
+		INSTDIR="/opt/areasy"
 		prompt "AREasy Destination Folder ($INSTDIR): "
 		stdinValidate INSTDIR $INSTDIR
 fi

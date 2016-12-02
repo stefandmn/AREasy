@@ -99,6 +99,7 @@
 				<attribute name="Product-Version" value="${project.version}.${build.number}"/>
 				<attribute name="Product-Vendor" value="${project.vendor}"/>
                 <attribute name="Product-Years" value="${project.years}"/>
+				<attribute name="Main-Class" value="org.areasy.runtime.RuntimeManager"/>
             </manifest>
 		</jar>
 	</target>

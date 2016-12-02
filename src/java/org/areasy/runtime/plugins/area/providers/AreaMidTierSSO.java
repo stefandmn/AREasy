@@ -42,7 +42,7 @@ public class AreaMidTierSSO extends AbstractArea
 		try
 		{
             //authentication string password
-			PASS_STRING = Credential.getCredential(getRuntimeArea().getManager().getConfiguration().getString("app.plugin.area.midtier.globalkey", null), null).decode();
+			PASS_STRING = Credential.getCredential(getRuntimeArea().getManager().getConfiguration().getString("app.plugin.area.authentication_string", null), null).decode();
 			debug("Authentication string: " + PASS_STRING);
 		}
 		catch(Exception e)

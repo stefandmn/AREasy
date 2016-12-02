@@ -55,7 +55,7 @@ public class RestrictedAccessRemoveAction extends AbstractUserEnrollment
 
 				if(person.exists())
 				{
-					//check if Unrestricted Acess Permission still exist
+					//check if Unrestricted Access Permission still exist
 					CoreItem entry = new CoreItem();
 					entry.setFormName("CTM:People Permission Groups");
 					entry.setAttribute(4, person.getLoginId());

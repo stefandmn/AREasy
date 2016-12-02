@@ -16,25 +16,25 @@
 
 	<plugins>
 		<plugin>
-			<name>SNT.AREASY.FILTERAPI</name>
+			<name>AREASY.FILTERAPI</name>
 			<type>FilterAPI</type>
 			<code>JAVA</code>
-			<filename>/opt/snt/areasy/libs/areasy-3.0.jar</filename>
+			<filename>/opt/areasy/libs/areasy-3.0.jar</filename>
 			<classname>org.areasy.runtime.plugins.RuntimeFilter</classname>
-			<pathelement type="path">/opt/snt/areasy/libs</pathelement>
+			<pathelement type="path">/opt/areasy/libs</pathelement>
 			<userDefined>
-				<home>/opt/snt/areasy</home>
+				<home>/opt/areasy</home>
 			</userDefined>
 		</plugin>
 		<plugin>
-			<name>SNT.AREASY.AREA</name>
+			<name>AREASY.AREA</name>
 			<type>AREA</type>
 			<code>JAVA</code>
-			<filename>/opt/snt/areasy/libs/areasy-3.0.jar</filename>
+			<filename>/opt/areasy/libs/areasy-3.0.jar</filename>
 			<classname>org.areasy.runtime.plugins.area.RuntimeArea</classname>
-			<pathelement type="path">/opt/snt/areasy/libs</pathelement>
+			<pathelement type="path">/opt/areasy/libs</pathelement>
 			<userDefined>
-				<home>/opt/snt/areasy</home>
+				<home>/opt/areasy</home>
 			</userDefined>
 		</plugin>
 	</plugins>

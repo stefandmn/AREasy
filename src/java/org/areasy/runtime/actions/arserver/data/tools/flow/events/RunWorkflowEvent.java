@@ -41,7 +41,7 @@ import java.util.*;
 /**
  * Dedicated action to perform data import workflow.
  */
-public class RunDataWorkflowEvent extends AbstractEvent
+public class RunWorkflowEvent extends AbstractEvent
 {
 	/** The list of action which must be executed */
 	private List actions = new Vector();

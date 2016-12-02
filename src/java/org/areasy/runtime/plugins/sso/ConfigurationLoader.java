@@ -35,10 +35,10 @@ public class ConfigurationLoader extends Thread
 	/** Logger instance */
 	private static Logger logger = LoggerFactory.getLog(ConfigurationLoader.class);
 
-	/** The default delay between every file modification execute, set to 60 seconds. */
+	/** The default delay between every configFile modification execute, set to 60 seconds. */
 	static final public long DEFAULT_DELAY 			= 30000;
 
-	public final String CONFIG_AUTHSTRING			= "app.plugin.area.sso.authentication_string";
+	public final String CONFIG_AUTHSTRING			= "app.plugin.area.authentication_string";
 
 	public final String CONFIG_USEBASIC				= "app.plugin.area.sso.use_basicauth";
 	public final String CONFIG_USENTLM				= "app.plugin.area.sso.use_ntlmauth";
@@ -90,7 +90,7 @@ public class ConfigurationLoader extends Thread
 	private static ServerConnection arServer = null;
 	private static Hashtable arCache = new Hashtable();
 
-	private File file;
+	private File configFile;
 	private long lastModify = 0;
 	private boolean interrupted = false;
 	private RuntimeManager manager = null;
@@ -98,13 +98,13 @@ public class ConfigurationLoader extends Thread
 	/** Authentication string for process validation */
 	private String uniqueAuthString = null;
 
-	public ConfigurationLoader(String home)
+	public ConfigurationLoader(File file)
 	{
-		if(home != null)
+		if(file != null && file.exists() && (file.isFile() || file.isDirectory()))
 		{
 			try
 			{
-				manager = RuntimeManager.getManager(home);
+				manager = RuntimeManager.getManager(file.getCanonicalPath());
 				logger.info("AREasy Runtime Manager has been (re)initialized");
 			}
 			catch(Throwable th)
@@ -119,14 +119,14 @@ public class ConfigurationLoader extends Thread
 				uniqueAuthString = Credential.getCredential(getManager().getConfiguration().getString(CONFIG_AUTHSTRING, null), null).decode();
 				logger.debug("MidTier 'authentication_string' value: " + uniqueAuthString);
 			}
-			else throw new RuntimeException("The MidTier doesn't have a authentication_string configured in the corresponding configuration file. It will fail authenticating users");
-
+			else throw new RuntimeException("The MidTier doesn't have a authentication_string configured in the corresponding configuration configFile. It will fail authenticating users");
 		}
 		else throw new RuntimeException("AREasy Runtime Manager initialization error because home path is not defined");
 
 		if(manager != null)
 		{
-			file = new File(RuntimeManager.getCfgDirectory(), "plugin.areasy.sso.properties");
+			if(file.isDirectory()) configFile = new File(RuntimeManager.getCfgDirectory(), "plugin.areasy.properties");
+				else if(file.isFile()) configFile = file;
 
 			setDaemon(true);
 			execute();
@@ -144,11 +144,11 @@ public class ConfigurationLoader extends Thread
 
 		try
 		{
-			fileExists = file.exists();
+			fileExists = configFile.exists();
 		}
 		catch (Exception e)
 		{
-			logger.warn("Error verifying file '" + file.getPath() + "' : " + e.getMessage());
+			logger.warn("Error verifying configFile '" + configFile.getPath() + "' : " + e.getMessage());
 			interrupted = true;
 
 			return;
@@ -156,7 +156,7 @@ public class ConfigurationLoader extends Thread
 
 		if (fileExists)
 		{
-			long l = file.lastModified();
+			long l = configFile.lastModified();
 
 			if (l > lastModify)
 			{
@@ -166,8 +166,7 @@ public class ConfigurationLoader extends Thread
 
 					try
 					{
-						String sector = RuntimeManager.getCfgDirectory() + File.separator + "default.properties";
-						getManager().setConfiguration(new PropertiesConfiguration(sector));
+						getManager().setConfiguration(new PropertiesConfiguration(configFile.getCanonicalPath()));
 					}
 					catch(Throwable th)
 					{
@@ -366,9 +365,9 @@ public class ConfigurationLoader extends Thread
 	}
 
 	/**
-	 * Return unique authentication string configured in the configuration file.
+	 * Return unique authentication string configured in the configuration configFile.
 	 *
-	 * @return authentication string from configuration file.
+	 * @return authentication string from configuration configFile.
 	 */
 	protected String getUniqueAuthString()
 	{

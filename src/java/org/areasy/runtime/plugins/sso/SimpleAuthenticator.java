@@ -25,6 +25,7 @@ import org.areasy.common.logger.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -39,6 +40,7 @@ public class SimpleAuthenticator extends DefaultAuthenticator implements Authent
 	public static final String HEADER_NTLM 				= "NTLM";
 	public static final String HEADER_BASIC 			= "Basic";
 	public static final String CONFIG_HOME				= "areasy.home";
+	public static final String CONFIG_FILE				= "arsystem.authenticator.config.file";
 
 	/** Logger instance */
 	protected static Logger logger = LoggerFactory.getLog(SimpleAuthenticator.class);
@@ -65,7 +67,15 @@ public class SimpleAuthenticator extends DefaultAuthenticator implements Authent
 
 			if(ssoConfig == null && HOME != null)
 			{
-				ssoConfig = new ConfigurationLoader(HOME);
+				ssoConfig = new ConfigurationLoader(new File(HOME));
+				ssoConfig.start();
+			}
+		}
+		else if (properties != null && properties.get(CONFIG_FILE) != null)
+		{
+			if(ssoConfig == null)
+			{
+				ssoConfig = new ConfigurationLoader(new File(CONFIG_FILE));
 				ssoConfig.start();
 			}
 		}

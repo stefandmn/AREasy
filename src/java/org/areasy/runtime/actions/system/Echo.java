@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * Processing echo internal command - echo server execution.
- *
  */
 public class Echo extends SystemAction implements RuntimeAction
 {

@@ -36,10 +36,8 @@ import java.util.Hashtable;
 
 public abstract class LoggerFactory
 {
-
 	/**
-	 * The name of the property used to identify the LoggerFactory implementation
-	 * class name.
+	 * The name of the property used to identify the LoggerFactory implementation class name.
 	 */
 	public static final String FACTORY_PROPERTY = "org.areasy.common.logger.LoggerFactory";
 
@@ -311,7 +309,6 @@ public abstract class LoggerFactory
 
 		try
 		{
-			// Are we running on a JDK 1.2 or later system?
 			Method method = Thread.class.getMethod("getContextClassLoader", null);
 
 			// Get the thread context class loader (if there is one)
@@ -375,6 +372,7 @@ public abstract class LoggerFactory
 			public Object run()
 			{
 				Class logFactoryClass = null;
+
 				try
 				{
 					if (classLoader != null)
@@ -419,4 +417,25 @@ public abstract class LoggerFactory
 
 		return (LoggerFactory) result;
 	}
+
+	/**
+	 * Check whether Log4J is used or not
+	 *
+	 * @return true if Log4J is the primary logging channel used by current AREasy instance
+	 */
+	public abstract boolean isLog4JLoggerUsed();
+
+	/**
+	 * Check whether JDKLogger is used or not
+	 *
+	 * @return true if JDK logger is the primary logging channel used by current AREasy instance
+	 */
+	public abstract boolean isJdkLoggerUsed();
+
+	/**
+	 * Check if Log4J is already initialized within the environment.
+	 *
+	 * @return true if the Log4J is already initialized and configured
+	 */
+	public abstract boolean isLog4JShared();
 }

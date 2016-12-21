@@ -21,7 +21,6 @@
 	<property name="javahome" value="${env.JAVA_HOME}"/>
 
 	<property file="${basedir}/core.properties"/>
-    <property file="${basedir}/build.properties"/>
 	<property file="${basedir}/build/profile.${username}.properties"/>
 
 	<!-- Define build folder -->

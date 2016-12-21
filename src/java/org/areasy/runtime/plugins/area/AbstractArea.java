@@ -119,6 +119,11 @@ public abstract class AbstractArea
 		info(logText);
 	}
 
+	public boolean isTraceEnabled()
+	{
+		return getRuntimeArea().isTraceEnabled();
+	}
+
 	public void debug(String message)
 	{
 		getRuntimeArea().debug(message);

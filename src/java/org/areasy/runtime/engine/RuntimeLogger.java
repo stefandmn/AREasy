@@ -66,10 +66,39 @@ public class RuntimeLogger
 		this.data.clear();
 
 		//register this logger definition
-		LoggerFactory.getLogManager().addFileLogger(getChannelPath(), LoggerManager.getLoggerLevel("info") , getChannelName(), getChannelFileName(), false, LoggerManager.FORMATTER_SIMPLE, "%d %-5p - %m%n");
+		LoggerFactory.getLogManager().addFileLogger(getChannelPath(), LoggerManager.getLoggerLevel("info"), getChannelName(), getChannelFileName(), false, LoggerManager.FORMATTER_SIMPLE, "%d %-5p - %m%n");
 
 		//create a new logger channel
 		this.logger = LoggerFactory.getLog(getChannelPath());
+	}
+
+	/**
+	 * Get runtime execution channel
+	 * @return the name of the execution channel (thread)
+	 */
+	public static String getChannelName()
+	{
+		String identifier = Thread.currentThread().getName();
+
+		if(StringUtility.equalsIgnoreCase(identifier, "main")) return System.getProperty("areasy.signature", Thread.currentThread().getName() + "-" + Thread.currentThread().getId());
+			else return identifier;
+	}
+
+	private static String getChannelPath()
+	{
+		return RuntimeLogger.class.getName() +  "." + getChannelName();
+	}
+
+	public static String getChannelFileName()
+	{
+		if((StringUtility.indexOf(RuntimeManager.getReference(), "JAR@") == 0) || (StringUtility.indexOf(RuntimeManager.getReference(), "CFG@") == 0))
+		{
+			return RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + "answer.log";
+		}
+		else
+		{
+			return RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + "answer-" + getChannelName() + ".log";
+		}
 	}
 
 	/**
@@ -575,27 +604,5 @@ public class RuntimeLogger
 	public static String getLevel()
 	{
 		return getAnswer().level;
-	}
-
-	/**
-	 * Get runtime execution channel
-	 * @return the name of the execution channel (thread)
-	 */
-	public static String getChannelName()
-	{
-		String identifier = Thread.currentThread().getName();
-
-		if(StringUtility.equalsIgnoreCase(identifier, "main")) return System.getProperty("areasy.signature", Thread.currentThread().getName() + "-" + Thread.currentThread().getId());
-			else return identifier;
-	}
-
-	private static String getChannelPath()
-	{
-		return RuntimeLogger.class.getName() +  "." + getChannelName();
-	}
-
-	public static String getChannelFileName()
-	{
-		return RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + "answers-" + getChannelName() + ".log";
 	}
 }

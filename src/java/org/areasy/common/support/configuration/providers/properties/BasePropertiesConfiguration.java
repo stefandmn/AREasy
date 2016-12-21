@@ -23,6 +23,7 @@ import org.areasy.common.data.StringUtility;
 
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Properties;
 import java.io.File;
 import java.io.InputStream;
@@ -140,10 +141,36 @@ public abstract class BasePropertiesConfiguration extends BaseConfiguration
 	public static Configuration getConfiguration(Properties p)
 	{
 		Configuration config = new BaseConfiguration();
-		for (Enumeration e = p.keys(); e.hasMoreElements();)
+
+		if(p != null && !p.isEmpty())
 		{
-			String key = (String) e.nextElement();
-			config.setKey(key, p.getProperty(key));
+			for (Enumeration e = p.keys(); e.hasMoreElements(); )
+			{
+				String key = (String) e.nextElement();
+				config.setKey(key, p.getProperty(key));
+			}
+		}
+
+		return config;
+	}
+
+	/**
+	 * Convert a standard <code>Map</code> interface into a configuration class.
+	 *
+	 * @param map <code>Map</code> object to convert
+	 * @return Configuration configuration created from the Properties
+	 */
+	public static Configuration getConfiguration(Map map)
+	{
+		Configuration config = new BaseConfiguration();
+
+		if(map != null && !map.isEmpty())
+		{
+			for (Iterator i = map.keySet().iterator(); i.hasNext();)
+			{
+				String key = (String) i.next();
+				config.setKey(key, map.get(key));
+			}
 		}
 
 		return config;

@@ -14,6 +14,8 @@ package org.areasy.common.logger.base;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.ClassUtility;
+import org.areasy.common.data.bean.MethodUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerException;
 import org.areasy.common.logger.LoggerFactory;
@@ -498,5 +500,58 @@ public class DefaultLoggerFactory extends LoggerFactory
 		{
 			throw new LoggerException(t);
 		}
+	}
+
+	/**
+	 * Check whether Log4J is used or not
+	 *
+	 * @return true if Log4J is the primary logging channel used by current AREasy instance
+	 */
+	public boolean isLog4JLoggerUsed()
+	{
+		if(managerClassName != null)
+		{
+			return managerClassName.endsWith("Log4JManager");
+		}
+		else return isLog4JAvailable();
+	}
+
+	/**
+	 * Check whether JDKLogger is used or not
+	 *
+	 * @return true if JDK logger is the primary logging channel used by current AREasy instance
+	 */
+	public boolean isJdkLoggerUsed()
+	{
+		if(managerClassName != null)
+		{
+			return managerClassName.endsWith("JdkManager");
+		}
+		else return isJdkAvailable();
+	}
+
+	/**
+	 * Check if Log4J is already initialized within the environment.
+	 *
+	 * @return true if the Log4J is already initialized and configured
+	 */
+	public boolean isLog4JShared()
+	{
+		if(isLog4JAvailable())
+		{
+			try
+			{
+				Object rootLoggerClass = ClassUtility.getInstance("org.apache.log4j.Logger");
+				Object rootLoggerMethod = MethodUtility.invokeExactMethod(rootLoggerClass, "getRootLogger", null);
+
+				Enumeration appenders = (Enumeration) MethodUtility.invokeExactMethod(rootLoggerMethod, "getAllAppenders", null);
+				return appenders.hasMoreElements();
+			}
+			catch (Throwable t)
+			{
+				return false;
+			}
+		}
+		else return false;
 	}
 }

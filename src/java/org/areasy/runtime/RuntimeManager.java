@@ -55,6 +55,9 @@ public class RuntimeManager
 	/** Home directory */
 	private static File homeDir = null;
 
+	/** Home Reference */
+	private static String homeRef = null;
+
 	/** Working directory */
 	private static File workDir = null;
 
@@ -205,8 +208,9 @@ public class RuntimeManager
 		boolean runtime = config.getBoolean("runtime", false);
 
 		if(StringUtility.equalsIgnoreCase(mode, "server") && !runtime) return 2;
-			else if(StringUtility.equalsIgnoreCase(mode, "client") && !runtime) return 1;
-				else return 0;
+		else if(StringUtility.equalsIgnoreCase(mode, "client") && !runtime) return 1;
+		else if(StringUtility.indexOf(homeRef, "JAR@") == 0 && !runtime) return 1;
+		else return 0;
 	}
 
 	/**
@@ -216,15 +220,79 @@ public class RuntimeManager
 	{
 		try
 		{
-			//define home directory
-			homeDir = new File(System.getProperty("areasy.home"));
+			//define application reference
+			homeRef = System.getProperty("areasy.reference");
 
-			//define working directory.
-			workDir = new File(homeDir.getAbsolutePath() + File.separator + "work");
-			if(!workDir.exists()) workDir.mkdirs();
+			//if the reference is empty try to detect it
+			if(StringUtility.isEmpty(homeRef))
+			{
+				if(StringUtility.isEmpty(System.getProperty("areasy.home")))
+				{
+					String className = this.getClass().getName().replace('.', '/');
+					String classJar = this.getClass().getResource("/" + className + ".class").toString();
 
-			//read configuration
-			setConfiguration(new PropertiesConfiguration(homeDir.getAbsolutePath() + File.separator + "cfg" + File.separator + "default.properties"));
+					if (classJar.startsWith("jar:") && classJar.indexOf("!") > 0)
+					{
+						File jarFile = new File(StringUtility.remove(classJar.substring(0, classJar.indexOf("!")), "jar:file:/"));
+
+						if (jarFile.exists()) System.setProperty("areasy.reference", "JAR@" + jarFile.getAbsolutePath());
+						else System.setProperty("areasy.reference", "ENV@" + System.getProperty("areasy.home", ""));
+					}
+					else System.setProperty("areasy.reference", "ENV@" + System.getProperty("areasy.home", ""));
+				}
+				else System.setProperty("areasy.reference", "ENV@" + System.getProperty("areasy.home", ""));
+
+				//read again application reference
+				homeRef = System.getProperty("areasy.reference");
+			}
+
+			//handle application model referred by ENV, DIR, CFG and JAR
+			if(StringUtility.indexOf(homeRef, "ENV@") == 0 || StringUtility.indexOf(homeRef, "DIR@") == 0)
+			{
+				//define home directory
+				homeDir = new File(System.getProperty("areasy.home"));
+
+				//define working directory.
+				workDir = new File(homeDir.getAbsolutePath() + File.separator + "work");
+				if (!workDir.exists()) workDir.mkdirs();
+
+				//read configuration
+				setConfiguration(new PropertiesConfiguration(homeDir.getAbsolutePath() + File.separator + "cfg" + File.separator + "default.properties"));
+			}
+			else if(StringUtility.indexOf(homeRef, "CFG@") == 0)
+			{
+				//define home directory
+				if(StringUtility.isEmpty(System.getProperty("areasy.home")))
+				{
+					String configFile = StringUtility.remove(homeRef, "CFG@");
+					homeDir = new File(configFile).getParentFile();
+				}
+				else homeDir = new File(System.getProperty("areasy.home"));
+
+				//define working directory.
+				workDir = new File(homeDir.getAbsolutePath());
+
+				//read configuration
+				String configFile = StringUtility.remove(homeRef, "CFG@");
+				setConfiguration(new PropertiesConfiguration(configFile));
+			}
+			else if(StringUtility.indexOf(homeRef, "JAR@") == 0)
+			{
+				//define home directory
+				if(StringUtility.isEmpty(System.getProperty("areasy.home")))
+				{
+					String configFile = StringUtility.remove(homeRef, "JAR@");
+					homeDir = new File(configFile).getParentFile();
+				}
+				else homeDir = new File(System.getProperty("areasy.home"));
+
+				//define working directory.
+				workDir = new File(homeDir.getAbsolutePath());
+
+				//set configuration
+				setConfiguration(new PropertiesConfiguration());
+			}
+			else throw new AREasyException("Invalid location reference");
 		}
 		catch (Exception e)
 		{
@@ -521,8 +589,8 @@ public class RuntimeManager
 	{
 		if(error)
 		{
-			if(logger != null) logger.info("Drop execution of AREasy Runtime because was recorded errors..");
-				else writeln("Drop execution of AREasy Runtime because was recorded errors..");
+			if(logger != null) logger.info("Drop execution of AREasy Runtime due to recorded errors..");
+				else writeln("Drop execution of AREasy Runtime because due to recorded errors..");
 
 			System.exit(1);
 		}
@@ -635,39 +703,50 @@ public class RuntimeManager
 	 */
 	protected final void setLogger(String name, String defaultFormatter, String defaultLevel, boolean append) throws Exception
 	{
-		if(name == null) name= "root";
-
+		if (name == null) name = "root";
 		String loggerLevel = defaultLevel != null ? defaultLevel : getConfiguration().getString("app.runtime.logger." + name + ".level", "info");
 		String loggerFormatter = defaultFormatter != null ? defaultFormatter : getConfiguration().getString("app.runtime.logger." + name + ".formatter", "%d [%t] %-5p %c{1} - %m%n");
 		boolean logAppend = append ? append : getConfiguration().getBoolean("app.runtime.logger." + name + ".append", false);
 
-		if(name.equals("root"))
+		if ((StringUtility.indexOf(homeRef, "JAR@") == 0) || (StringUtility.indexOf(homeRef, "CFG@") == 0))
 		{
-			String loggerFileName = getConfiguration().getString("app.runtime.logger.outer.file", "external.log");
-			File loggerFile = new File(getLogsDirectory(), loggerFileName);
+			if(!LoggerFactory.getFactory().isLog4JShared())
+			{
+				//root or custom logger for client or runtime called from JAR from CFG reference
+				String loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name.equals("root") ? "runtime.log" : name + ".log");
+				File loggerFile = new File(getLogsDirectory(), loggerFileName);
 
-			LoggerFactory.getLogManager().addFileLogger("root", LoggerManager.getLoggerLevel(loggerLevel),
-				"AREasy Outer", loggerFile.getAbsolutePath(), logAppend,
-				LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
-
-			loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name + ".log");
-			loggerFile = new File(getLogsDirectory(), loggerFileName);
-
-			LoggerFactory.getLogManager().addFileLogger("org.areasy", LoggerManager.getLoggerLevel(loggerLevel),
-				"AREasy Root", loggerFile.getAbsolutePath(), logAppend,
-				LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
+				LoggerFactory.getLogManager().addFileLogger(name.equals("root") ? "root" : "org.areasy.runtime." + name, LoggerManager.getLoggerLevel(loggerLevel),
+						name.equals("root") ? "AREasy Runtime" : "AREasy " + StringUtility.capitalize(name), loggerFile.getAbsolutePath(), logAppend, LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
+			}
 		}
 		else
 		{
-			String loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name + ".log");
-			File loggerFile = new File(getLogsDirectory(), loggerFileName);
+			if (name.equals("root"))
+			{
+				//root loger
+				String loggerFileName = getConfiguration().getString("app.runtime.logger.outer.file", "external.log");
+				File loggerFile = new File(getLogsDirectory(), loggerFileName);
 
-			String loggerTitle = "AREasy " + StringUtility.capitalize(name);
-			String loggerName = "org.areasy.runtime." + name;
+				LoggerFactory.getLogManager().addFileLogger("root", LoggerManager.getLoggerLevel(loggerLevel),
+						"AREasy Outer", loggerFile.getAbsolutePath(), logAppend, LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
 
-			LoggerFactory.getLogManager().addFileLogger(loggerName, LoggerManager.getLoggerLevel(loggerLevel),
-				loggerTitle, loggerFile.getAbsolutePath(), logAppend,
-				LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
+				//external logger
+				loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name + ".log");
+				loggerFile = new File(getLogsDirectory(), loggerFileName);
+
+				LoggerFactory.getLogManager().addFileLogger("org.areasy", LoggerManager.getLoggerLevel(loggerLevel),
+						"AREasy Root", loggerFile.getAbsolutePath(), logAppend, LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
+			}
+			else
+			{
+				//custom logger
+				String loggerFileName = getConfiguration().getString("app.runtime.logger." + name + ".file", name + ".log");
+				File loggerFile = new File(getLogsDirectory(), loggerFileName);
+
+				LoggerFactory.getLogManager().addFileLogger("org.areasy.runtime." + name, LoggerManager.getLoggerLevel(loggerLevel),
+						"AREasy " + StringUtility.capitalize(name), loggerFile.getAbsolutePath(), logAppend, LoggerManager.FORMATTER_SIMPLE, loggerFormatter);
+			}
 		}
 	}
 
@@ -807,11 +886,18 @@ public class RuntimeManager
 	 */
 	public static File getLogsDirectory()
 	{
-		String logFileString = homeDir.getAbsolutePath() + File.separator + "logs";
-		File logDir = new File(logFileString);
-		if(!logDir.exists()) logDir.mkdirs();
+		if(StringUtility.indexOf(homeRef, "CFG@") == 0 || StringUtility.indexOf(homeRef, "JAR@") == 0)
+		{
+			return getWorkingDirectory();
+		}
+		else
+		{
+			String logFileString = homeDir.getAbsolutePath() + File.separator + "logs";
+			File logDir = new File(logFileString);
+			if (!logDir.exists()) logDir.mkdirs();
 
-		return logDir;
+			return logDir;
+		}
 	}
 
 	/**
@@ -821,12 +907,19 @@ public class RuntimeManager
 	 */
 	public static File getLibsDirectory()
 	{
-		String libsFileString = homeDir.getAbsolutePath() + File.separator + "libs";
-		File libsDir = new File(libsFileString);
+		if(StringUtility.indexOf(homeRef, "CFG@") == 0 || StringUtility.indexOf(homeRef, "JAR@") == 0)
+		{
+			return getHomeDirectory();
+		}
+		else
+		{
+			String libsFileString = homeDir.getAbsolutePath() + File.separator + "libs";
+			File libsDir = new File(libsFileString);
 
-		if(!libsDir.exists()) libsDir.mkdirs();
+			if (!libsDir.exists()) libsDir.mkdirs();
 
-		return libsDir;
+			return libsDir;
+		}
 	}
 
 	/**
@@ -836,12 +929,19 @@ public class RuntimeManager
 	 */
 	public static File getCfgDirectory()
 	{
-		String libsFileString = homeDir.getAbsolutePath() + File.separator + "cfg";
-		File libsDir = new File(libsFileString);
+		if(StringUtility.indexOf(homeRef, "CFG@") == 0 || StringUtility.indexOf(homeRef, "JAR@") == 0)
+		{
+			return getHomeDirectory();
+		}
+		else
+		{
+			String libsFileString = homeDir.getAbsolutePath() + File.separator + "cfg";
+			File libsDir = new File(libsFileString);
 
-		if(!libsDir.exists()) libsDir.mkdirs();
+			if (!libsDir.exists()) libsDir.mkdirs();
 
-		return libsDir;
+			return libsDir;
+		}
 	}
 
 	/**
@@ -851,12 +951,19 @@ public class RuntimeManager
 	 */
 	public static File getBinDirectory()
 	{
-		String libsFileString = homeDir.getAbsolutePath() + File.separator + "bin";
-		File libsDir = new File(libsFileString);
+		if(StringUtility.indexOf(homeRef, "CFG@") == 0 || StringUtility.indexOf(homeRef, "JAR@") == 0)
+		{
+			return getHomeDirectory();
+		}
+		else
+		{
+			String libsFileString = homeDir.getAbsolutePath() + File.separator + "bin";
+			File libsDir = new File(libsFileString);
 
-		if(!libsDir.exists()) libsDir.mkdirs();
+			if (!libsDir.exists()) libsDir.mkdirs();
 
-		return libsDir;
+			return libsDir;
+		}
 	}
 
 	/**
@@ -866,12 +973,29 @@ public class RuntimeManager
 	 */
 	public static File getDocDirectory()
 	{
-		String libsFileString = homeDir.getAbsolutePath() + File.separator + "doc";
-		File libsDir = new File(libsFileString);
+		if(StringUtility.indexOf(homeRef, "CFG@") == 0 || StringUtility.indexOf(homeRef, "JAR@") == 0)
+		{
+			return getHomeDirectory();
+		}
+		else
+		{
+			String libsFileString = homeDir.getAbsolutePath() + File.separator + "doc";
+			File libsDir = new File(libsFileString);
 
-		if(!libsDir.exists()) libsDir.mkdirs();
+			if (!libsDir.exists()) libsDir.mkdirs();
 
-		return libsDir;
+			return libsDir;
+		}
+	}
+
+	/**
+	 * Get runtime reference.
+	 *
+	 * @return directory file structure
+	 */
+	public static String getReference()
+	{
+		return homeRef;
 	}
 
 	/**
@@ -1018,6 +1142,8 @@ public class RuntimeManager
 		String signature = "";
 		String mode = config.getString("mode", null);
 		String action = config.getString("action", null);
+
+		if(StringUtility.isEmpty(mode) && StringUtility.indexOf(homeRef, "JAR@") == 0) mode = "client";
 
 		if(StringUtility.isNotEmpty(mode)) signature += mode + "-";
 		if(StringUtility.isNotEmpty(action)) signature += action + "-";
@@ -1170,7 +1296,7 @@ public class RuntimeManager
 	public static RuntimeManager getManager(String defaultHome) throws AREasyException
 	{
 		//get home location from configuration
-		if(homeDir == null)
+		if(homeDir == null && defaultHome == null)
 		{
 			//get home location from java environment
 			String home = System.getProperty("areasy.home");
@@ -1181,19 +1307,39 @@ public class RuntimeManager
 				Map map = RuntimeWrapper.getEnvironmentVariables();
 
 				home = (String)map.get("AREASY_HOME");
-				if(StringUtility.isEmpty(home))
+				if(StringUtility.isEmpty(home)) home = (String)map.get("areasy_home");
+
+				if(StringUtility.isNotEmpty(home))
 				{
-					home = (String)map.get("areasy_home");
-					if(StringUtility.isEmpty(home))
+					//set the local variable
+					System.setProperty("areasy.home", home);
+					System.setProperty("areasy.reference", "ENV@" + home);
+				}
+				else
+				{
+					String className = RuntimeManager.class.getName().replace('.', '/');
+					String classJar = RuntimeManager.class.getResource("/" + className + ".class").toString();
+
+					if (classJar.startsWith("jar:") && classJar.indexOf("!") > 0)
 					{
-						if(StringUtility.isEmpty(defaultHome)) throw new AREasyException("There is no application or system variable to refer the AREasy plugin home location" );
-							else home = defaultHome;
+						File jarFile = new File(StringUtility.remove(classJar.substring(0, classJar.indexOf("!")), "jar:file:/"));
+
+						if (jarFile.exists()) System.setProperty("areasy.reference", "JAR@" + jarFile.getAbsolutePath());
+							else throw new AREasyException("There is no application reference to the AREasy home instance");
 					}
 				}
-
-				//set the local variable
-				System.setProperty("areasy.home", home);
 			}
+		}
+		else if(homeDir == null && defaultHome != null && (new File(defaultHome)).isDirectory())
+		{
+			//set the local variable
+			System.setProperty("areasy.home", defaultHome);
+			System.setProperty("areasy.reference", "DIR@"+defaultHome);
+		}
+		else if(homeDir == null && defaultHome != null && (new File(defaultHome)).isFile())
+		{
+			System.setProperty("areasy.home", (new File(defaultHome)).getParent());
+			System.setProperty("areasy.reference", "CFG@" + defaultHome);
 		}
 
 		return new RuntimeManager();

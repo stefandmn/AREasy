@@ -17,6 +17,9 @@ import com.remedy.arsys.session.Authenticator;
 import com.remedy.arsys.session.DefaultAuthenticator;
 import com.remedy.arsys.session.HttpSessionKeys;
 import com.remedy.arsys.session.UserCredentials;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.support.configuration.base.BaseConfiguration;
+import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.logger.Logger;
@@ -27,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -45,8 +49,6 @@ public class SimpleAuthenticator extends DefaultAuthenticator implements Authent
 	/** Logger instance */
 	protected static Logger logger = LoggerFactory.getLog(SimpleAuthenticator.class);
 
-	protected String HOME = null;
-
 	/** SSO configuration structure */
 	protected static ConfigurationLoader ssoConfig = null;
 
@@ -61,22 +63,35 @@ public class SimpleAuthenticator extends DefaultAuthenticator implements Authent
 	@SuppressWarnings("unchecked")
 	public void init(Map properties)
 	{
-		if (properties != null && properties.get(CONFIG_HOME) != null)
+		if(!isConfigLoaded())
 		{
-			HOME = (String) properties.remove(CONFIG_HOME);
+			if (properties != null && properties.containsKey(CONFIG_HOME))
+			{
+				String homeFolder = (String) properties.remove(CONFIG_HOME);
+				logger.debug("Create Authenticator ConfigurationLoader using home folder: " + homeFolder);
 
-			if(ssoConfig == null && HOME != null)
-			{
-				ssoConfig = new ConfigurationLoader(new File(HOME));
-				ssoConfig.start();
+				if (homeFolder != null)
+				{
+					ssoConfig = new ConfigurationLoader(new File(homeFolder));
+					ssoConfig.start();
+				}
 			}
-		}
-		else if (properties != null && properties.get(CONFIG_FILE) != null)
-		{
-			if(ssoConfig == null)
+			else if (properties != null && properties.containsKey(CONFIG_FILE))
 			{
-				ssoConfig = new ConfigurationLoader(new File(CONFIG_FILE));
-				ssoConfig.start();
+				String homeFile = (String) properties.remove(CONFIG_FILE);
+				logger.debug("Create Authenticator ConfigurationLoader using configuration file: " + homeFile);
+
+				if (homeFile != null)
+				{
+					ssoConfig = new ConfigurationLoader(new File(homeFile));
+					ssoConfig.start();
+				}
+			}
+			else
+			{
+				logger.debug("Create Authenticator ConfigurationLoader using configuration structure");
+				Configuration config = BasePropertiesConfiguration.getConfiguration(properties);
+				ssoConfig = new ConfigurationLoader(config);
 			}
 		}
 	}

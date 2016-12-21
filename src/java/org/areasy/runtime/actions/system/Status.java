@@ -120,8 +120,8 @@ public class Status extends SystemAction implements RuntimeAction
 		StringBuffer buffer = new StringBuffer();
 		Configuration config = getManager().getConfiguration();
 
-		buffer.append("AREasy Runtime: ").append(config.getString("app.server.host")).append(":").append(config.getString("app.server.port")).append("\n");
-		buffer.append("AR System Server: ").append(config.getString("app.server.default.arsystem.user.name")).append("@").append(config.getString("app.server.default.arsystem.server.name")).append(config.getInt("app.server.default.arsystem.port.number", 0) > 0 ? (":" + config.getString("app.server.default.arsystem.port.number")) : "").append("\n\n");
+		if(config.containsKey("app.server.host")) buffer.append("AREasy Runtime: ").append(config.getString("app.server.host")).append(":").append(config.getString("app.server.port")).append("\n");
+		if(config.containsKey("app.server.default.arsystem.user.name")) buffer.append("AR System Server: ").append(config.getString("app.server.default.arsystem.user.name")).append("@").append(config.getString("app.server.default.arsystem.server.name")).append(config.getInt("app.server.default.arsystem.port.number", 0) > 0 ? (":" + config.getString("app.server.default.arsystem.port.number")) : "").append("\n\n");
 
 		NumberFormat number = NumberFormat.getInstance();
 		number.setMaximumFractionDigits(2);

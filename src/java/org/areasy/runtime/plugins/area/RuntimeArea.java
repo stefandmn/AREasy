@@ -36,6 +36,7 @@ import java.util.Vector;
 public class RuntimeArea extends AREAPlugin
 {
 	private static String HOME = null;
+	private static String CONF = null;
 
 	/** Runtime manager */
 	private static RuntimeManager manager = null;
@@ -52,8 +53,11 @@ public class RuntimeArea extends AREAPlugin
      */
     public static void init(ARPluginContext context)
 	{
-    	HOME = context.getConfigItem("home");
-    	System.out.println("User defined value for HOME parameter: " + HOME);
+		HOME = context.getConfigItem("home");
+		if(StringUtility.isNotEmpty(HOME)) System.out.println("User defined value for HOME parameter: " + HOME);
+
+		CONF = context.getConfigItem("conf");
+		if(StringUtility.isNotEmpty(CONF)) System.out.println("User defined value for CONF parameter: " + CONF);
     }
 
 	/**
@@ -72,7 +76,10 @@ public class RuntimeArea extends AREAPlugin
 		{
 			if(getManager() == null)
 			{
-				manager = RuntimeManager.getManager(HOME);
+				if(StringUtility.isNotEmpty(HOME)) manager = RuntimeManager.getManager(HOME);
+					else if(StringUtility.isNotEmpty(CONF)) manager = RuntimeManager.getManager(CONF);
+						else manager = RuntimeManager.getManager();
+
 				info(context, "AREasy Runtime Manager is initialized");
 			}
 			else info(context, "AREasy Runtime Manager is already initialized");
@@ -234,9 +241,14 @@ public class RuntimeArea extends AREAPlugin
 		return manager;
 	}
 
+	public boolean isTraceEnabled()
+	{
+		return LoggerFactory.getLog(getClass()).isTraceEnabled();
+	}
+
 	public void debug(String message)
 	{
-		LoggerFactory.getLog(RuntimeArea.class).debug(message);
+		LoggerFactory.getLog(getClass()).debug(message);
 	}
 
 	public void debug(String message, Throwable th)

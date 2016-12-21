@@ -19,8 +19,8 @@
 	<import file="build-0.base.xml"/>
 
 
-	<property name="library.jar" value="${project.name}-${project.version}.jar"/>
-	<property name="documentation.pdf" value="${project.name}-${project.version}.pdf"/>
+	<property name="library.jar" value="${project.name}.jar"/>
+	<property name="documentation.pdf" value="${project.name}.pdf"/>
 
 
 	<!-- up to dates-->
@@ -58,8 +58,6 @@
 	<!-- Compiling procedure. -->
     <target name="2.Bin" depends="1.Init" unless="uptodate-lib" description="Compile library">
 
-        <buildnumber file="build.properties"/>
-
         <javac classpathref="classpath.bin" srcdir="${src.java.dir}" destdir="${build.temp.dir}"
             debug="${compiler.debug}" deprecation="${compiler.deprecation}" optimize="${compiler.optimize}" nowarn="true">
         </javac>
@@ -81,7 +79,7 @@
 			<manifest>
 				<attribute name="Product-Name" value="${project.name}"/>
 				<attribute name="Product-Description" value="${project.description}"/>
-				<attribute name="Product-Version" value="${project.version}.${build.number}"/>
+				<attribute name="Product-Version" value="${project.version}"/>
 				<attribute name="Product-Vendor" value="${project.vendor}"/>
 				<attribute name="Product-Years" value="${project.years}"/>
 				<attribute name="Main-Class" value="org.areasy.boot.Main"/>
@@ -96,7 +94,7 @@
 			<manifest>
 				<attribute name="Product-Name" value="${project.name}"/>
 				<attribute name="Product-Description" value="${project.description}"/>
-				<attribute name="Product-Version" value="${project.version}.${build.number}"/>
+				<attribute name="Product-Version" value="${project.version}"/>
 				<attribute name="Product-Vendor" value="${project.vendor}"/>
                 <attribute name="Product-Years" value="${project.years}"/>
 				<attribute name="Main-Class" value="org.areasy.runtime.RuntimeManager"/>
@@ -114,7 +112,7 @@
         <replace file="${build.temp.dir}/doclet.properties" token="%year%" value="${project.years}"/>
         <replace file="${build.temp.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>
         <replace file="${build.temp.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
-        <replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}.${build.number}"/>
+        <replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}"/>
 
 		<copy overwrite="true" todir="${build.temp.dir}/resources">
             <fileset dir="${src.doc.dir}/resources">

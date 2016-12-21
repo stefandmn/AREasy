@@ -93,10 +93,8 @@ public class MethodUtility
 	 */
 	public static Object invokeMethod(Object object,  String methodName, Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-
 		Object[] args = {arg};
 		return invokeMethod(object, methodName, args);
-
 	}
 
 
@@ -122,25 +120,21 @@ public class MethodUtility
 	 * @throws IllegalAccessException    if the requested method is not accessible
 	 *                                   via reflection
 	 */
-	public static Object invokeMethod(Object object,
-									  String methodName,
-									  Object[] args)
-			throws
-			NoSuchMethodException,
-			IllegalAccessException,
-			InvocationTargetException
+	public static Object invokeMethod(Object object, String methodName, Object[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-
 		if (args == null)
 		{
 			args = emptyObjectArray;
 		}
+
 		int arguments = args.length;
 		Class parameterTypes [] = new Class[arguments];
+
 		for (int i = 0; i < arguments; i++)
 		{
 			parameterTypes[i] = args[i].getClass();
 		}
+
 		return invokeMethod(object, methodName, args, parameterTypes);
 
 	}
@@ -169,33 +163,25 @@ public class MethodUtility
 	 * @throws IllegalAccessException    if the requested method is not accessible
 	 *                                   via reflection
 	 */
-	public static Object invokeMethod(Object object,
-									  String methodName,
-									  Object[] args,
-									  Class[] parameterTypes)
-			throws
-			NoSuchMethodException,
-			IllegalAccessException,
-			InvocationTargetException
+	public static Object invokeMethod(Object object, String methodName,  Object[] args, Class[] parameterTypes) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-
 		if (parameterTypes == null)
 		{
 			parameterTypes = emptyClassArray;
 		}
+
 		if (args == null)
 		{
 			args = emptyObjectArray;
 		}
 
-		Method method = getMatchingAccessibleMethod(object.getClass(),
-				methodName,
-				parameterTypes);
+		Method method = getMatchingAccessibleMethod(object.getClass(), methodName, parameterTypes);
+
 		if (method == null)
 		{
-			throw new NoSuchMethodException("No such accessible method: " +
-					methodName + "() on object: " + object.getClass().getName());
+			throw new NoSuchMethodException("No such accessible method: " + methodName + "() on object: " + object.getClass().getName());
 		}
+
 		return method.invoke(object, args);
 	}
 
@@ -217,18 +203,11 @@ public class MethodUtility
 	 * @throws IllegalAccessException    if the requested method is not accessible
 	 *                                   via reflection
 	 */
-	public static Object invokeExactMethod(Object object,
-										   String methodName,
-										   Object arg)
-			throws
-			NoSuchMethodException,
-			IllegalAccessException,
-			InvocationTargetException
+	public static Object invokeExactMethod(Object object, String methodName,  Object arg) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-
 		Object[] args = {arg};
-		return invokeExactMethod(object, methodName, args);
 
+		return invokeExactMethod(object, methodName, args);
 	}
 
 
@@ -254,14 +233,16 @@ public class MethodUtility
 		{
 			args = emptyObjectArray;
 		}
+
 		int arguments = args.length;
 		Class parameterTypes [] = new Class[arguments];
+
 		for (int i = 0; i < arguments; i++)
 		{
 			parameterTypes[i] = args[i].getClass();
 		}
-		return invokeExactMethod(object, methodName, args, parameterTypes);
 
+		return invokeExactMethod(object, methodName, args, parameterTypes);
 	}
 
 
@@ -284,7 +265,6 @@ public class MethodUtility
 	 */
 	public static Object invokeExactMethod(Object object, String methodName, Object[] args, Class[] parameterTypes) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException
 	{
-
 		if (args == null)
 		{
 			args = emptyObjectArray;
@@ -296,13 +276,13 @@ public class MethodUtility
 		}
 
 		Method method = getAccessibleMethod(object.getClass(), methodName, parameterTypes);
+
 		if (method == null)
 		{
-			throw new NoSuchMethodException("No such accessible method: " +
-					methodName + "() on object: " + object.getClass().getName());
+			throw new NoSuchMethodException("No such accessible method: " + methodName + "() on object: " + object.getClass().getName());
 		}
-		return method.invoke(object, args);
 
+		return method.invoke(object, args);
 	}
 
 
@@ -663,8 +643,7 @@ public class MethodUtility
 
 		if (parameterType.isPrimitive())
 		{
-			// this method does *not* do widening - you must specify exactly
-			// is this the right behaviour?
+			// this method does *not* do widening - you must specify exactly is this the right behaviour?
 			Class parameterWrapperClazz = getPrimitiveWrapper(parameterType);
 			if (parameterWrapperClazz != null)
 			{
@@ -720,7 +699,6 @@ public class MethodUtility
 		}
 		else
 		{
-
 			return null;
 		}
 	}
@@ -774,6 +752,7 @@ public class MethodUtility
 			{
 				log.debug("Not a known primitive wrapper class: " + wrapperType);
 			}
+
 			return null;
 		}
 	}

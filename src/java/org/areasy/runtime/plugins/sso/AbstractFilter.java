@@ -32,34 +32,26 @@ public abstract class AbstractFilter extends SingleSignOnAuthenticator implement
 
 	public final void init(FilterConfig config) throws ServletException
 	{
+		Properties map = new Properties();
+		String filePath = config.getInitParameter("arsystem.authenticator.config.file");
+
+		if (filePath != null)
+		{
+			if (!new File(filePath).exists()) filePath = config.getServletContext().getRealPath(filePath);
+			logger.debug("Authenticator configuration file detected in Filter: " + filePath);
+		}
+
 		if(!isConfigLoaded())
 		{
-			Properties map = new Properties();
-			String filePath = config.getInitParameter("arsystem.authenticator.config.file");
-			String areasyHome = config.getInitParameter(CONFIG_HOME);
-
-			if (filePath != null)
-			{
-				if(! new File(filePath).exists()) filePath = config.getServletContext().getRealPath(filePath);
-				logger.debug("Authenticator configuration file: " + filePath);
-
-				try
-				{
-					FileInputStream input = new FileInputStream(new File(filePath));
-					map.load(input);
-				}
-				catch (IOException ioe)
-				{
-					throw new RuntimeException("Invalid authenticator configuration file: " + ioe.getMessage());
-				}
-			}
-			else if(areasyHome != null)
-			{
-				logger.debug("Authenticator configuration reference: " + areasyHome);
-				map.put(CONFIG_HOME, areasyHome);
-			}
-
-			super.init(map);
+			logger.debug("Create Filter ConfigurationLoader using configuration file: " + filePath);
+			ssoConfig = new ConfigurationLoader(new File(filePath));
+			ssoConfig.start();
+		}
+		else
+		{
+			logger.debug("Update Filter ConfigurationLoader using configuration file: " + filePath);
+			ssoConfig.setFile(new File(filePath));
+			ssoConfig.start();
 		}
 	}
 

@@ -1,7 +1,13 @@
 3.0.1
 ======
+11. Optimize and adapt logging channels to the startup mode and disable default console logging for JDK
+10. Implement plugin or client mode startup using a direct and simplified configuration file
+09. Redevelop SupportGroupAdministration action
+07. Redevelop KeypassAdministration action
+06. Develop startup process using JAR library
+05. Merge in base package AAR and SSO modules
 04. Update file.wrapper action
-03. Implement supportgroup.migration action
+03. Implement SupportGroupMigration action
 02. Export help documents in plain text and wiki (md) and html formats
 01. Design and implement new help model
 

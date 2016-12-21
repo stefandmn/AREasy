@@ -93,6 +93,13 @@ public class JdkManager extends LoggerManager
 			definition.setHandler(appender);
 
 			LoggerManager.addLoggerDefinition(definition);
+
+			//remove default console handler
+			if (!(appender instanceof ConsoleHandler))
+			{
+				Logger l0 = Logger.getLogger("");
+				l0.removeHandler(l0.getHandlers()[0]);
+			}
 		}
 		catch(Throwable th)
 		{

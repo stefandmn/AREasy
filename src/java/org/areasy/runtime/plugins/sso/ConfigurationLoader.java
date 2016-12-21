@@ -14,6 +14,7 @@ package org.areasy.runtime.plugins.sso;
  */
 
 import com.remedy.arsys.session.UserCredentials;
+import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
@@ -98,6 +99,21 @@ public class ConfigurationLoader extends Thread
 	/** Authentication string for process validation */
 	private String uniqueAuthString = null;
 
+	public ConfigurationLoader(Configuration config)
+	{
+		try
+		{
+			manager = RuntimeManager.getManager();
+			manager.setConfiguration(config);
+			logger.info("AREasy Runtime Manager has been initialized");
+		}
+		catch(Throwable th)
+		{
+			logger.debug("Exception", th);
+			throw new RuntimeException("AREasy Runtime Manager couldn't be (re)initialized: "  + th.getMessage());
+		}
+	}
+
 	public ConfigurationLoader(File file)
 	{
 		if(file != null && file.exists() && (file.isFile() || file.isDirectory()))
@@ -105,56 +121,34 @@ public class ConfigurationLoader extends Thread
 			try
 			{
 				manager = RuntimeManager.getManager(file.getCanonicalPath());
-				logger.info("AREasy Runtime Manager has been (re)initialized");
+				logger.info("AREasy Runtime Manager has been initialized");
 			}
 			catch(Throwable th)
 			{
 				logger.debug("Exception", th);
 				throw new RuntimeException("AREasy Runtime Manager couldn't be (re)initialized: "  + th.getMessage());
 			}
-
-			//authentication string
-			if (getManager().getConfiguration().containsKey(CONFIG_AUTHSTRING))
-			{
-				uniqueAuthString = Credential.getCredential(getManager().getConfiguration().getString(CONFIG_AUTHSTRING, null), null).decode();
-				logger.debug("MidTier 'authentication_string' value: " + uniqueAuthString);
-			}
-			else throw new RuntimeException("The MidTier doesn't have a authentication_string configured in the corresponding configuration configFile. It will fail authenticating users");
 		}
 		else throw new RuntimeException("AREasy Runtime Manager initialization error because home path is not defined");
 
-		if(manager != null)
+		if(file.isDirectory()) file = new File(RuntimeManager.getCfgDirectory(), "plugin.areasy.properties");
+		setFile(file);
+	}
+
+	public void setFile(File file)
+	{
+		if(file != null && file.isFile())
 		{
-			if(file.isDirectory()) configFile = new File(RuntimeManager.getCfgDirectory(), "plugin.areasy.properties");
-				else if(file.isFile()) configFile = file;
+			configFile = file;
 
 			setDaemon(true);
 			execute();
-		}
-		else
-		{
-			logger.fatal("AREasy Runtime Manager is null!");
-			interrupted = false;
 		}
 	}
 
 	protected void execute()
 	{
-		boolean fileExists;
-
-		try
-		{
-			fileExists = configFile.exists();
-		}
-		catch (Exception e)
-		{
-			logger.warn("Error verifying configFile '" + configFile.getPath() + "' : " + e.getMessage());
-			interrupted = true;
-
-			return;
-		}
-
-		if (fileExists)
+		if (configFile != null && configFile.exists() && configFile.isFile())
 		{
 			long l = configFile.lastModified();
 
@@ -179,6 +173,10 @@ public class ConfigurationLoader extends Thread
 				loadConfiguration();
 			}
 		}
+		else
+		{
+			interrupted = true;
+		}
 	}
 
 	public void run()
@@ -197,6 +195,14 @@ public class ConfigurationLoader extends Thread
 
 	public void loadConfiguration()
 	{
+		//authentication string
+		if (getManager().getConfiguration().containsKey(CONFIG_AUTHSTRING))
+		{
+			uniqueAuthString = Credential.getCredential(getManager().getConfiguration().getString(CONFIG_AUTHSTRING, null), null).decode();
+			logger.debug("MidTier 'authentication_string' value: " + (logger.isTraceEnabled() ? uniqueAuthString : "********"));
+		}
+		else throw new RuntimeException("The MidTier doesn't have a authentication_string configured in the corresponding configuration configFile. It will fail authenticating users");
+
 		useBasic = getManager().getConfiguration().getBoolean(CONFIG_USEBASIC, false);
 		logger.info("SSO uses BASIC authentication: " + useBasic);
 

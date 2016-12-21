@@ -396,11 +396,11 @@ public abstract class LoggerManager
 	 * Create a custom logger, defining a special appender to write to a dedicated writer or output stream.
 	 *
 	 * @param loggerName logger name
-	 * @param loggerLlevel logger level
+	 * @param loggerLevel logger level
 	 * @param handlerName handler name
 	 * @param handlerWriter handler writer
 	 */
-	public abstract void addWriterLogger(String loggerName, int loggerLlevel, String handlerName, Object handlerWriter, String handlerFormatterPattern) throws LoggerException;
+	public abstract void addWriterLogger(String loggerName, int loggerLevel, String handlerName, Object handlerWriter, String handlerFormatterPattern) throws LoggerException;
 
 	/**
 	 * Create a new logger with a file handler.

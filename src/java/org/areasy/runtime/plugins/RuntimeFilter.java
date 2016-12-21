@@ -41,6 +41,8 @@ public class RuntimeFilter extends ARFilterAPIPlugin
 	public static Logger logger = LoggerFactory.getLog(RuntimeFilter.class);
 
 	private static String HOME = null;
+	private static String HOST = null;
+	private static String PORT = null;
 
 	/** Runtime manager */
 	private RuntimeManager manager = null;
@@ -55,8 +57,14 @@ public class RuntimeFilter extends ARFilterAPIPlugin
     public static void init(ARPluginContext context)
 	{
     	HOME = context.getConfigItem("home");
-    	System.out.println("User defined value for HOME parameter: " + HOME);
-    }
+    	if(StringUtility.isNotEmpty(HOME)) System.out.println("User defined value for HOME parameter: " + HOME);
+
+    	HOST = context.getConfigItem("host");
+		if(StringUtility.isNotEmpty(HOST)) System.out.println("User defined value for HOST parameter: " + HOST);
+
+		PORT = context.getConfigItem("port");
+		if(StringUtility.isNotEmpty(PORT)) System.out.println("User defined value for PORT parameter: " + PORT);
+	}
 
 	/**
 	 * Implementation of the initialization method, to do any static initialization for this class.
@@ -74,7 +82,9 @@ public class RuntimeFilter extends ARFilterAPIPlugin
 		{
 			if(getManager() == null)
 			{
-				manager = RuntimeManager.getManager(HOME);
+				if(StringUtility.isEmpty(HOME)) manager = RuntimeManager.getManager();
+					else manager = RuntimeManager.getManager(HOME);
+
 				info(context, "AREasy Runtime Manager is initialized.");
 			}
 		}
@@ -111,13 +121,15 @@ public class RuntimeFilter extends ARFilterAPIPlugin
 		//execute generated command
 		try
 		{
-			Configuration config = getManager().getConfiguration(command);
+			Configuration cmd = getManager().getConfiguration(command);
+			if(StringUtility.isNotEmpty(HOST)) cmd.setKey("host", HOST);
+			if(StringUtility.isNotEmpty(PORT)) cmd.setKey("port", PORT);
 
 			//setup runtime manager instance for the current request
-			getManager().setup(config);
+			getManager().setup(cmd);
 
 			//start client execution
-			getManager().client(config);
+			getManager().client(cmd);
 
 			String data[] = RuntimeLogger.getData();
 			String text = RuntimeLogger.getMessages();

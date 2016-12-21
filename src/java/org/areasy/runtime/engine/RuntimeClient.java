@@ -61,7 +61,7 @@ public class RuntimeClient extends RuntimeBase
 			{
 				//get connectivity data
 				String host = config.getString("host", getManager().getConfiguration().getString("app.server.host", "127.0.0.1"));
-				int port = config.getInt("port", getManager().getConfiguration().getInt("app.server.port", 0));
+				int port = config.getInt("port", getManager().getConfiguration().getInt("app.server.port", 6506));
 
 				//if any kind of issue appear try to fix connectivity coordinates
 				if(StringUtility.equalsIgnoreCase(host, "true")) host = getManager().getConfiguration().getString("app.server.host", "127.0.0.1");

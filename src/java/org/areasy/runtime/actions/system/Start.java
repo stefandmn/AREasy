@@ -48,7 +48,7 @@ public class Start extends SystemAction implements RuntimeAction
 			config.setKey("signal", "true");
 			config.setKey("loglevel", "off");
 
-			getLogger().info("Checking in the AREasy Runtime server is already started");
+			getLogger().info("Checking if AREasy Runtime Server is already started");
 			RuntimeLogger.clearData();
 			RuntimeLogger.Off();
 

@@ -122,6 +122,7 @@ public class RuntimeFilter extends ARFilterAPIPlugin
 		try
 		{
 			Configuration cmd = getManager().getConfiguration(command);
+			
 			if(StringUtility.isNotEmpty(HOST)) cmd.setKey("host", HOST);
 			if(StringUtility.isNotEmpty(PORT)) cmd.setKey("port", PORT);
 

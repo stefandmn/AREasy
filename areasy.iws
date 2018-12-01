@@ -19,7 +19,31 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="" />
+    <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/README" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/areasy.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/areasy.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/areasy.iws" beforeDir="false" afterPath="$PROJECT_DIR$/areasy.iws" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/changelog.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core.properties" beforeDir="false" afterPath="$PROJECT_DIR$/core.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.unix.properties" beforeDir="false" afterPath="$PROJECT_DIR$/profile.unix.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profile.windows.properties" beforeDir="false" afterPath="$PROJECT_DIR$/profile.windows.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/documentation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/doc/documentation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/ArchitectureDiagram.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/doc/documentation-ArchitectureDiagram.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/ArchitectureDiagram.vsd" beforeDir="false" afterPath="$PROJECT_DIR$/res/doc/ArchitectureDiagram.vsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/Definition Actions Diagram.vsdx" beforeDir="false" afterPath="$PROJECT_DIR$/res/doc/Definition Actions Diagram.vsdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy.ico" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_128.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_128.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_16.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_16.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_24.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_24.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_256.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_32.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_32.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_48.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_48.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/resources/icons/areasy_72.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/icons/areasy_72.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/tools/decrypt.bat" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/tools/decrypt.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/tools/decrypt.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/tools/decrypt.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/tools/encrypt.bat" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/tools/encrypt.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/env/tools/service.bat" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/tools/service.bat" afterDir="false" />
+    </list>
     <ignored path="areasy.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/build/dist/" />
@@ -126,68 +150,75 @@
     <session id="-2014406750">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="15" />
-          <entry key="project.open.time.10" value="1" />
+          <entry key="project.closed" value="17" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.5" value="3" />
           <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="5" />
+          <entry key="project.open.time.7" value="7" />
           <entry key="project.open.time.8" value="2" />
-          <entry key="project.opened" value="15" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="README" value="1" />
-          <entry key="bat" value="9" />
-          <entry key="bin" value="1" />
+          <entry key="README" value="3" />
+          <entry key="bat" value="15" />
+          <entry key="bin" value="2" />
           <entry key="conf" value="3" />
-          <entry key="dtd" value="5" />
-          <entry key="html" value="3" />
+          <entry key="dtd" value="6" />
+          <entry key="html" value="4" />
           <entry key="ico" value="1" />
-          <entry key="java" value="84" />
-          <entry key="nsi" value="2" />
-          <entry key="png" value="1" />
-          <entry key="properties" value="35" />
-          <entry key="sh" value="6" />
-          <entry key="txt" value="4" />
-          <entry key="xml" value="94" />
+          <entry key="java" value="90" />
+          <entry key="md" value="1" />
+          <entry key="nsi" value="3" />
+          <entry key="png" value="5" />
+          <entry key="properties" value="45" />
+          <entry key="sh" value="7" />
+          <entry key="txt" value="10" />
+          <entry key="xml" value="96" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Bash" value="5" />
-          <entry key="Bat" value="8" />
-          <entry key="DTD" value="5" />
-          <entry key="HTML" value="3" />
-          <entry key="Image" value="2" />
-          <entry key="JAVA" value="84" />
-          <entry key="PLAIN_TEXT" value="13" />
-          <entry key="Properties" value="35" />
-          <entry key="XML" value="94" />
+          <entry key="Bash" value="6" />
+          <entry key="Bat" value="14" />
+          <entry key="DTD" value="6" />
+          <entry key="HTML" value="4" />
+          <entry key="Image" value="6" />
+          <entry key="JAVA" value="90" />
+          <entry key="NSIS script" value="1" />
+          <entry key="PLAIN_TEXT" value="23" />
+          <entry key="Properties" value="45" />
+          <entry key="XML" value="96" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="bat" value="151" />
+          <entry key="README" value="40" />
+          <entry key="bat" value="228" />
           <entry key="dummy" value="19" />
+          <entry key="html" value="2" />
           <entry key="java" value="122" />
+          <entry key="md" value="10" />
           <entry key="nsi" value="6" />
-          <entry key="properties" value="216" />
-          <entry key="sh" value="13" />
-          <entry key="txt" value="86" />
-          <entry key="xml" value="829" />
+          <entry key="properties" value="219" />
+          <entry key="sh" value="14" />
+          <entry key="txt" value="132" />
+          <entry key="xml" value="891" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Bash" value="13" />
-          <entry key="Bat" value="150" />
+          <entry key="Bash" value="14" />
+          <entry key="Bat" value="227" />
+          <entry key="HTML" value="2" />
           <entry key="JAVA" value="122" />
+          <entry key="Markdown" value="10" />
           <entry key="NSIS script" value="6" />
-          <entry key="PLAIN_TEXT" value="106" />
-          <entry key="Properties" value="216" />
-          <entry key="XML" value="829" />
+          <entry key="PLAIN_TEXT" value="192" />
+          <entry key="Properties" value="219" />
+          <entry key="XML" value="891" />
         </counts>
       </usages-collector>
     </session>
@@ -198,32 +229,37 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java">
+        <entry file="file://$PROJECT_DIR$/src/env/tools/decrypt.bat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="1399" column="70" lean-forward="true" selection-start-line="1399" selection-start-column="70" selection-end-line="1399" selection-end-column="70" />
-              <folding>
-                <element signature="e#7741#7742#0" expanded="true" />
-                <element signature="e#7764#7765#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="1105">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
+        <entry file="file://$PROJECT_DIR$/src/env/tools/service.bat">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="351" column="5" selection-start-line="351" selection-start-column="5" selection-end-line="351" selection-end-column="5" />
+            <state relative-caret-position="51">
+              <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="89" selection-start-line="5" selection-start-column="89" selection-end-line="5" selection-end-column="89" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build.xml">
+        <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="339" column="41" selection-start-line="339" selection-start-column="41" selection-end-line="339" selection-end-column="41" />
+            <state relative-caret-position="697">
+              <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -232,11 +268,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>quot</find>
-      <find>getListEntryObjects</find>
-      <find>FILE@</find>
-      <find>areasy.ref</find>
-      <find>logger.LoggerFactory</find>
       <find>app.server.host</find>
       <find>answers</find>
       <find>jdk</find>
@@ -262,6 +293,11 @@
       <find>deploy.host.path</find>
       <find>location.tool.nsis</find>
       <find>nsis</find>
+      <find>error</find>
+      <find>setup</find>
+      <find>icons/</find>
+      <find>icon</find>
+      <find>icons</find>
     </findStrings>
     <replaceStrings>
       <replace>areasy.reference</replace>
@@ -307,9 +343,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/providers/AreaMidTierSSO.java" />
-        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/area/AbstractArea.java" />
-        <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/RuntimeManager.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/AbstractFilter.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/plugins/sso/SimpleAuthenticator.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/common/data/type/MultiMap.java" />
@@ -321,17 +354,13 @@
         <option value="$PROJECT_DIR$/build-1.devel.xml" />
         <option value="$PROJECT_DIR$/build-0.base.xml" />
         <option value="$PROJECT_DIR$/build-2.deploy.xml" />
-        <option value="$PROJECT_DIR$/changelog.txt" />
         <option value="$PROJECT_DIR$/src/shell/setup.sh" />
         <option value="$PROJECT_DIR$/src/nsis/installer.nsi" />
         <option value="$PROJECT_DIR$/src/doc/help/flow/data.tools.exportflow.xml" />
         <option value="$PROJECT_DIR$/src/doc/help/flow/data.tools.processflow.xml" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/FlowPatternAction.java" />
         <option value="$PROJECT_DIR$/src/doc/samples/pluginsvr_config.xml" />
-        <option value="$PROJECT_DIR$/src/env/tools/decrypt.sh" />
-        <option value="$PROJECT_DIR$/src/env/tools/encrypt.bat" />
         <option value="$PROJECT_DIR$/src/env/tools/encrypt.sh" />
-        <option value="$PROJECT_DIR$/src/env/tools/service.bat" />
         <option value="$PROJECT_DIR$/src/env/areasy.sh" />
         <option value="$PROJECT_DIR$/src/doc/help/flow/flow.dataexport.xml" />
         <option value="$PROJECT_DIR$/src/doc/help/flow/flow.datatransfer.xml" />
@@ -341,10 +370,7 @@
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/admin/PasswordAdministration.java" />
         <option value="$PROJECT_DIR$/src/cfg/runtime.areasy.properties" />
         <option value="$PROJECT_DIR$/src/doc/help/ars/admin/ars.passadmin.xml" />
-        <option value="$PROJECT_DIR$/profile.unix.properties" />
-        <option value="$PROJECT_DIR$/profile.windows.properties" />
         <option value="$PROJECT_DIR$/src/env/areasy.bat" />
-        <option value="$PROJECT_DIR$/src/env/tools/decrypt.bat" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java" />
         <option value="$PROJECT_DIR$/src/doc/help/system/version.xml" />
         <option value="$PROJECT_DIR$/src/doc/help/system/stop.xml" />
@@ -356,8 +382,18 @@
         <option value="$PROJECT_DIR$/src/doc/help/system/echo.xml" />
         <option value="$PROJECT_DIR$/src/doc/help/system/config.xml" />
         <option value="$PROJECT_DIR$/src/doc/help/system/clean.xml" />
-        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/changelog.txt" />
         <option value="$PROJECT_DIR$/core.properties" />
+        <option value="$PROJECT_DIR$/profile.unix.properties" />
+        <option value="$PROJECT_DIR$/profile.windows.properties" />
+        <option value="$PROJECT_DIR$/src/env/tools/decrypt.bat" />
+        <option value="$PROJECT_DIR$/src/env/tools/decrypt.sh" />
+        <option value="$PROJECT_DIR$/src/env/tools/encrypt.bat" />
+        <option value="$PROJECT_DIR$/src/env/tools/service.bat" />
+        <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/src/doc/documentation.html" />
       </list>
     </option>
   </component>
@@ -487,9 +523,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -500,121 +535,24 @@
             <path>
               <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
               <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-              <item name="tools" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
               <item name="AREasy" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="cfg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
               <item name="AREasy" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="doc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-              <item name="help" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-              <item name="help" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-              <item name="samples" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="env" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="env" type="462c0819:PsiDirectoryNode" />
-              <item name="tools" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="areasy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="areasy" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="areasy" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="areasy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AREasy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="areasy" type="462c0819:PsiDirectoryNode" />
-              <item name="runtime" type="462c0819:PsiDirectoryNode" />
-              <item name="actions" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="Favorites">
         <subPane subId="areasy">
           <PATH>
@@ -655,22 +593,34 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543683145955" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543688422791" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/mail-1.4.5.jar!/" />
     <property name="options.lastSelected" value="vcs.Git" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.16561845" />
     <property name="options.splitter.main.proportions" value="0.23487261" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="org.areasy.runtime.engine.base.ARDictionary" />
       <recent name="com.snt.areasy.runtime.plugins.sso.SimpleAuthenticator" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc" />
+      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\res\doc" />
+      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\res" />
+      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\res\installer" />
+      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\itsm\admin" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.snt.areasy.runtime.actions.arserver.defs.tools" />
+      <recent name="com.snt.areasy.runtime.actions.arserver.admin" />
+      <recent name="com.snt.areasy.runtime.engine.structures.itsm" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy" />
@@ -678,18 +628,6 @@
       <recent name="C:\Users\s.damian\Workspace\Projects\DEV.AREasy\AREasy\build" />
       <recent name="D:\Workspace\Projects\SNT.Addons\SNT.AREasy\AREasy\src\java\com\snt\areasy\runtime\utilities\resources\help\arserver\admin" />
       <recent name="G:\Workspace\Projects\SNT.Addons\SNT.AREasy\AREasy\build" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.snt.areasy.runtime.actions.arserver.defs.tools" />
-      <recent name="com.snt.areasy.runtime.actions.arserver.admin" />
-      <recent name="com.snt.areasy.runtime.engine.structures.itsm" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\itsm\admin" />
-      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help" />
-      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\ars\dev" />
-      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\itsm\data" />
-      <recent name="C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\ars\data" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1037,7 +975,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482304864805</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Reorganize installers">
+      <created>1543688056911</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1543688056911</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1051,11 +996,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="-8" width="1867" height="1096" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.44468084" visible="true" weight="0.2252352" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5053192" visible="true" weight="0.23021583" />
       <window_info id="UI Designer" order="1" />
-      <window_info id="Favorites" order="2" sideWeight="0.43392506" side_tool="true" weight="0.21849866" />
+      <window_info id="Favorites" order="2" sideWeight="0.49468085" side_tool="true" weight="0.2274488" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Nl-Palette" order="4" />
       <window_info id="Palette&#9;" order="5" />
@@ -1067,12 +1011,12 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4743758" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.15867944" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.15957446" />
       <window_info anchor="bottom" id="Changes" order="7" weight="0.32930845" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50268096" side_tool="true" weight="0.325887" />
       <window_info anchor="bottom" id="Application Servers" order="9" />
       <window_info active="true" anchor="bottom" x="91" y="451" width="1807" height="177" id="Messages" order="10" visible="true" weight="0.28936172" />
-      <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" weight="0.30789474" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.30789474" />
       <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.49731904" weight="0.32446808" />
       <window_info anchor="bottom" id="Dependency Viewer" order="13" />
       <window_info anchor="bottom" id="IDEtalk Messages" order="14" />
@@ -1169,7 +1113,8 @@
     <MESSAGE value="Adapt SSO module to keep the configuration separately (in midtier)" />
     <MESSAGE value="Adapt Runtime and SSO modules to startup based on reference details" />
     <MESSAGE value="Adapt plugin configuration samples to refer AREasy.jar library" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adapt plugin configuration samples to refer AREasy.jar library" />
+    <MESSAGE value="Reorganize installers" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reorganize installers" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -1234,125 +1179,8 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/ConfigurationItemCreateAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/ConfigurationItemUpdateAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/InventoryRegisterAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/InventoryRelocateAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/InventoryReserveAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/RelationshipConfigurationItemCreateAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/RelationshipConfigurationItemRemoveAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/RelationshipPeopleCreateAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/IncidentOwnerGroupSetAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/itsm/data/IncidentAssignedGroupSetAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/admin/EmailMonitorAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/FlowPatternAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="44" column="78" selection-start-line="44" selection-start-column="78" selection-end-line="44" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/DataProcessAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/DataTransferAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/DataExportAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="148" column="38" selection-start-line="148" selection-start-column="38" selection-end-line="148" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/flow/flow.dataexport.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" selection-end-line="27" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/flow/flow.datatransfer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/help/flow/flow.dataexport.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/flow/flow.datatransfer.xml" />
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/data/CoreData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="373">
@@ -1381,14 +1209,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/env/tools/decrypt.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/env/tools/encrypt.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/admin/PasswordAdministration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -1403,148 +1223,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/itsm/admin/abs.enrollment.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/ars.formdata.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/ars.filewrapper.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/abs.data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/action.dtd">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/admin/ars.passadmin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="33" lean-forward="true" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profile.unix.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profile.windows.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/env/tools/decrypt.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-312">
-          <caret line="15" column="30" lean-forward="true" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/env/areasy.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="101" selection-start-line="101" selection-end-line="101" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="1399" column="70" lean-forward="true" selection-start-line="1399" selection-start-column="70" selection-end-line="1399" selection-end-column="70" />
-          <folding>
-            <element signature="e#7741#7742#0" expanded="true" />
-            <element signature="e#7764#7765#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/status.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/stop.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/version.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/process.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/start.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/install.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="12" lean-forward="true" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/help.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="8" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/echo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="24" lean-forward="true" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="13" lean-forward="true" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/help/system/clean.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="14" lean-forward="true" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="351" column="5" selection-start-line="351" selection-start-column="5" selection-end-line="351" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/help/itsm/admin/abs.enrollment.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/ars.formdata.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/ars.filewrapper.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/data/abs.data.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/ars/admin/ars.passadmin.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/status.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/stop.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/version.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/process.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/start.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/install.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/help.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/echo.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/config.xml" />
+    <entry file="file://$PROJECT_DIR$/src/doc/help/system/clean.xml" />
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/SystemAction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2729">
@@ -1559,17 +1252,163 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core.properties">
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/AbstractAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="63" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
+        <state relative-caret-position="855">
+          <caret line="1397" column="34" selection-start-line="1397" selection-start-column="34" selection-end-line="1397" selection-end-column="34" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Help.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="49">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Sysmon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Clean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Process.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cfg/default.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/help/action.dtd">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profile.windows.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="25" selection-start-column="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profile.unix.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="25" selection-start-column="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/env/areasy.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="110" column="8" lean-forward="true" selection-start-line="67" selection-end-line="110" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/env/tools/decrypt.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/env/tools/encrypt.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/installer/unix/installer.bin">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/env/tools/decrypt.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1105">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor>
+            <caret column="6" selection-start-column="6" selection-end-column="6" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/env/tools/service.bat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/installer/win/installer.nsi">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="25" selection-start-column="25" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/changelog.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="57" selection-start-line="2" selection-start-column="57" selection-end-line="2" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/icons/areasy_16.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/icons/areasy_128.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/documentation-ArchitectureDiagram.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="339" column="41" selection-start-line="339" selection-start-column="41" selection-end-line="339" selection-end-column="41" />
+        <state relative-caret-position="85">
+          <caret line="5" column="89" selection-start-line="5" selection-start-column="89" selection-end-line="5" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/doclet.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-312" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/doc/documentation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
         </state>
       </provider>
     </entry>

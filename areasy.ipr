@@ -309,71 +309,38 @@
     </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
     <library name="apache">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/apache/poi-3.5.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/apache/common-logging-1.1.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/apache/common-codec-1.3.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/apache/common-httpclient-3.0.1.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="apache1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/apache/common-codec-1.3.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/apache/common-httpclient-3.0.1.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/apache/common-logging-1.1.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/apache/poi-3.5.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="areasy-opet-1.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/areasy-opet-1.1.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="libs">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/mail-1.4.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/areasy-aar-1.2.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/snt-parser-1.0.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/arpluginsvr.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/arapi.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/arapiext.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/log4j-1.2.16.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/areasy-2.2.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/snt-common-1.1.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="ojdbc14">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/build/dist/areasy/libs/databases/ojdbc14.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="ojdbc141">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/databases/ojdbc14.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="tools">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/tools/jtidy-r938.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/tools/jsch-0.1.42.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/tools/itext-1.5.5.jar!/" />
-        <root url="jar://$USER_HOME$/omv.com/14OPET01-GenAppS/Support/Development/AREasy.OPET/libs/tools/ant-classloadertask.jar!/" />
-      </CLASSES>
+      <CLASSES />
       <JAVADOC />
       <SOURCES />
     </library>

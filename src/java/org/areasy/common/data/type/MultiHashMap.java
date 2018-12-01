@@ -1,7 +1,7 @@
 package org.areasy.common.data.type;
 
 /*
- * Copyright (c) 2007-2016 AREasy Runtime
+ * Copyright (c) 2007-2018 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -331,13 +331,13 @@ public class MultiHashMap extends HashMap implements MultiMap
 	 * @param item the value to remove
 	 * @return the value removed (which was passed in), null if nothing removed
 	 */
-	public Object remove(Object key, Object item)
+	public boolean remove(Object key, Object item)
 	{
 		Collection valuesForKey = getCollection(key);
 
 		if (valuesForKey == null)
 		{
-			return null;
+			return false;
 		}
 
 		valuesForKey.remove(item);
@@ -348,7 +348,7 @@ public class MultiHashMap extends HashMap implements MultiMap
 			remove(key);
 		}
 
-		return item;
+		return true;
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package org.areasy.common.data.type;
 
 /*
- * Copyright (c) 2007-2016 AREasy Runtime
+ * Copyright (c) 2007-2018 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -54,7 +54,7 @@ public interface MultiMap extends Map
 	 * @throws ClassCastException            if the key or value is of an invalid type
 	 * @throws NullPointerException          if the key or value is null and null is invalid
 	 */
-	public Object remove(Object key, Object item);
+	public boolean remove(Object key, Object item);
 
 	/**
 	 * Gets the number of keys in this map.

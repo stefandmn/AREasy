@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="data/base.data.xml">
+	<name>Set System License</name>
+	<description><![CDATA[
+The action is part of AR System management tools and it has the main goal to set a specific system license for one or many users.
+The login ids are validated before to be processed.
+
+The standard command line is described below:
+areasy -action admin.set.system.license -method <people|user>] -license <fixed|floating|read> [-login <val>] [-logins <val1> <val2> ... <valn>] [-fieldid <CTM:People field id> [-fieldvalue <CTM:People field value>]]
+
+Where:
+	-method           = this option tells where to set the license: in User form or (in case of ITSM applications are installed), in CTM:People form (foundation layer). "People" is considered default option. If "People" search option is selected the specified license is applied in both places: User form and also CTM:People form.
+
+	-login            = Remedy user id
+
+	-logins           = list of Remedy user ids
+
+	-license          = license type that could be: Write, Floating, or Read
+
+	-userfieldid      = a specific field Id from CTM:People form (or other form in case of 'userformname' option is specified) to the create a qualification criteria to identify the login ids where this permission have to the applied
+
+	-userfieldvalue   = the corresponding value for -fieldid option to compose the qualification criteria: <CTM:People fieldid> = <fieldvalue>. From the found people records will be extracted login ids that will be appended to the specified list through -login(s) option
+
+	-userqualifiation = this could be the third option to take the list of persons and to provide them additional permissions / roles and licenses. Actually this option provide a way to select persons using a qualification criteria addressed to the direct connected AR System server.
+
+	-userformname     = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field, or in User form and will read 'User Name' field (according to the 'method' option value)
+
+
+Note: This action allows you to set the same license type for many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -license and -login options you'll refer columns from an Excel file or from a text file.
+
+Attention: In order to execute this action you must have configured in the default configuration sector the Remedy server and all related details or you can specify them in the command line, using general options. For more details check the help manual from help action.
+
+
+Examples:
+---------
+1) areasy -action admin.set.system.license -license fixed -login abc123
+	= sets Write system license for 'abc123' user profile, using implicit user search (in CTM:People form)
+
+2) areasy -action admin.set.system.license -license floating -logins abc123 xyz456 -method user
+	= sets Floating system license for the specified list of user profiles, using User form
+
+3) areasy -action admin.set.system.license -license floating -logins abc123 xyz456 -fieldid 1000000001 -fieldvalue "Calbro Software"
+	= sets Floating system license for the specified list of user profiles and to all users found in CTM:people form based on qualification criteria: '1000000001' = "Calbro Software"
+	]]></description>
+	<syntax>
+		areasy -action admin.set.system.license
+	</syntax>
+	<samples>
+		<sample code="" description=""/>
+	</samples>
+</help>

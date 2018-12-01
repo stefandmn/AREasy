@@ -1,5 +1,7 @@
 3.0.1
 ======
+13. Adapt engine to Remedy 9 API
+12. Redesign project configuration management
 11. Optimize and adapt logging channels to the startup mode and disable default console logging for JDK
 10. Implement plugin or client mode startup using a direct and simplified configuration file
 09. Redevelop SupportGroupAdministration action

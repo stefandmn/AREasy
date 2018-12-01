@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="data/base.data.xml">
+	<name>Form Data Operation</name>
+	<description>Form</description>
+	<syntax>
+		areasy -action formdata.operation
+		-form FormName -id EntryId [-Q10001 Values1 .. -Q1000N ValuesN]
+		-D10001 Values1 .. -D1000N ValuesN [-validate] [-file FilePathAndName -startindex StartIndex [-endindex EndIndex]
+		[-pageindex FileWorksheet -force]] [-multipart] -[partforms Par1@FormName1;Part2@FormName2;..;PartX@FormNameX]
+		[sleep SleepInMilliseconds] [-entity company|organisation|site|people|sgroup|productc|operationalc]
+	</syntax>
+	<options>
+		<option key="operation" type="string" selvalues="insert,update,delete,merge" description=""/>
+		<option key="firstmatchreading" type="string" description=""/>
+		<option key="exactmatchreading" type="string" description=""/>
+		<option key="nextchunkid" type="string" description=""/>
+		<option key="chunk" type="string" description=""/>
+		<option key="id" type="string" description=""/>
+		<option key="qualification" type="string" description=""/>
+		<option key="limit" type="string" description=""/>
+		<option key="multipart" type="string" description=""/>
+		<option key="mergematchingfieldids" type="string" description=""/>
+		<option key="mergevaliddata" type="bool" description=""/>
+
+	</options>
+	<samples>
+		<sample code="" description=""/>
+		<sample code="" description=""/>
+	</samples>
+</help>

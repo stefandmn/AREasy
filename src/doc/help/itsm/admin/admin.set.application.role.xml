@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="data/base.data.xml">
+	<name>Set Application Role</name>
+	<description><![CDATA[
+The action is part of AR System management tools and it has the main goal to set a specific application role (functional role) to one or many users.
+Application role (permission) ans also login Ids are validated before to be processed.
+
+The standard command line is described below:
+areasy -action admin.set.application.role -role <application role>] [-login <val>] [-logins <val1> <val2> ... <valn>] [-fieldid <CTM:People field id> [-fieldvalue <CTM:People field value>]] -sgroupname <support group name> [-sgroupcompany <support group company name>] [-sgrouporganisation <support group organisation name>] [-appcode <ITSM application code>]
+
+Where:
+	-role               = application functional role
+
+	-login              = Remedy user id
+
+	-logins             = list of Remedy user ids
+
+	-userfieldid        = a specific field Id from CTM:People form (or other form in case of 'userformname' option is specified) to the create a qualification criteria to identify the login ids where this permission have to the applied
+
+	-userfieldvalue     = the corresponding value for -fieldid option to compose the qualification criteria: <CTM:People fieldid> = <fieldvalue>. From the found people records will be extracted login ids that will be appended to the specified list through -login(s) option
+
+	-userqualifiation   = this could be the third option to take the list of persons and to provide them additional roles. Actually this option provide a way to select persons using a qualification criteria addressed to the direct connected AR System server.
+
+	-userformname       = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field
+
+	-sgroupname         = each functional role have to be attached to a support group. This option allows you to indicate the support group.
+
+	-sgrouporganisation = this is an optional choice and allows you to identify more precisely the support group entity. Actually, this option will attached to the search qualification criteria for support group also the Company identifier
+
+	-sgroupcompany      = this is an optional choice, similar with the previous one, to identify more deeper the support group entity
+
+	-sgroupid           = support group id. Also this option has an alias and this is -supportgroupid. So, last four options have to be used to identify the support group entity
+
+Note: This action allows you to set the same functional role to many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -role, -sgroupname and -login options you'll refer columns from an Excel file or from a text file.
+
+Attention: In order to execute this action you must have configured in the default configuration sector the Remedy server and all related details or you can specify them in the command line, using general options. For more details check the help manual from help action.
+
+
+Examples:
+---------
+1) areasy -action admin.set.application.role -role "Infrastructure Change Manager" -sgroupname "NMC" -login abc123
+	= sets 'Infrastructure Change Manager' functional role to 'abc123' user profile and "NMC" support group. if the support group entity is not identified or many support groups with the specified name are found it will be returned an error message
+
+2) areasy -action admin.set.application.role -role "Infrastructure Change Manager" -sgroupname "NMC" sgroupopration "Service" -sgroupcompany "Company" -logins abc123 xyz456
+	= sets 'Infrastructure Change Manager' functional role to the specified list of user profiles and "Company>Services>NMC" support group
+
+3) areasy -action admin.set.application.role -role "Infrastructure Change Manager" -sgroupname "NMC" -logins abc123 xyz456 -fieldid 1000000001 -fieldvalue "Calbro Software"
+	= sets 'Infrastructure Change Manager' functional role to "NMC" support group and to the specified list of user profiles, + to all users found in CTM:people form based on qualification criteria: '1000000001' = "Calbro Software"
+
+4) areasy -action admin.set.application.role -role "Infrastructure Change Manager" -sgroupname "NMC" -qualification "|Acounting Code| = ||9R02||"
+	= sets 'Infrastructure Change Manager' functional role to "NMC" support group and all People accounts that are found using specified selection critria. Actually this criteria select user accounts that have "Acounting Code" = "9R02"
+	]]></description>
+	<syntax>
+		areasy -action admin.set.application.role
+	</syntax>
+	<samples>
+		<sample code="" description=""/>
+	</samples>
+</help>

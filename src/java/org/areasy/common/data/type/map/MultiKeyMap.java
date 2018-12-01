@@ -1,7 +1,7 @@
 package org.areasy.common.data.type.map;
 
 /*
- * Copyright (c) 2007-2016 AREasy Runtime
+ * Copyright (c) 2007-2018 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -195,7 +195,7 @@ public class MultiKeyMap implements IterableMap, Serializable
 	 * @param key2 the second key
 	 * @return the value mapped to the removed key, null if key not in map
 	 */
-	public Object remove(Object key1, Object key2)
+	public boolean remove(Object key1, Object key2)
 	{
 		int hashCode = hash(key1, key2);
 		int index = map.hashIndex(hashCode, map.data.length);
@@ -209,14 +209,14 @@ public class MultiKeyMap implements IterableMap, Serializable
 			{
 				Object oldValue = entry.getValue();
 				map.removeMapping(entry, index, previous);
-				return oldValue;
+				return true;
 			}
 
 			previous = entry;
 			entry = entry.next;
 		}
 
-		return null;
+		return false;
 	}
 
 	/**

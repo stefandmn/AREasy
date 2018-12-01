@@ -1,0 +1,36 @@
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<!DOCTYPE help [
+		<!ELEMENT help (name|description|syntax|options|options1|options2|samples)*>
+		<!ATTLIST help
+				inherits CDATA #IMPLIED>
+		<!ELEMENT name (#PCDATA)>
+		<!ELEMENT syntax (#PCDATA)>
+		<!ELEMENT description (#PCDATA)>
+		<!ELEMENT options (option)*>
+		<!ELEMENT options1 (option)*>
+		<!ELEMENT options2 (option)*>
+		<!ELEMENT samples (sample)*>
+		<!ELEMENT option (#PCDATA)>
+		<!ELEMENT sample (#PCDATA)>
+		<!ATTLIST option
+				key CDATA #REQUIRED
+				type (string|number|date|bool|list) #REQUIRED
+				defvalue CDATA #IMPLIED
+				selvalues CDATA #IMPLIED
+				description CDATA #IMPLIED>
+		<!ATTLIST sample
+				code CDATA #REQUIRED
+				description CDATA #REQUIRED>
+]>

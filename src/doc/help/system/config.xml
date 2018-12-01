@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "../action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help>
+	<name>Config</name>
+	<description>
+Config action is used to set the configuration properties from configuration files and to reload server or runtime configuration entries. Config action runs in security mode that means could be called locally as it is or remotely, if you'll provide admin credentials (user credentials used to connect to the AR System instance).
+Instead of clear text password could be also provided the obfuscated version. As is described in the second example, _Demo_ user and _1234_ password must be the values of `app.server.default.arsystem.user.name` and `app.server.default.arsystem.user.password` from `default.properties` configuration sector.
+	</description>
+	<syntax>areasy -action config [-reload] [-property ConfigurationProperty] [-sector ConfigurationSector] [-value ConfigurationValue] [-values Value1 Value2 .. ValueN>]</syntax>
+	<options>
+		<option key="reload" type="bool" defvalue="off" description="Reloads configuration entries after they are changed and saved in th configuration sector(s)"/>
+		<option key="sector" type="string" description="Specifies the configuration sector that have to be changed"/>
+		<option key="property" type="string" description="This is the option that indicates the property key that will be modified"/>
+		<option key="values" type="string" description="The list of values that have to be associated to the specified property key"/>
+		<option key="value" type="string" description="The new value of the specified property key. If are specified both options (-value and -values) the list of values will be consolidated"/>
+	</options>
+	<samples>
+		<sample code="areasy -action config -reload"
+				description="Reloads server configuration for a local AREasy server"/>
+		<sample code="areasy -action config -reload -aruser Demo -arpassword 1234"
+				description="Reloads server configuration for a remote AREasy server instance"/>
+		<sample code='areasy -action config -property "app.server.default.arsystem.server.name" -value "localhost" -reload'
+				description="Sets the property key that specify what AR Server server is connected to the AREasy instance and than reloads/refreshes configuration properties from AREasy server instance"/>
+	</samples>
+</help>

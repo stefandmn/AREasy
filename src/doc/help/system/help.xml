@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "../action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help>
+	<name>Help</name>
+	<description>
+Help action shows and describes standard command line and related parameters. Also, using [-inventory] you can get the list of all registered actions.
+If in the command line will be included [-call ActionName] will be displayed the help text of returned by that specified action name.
+In case of [-call ...] parameter is not specified, Help action displays this text.
+	</description>
+	<syntax>
+		areasy [-runtime] -action help
+		[-call [WrappedAction] -export [[-outputfile FileName] | [-exportformat txt|html|md]]
+	</syntax>
+	<options>
+		<option key="inventory" type="bool" defvalue="off" description="Returns a list of all registered actions"/>
+		<option key="call" type="string" description="Specifies a registered action that is called to retrieve its help document. 'subaction' parameter alias could be used in order to obtain the same thing"/>
+		<option key="export" type="bool" defvalue="off" description="Export help content into a supported document format (see 'exportformat' options)"/>
+		<option key="outputfile" type="string" description="Exports help document related to the action specified by 'call' parameter into the specified file path and name"/>
+		<option key="exportformat" type="string" description="In case the 'outputfile' is null (not specified) this parameter could mention the file format for the help document requested for export"/>
+	</options>
+	<samples>
+		<sample code='areasy -action help'
+				description="Displays the whole help text of Help action called from AREasy server. This is a client call to the server that is described in the configuration file"/>
+		<sample code='areasy -action help -inventory'
+				description="Displays the list of registered action on the AREasy server. This is a client call to the server that is described in the configuration file"/>
+		<sample code='areasy -action help -call file.wrapper'
+				description="Displays the help text delivered by the data.wrapper.file action, from the server instance described in the configuration file"/>
+		<sample code='areasy -runtime -action help -inventory'
+				description="Display the list of registered action on the local AREasy distribution, called as a Runtime instance"/>
+		<sample code='areasy -host localhost -action help'
+				description="Displays the complete help text of Help action called from 'localhost' AREasy server instance. The action is execute on that server and the answer (this help text) is returned in the client console (where this command has been executed)"/>
+	</samples>
+</help>

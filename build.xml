@@ -51,6 +51,9 @@
 	<property name="libs.dir" value="${basedir}/libs"/>
 	<property name="tools.dir" value="${libs.dir}/tools"/>
 
+	<!-- Define resources folder -->
+	<property name="res.dir" value="${basedir}/res"/>
+
 	<!-- Define distribution folder (static and generated files) -->
 	<property name="dist.dir" value="${build.dir}/dist/areasy"/>
 	<property name="dist.bin.dir" value="${dist.dir}/bin"/>
@@ -201,41 +204,8 @@
 	</target>
 
 
-	<!-- Generates the module's API documentation -->
-	<target name="3.Doc" depends="1.Init, 2.Bin" unless="uptodate-doc" description="Generates API documentation">
-
-		<copy file="${src.doc.dir}/doclet.properties" tofile="${build.temp.dir}/doclet.properties" force="yes" overwrite="yes"/>
-		<copy file="${src.doc.dir}/documentation.html" tofile="${build.temp.dir}/documentation.html" force="yes" overwrite="yes"/>
-
-		<replace file="${build.temp.dir}/doclet.properties" token="%year%" value="${project.years}"/>
-		<replace file="${build.temp.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>
-		<replace file="${build.temp.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
-		<replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}"/>
-
-		<copy overwrite="true" todir="${build.temp.dir}/resources">
-			<fileset dir="${src.doc.dir}/resources">
-				<include name="*.png"/>
-			</fileset>
-		</copy>
-
-		<javadoc doclet="org.areasy.common.doclet.Doclet"
-				 classpathref="classpath.bin"
-				 maxmemory="256M" docletpathref="classpath.doc"
-				 packagenames="org.areasy.*"
-				 sourcepath="${src.java.dir}"
-				 additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"
-				 private="no"/>
-
-		<copy overwrite="true" todir="${dist.doc.dir}">
-			<fileset dir="${src.doc.dir}/resources">
-				<include name="*.pdf"/>
-			</fileset>
-		</copy>
-	</target>
-
-
 	<!-- Create environment -->
-	<target name="4.Dist" depends="2.Bin" description="Create distribution">
+	<target name="3.Dist" depends="2.Bin" description="Create distribution">
 		<mkdir dir="${dist.dir}/bin"/>
 		<mkdir dir="${dist.dir}/bin/tools"/>
 		<mkdir dir="${dist.dir}/work"/>
@@ -271,6 +241,39 @@
 			<fileset dir="${libs.dir}">
 				<include name="*.jar"/>
 				<include name="databases/*.jar"/>
+			</fileset>
+		</copy>
+	</target>
+
+
+	<!-- Generates the module's API documentation -->
+	<target name="4.Doc" depends="3.Dist" unless="uptodate-doc" description="Generates API documentation">
+
+		<copy file="${src.doc.dir}/doclet.properties" tofile="${build.temp.dir}/doclet.properties" force="yes" overwrite="yes"/>
+		<copy file="${src.doc.dir}/documentation.html" tofile="${build.temp.dir}/documentation.html" force="yes" overwrite="yes"/>
+
+		<replace file="${build.temp.dir}/doclet.properties" token="%year%" value="${project.years}"/>
+		<replace file="${build.temp.dir}/doclet.properties" token="%vendor%" value="${project.vendor}"/>
+		<replace file="${build.temp.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
+		<replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}"/>
+
+		<copy overwrite="true" todir="${build.temp.dir}/resources">
+			<fileset dir="${src.doc.dir}/resources">
+				<include name="*.png"/>
+			</fileset>
+		</copy>
+
+		<javadoc doclet="org.areasy.common.doclet.Doclet"
+				 classpathref="classpath.bin"
+				 maxmemory="256M" docletpathref="classpath.doc"
+				 packagenames="org.areasy.*"
+				 sourcepath="${src.java.dir}"
+				 additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"
+				 private="no"/>
+
+		<copy overwrite="true" todir="${dist.doc.dir}">
+			<fileset dir="${src.doc.dir}/resources">
+				<include name="*.pdf"/>
 			</fileset>
 		</copy>
 	</target>
@@ -329,7 +332,7 @@
 	</target>
 
 
-	<target name="5.Deploy" depends="4.Dist" description="Deploy distribution on local file system">
+	<target name="5.Deploy" depends="3.Dist" description="Deploy distribution on local file system">
 		<echo message="Create AREasy distribution: ${deployment.path}"/>
 
 		<echo message="Creating file system structure.."/>
@@ -381,10 +384,10 @@
 	</target>
 
 
-	<target name="6.1.Installer.ForWin" depends="4.Dist, 3.Doc" if="isWindows">
+	<target name="6.1.Installer.ForWin" depends="4.Doc" if="isWindows">
 		<antcall target="5.2.1.Restructure.ForWin"/>
 
-		<copy file="${src.dir}/nsis/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
+		<copy file="${res.dir}/installer/win/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
@@ -401,14 +404,14 @@
 	</target>
 
 
-	<target name="6.2.Installer.ForUnix" depends="4.Dist, 3.Doc" if="isUnix">
+	<target name="6.2.Installer.ForUnix" depends="4.Doc" if="isUnix">
 		<antcall target="7.2.Package.ForUnix"/>
 
-		<copyfile src="${src.dir}/shell/installer.bin" dest="${build.temp.dir}/${project.name}.bin"/>
+		<copyfile src="${res.dir}/installer/unix/installer.bin" dest="${build.temp.dir}/${project.name}.bin"/>
 
 		<mkdir dir="${build.temp.dir}/${project.name}"/>
 		<move file="${build.temp.dir}/${project.name}-${project.version}.tar.gz" todir="${build.temp.dir}/${project.name}"/>
-		<copyfile src="${src.dir}/shell/setup.sh" dest="${build.temp.dir}/${project.name}/setup.sh"/>
+		<copyfile src="${res.dir}/installer/unix/setup.sh" dest="${build.temp.dir}/${project.name}/setup.sh"/>
 		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
 		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
 
@@ -437,13 +440,13 @@
 	</target>
 
 
-	<target name="7.1.Package.ForWin" depends="4.Dist, 3.Doc">
+	<target name="7.1.Package.ForWin" depends="4.Doc">
 		<antcall target="5.2.1.Restructure.ForWin"/>
 		<zip destfile="${build.temp.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
 	</target>
 
 
-	<target name="7.2.Package.ForUnix" depends="4.Dist, 3.Doc">
+	<target name="7.2.Package.ForUnix" depends="4.Doc">
 		<antcall target="5.2.1.Restructure.ForUnix"/>
 
 		<tar destfile="${build.temp.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>

@@ -19,31 +19,9 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="Update batch scripts to detect JRE installation">
-      <change afterPath="$PROJECT_DIR$/src/doc/documentation-Architecture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/doc/help/system/sysmon.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/infos/JavaInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/infos/ProcessorInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/infos/SystemInfo.java" afterDir="false" />
+    <list default="true" id="5a64ca74-ef80-4ca8-9864-606ce2c20e9f" name="Default" comment="Implementation of Sysmon action">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/areasy.iws" beforeDir="false" afterPath="$PROJECT_DIR$/areasy.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/changelog.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cfg/default.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/cfg/default.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/doc/documentation-ArchitectureDiagram.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/doc/documentation.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/doc/documentation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/doc/help/system/echo.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/doc/help/system/echo.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env/areasy.bat" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/areasy.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/env/tools/service.bat" beforeDir="false" afterPath="$PROJECT_DIR$/src/env/tools/service.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/SystemAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/SystemAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Sysmon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Sysmon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Version.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/Version.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/MemoryInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/infos/MemoryInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/Monitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/Monitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ProcessInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ProcessorInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/infos/UsageInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/LinuxMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/LinuxMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/NullMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/JavaMonitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java" afterDir="false" />
     </list>
     <ignored path="areasy.iws" />
@@ -174,7 +152,7 @@
           <entry key="html" value="6" />
           <entry key="ico" value="2" />
           <entry key="java" value="182" />
-          <entry key="md" value="1" />
+          <entry key="md" value="2" />
           <entry key="nsi" value="4" />
           <entry key="png" value="5" />
           <entry key="properties" value="47" />
@@ -192,6 +170,7 @@
           <entry key="HTML" value="6" />
           <entry key="Image" value="7" />
           <entry key="JAVA" value="182" />
+          <entry key="Markdown" value="1" />
           <entry key="NSIS script" value="2" />
           <entry key="PLAIN_TEXT" value="24" />
           <entry key="Properties" value="47" />
@@ -204,12 +183,12 @@
           <entry key="bat" value="433" />
           <entry key="dummy" value="31" />
           <entry key="html" value="17" />
-          <entry key="java" value="3728" />
-          <entry key="md" value="10" />
+          <entry key="java" value="3729" />
+          <entry key="md" value="11" />
           <entry key="nsi" value="10" />
           <entry key="properties" value="224" />
           <entry key="sh" value="14" />
-          <entry key="txt" value="300" />
+          <entry key="txt" value="331" />
           <entry key="xml" value="1229" />
         </counts>
       </usages-collector>
@@ -218,10 +197,10 @@
           <entry key="Bash" value="14" />
           <entry key="Bat" value="432" />
           <entry key="HTML" value="17" />
-          <entry key="JAVA" value="3728" />
-          <entry key="Markdown" value="10" />
+          <entry key="JAVA" value="3729" />
+          <entry key="Markdown" value="11" />
           <entry key="NSIS script" value="10" />
-          <entry key="PLAIN_TEXT" value="372" />
+          <entry key="PLAIN_TEXT" value="403" />
           <entry key="Properties" value="224" />
           <entry key="XML" value="1229" />
         </counts>
@@ -269,11 +248,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+            <state relative-caret-position="357">
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -287,6 +266,18 @@
                 <element signature="e#1576#1577#0" expanded="true" />
                 <element signature="e#1652#1653#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor>
+                <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -394,7 +385,6 @@
         <option value="$PROJECT_DIR$/profile.windows.properties" />
         <option value="$PROJECT_DIR$/src/env/tools/decrypt.sh" />
         <option value="$PROJECT_DIR$/README" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/res/installer/win/installer.nsi" />
         <option value="$PROJECT_DIR$/src/env/tools/decrypt.bat" />
         <option value="$PROJECT_DIR$/src/env/tools/encrypt.bat" />
@@ -421,6 +411,7 @@
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/LinuxMonitor.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java" />
         <option value="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -752,7 +743,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543790385728" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543790524522" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/mail-1.4.5.jar!/" />
     <property name="options.lastSelected" value="vcs.Git" />
     <property name="options.searchVisible" value="true" />
@@ -1163,7 +1154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1543769952791</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Implementation of Sysmon action">
+      <created>1543790436622</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1543790436622</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1274,7 +1272,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Fixes for configuration management part: EXE paxkage" />
     <MESSAGE value="Fixes for configuration management part: publishing includes now SNT libraries" />
     <MESSAGE value="Fix for: 14INGR01-4 AREasy Installer error&#10;Also, password encrypt and decrypt actions have been documented" />
     <MESSAGE value="New actions development: set/remove hierarchical permission groups" />
@@ -1299,7 +1296,8 @@
     <MESSAGE value="Reorganize documentation" />
     <MESSAGE value="Update batch scripts to detect JRE installation" />
     <MESSAGE value="Update related documentation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update related documentation" />
+    <MESSAGE value="Implementation of Sysmon action" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementation of Sysmon action" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -1402,9 +1400,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/res/icons/areasy_16.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/icons/areasy_128.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1751,6 +1746,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/ParserUtility.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1">
@@ -1762,10 +1764,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/org/areasy/runtime/actions/system/sysmon/monitors/WindowsMonitor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

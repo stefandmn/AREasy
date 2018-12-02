@@ -1,4 +1,4 @@
-#AREasy
+# AREasy
 
 **AREasy** is a powerful runtime used to manipulate data and development objects within
 **BMC Remedy AR System** servers. This application could be used directly in Remedy workflows 

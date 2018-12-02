@@ -29,6 +29,6 @@ Echo action is usually used to check if an AREasy server instance is running or 
 	<samples>
 		<sample code="areasy -action echo" description="Checks server status and returns a log message"/>
 		<sample code="areasy -action echo -signal" description="Checks server status and returns bit 0 as a value if the server is up (otherwise nothing) and server answer into a log message"/>
-		<sample code="areasy -action echo -inout" description="Xhecks server status and returns input parameters as output value and server status as a log message"/>
+		<sample code="areasy -action echo -inout" description="Checks server status and returns input parameters as output value and server status as a log message"/>
 	</samples>
 </help>

@@ -51,6 +51,7 @@ public abstract class SystemAction extends AbstractAction implements RuntimeActi
 		actions.put("version", "org.areasy.runtime.actions.system.Version");
 		actions.put("process","org.areasy.runtime.actions.system.Process");
 		actions.put("install","org.areasy.runtime.actions.system.Install");
+		actions.put("sysmon","org.areasy.runtime.actions.system.Sysmon");
 	}
 
 	/** Runtime server instance */

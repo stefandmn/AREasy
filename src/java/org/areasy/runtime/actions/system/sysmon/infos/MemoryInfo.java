@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.system.sysmon;
+package org.areasy.runtime.actions.system.sysmon.infos;
 
 /*
  * Copyright (c) 2007-2018 AREasy Runtime
@@ -12,6 +12,8 @@ package org.areasy.runtime.actions.system.sysmon;
  * including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
+
+import org.areasy.runtime.actions.system.sysmon.ParserUtility;
 
 /**
  * This object represents a snapshot detailing the total memory of
@@ -52,6 +54,6 @@ public class MemoryInfo
 
 	public String toString()
 	{
-		return "Total: " + ParserUtility.diskSizeFormat(getTotalBytes()) + ", Free: " + ParserUtility.diskSizeFormat(getFreeBytes());
+		return "[total: " + ParserUtility.memoryValueFormat(getTotalBytes()) + ", free: " + ParserUtility.memoryValueFormat(getFreeBytes()) + "]";
 	}
 }

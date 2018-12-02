@@ -13,10 +13,15 @@ package org.areasy.runtime.actions.system;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.actions.SystemAction;
 import org.areasy.runtime.actions.system.sysmon.*;
+import org.areasy.runtime.actions.system.sysmon.infos.*;
 import org.areasy.runtime.actions.system.sysmon.monitors.LinuxMonitor;
-import org.areasy.runtime.actions.system.sysmon.monitors.NullMonitor;
+import org.areasy.runtime.actions.system.sysmon.monitors.JavaMonitor;
 import org.areasy.runtime.actions.system.sysmon.monitors.WindowsMonitor;
+import org.areasy.runtime.engine.RuntimeLogger;
+import org.areasy.runtime.engine.base.AREasyException;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -35,97 +40,61 @@ import java.util.List;
  * it will display output similar to the UNIX "top" command. You can optionally specify a process id as an
  * argument, in which case JavaSysMon will attempt to kill the process.
  */
-public class Sysmon implements Monitor
+public class Sysmon extends SystemAction implements Monitor, RuntimeAction
 {
-
+	/** Declare system monitor taht should describe a specific OS */
 	private static Monitor monitor = null;
-
-	/**
-	 * Allows you to register your own implementation of {@link Monitor}.
-	 *
-	 * @param myMonitor An implementation of the Monitor interface that all API calls will be delegated to
-	 */
-	public static void setMonitor(Monitor myMonitor)
-	{
-		if (monitor == null || monitor instanceof NullMonitor)
-		{
-			monitor = myMonitor;
-		}
-	}
 
 	static
 	{
 		new LinuxMonitor();
 		new WindowsMonitor();
-		new NullMonitor(); // make sure the API never gives back a NPE
+		new JavaMonitor(); // default monitor in case no other specific system monitor is found
 	}
 
 	/**
-	 * Creates a new JavaSysMon object through which to access
-	 * the JavaSysMon API. All necessary state is kept statically
-	 * so there is zero overhead to instantiating this class.
+	 * Allows you to register your own implementation of {@link Monitor}.
+	 *
+	 * @param mon An implementation of the Monitor interface that all API calls will be delegated to
 	 */
-	public Sysmon()
+	public static void setMonitor(Monitor mon)
 	{
-		//nothing to do here
+		if (mon != null) monitor = mon;
+	}
+
+	public static Monitor getMonitor()
+	{
+		return monitor;
 	}
 
 	/**
-	 * This is the main entry point when running the jar directly.
-	 * It prints out some system performance metrics and the process table
-	 * in a format similar to the UNIX top command. Optionally you can
-	 * specify a process id as an argument, in which case JavaSysMon
-	 * will attempt to kill the process specified by that pid.
+	 * Execute 'sysmon' action.
+	 * Processing system monitoring internal command (for client/runtime of server)
+	 *
+	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occur.
 	 */
-	public static void main(String[] params) throws Exception
+	public void run() throws AREasyException
 	{
-		if (monitor instanceof NullMonitor)
+		if(getConfiguration().getBoolean("info", false))
 		{
-			System.err.println("Couldn't find an implementation for OS: " + System.getProperty("os.name"));
-			System.exit(1);
-		}
-		else
-		{
-			List lps = Arrays.asList(params);
-
-			ProcessorInfo initialTimes = monitor.getProcessorInfo();
-			System.out.println("\nOS Name: " + monitor.getOSName());
-			System.out.println("Uptime: " + ParserUtility.secsInDaysAndHours(monitor.getUptime()));
-			System.out.println("Current Pid: " + monitor.getCurrentPid());
-			System.out.println("\nNumber of CPUs: " + monitor.getNumberOfProcessors());
-			System.out.println("CPU frequency: " + monitor.getProcessorFrequency() / (1000 * 1000) + " MHz");
-			System.out.println("RAM: " + monitor.getPhysicalMemoryInfo());
-			System.out.println("Swap: " + monitor.getSwapMemoryInfo());
-			Thread.sleep(500);
-			System.out.println("CPU Usage: " + new DecimalFormat("#,##0.#").format(monitor.getProcessorInfo().getCpuUsage(initialTimes) * 100) + "%");
-			System.out.println();
-
-			if (lps.contains("-p"))
-			{
-				String filter = null;
-				int index = lps.indexOf("-p");
-
-				if (lps.size() >= index + 2) filter = (String) lps.get(index + 1);
-
-				System.out.println("\n" + ProcessInfo.header());
-				ProcessInfo[] processes = monitor.getProcessesInfo();
-
-				for (int i = 0; i < processes.length; i++)
-				{
-					if (processes[i].getPid() != monitor.getCurrentPid())
-					{
-						if (filter != null)
-						{
-							if (processes[i].toString().indexOf(filter) >= 0) System.out.println(processes[i].toString());
-						}
-						else System.out.println(processes[i].toString());
-					}
-				}
-			}
+			RuntimeLogger.add("OS:    " + getSystemInfo());
+			RuntimeLogger.add("CPU:   " + getProcessorInfo());
+			RuntimeLogger.add("RAM:   " + getPhysicalMemoryInfo());
+			RuntimeLogger.add("Swap:  " + getSwapMemoryInfo());
+			RuntimeLogger.add("JVM:   " + getJavaInfo());
+			RuntimeLogger.add("Usage: " + getUsageInfo());
 		}
 	}
 
-	// Following is the actual API
+	/**
+	 * Get the operating system details (name, version).
+	 *
+	 * @return The operating system structure.
+	 */
+	public SystemInfo getSystemInfo()
+	{
+		return monitor.getSystemInfo();
+	}
 
 	/**
 	 * Get the operating system name.
@@ -134,7 +103,27 @@ public class Sysmon implements Monitor
 	 */
 	public String getOSName()
 	{
-		return monitor.getOSName();
+		return monitor.getSystemInfo().getName();
+	}
+
+	/**
+	 * Get the operating system version.
+	 *
+	 * @return The operating system version.
+	 */
+	public String getOSVersion()
+	{
+		return monitor.getSystemInfo().getVersion();
+	}
+
+	/**
+	 * Gets CPU details
+	 *
+	 * @return An object containing the number of CPUs and related frequency.
+	 */
+	public ProcessorInfo getProcessorInfo()
+	{
+		return monitor.getProcessorInfo();
 	}
 
 	/**
@@ -144,7 +133,7 @@ public class Sysmon implements Monitor
 	 */
 	public int getNumberOfProcessors()
 	{
-		return monitor.getNumberOfProcessors();
+		return monitor.getProcessorInfo().getNumberOfProcessors();
 	}
 
 	/**
@@ -154,7 +143,17 @@ public class Sysmon implements Monitor
 	 */
 	public long getProcessorFrequency()
 	{
-		return monitor.getProcessorFrequency();
+		return monitor.getProcessorInfo().getProcessorFrequency();
+	}
+
+	/**
+	 * Gets JVM details
+	 *
+	 * @return An object containing pid, uptime and Head details.
+	 */
+	public JavaInfo getJavaInfo()
+	{
+		return monitor.getJavaInfo();
 	}
 
 	/**
@@ -166,7 +165,7 @@ public class Sysmon implements Monitor
 	 */
 	public long getUptime()
 	{
-		return monitor.getUptime();
+		return monitor.getJavaInfo().getUptime();
 	}
 
 	/**
@@ -175,26 +174,9 @@ public class Sysmon implements Monitor
 	 *
 	 * @return The pid of the process calling this method.
 	 */
-	public int getCurrentPid()
+	public int getPid()
 	{
-		return monitor.getCurrentPid();
-	}
-
-	/**
-	 * Gets a snapshot which contains the total amount
-	 * of time the CPU has spent in user mode, kernel mode,
-	 * and idle. Given two snapshots, you can calculate
-	 * the CPU usage during that time. There is a convenience
-	 * method to perform this calculation in
-	 * {@link ProcessorInfo#getCpuUsage}
-	 *
-	 * @return An object containing the amount of time the
-	 *         CPU has spent idle, in user mode and in kernel mode,
-	 *         in milliseconds.
-	 */
-	public ProcessorInfo getProcessorInfo()
-	{
-		return monitor.getProcessorInfo();
+		return monitor.getJavaInfo().getPid();
 	}
 
 	/**
@@ -221,28 +203,13 @@ public class Sysmon implements Monitor
 	}
 
 	/**
-	 * Get the current process table. This call returns an array of
-	 * objects, each of which represents a single process. If you want
-	 * the objects in a tree structure.
+	 * Gets a snapshot which contains the total load
+	 * of the CPU for the current process (JVM) and for the whole system.
 	 *
-	 * @return An array of objects, each of which represents a process.
+	 * @return An object containing the load of the CPU for the current process and also for the whole system.
 	 */
-	public ProcessInfo[] getProcessesInfo()
+	public UsageInfo getUsageInfo()
 	{
-		return monitor.getProcessesInfo();
-	}
-
-
-	int parseInt(String value)
-	{
-		try
-		{
-			return Integer.parseInt(value);
-		}
-		catch (NumberFormatException nfe)
-		{
-			// Log exception.
-			return 0;
-		}
+		return monitor.getUsageInfo();
 	}
 }

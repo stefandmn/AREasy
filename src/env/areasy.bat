@@ -179,4 +179,4 @@ goto end
 
 
 :end
-rem End program
+rem End of program

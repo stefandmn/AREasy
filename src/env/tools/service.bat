@@ -144,6 +144,7 @@ if not errorlevel 1 goto doUpdate
 echo Failed installing '%SERVICE_NAME%' service
 goto end
 
+
 :doUpdate
 rem Clear the environment variables. They are not needed any more.
 set PR_DISPLAYNAME=
@@ -162,4 +163,6 @@ set PR_LOGPREFIX=service
 "%EXECUTABLE%" //US//%SERVICE_NAME% ++JvmOptions "-Djava.io.tmpdir=%_APP_HOM%\work" --JvmMs %JVMMS% --JvmMx %JVMMM%
 echo The service '%SERVICE_NAME%' has been installed.
 
+
 :end
+rem End of program

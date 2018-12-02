@@ -35,7 +35,7 @@ public class Version extends SystemAction implements RuntimeAction
 {
 	/**
 	 * Execute 'version' action.
-	 * Processing version internal command - status server execution
+	 * Processing version internal command (for client/runtime of server)
 	 *
 	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occur.
 	 */

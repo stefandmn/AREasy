@@ -151,19 +151,48 @@ public class ParserUtility
 		return null;
 	}
 
-	public static String secsInDaysAndHours(long seconds)
+	public static String msecs2DHMS(long msecs)
 	{
-		long days = seconds / (60 * 60 * 24);
-		long hours = (seconds / (60 * 60)) - (days * 24);
-		return days + " days " + hours + " hours";
+		long seconds = msecs / 1000;
+
+		if (seconds > 0)
+		{
+			long days = seconds / (60 * 60 * 24);
+			long hours = (seconds  - (days * 60 * 60 * 24)) / (60 * 60);
+			long minutes = (seconds  - (days * 60 * 60 * 24) - (hours * 60 * 60)) / 60;
+			seconds = seconds - (days * 60 * 60 * 24) - (hours * 60 * 60) - (minutes * 60);
+			return days + " days, " + hours + " hours, " + minutes + " minutes, "+ seconds + " seconds";
+		}
+		else
+		{
+			return new DecimalFormat("0.###").format((double)msecs/1000) + " seconds";
+		}
 	}
 
-	public static String diskSizeFormat(long size)
+	public static String memoryValueFormat(long size)
 	{
 		if (size <= 0) return "0";
+
 		final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
 		int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
 
 		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+	}
+
+	public static String frequencyValueFormat(long size)
+	{
+		if (size <= 0) return "0";
+
+		final String[] units = new String[]{"Hz", "kHz", "MHz", "GHz", "THz"};
+		int digitGroups = (int) (Math.log10(size) / Math.log10(1000));
+
+		return new DecimalFormat("#,##0.#").format(size / Math.pow(1000, digitGroups)) + " " + units[digitGroups];
+	}
+
+	public static String loadValueFormat(double load)
+	{
+		if (load <= 0) return "0%";
+
+		return new DecimalFormat("##.##%").format(load);
 	}
 }

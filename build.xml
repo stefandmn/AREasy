@@ -229,20 +229,52 @@
 				<include name="*.exe"/>
 			</fileset>
 		</copy>
+
 		<copy todir="${dist.cfg.dir}" overwrite="yes">
 			<fileset dir="${src.dir}/cfg">
 				<include name="*.properties"/>
 			</fileset>
 		</copy>
+
 		<copy todir="${dist.doc.dir}/samples">
 			<fileset dir="${src.doc.dir}/samples"/>
 		</copy>
+		<copy todir="${dist.doc.dir}/help">
+			<fileset dir="${src.doc.dir}/help"/>
+		</copy>
+
 		<copy todir="${dist.libs.dir}">
 			<fileset dir="${libs.dir}">
 				<include name="*.jar"/>
 				<include name="databases/*.jar"/>
 			</fileset>
 		</copy>
+
+		<if>
+			<equals arg1="${isWindows}" arg2="true"/>
+			<then>
+				<echo message="Prepare distribution for Windows environment"/>
+				<delete>
+					<fileset dir="${dist.dir}/bin" includes="*.sh"/>
+					<fileset dir="${dist.dir}/bin/tools" includes="*.sh"/>
+				</delete>
+			</then>
+			<else>
+				<echo message="Prepare distribution for Unix/Linux environment"/>
+				<delete>
+					<fileset dir="${dist.dir}/bin" includes="*.exe"/>
+					<fileset dir="${dist.dir}/bin" includes="*.bat"/>
+					<fileset dir="${dist.dir}/bin/tools" includes="*.bat"/>
+				</delete>
+			</else>
+		</if>
+
+		<java classname="org.areasy.common.support.configuration.providers.properties.stream.ConfigurationManager" classpathref="classpath.bin">
+			<arg value="-configfile"/>
+			<arg value="${build.dir}/deploy.properties"/>
+			<arg value="-remotepath"/>
+			<arg value="${dist.dir}/cfg"/>
+		</java>
 	</target>
 
 
@@ -257,9 +289,9 @@
 		<replace file="${build.temp.dir}/doclet.properties" token="%fullname%" value="${project.fullname}"/>
 		<replace file="${build.temp.dir}/doclet.properties" token="%version%" value="${project.version}"/>
 
-		<copy overwrite="true" todir="${build.temp.dir}/resources">
-			<fileset dir="${src.doc.dir}/resources">
-				<include name="*.png"/>
+		<copy overwrite="true" todir="${build.temp.dir}">
+			<fileset dir="${src.doc.dir}">
+				<include name="documentation-*"/>
 			</fileset>
 		</copy>
 
@@ -270,69 +302,10 @@
 				 sourcepath="${src.java.dir}"
 				 additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"
 				 private="no"/>
-
-		<copy overwrite="true" todir="${dist.doc.dir}">
-			<fileset dir="${src.doc.dir}/resources">
-				<include name="*.pdf"/>
-			</fileset>
-		</copy>
 	</target>
 
 
-	<!-- Set specific distribution configuration -->
-	<target name="5.1.Configuration" if="merge.config">
-		<java classname="org.areasy.common.support.configuration.providers.properties.stream.ConfigurationManager" classpathref="classpath.bin">
-			<arg value="-configfile"/>
-			<arg value="${build.dir}/deploy.properties"/>
-			<arg value="-remotepath"/>
-			<arg value="${dist.dir}/cfg"/>
-		</java>
-	</target>
-
-
-	<!-- Create OS dependent distribution -->
-	<target name="5.2.Restructure">
-		<antcall target="5.2.1.Restructure.ForUnix"/>
-		<antcall target="5.2.1.Restructure.ForWin"/>
-	</target>
-
-
-	<!-- Create unix distribution -->
-	<target name="5.2.1.Restructure.ForUnix" if="isUnix">
-		<echo message="Prepare distribution for Unix/Linux environment"/>
-
-		<delete>
-			<fileset dir="${dist.dir}/bin" includes="*.exe"/>
-			<fileset dir="${dist.dir}/bin" includes="*.bat"/>
-			<fileset dir="${dist.dir}/bin/tools" includes="*.bat"/>
-		</delete>
-	</target>
-
-
-	<!-- Create windows distribution -->
-	<target name="5.2.1.Restructure.ForWin" if="isWindows">
-		<echo message="Prepare distribution for Windows environment"/>
-
-		<exec executable="icacls">
-			<arg value="${deployment.path}/logs"/>
-			<arg value="/grant"/>
-			<arg value="${env.USERNAME}:(f)"/>
-		</exec>
-
-		<exec executable="icacls">
-			<arg value="${deployment.path}/work"/>
-			<arg value="/grant"/>
-			<arg value="${env.USERNAME}:(f)"/>
-		</exec>
-
-		<delete>
-			<fileset dir="${dist.dir}/bin" includes="*.sh"/>
-			<fileset dir="${dist.dir}/bin/tools" includes="*.sh"/>
-		</delete>
-	</target>
-
-
-	<target name="5.Deploy" depends="3.Dist" description="Deploy distribution on local file system">
+	<target name="5.Deploy" depends="4.Doc" description="Deploy distribution on local file system">
 		<echo message="Create AREasy distribution: ${deployment.path}"/>
 
 		<echo message="Creating file system structure.."/>
@@ -346,19 +319,22 @@
 		<mkdir dir="${deployment.path}/logs"/>
 		<mkdir dir="${deployment.path}/work"/>
 
-		<echo message="Deploying libraries.."/>
-		<copy todir="${deployment.path}/libs">
-			<fileset dir="${dist.libs.dir}"/>
-		</copy>
+		<if>
+			<equals arg1="${isWindows}" arg2="true"/>
+			<then>
+				<exec executable="icacls">
+					<arg value="${deployment.path}/logs"/>
+					<arg value="/grant"/>
+					<arg value="${env.USERNAME}:(f)"/>
+				</exec>
 
-		<echo message="Removing log files and temporary files.."/>
-		<delete quiet="true">
-			<fileset dir="${deployment.path}/logs" includes="**/*.log"/>
-			<fileset dir="${deployment.path}/work" includes="**/*"/>
-		</delete>
-
-		<antcall target="5.1.Configuration"/>
-		<antcall target="5.2.Restructure"/>
+				<exec executable="icacls">
+					<arg value="${deployment.path}/work"/>
+					<arg value="/grant"/>
+					<arg value="${env.USERNAME}:(f)"/>
+				</exec>
+			</then>
+		</if>
 
 		<echo message="Deploying binary files.."/>
 		<copy todir="${deployment.path}/bin">
@@ -369,95 +345,118 @@
 		</copy>
 
 		<echo message="Deploying configuration files.."/>
-		<antcall target="5.1.Configuration"/>
 		<copy todir="${deployment.path}/cfg" overwrite="yes">
 			<fileset dir="${dist.cfg.dir}"/>
+		</copy>
+
+		<echo message="Deploying libraries.."/>
+		<copy todir="${deployment.path}/libs">
+			<fileset dir="${dist.libs.dir}"/>
 		</copy>
 
 		<echo message="Deploying documentation files.."/>
 		<copy todir="${deployment.path}/doc">
 			<fileset dir="${dist.doc.dir}"/>
 		</copy>
+	</target>
+
+
+	<target name="6.Update" depends="2.Bin" description="Update deployment of configurations, help docs and libraries on existing local distribution">
+		<echo message="Update AREasy distribution: ${deployment.path}"/>
+
+		<echo message="Deploying libraries.."/>
+		<copy todir="${deployment.path}/bin">
+			<file name="${dist.bin.dir}/boot.jar"/>
+		</copy>
+		<copy todir="${deployment.path}/libs">
+			<file name="${dist.libs.dir}/${library.jar}"/>
+		</copy>
+
+		<echo message="Deploying configuration files.."/>
+		<copy todir="${deployment.path}/cfg" overwrite="yes">
+			<fileset dir="${src.dir}/cfg">
+				<include name="*.properties"/>
+			</fileset>
+		</copy>
+
+		<echo message="Deploying help documentation files.."/>
 		<copy todir="${deployment.path}/doc/help">
 			<fileset dir="${src.doc.dir}/help"/>
 		</copy>
+
+		<echo message="Removing log files and temporary files.."/>
+		<delete quiet="true">
+			<fileset dir="${deployment.path}/logs" includes="**/*.log"/>
+			<fileset dir="${deployment.path}/work" includes="**/*"/>
+		</delete>
 	</target>
 
 
-	<target name="6.1.Installer.ForWin" depends="4.Doc" if="isWindows">
-		<antcall target="5.2.1.Restructure.ForWin"/>
+	<target name="7.Installer" description="Build installation kit">
+		<if>
+			<equals arg1="${isWindows}" arg2="true"/>
+			<then>
+				<copy file="${res.dir}/installer/win/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${res.dir}/installer/win"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%version%" value="${project.version}"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
+				<replace file="${build.temp.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
 
-		<copy file="${res.dir}/installer/win/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${res.dir}/installer/win"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%version%" value="${project.version}"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%vendor%" value="${project.vendor}"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%fullname%" value="${project.fullname}"/>
+				<!-- compile installer source -->
+				<exec executable="${nsis.path}/MakeNSIS.exe">
+					<arg path="${build.temp.dir}/installer.nsi"/>
+				</exec>
 
-		<!-- compile installer source -->
-		<exec executable="${nsis.path}/MakeNSIS.exe">
-			<arg path="${build.temp.dir}/installer.nsi"/>
-		</exec>
+				<delete file="${build.temp.dir}/installer.nsi" quiet="true"/>
+			</then>
+			<else>
+				<tar destfile="${build.temp.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
+				<gzip destfile="${build.temp.dir}/${project.name}-${project.version}.tar.gz" src="${build.temp.dir}/${project.name}-${project.version}.tar"/>
+				<delete file="${build.temp.dir}/${project.name}-${project.version}.tar" quiet="true"/>
 
-		<delete file="${build.temp.dir}/installer.nsi" quiet="true"/>
+				<copyfile src="${res.dir}/installer/unix/installer.bin" dest="${build.temp.dir}/${project.name}.bin"/>
+
+				<mkdir dir="${build.temp.dir}/${project.name}"/>
+				<move file="${build.temp.dir}/${project.name}-${project.version}.tar.gz" todir="${build.temp.dir}/${project.name}"/>
+				<copyfile src="${res.dir}/installer/unix/setup.sh" dest="${build.temp.dir}/${project.name}/setup.sh"/>
+				<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
+				<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
+
+				<tar destfile="${build.temp.dir}/${project.name}.tar" basedir="${build.temp.dir}/${project.name}"/>
+				<gzip destfile="${build.temp.dir}/${project.name}.tar.gz" src="${build.temp.dir}/${project.name}.tar"/>
+
+				<concat destfile="${build.temp.dir}/${project.name}-${project.version}.bin" binary="yes">
+					<fileset file="${build.temp.dir}/areasy.bin"/>
+					<fileset file="${build.temp.dir}/areasy.tar.gz"/>
+				</concat>
+
+				<exec executable="/bin/chmod">
+					<arg line="+x '${build.temp.dir}/${project.name}-${project.version}.bin'"/>
+				</exec>
+
+				<delete dir="${build.temp.dir}/areasy" quiet="true"/>
+				<delete file="${build.temp.dir}/${project.name}.bin" quiet="true"/>
+				<delete file="${build.temp.dir}/${project.name}.tar" quiet="true"/>
+				<delete file="${build.temp.dir}/${project.name}.tar.gz" quiet="true"/>
+			</else>
+		</if>
 	</target>
 
 
-	<target name="6.2.Installer.ForUnix" depends="4.Doc" if="isUnix">
-		<antcall target="7.2.Package.ForUnix"/>
-
-		<copyfile src="${res.dir}/installer/unix/installer.bin" dest="${build.temp.dir}/${project.name}.bin"/>
-
-		<mkdir dir="${build.temp.dir}/${project.name}"/>
-		<move file="${build.temp.dir}/${project.name}-${project.version}.tar.gz" todir="${build.temp.dir}/${project.name}"/>
-		<copyfile src="${res.dir}/installer/unix/setup.sh" dest="${build.temp.dir}/${project.name}/setup.sh"/>
-		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%name%" value="${project.name}"/>
-		<replace file="${build.temp.dir}/${project.name}/setup.sh" token="%version%" value="${project.version}"/>
-
-		<tar destfile="${build.temp.dir}/${project.name}.tar" basedir="${build.temp.dir}/${project.name}"/>
-		<gzip destfile="${build.temp.dir}/${project.name}.tar.gz" src="${build.temp.dir}/${project.name}.tar"/>
-
-		<concat destfile="${build.temp.dir}/${project.name}-${project.version}.bin" binary="yes">
-			<fileset file="${build.temp.dir}/areasy.bin"/>
-			<fileset file="${build.temp.dir}/areasy.tar.gz"/>
-		</concat>
-
-		<exec executable="/bin/chmod">
-			<arg line="+x '${build.temp.dir}/${project.name}-${project.version}.bin'"/>
-		</exec>
-
-		<delete dir="${build.temp.dir}/areasy" quiet="true"/>
-		<delete file="${build.temp.dir}/${project.name}.bin" quiet="true"/>
-		<delete file="${build.temp.dir}/${project.name}.tar" quiet="true"/>
-		<delete file="${build.temp.dir}/${project.name}.tar.gz" quiet="true"/>
-	</target>
-
-
-	<target name="6.Installer" description="Build installation kit">
-		<antcall target="6.1.Installer.ForWin"/>
-		<antcall target="6.2.Installer.ForUnix"/>
-	</target>
-
-
-	<target name="7.1.Package.ForWin" depends="4.Doc">
-		<antcall target="5.2.1.Restructure.ForWin"/>
-		<zip destfile="${build.temp.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
-	</target>
-
-
-	<target name="7.2.Package.ForUnix" depends="4.Doc">
-		<antcall target="5.2.1.Restructure.ForUnix"/>
-
-		<tar destfile="${build.temp.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
-		<gzip destfile="${build.temp.dir}/${project.name}-${project.version}.tar.gz" src="${build.temp.dir}/${project.name}-${project.version}.tar"/>
-		<delete file="${build.temp.dir}/${project.name}-${project.version}.tar" quiet="true"/>
-	</target>
-
-
-	<target name="7.Package" description="Build zip/gzip package">
-		<antcall target="7.1.Package.ForWin"/>
-		<antcall target="7.2.Package.ForUnix"/>
+	<target name="8.Package" description="Build zip/gzip package">
+		<if>
+			<equals arg1="${isUnix}" arg2="true"/>
+			<then>
+				<tar destfile="${build.temp.dir}/${project.name}-${project.version}.tar" basedir="${dist.dir}"/>
+				<gzip destfile="${build.temp.dir}/${project.name}-${project.version}.tar.gz" src="${build.temp.dir}/${project.name}-${project.version}.tar"/>
+				<delete file="${build.temp.dir}/${project.name}-${project.version}.tar" quiet="true"/>
+			</then>
+			<else>
+				<zip destfile="${build.temp.dir}/${project.name}-${project.version}.zip" basedir="${dist.dir}"/>
+			</else>
+		</if>
 	</target>
 
 </project>

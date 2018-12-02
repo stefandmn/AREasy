@@ -3,6 +3,8 @@
 if "%OS%" == "Windows_NT" @setlocal
 if "%OS%"=="Windows_NT" @setlocal
 if "%OS%"=="WINNT" @setlocal
+
+
 rem ---------------------------------------------------------------------------
 rem AREasy Runtime
 rem Copyright (c) 2007-2018 AREasy.org. All Rights Reserved
@@ -16,7 +18,50 @@ rem ---------------------------------------------------------------------------
 @echo ========================
 
 
-if "%JAVA_HOME%" == "" goto error
+rem Check Java runtime prerequisite
+if not "%JAVA_HOME%" == "" (
+	set "JAVA_PATH=%JAVA_HOME%"
+	goto askDebug
+)
+
+set KEY_NAME="HKEY_LOCAL_MACHINE\Software\JavaSoft\Java Runtime Environment"
+set VALUE_NAME=CurrentVersion
+for /F "usebackq skip=2 tokens=1-3" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
+	set ValueName=%%A
+	set ValueType=%%B
+	set ValueValue=%%C
+)
+set KEY_NAME="%KEY_NAME:~1,-1%\%ValueValue%"
+set VALUE_NAME=JavaHome
+if not "%ValueName%" == "" (
+	for /F "usebackq skip=2 tokens=1,2*" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
+		set ValueName2=%%A
+		set ValueType2=%%B
+		set JAVA_PATH=%%C
+	)
+)
+
+if not "%JAVA_PATH%" == "" goto askDebug
+set KEY_NAME="HKEY_LOCAL_MACHINE\Software\Wow6432Node\JavaSoft\Java Runtime Environment"
+set VALUE_NAME=CurrentVersion
+for /F "usebackq skip=2 tokens=1-3" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
+	set ValueName=%%A
+	set ValueType=%%B
+	set ValueValue=%%C
+)
+SET KEY_NAME="%KEY_NAME:~1,-1%\%ValueValue%"
+SET VALUE_NAME=JavaHome
+if not "%ValueName%" == "" (
+	for /F "usebackq skip=2 tokens=1,2*" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
+		set ValueName2=%%A
+		set ValueType2=%%B
+		set JAVA_PATH=%%C
+	)
+)
+
+if not "%JAVA_PATH%" == "" goto askDebug
+echo Java is not detected on your environment
+goto end
 
 
 set _APP_CUR=%~dp0
@@ -51,12 +96,8 @@ call %TMP%\~userin.bat
 
 
 echo Credential decoding..
-"%JAVA_HOME%\bin\java" -classpath "%_APP_HOM%\libs\areasy.jar" org.areasy.common.data.type.credential.Credential -d %PASSWORD%
+"%JAVA_PATH%\bin\java" -classpath "%_APP_HOM%\libs\areasy.jar" org.areasy.common.data.type.credential.Credential -d %PASSWORD%
 goto end
-
-
-:error
-echo Invalid parameter JAVA_HOME
 
 
 :end

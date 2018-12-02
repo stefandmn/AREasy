@@ -4,6 +4,7 @@ if "%OS%" == "Windows_NT" setlocal
 if "%OS%"=="Windows_NT" setlocal
 if "%OS%"=="WINNT" setlocal
 
+
 rem ---------------------------------------------------------------------------
 rem AREasy Runtime
 rem Copyright (c) 2007-2019 AREasy.org. All Rights Reserved.
@@ -91,7 +92,7 @@ if not "%ValueName%" == "" (
 if not "%JAVA_PATH%" == "" goto askDebug
 set KEY_NAME="HKEY_LOCAL_MACHINE\Software\Wow6432Node\JavaSoft\Java Runtime Environment"
 set VALUE_NAME=CurrentVersion
-for /F "usebackq skip=2 tokens=1-3" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) DO (
+for /F "usebackq skip=2 tokens=1-3" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
 	set ValueName=%%A
 	set ValueType=%%B
 	set ValueValue=%%C
@@ -99,7 +100,7 @@ for /F "usebackq skip=2 tokens=1-3" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME
 SET KEY_NAME="%KEY_NAME:~1,-1%\%ValueValue%"
 SET VALUE_NAME=JavaHome
 if not "%ValueName%" == "" (
-	FOR /F "usebackq skip=2 tokens=1,2*" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) DO (
+	for /F "usebackq skip=2 tokens=1,2*" %%A IN (`REG QUERY %KEY_NAME% /v %VALUE_NAME% 2^>nul`) do (
 		set ValueName2=%%A
 		set ValueType2=%%B
 		set JAVA_PATH=%%C

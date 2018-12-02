@@ -51,11 +51,11 @@ InstallDirRegKey HKLM "Software\%fullname%" ""
 ;--------------------------------
 ;Interface Settings
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "%srcdir%\nsis\header.bmp"
+!define MUI_HEADERIMAGE_BITMAP "%srcdir%\header.bmp"
 !define MUI_ABORTWARNING
-!define MUI_ICON "%srcdir%\nsis\installer.ico"
-!define MUI_UNICON "%srcdir%\nsis\installer.ico"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "%srcdir%\nsis\welcome.bmp"
+!define MUI_ICON "%srcdir%\installer.ico"
+!define MUI_UNICON "%srcdir%\installer.ico"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "%srcdir%\welcome.bmp"
 
 ;--------------------------------
 ; Installer Pages

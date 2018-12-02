@@ -7,6 +7,7 @@
 # Dedicated Script to return credential format to be used in configuration files.
 # ---------------------------------------------------------------------------
 
+
 # Caller home
 _APP_HOME=`dirname $0`
 _APP_HOME=$(cd $_APP_HOME/../../;pwd)

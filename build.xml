@@ -388,7 +388,7 @@
 		<antcall target="5.2.1.Restructure.ForWin"/>
 
 		<copy file="${res.dir}/installer/win/installer.nsi" tofile="${build.temp.dir}/installer.nsi" force="yes" overwrite="yes"/>
-		<replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${src.dir}"/>
+		<replace file="${build.temp.dir}/installer.nsi" token="%srcdir%" value="${res.dir}/installer/win"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%distdir%" value="${dist.dir}"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%name%" value="${project.name}"/>
 		<replace file="${build.temp.dir}/installer.nsi" token="%version%" value="${project.version}"/>

@@ -39,7 +39,7 @@
 	<property file="${basedir}/core.properties"/>
 
 	<!-- Define build folder -->
-	<property name="build.dir" value="${env.TMP}/AREasy/build"/>
+	<property name="build.dir" value="${user.home}/.AREasy"/>
 	<property name="build.temp.dir" value="${build.dir}/temp"/>
 
 	<!-- Define sources folder (static and generated files) -->
@@ -104,8 +104,8 @@
 		</fileset>
 	</path>
 
-	<!-- Builds Classpath -->
-	<path id="classpath.doc">
+	<!-- Builds Classpath with Compiled AREasy libraries-->
+	<path id="classpath.ext">
 		<fileset dir="${libs.dir}">
 			<include name="*.jar"/>
 		</fileset>
@@ -269,12 +269,17 @@
 			</else>
 		</if>
 
-		<java classname="org.areasy.common.support.configuration.providers.properties.stream.ConfigurationManager" classpathref="classpath.bin">
-			<arg value="-configfile"/>
-			<arg value="${build.dir}/deploy.properties"/>
-			<arg value="-remotepath"/>
-			<arg value="${dist.dir}/cfg"/>
-		</java>
+		<if>
+			<equals arg1="${merge.config}" arg2="true"/>
+			<then>
+				<java classname="org.areasy.common.support.configuration.providers.properties.stream.ConfigurationManager" classpathref="classpath.ext">
+					<arg value="-configfile"/>
+					<arg value="${basedir}/deploy.properties"/>
+					<arg value="-remotepath"/>
+					<arg value="${dist.dir}/cfg"/>
+				</java>
+			</then>
+		</if>
 	</target>
 
 
@@ -297,7 +302,7 @@
 
 		<javadoc doclet="org.areasy.common.doclet.Doclet"
 				 classpathref="classpath.bin"
-				 maxmemory="256M" docletpathref="classpath.doc"
+				 maxmemory="256M" docletpathref="classpath.ext"
 				 packagenames="org.areasy.*"
 				 sourcepath="${src.java.dir}"
 				 additionalparam="-pdf '${dist.doc.dir}/${documentation.pdf}' -config '${build.temp.dir}/doclet.properties'"
@@ -325,13 +330,13 @@
 				<exec executable="icacls">
 					<arg value="${deployment.path}/logs"/>
 					<arg value="/grant"/>
-					<arg value="${env.USERNAME}:(f)"/>
+					<arg value="${user.name}:(f)"/>
 				</exec>
 
 				<exec executable="icacls">
 					<arg value="${deployment.path}/work"/>
 					<arg value="/grant"/>
-					<arg value="${env.USERNAME}:(f)"/>
+					<arg value="${user.name}:(f)"/>
 				</exec>
 			</then>
 			<else>

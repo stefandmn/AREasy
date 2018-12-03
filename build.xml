@@ -334,6 +334,19 @@
 					<arg value="${env.USERNAME}:(f)"/>
 				</exec>
 			</then>
+			<else>
+				<exec executable="chmod">
+					<arg value="-R"/>
+					<arg value="777"/>
+					<arg value="${deployment.path}/logs"/>
+				</exec>
+
+				<exec executable="icacls">
+					<arg value="-R"/>
+					<arg value="777"/>
+					<arg value="${deployment.path}/work"/>
+				</exec>
+			</else>
 		</if>
 
 		<echo message="Deploying binary files.."/>

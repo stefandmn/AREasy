@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "../../action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="ars/data/basedata.xml">
+	<name>File Wrapper</name>
+	<description>File wrapper to read file content and to pass it to other action to execute transactions</description>
+	<syntax>
+		areasy -action filewrapper
+		[-file FilePath -startindex StartIndex [-endindex EndIndex] [-pageindex FileWorksheet -force]]
+		-call sub.action ...sub action parametrization.. [sleep SleepInMilliseconds]
+	</syntax>
+	<options>
+		<option key="inputfile" type="string" description="Aliases for this option are: parserfile, file. Indicates the path of the data file"/>
+		<option key="parsertype" type="string" description="Identifies a particular files, if this option is not specified the file type and the corresponding parser will be detected based on file extension. SUpported data files are: comma separated, Excel (2003 format) and tab or delimiter separated"/>
+		<option key="call" type="string" description="Alias for this option is: subaction. It specify the action that will be called by this wrapper thta can use the data records extracted by file parser and reader"/>
+		<option key="limit" type="number" description="Indicates the numer of records that will be read from the specified file"/>
+		<option key="sleep" type="number" description="Describes a sleep time (in seconds) between two consecutive reads from the file"/>
+	</options>
+	<samples>
+		<sample code="areasy -action filewrapper -file /tmp/data.csv -call formdata -operation create -D1001 ${A} -D1002 ${B} -D1003 ${C} -D1004 ${D}" description="Reads content of data.csv file (line by line) and pass the data to 'formadata' action in order to execute Create operation. The data is used like a spreadsheet with columns A, B, C, etc. within variables: first column = ${A}, second column = ${B}, etc."/>
+	</samples>
+</help>

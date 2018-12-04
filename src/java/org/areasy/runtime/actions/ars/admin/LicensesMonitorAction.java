@@ -17,18 +17,17 @@ import com.bmc.arsys.api.Constants;
 import com.bmc.arsys.api.Timestamp;
 import com.bmc.arsys.api.UserInfo;
 import com.bmc.arsys.api.UserLicenseInfo;
+import org.areasy.common.data.BooleanUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
-import org.areasy.common.data.BooleanUtility;
-import org.areasy.common.data.StringUtility;
 
 import java.util.*;
 
 /**
  * Remedy system monitor action
- *
  */
 public class LicensesMonitorAction extends LicensesReportAction implements RuntimeAction
 {

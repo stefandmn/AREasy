@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "../../action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="action.xml">
+	<options1>
+		<option key="Q" type="string" description="Query prefix identifier to query after a field id"/>
+		<option key="D" type="string" description="Data prefix identified to push value of specific field id"/>
+		<option key="partforms" type="list"  description="Define the list of multi-part forms. The syntax is the following: -partforms Par1@FormName1;Part2@FormName2;..;PartX@FormNameX"/>
+		<option key="multipart" type="bool" description="Activate multi-part form extension"/>
+		<option key="ignorenullvalues" type="bool" description="Ignore null values from input during transaction execution"/>
+		<option key="ignoreunchangedvalues" type="bool" description="Ignore unchanges values in comparison with input values from instantiation or from read"/>
+		<option key="simplified" type="bool" description="Specify if the transaction will use 'fast return' mechanism avoiding to re-read the submitted or updated record."/>
+		<option key="firstmatchreading" type="bool" description="Activate first match operation and disable exact match opeartion"/>
+		<option key="exactmatchreading" type="bool" description="Activate exact match operation and disable first match opeartion"/>
+		<option key="entity" type="string" selvalues="company,region,site,organisation,sgroup,people,product,service,configurationitem,inventorylocation" description="Indicate what particular entity structure will process the data"/>
+		<option key="classid" type="string" description="In case you'll process CMDB data this attribute can identify class id (or class keyword) in order to detect the other details (forms, fields, etc.)"/>
+		<option key="formname" type="string" description="AR form name to process the transaction"/>
+		<option key="ignorenulls" type="list" description="Specify to not fill in the entity structure with null data"/>
+		<option key="force" type="bool" description="Force transactions in case of the main transaction contains a cycle that repeats sub-transactions"/>
+		<option key="mergetype" type="string" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description="Specify type of merge transaction"/>
+		<option key="mergeoptions" type="list" selvalues="norequired,nopattern,noworkflow" description="Specify additional merge options"/>
+		<option key="datamaps" type="list" description="Load data maps from external files"/>
+	</options1>
+</help>

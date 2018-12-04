@@ -16,11 +16,11 @@ package org.areasy.common.doclet.document.elements;
 import com.lowagie.text.Element;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPTable;
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.Tag;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.document.tags.HtmlParserWrapper;
 import org.areasy.common.doclet.utilities.DocletUtility;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.Tag;
 
 /**
  * Custom phrase with 'deprecated' text. A phrase object

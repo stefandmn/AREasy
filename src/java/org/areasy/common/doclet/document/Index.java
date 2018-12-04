@@ -20,10 +20,10 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.DefaultConfiguration;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.util.*;
 

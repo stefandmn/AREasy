@@ -13,13 +13,13 @@ package org.areasy.common.doclet.document;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.Tag;
+import org.areasy.common.doclet.AbstractConfiguration;
+import org.areasy.common.doclet.DefaultConfiguration;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.doclet.AbstractConfiguration;
-import org.areasy.common.doclet.DefaultConfiguration;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.Tag;
 
 import java.util.*;
 

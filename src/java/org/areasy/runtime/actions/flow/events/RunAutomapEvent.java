@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.flow.events;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
@@ -20,7 +21,6 @@ import org.areasy.runtime.engine.structures.Attribute;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
-import org.areasy.common.data.StringUtility;
 
 import java.util.Collection;
 import java.util.Iterator;

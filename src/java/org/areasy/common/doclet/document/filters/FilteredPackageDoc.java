@@ -13,8 +13,8 @@ package org.areasy.common.doclet.document.filters;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.doclet.DefaultConfiguration;
 import com.sun.javadoc.*;
+import org.areasy.common.doclet.DefaultConfiguration;
 
 /**
  * @version $Id: FilteredPackageDoc.java,v 1.3 2008/05/14 09:36:47 swd\stefan.damian Exp $

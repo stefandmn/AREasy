@@ -14,9 +14,9 @@ package org.areasy.runtime.plugins.sso.ntlm;
  */
 
 import com.remedy.arsys.session.UserCredentials;
-import org.areasy.runtime.plugins.sso.AbstractFilter;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
+import org.areasy.runtime.plugins.sso.AbstractFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

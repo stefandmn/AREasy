@@ -13,11 +13,11 @@ package org.areasy.runtime;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.services.status.BaseStatus;
-import org.areasy.common.support.configuration.Configuration;
 
 /**
  * This is a template for runtime actions which will take from the runtime manager the corresponding

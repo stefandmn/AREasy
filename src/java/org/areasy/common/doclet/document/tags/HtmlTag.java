@@ -17,12 +17,12 @@ import com.lowagie.text.*;
 import com.lowagie.text.Font;
 import com.lowagie.text.List;
 import org.areasy.common.data.StringUtility;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.document.Fonts;
 import org.areasy.common.doclet.document.State;
 import org.areasy.common.doclet.utilities.DocletUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.awt.*;
 import java.util.ArrayList;

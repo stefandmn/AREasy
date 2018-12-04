@@ -14,6 +14,8 @@ package org.areasy.runtime.actions.flow.events;
  */
 
 import com.bmc.arsys.api.*;
+import org.areasy.common.data.CharUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
@@ -21,8 +23,6 @@ import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel2CmdbApp;
 import org.areasy.runtime.utilities.StreamUtility;
-import org.areasy.common.data.CharUtility;
-import org.areasy.common.data.StringUtility;
 
 import java.io.File;
 import java.math.BigDecimal;

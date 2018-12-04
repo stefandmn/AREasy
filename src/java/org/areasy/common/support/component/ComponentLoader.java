@@ -13,12 +13,12 @@ package org.areasy.common.support.component;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.errors.NestableException;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.component.lifecycle.Configurable;
 import org.areasy.common.support.component.lifecycle.Initializable;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
-import org.areasy.common.errors.NestableException;
 
 /**
  * Factory library that knows to load "component" applications.

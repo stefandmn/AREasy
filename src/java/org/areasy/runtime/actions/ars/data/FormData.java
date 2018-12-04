@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Dedicated library to perform all standard operations (data transactions) for a Remedy form.
- * This action is usually combined with file.wrapper runtime action in order to process data from
+ * This action is usually combined with filewrapper runtime action in order to process data from
  * a data file (excel csv, text delimited, etc. - all files supported by parser engine)
  */
 public class FormData extends BaseData

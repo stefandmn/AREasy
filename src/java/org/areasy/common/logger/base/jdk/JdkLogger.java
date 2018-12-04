@@ -14,8 +14,8 @@ package org.areasy.common.logger.base.jdk;
  */
 
 import java.io.Serializable;
-import java.util.logging.Level;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 
 /**
  * <p>Implementation of the <code>org.areasy.common.logger.Logger</code>

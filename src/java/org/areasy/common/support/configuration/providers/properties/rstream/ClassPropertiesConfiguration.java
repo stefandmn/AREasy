@@ -13,8 +13,8 @@ package org.areasy.common.support.configuration.providers.properties.rstream;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.support.configuration.ConfigurationException;
 import org.areasy.common.support.configuration.ConfigurationEntry;
+import org.areasy.common.support.configuration.ConfigurationException;
 import org.areasy.common.support.configuration.base.BaseConfigurationEntry;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
 

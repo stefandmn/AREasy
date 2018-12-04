@@ -17,10 +17,10 @@ import org.areasy.common.parser.html.engine.Parser;
 import org.areasy.common.parser.html.engine.StringNode;
 import org.areasy.common.parser.html.engine.tags.LinkTag;
 import org.areasy.common.parser.html.engine.tags.Tag;
+import org.areasy.common.parser.html.engine.visitors.NodeVisitor;
 import org.areasy.common.parser.html.utilities.EncodingChangeException;
 import org.areasy.common.parser.html.utilities.ParserException;
 import org.areasy.common.parser.html.utilities.Translate;
-import org.areasy.common.parser.html.engine.visitors.NodeVisitor;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

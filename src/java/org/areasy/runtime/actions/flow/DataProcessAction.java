@@ -13,10 +13,10 @@ package org.areasy.runtime.actions.flow;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.actions.flow.events.AbstractEvent;
 import org.areasy.runtime.actions.flow.sources.AbstractSource;
 import org.areasy.runtime.engine.base.AREasyException;
-import org.areasy.common.data.StringUtility;
 
 import java.lang.reflect.Constructor;
 import java.util.Hashtable;

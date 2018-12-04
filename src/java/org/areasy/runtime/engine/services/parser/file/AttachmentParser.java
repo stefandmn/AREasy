@@ -13,9 +13,9 @@ package org.areasy.runtime.engine.services.parser.file;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.services.parser.ParserException;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
-import org.areasy.common.data.StringUtility;
 
 import java.io.File;
 

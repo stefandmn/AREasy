@@ -14,12 +14,10 @@ package org.areasy.runtime.actions.ars.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.ars.admin.AbstractSystemMonitor;
 
 /**
  * Dedicated action to monitor if server instances are working.
  * todo - implement me
- *
  */
 public class MidtierMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {

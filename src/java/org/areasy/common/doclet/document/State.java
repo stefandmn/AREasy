@@ -14,8 +14,8 @@ package org.areasy.common.doclet.document;
  */
 
 import com.lowagie.text.pdf.PdfOutline;
-import org.areasy.common.doclet.utilities.DocletUtility;
 import com.sun.javadoc.Doc;
+import org.areasy.common.doclet.utilities.DocletUtility;
 
 import java.io.File;
 

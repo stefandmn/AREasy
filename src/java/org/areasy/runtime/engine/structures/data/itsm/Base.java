@@ -13,10 +13,10 @@ package org.areasy.runtime.engine.structures.data.itsm;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.common.data.StringUtility;
 
 import java.util.List;
 

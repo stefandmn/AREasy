@@ -13,8 +13,8 @@ package org.areasy.common.support.configuration;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**

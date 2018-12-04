@@ -14,6 +14,8 @@ package org.areasy.runtime.engine.structures.data.cmdb.units;
  */
 
 import com.bmc.arsys.api.Entry;
+import org.areasy.common.data.NumberUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
@@ -22,8 +24,6 @@ import org.areasy.runtime.engine.structures.data.itsm.foundation.Organisation;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
-import org.areasy.common.data.NumberUtility;
-import org.areasy.common.data.StringUtility;
 
 import java.util.List;
 

@@ -16,13 +16,13 @@ package org.areasy.common.doclet.document;
 import com.lowagie.text.Document;
 import com.lowagie.text.Element;
 import org.areasy.common.data.StringUtility;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.DefaultConfiguration;
 import org.areasy.common.doclet.document.tags.HtmlParserWrapper;
 import org.areasy.common.doclet.utilities.DocletUtility;
 import org.areasy.common.doclet.utilities.PDFUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.io.File;
 import java.util.Arrays;

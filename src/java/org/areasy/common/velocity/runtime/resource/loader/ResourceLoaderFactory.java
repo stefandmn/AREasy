@@ -13,9 +13,9 @@ package org.areasy.common.velocity.runtime.resource.loader;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.errors.ExceptionUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
-import org.areasy.common.errors.ExceptionUtility;
 import org.areasy.common.velocity.runtime.RuntimeService;
 
 /**

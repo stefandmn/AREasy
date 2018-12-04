@@ -17,10 +17,10 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Rectangle;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.data.NumberUtility;
 import org.areasy.common.doclet.utilities.DocletUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.awt.*;
 import java.io.FileNotFoundException;

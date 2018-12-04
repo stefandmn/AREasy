@@ -14,9 +14,9 @@ package org.areasy.runtime.engine.structures;
  */
 
 import com.bmc.arsys.api.*;
-import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.common.data.NumberUtility;
 import org.areasy.common.data.StringUtility;
+import org.areasy.runtime.engine.base.AREasyException;
 
 import java.io.File;
 import java.io.IOException;

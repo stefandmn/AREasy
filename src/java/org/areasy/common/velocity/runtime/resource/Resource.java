@@ -14,8 +14,8 @@ package org.areasy.common.velocity.runtime.resource;
  */
 
 import org.areasy.common.velocity.base.ResourceNotFoundException;
-import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.RuntimeService;
+import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.resource.loader.ResourceLoader;
 
 /**

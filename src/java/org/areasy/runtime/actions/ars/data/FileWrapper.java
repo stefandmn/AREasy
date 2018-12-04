@@ -13,14 +13,13 @@ package org.areasy.runtime.actions.ars.data;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.ars.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
-import org.areasy.common.data.StringUtility;
 
 /**
  * Wrapper data processor action.
@@ -37,7 +36,7 @@ public class FileWrapper extends BaseData
 	 */
 	public void run() throws AREasyException
 	{
-		/** The delegated action to be executed **/
+		/* The delegated action to be executed **/
 		RuntimeAction command;
 		boolean errorFlag = false;
 		ParserEngine parser = null;

@@ -13,16 +13,16 @@ package org.areasy.common.logger.base.log4j;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.data.NumberUtility;
-import org.areasy.common.logger.LoggerException;
-import org.areasy.common.logger.base.LoggerManager;
-import org.areasy.common.data.StringUtility;
 import org.apache.log4j.*;
 import org.apache.log4j.xml.XMLLayout;
+import org.areasy.common.data.NumberUtility;
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.logger.LoggerException;
+import org.areasy.common.logger.base.LoggerManager;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.io.Writer;
-import java.io.File;
 
 /**
  * Log4J manager to initialize and to manage logger engine.

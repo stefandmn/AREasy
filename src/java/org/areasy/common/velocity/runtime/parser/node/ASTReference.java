@@ -17,10 +17,10 @@ import org.areasy.common.velocity.base.MethodInvocationException;
 import org.areasy.common.velocity.base.event.EventCartridge;
 import org.areasy.common.velocity.context.Context;
 import org.areasy.common.velocity.context.InternalContextAdapter;
-import org.areasy.common.velocity.runtime.parser.ReferenceException;
 import org.areasy.common.velocity.runtime.introspection.Information;
 import org.areasy.common.velocity.runtime.introspection.VelocityPropertySet;
 import org.areasy.common.velocity.runtime.parser.Parser;
+import org.areasy.common.velocity.runtime.parser.ReferenceException;
 import org.areasy.common.velocity.runtime.parser.Token;
 
 import java.io.IOException;

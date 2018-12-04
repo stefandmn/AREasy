@@ -13,8 +13,8 @@ package org.areasy.runtime.plugins.sso.tools;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.plugins.sso.AbstractFilter;
 import org.areasy.common.data.StringUtility;
+import org.areasy.runtime.plugins.sso.AbstractFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

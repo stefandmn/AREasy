@@ -13,13 +13,12 @@ package org.areasy.runtime.actions.itsm.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.itsm.admin.AbstractUserEnrollment;
+import org.areasy.common.data.NumberUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
-import org.areasy.common.data.NumberUtility;
-import org.areasy.common.data.StringUtility;
 
 /**
  * Dedicated action to set system license for an user or for a list of users

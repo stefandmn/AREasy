@@ -17,8 +17,8 @@ import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.velocity.base.ResourceNotFoundException;
-import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.RuntimeService;
+import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.resource.loader.ResourceLoader;
 import org.areasy.common.velocity.runtime.resource.loader.ResourceLoaderFactory;
 

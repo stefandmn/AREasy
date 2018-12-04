@@ -13,13 +13,13 @@ package org.areasy.boot;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
+import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.InetAddress;
 import java.util.Properties;
-import java.io.OutputStream;
-import java.io.LineNumberReader;
-import java.io.InputStreamReader;
 
 class Listener extends Thread
 {

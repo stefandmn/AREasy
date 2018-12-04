@@ -19,8 +19,8 @@ import org.areasy.common.velocity.base.Template;
 import org.areasy.common.velocity.runtime.directive.Directive;
 import org.areasy.common.velocity.runtime.introspection.Introspector;
 import org.areasy.common.velocity.runtime.introspection.Uberspect;
-import org.areasy.common.velocity.runtime.parser.ParseException;
 import org.areasy.common.velocity.runtime.parser.ParseErrorException;
+import org.areasy.common.velocity.runtime.parser.ParseException;
 import org.areasy.common.velocity.runtime.parser.node.SimpleNode;
 import org.areasy.common.velocity.runtime.resource.ContentResource;
 

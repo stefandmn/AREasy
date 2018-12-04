@@ -16,9 +16,9 @@ package org.areasy.common.parser.html.beans;
 import org.areasy.common.parser.html.engine.Node;
 import org.areasy.common.parser.html.engine.Parser;
 import org.areasy.common.parser.html.engine.tags.LinkTag;
+import org.areasy.common.parser.html.engine.visitors.ObjectFindingVisitor;
 import org.areasy.common.parser.html.utilities.EncodingChangeException;
 import org.areasy.common.parser.html.utilities.ParserException;
-import org.areasy.common.parser.html.engine.visitors.ObjectFindingVisitor;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

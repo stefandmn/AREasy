@@ -16,8 +16,8 @@ package org.areasy.common.velocity.runtime.directive;
 import org.areasy.common.velocity.base.MethodInvocationException;
 import org.areasy.common.velocity.base.ResourceNotFoundException;
 import org.areasy.common.velocity.context.InternalContextAdapter;
-import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.RuntimeService;
+import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.parser.node.Node;
 
 import java.io.IOException;

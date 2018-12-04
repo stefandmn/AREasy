@@ -14,18 +14,18 @@ package org.areasy.common.support.configuration.providers.properties.stream;
  */
 
 import org.areasy.common.data.StringUtility;
-import org.areasy.common.support.configuration.ConfigurationException;
-import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.support.configuration.ConfigurationEntry;
-import org.areasy.common.support.configuration.base.BaseConfigurationEntry;
-import org.areasy.common.support.configuration.base.BaseConfiguration;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.support.configuration.ConfigurationEntry;
+import org.areasy.common.support.configuration.ConfigurationException;
+import org.areasy.common.support.configuration.base.BaseConfiguration;
+import org.areasy.common.support.configuration.base.BaseConfigurationEntry;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.Vector;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 public class ConfigurationManager
 {

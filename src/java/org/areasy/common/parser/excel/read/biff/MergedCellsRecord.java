@@ -15,9 +15,9 @@ package org.areasy.common.parser.excel.read.biff;
 
 import org.areasy.common.parser.excel.Range;
 import org.areasy.common.parser.excel.Sheet;
+import org.areasy.common.parser.excel.biff.DefaultSheetRange;
 import org.areasy.common.parser.excel.biff.IntegerHelper;
 import org.areasy.common.parser.excel.biff.RecordData;
-import org.areasy.common.parser.excel.biff.DefaultSheetRange;
 
 /**
  * A merged cells record for a given sheet

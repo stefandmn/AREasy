@@ -13,12 +13,12 @@ package org.areasy.runtime.engine.structures.data.itsm.foundation;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.MultiPartItem;
-import org.areasy.common.data.StringUtility;
 
 /**
  * Organisation entity from the Foundation layer from ITSM application suite.

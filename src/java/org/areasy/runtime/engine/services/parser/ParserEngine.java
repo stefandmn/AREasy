@@ -13,11 +13,11 @@ package org.areasy.runtime.engine.services.parser;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.common.data.ClassUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
+import org.areasy.runtime.engine.base.ServerConnection;
 
 import java.util.Vector;
 

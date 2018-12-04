@@ -13,9 +13,9 @@ package org.areasy.common.doclet.document;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import com.sun.javadoc.*;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.utilities.DocletUtility;
-import com.sun.javadoc.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

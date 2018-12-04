@@ -21,8 +21,8 @@ import org.areasy.common.velocity.base.ResourceNotFoundException;
 import org.areasy.common.velocity.base.Template;
 import org.areasy.common.velocity.context.Context;
 import org.areasy.common.velocity.context.DefaultInternalContextAdapter;
-import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.RuntimeServiceImplementation;
+import org.areasy.common.velocity.runtime.parser.ParseErrorException;
 import org.areasy.common.velocity.runtime.parser.ParseException;
 import org.areasy.common.velocity.runtime.parser.node.SimpleNode;
 

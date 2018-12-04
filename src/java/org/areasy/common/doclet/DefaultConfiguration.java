@@ -13,12 +13,12 @@ package org.areasy.common.doclet;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
+import com.sun.javadoc.RootDoc;
 import org.areasy.common.doclet.document.Fonts;
 import org.areasy.common.doclet.document.State;
 import org.areasy.common.doclet.utilities.DocletUtility;
-import com.sun.javadoc.RootDoc;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
 import sun.tools.java.ClassPath;
 
 import java.io.File;

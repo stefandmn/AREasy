@@ -14,9 +14,9 @@ package org.areasy.runtime.actions.ars.dev;
  */
 
 import com.bmc.arsys.api.*;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.engine.RuntimeLogger;
-import org.areasy.common.data.StringUtility;
 
 /**
  * Abstract runtime action to remove one or more definition objects.

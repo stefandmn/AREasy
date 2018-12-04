@@ -20,7 +20,6 @@ import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerException;
 import org.areasy.common.logger.LoggerFactory;
 
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

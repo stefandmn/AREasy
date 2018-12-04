@@ -16,12 +16,12 @@ package org.areasy.runtime.actions.flow.events;
 import com.bmc.arsys.api.ARException;
 import com.bmc.arsys.api.SQLResult;
 import com.bmc.arsys.api.Value;
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.common.data.StringUtility;
-import org.areasy.common.support.configuration.Configuration;
 
 import java.util.List;
 import java.util.Vector;

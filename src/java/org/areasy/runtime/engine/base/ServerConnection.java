@@ -14,12 +14,12 @@ package org.areasy.runtime.engine.base;
  */
 
 import com.bmc.arsys.api.ARServerUser;
-import org.areasy.runtime.engine.services.cache.InitialObject;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.data.type.credential.Credential;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
+import org.areasy.runtime.engine.services.cache.InitialObject;
 
 /**
  * This class is a generic API for communication with AR server.

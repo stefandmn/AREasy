@@ -19,15 +19,15 @@ import com.lowagie.text.List;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
+import com.sun.javadoc.*;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.DefaultConfiguration;
 import org.areasy.common.doclet.document.elements.*;
 import org.areasy.common.doclet.document.tags.HtmlParserWrapper;
 import org.areasy.common.doclet.utilities.DocletUtility;
 import org.areasy.common.doclet.utilities.PDFUtility;
-import com.sun.javadoc.*;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.awt.*;
 import java.util.Arrays;

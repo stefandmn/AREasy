@@ -13,15 +13,15 @@ package org.areasy.common.support.configuration.base;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.data.StringUtility;
 import org.areasy.common.data.StringEscapeUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.support.configuration.ConfigurationEntry;
 import org.areasy.common.support.configuration.ConfigurationLocator;
 
-import java.util.List;
-import java.util.Vector;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 
 /**

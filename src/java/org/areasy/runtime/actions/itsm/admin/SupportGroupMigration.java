@@ -14,13 +14,13 @@ package org.areasy.runtime.actions.itsm.admin;
  */
 
 import com.bmc.arsys.api.Constants;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.ARDictionary;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
-import org.areasy.common.data.StringUtility;
 
 import java.util.List;
 

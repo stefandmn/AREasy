@@ -13,16 +13,14 @@ package org.areasy.runtime.actions.ars.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.ars.admin.AbstractSystemMonitor;
-import org.areasy.runtime.engine.RuntimeLogger;
-import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.base.BaseConfiguration;
+import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.engine.RuntimeLogger;
+import org.areasy.runtime.engine.base.ServerConnection;
 
 /**
  * Dedicated action to monitor if server instances are working.
- *
  */
 public class ServerMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {

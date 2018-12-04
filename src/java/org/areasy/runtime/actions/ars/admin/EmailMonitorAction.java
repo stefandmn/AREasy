@@ -14,7 +14,6 @@ package org.areasy.runtime.actions.ars.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.ars.admin.AbstractSystemMonitor;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.RuntimeServer;
 import org.areasy.runtime.engine.services.cache.CacheEntry;
@@ -24,7 +23,6 @@ import java.util.List;
 
 /**
  * Dedicated action to monitor if server instances are working.
- *
  */
 public class EmailMonitorAction extends AbstractSystemMonitor implements RuntimeAction
 {

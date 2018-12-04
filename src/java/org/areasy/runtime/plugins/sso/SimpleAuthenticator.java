@@ -17,20 +17,18 @@ import com.remedy.arsys.session.Authenticator;
 import com.remedy.arsys.session.DefaultAuthenticator;
 import com.remedy.arsys.session.HttpSessionKeys;
 import com.remedy.arsys.session.UserCredentials;
-import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.support.configuration.base.BaseConfiguration;
-import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
-import org.areasy.runtime.RuntimeManager;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
+import org.areasy.runtime.RuntimeManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

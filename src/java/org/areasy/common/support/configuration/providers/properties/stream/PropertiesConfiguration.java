@@ -14,18 +14,20 @@ package org.areasy.common.support.configuration.providers.properties.stream;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
+import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.ConfigurationEntry;
 import org.areasy.common.support.configuration.ConfigurationException;
 import org.areasy.common.support.configuration.ConfigurationLocator;
-import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.base.BaseConfigurationLocator;
 import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
-import org.areasy.common.data.StringUtility;
 
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.StringWriter;
 import java.util.Iterator;
-import java.io.*;
 
 /**
  * This is the "classic" Properties loader which loads the values from

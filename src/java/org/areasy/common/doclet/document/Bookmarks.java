@@ -16,9 +16,9 @@ package org.areasy.common.doclet.document;
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfOutline;
 import com.lowagie.text.pdf.PdfWriter;
+import com.sun.javadoc.*;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.DefaultConfiguration;
-import com.sun.javadoc.*;
 
 import java.util.*;
 

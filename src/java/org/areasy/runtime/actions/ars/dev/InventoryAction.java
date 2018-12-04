@@ -14,10 +14,10 @@ package org.areasy.runtime.actions.ars.dev;
  */
 
 import com.bmc.arsys.api.StructItemInfo;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
-import org.areasy.common.data.StringUtility;
 
 import java.io.File;
 import java.util.List;

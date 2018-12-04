@@ -13,15 +13,18 @@ package org.areasy.common.logger.base;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerException;
+import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.providers.properties.BasePropertiesConfiguration;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
-import org.areasy.common.logger.LoggerException;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
-import org.areasy.common.data.StringUtility;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.Vector;
 
 /**
  * This logger manager library could be used to initialize and to manage different implementation of logger engines.

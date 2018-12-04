@@ -13,13 +13,13 @@ package org.areasy.common.parser.html;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.parser.html.utilities.ParserException;
-import org.areasy.common.parser.html.engine.lexer.Page;
-import org.areasy.common.parser.html.engine.lexer.Lexer;
-import org.areasy.common.parser.html.engine.Parser;
-import org.areasy.common.parser.html.engine.NodeFilter;
-import org.areasy.common.parser.html.engine.filters.TagNameFilter;
 import org.areasy.common.parser.html.beans.StringBean;
+import org.areasy.common.parser.html.engine.NodeFilter;
+import org.areasy.common.parser.html.engine.Parser;
+import org.areasy.common.parser.html.engine.filters.TagNameFilter;
+import org.areasy.common.parser.html.engine.lexer.Lexer;
+import org.areasy.common.parser.html.engine.lexer.Page;
+import org.areasy.common.parser.html.utilities.ParserException;
 
 
 /**

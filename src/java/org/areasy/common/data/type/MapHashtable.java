@@ -13,7 +13,8 @@ package org.areasy.common.data.type;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import java.util.*;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * <p>A customized implementation of <code>java.util.Hashtable</code> designed

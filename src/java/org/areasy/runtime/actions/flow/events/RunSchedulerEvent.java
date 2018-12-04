@@ -16,13 +16,13 @@ package org.areasy.runtime.actions.flow.events;
 import com.bmc.arsys.api.DateInfo;
 import com.bmc.arsys.api.Time;
 import com.bmc.arsys.api.Timestamp;
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.support.configuration.base.BaseConfiguration;
 import org.areasy.runtime.actions.flow.FlowPatternAction;
 import org.areasy.runtime.engine.RuntimeClient;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.common.data.StringUtility;
-import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.support.configuration.base.BaseConfiguration;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -15,9 +15,9 @@ package org.areasy.runtime.actions.ars.dev.wrappers;
 
 import com.bmc.arsys.api.ARException;
 import com.bmc.arsys.api.ObjectBase;
+import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.actions.ars.dev.DefinitionAction;
 import org.areasy.runtime.engine.base.ServerConnection;
-import org.areasy.common.support.configuration.Configuration;
 
 /**
  * Default and abstract implementation of <code>AbstractModel</code>

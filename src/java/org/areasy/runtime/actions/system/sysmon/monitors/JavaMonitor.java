@@ -15,7 +15,7 @@ package org.areasy.runtime.actions.system.sysmon.monitors;
 
 import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.actions.system.Sysmon;
-import org.areasy.runtime.actions.system.sysmon.*;
+import org.areasy.runtime.actions.system.sysmon.Monitor;
 import org.areasy.runtime.actions.system.sysmon.infos.*;
 
 public class JavaMonitor implements Monitor

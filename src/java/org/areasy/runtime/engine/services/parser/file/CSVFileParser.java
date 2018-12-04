@@ -13,9 +13,9 @@ package org.areasy.runtime.engine.services.parser.file;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.parser.csv.CsvReader;
 import org.areasy.runtime.engine.services.parser.AbstractParser;
 import org.areasy.runtime.engine.services.parser.ParserException;
-import org.areasy.common.parser.csv.CsvReader;
 
 import java.io.FileInputStream;
 import java.io.FileReader;

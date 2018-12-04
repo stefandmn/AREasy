@@ -13,6 +13,15 @@ package org.areasy.runtime.actions;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.BooleanUtility;
+import org.areasy.common.data.DateUtility;
+import org.areasy.common.data.NumberUtility;
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
+import org.areasy.common.support.configuration.Configuration;
+import org.areasy.common.velocity.context.Context;
+import org.areasy.common.velocity.context.VelocityContext;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.engine.RuntimeLogger;
@@ -23,15 +32,6 @@ import org.areasy.runtime.engine.services.cache.CacheEntry;
 import org.areasy.runtime.engine.services.cache.InitialObject;
 import org.areasy.runtime.engine.services.status.BaseStatus;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.common.data.BooleanUtility;
-import org.areasy.common.data.DateUtility;
-import org.areasy.common.data.NumberUtility;
-import org.areasy.common.data.StringUtility;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
-import org.areasy.common.support.configuration.Configuration;
-import org.areasy.common.velocity.context.Context;
-import org.areasy.common.velocity.context.VelocityContext;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -1372,7 +1372,9 @@ public abstract class AbstractAction implements RuntimeAction
 			}
 			else throw new AREasyException("Help location could not be detected");
 
-			this.loadHelpPath = RuntimeManager.getDocDirectory()+ "/help/"+ this.loadHelpPath.replace('.', '/') + "/" + action.getCode() + ".xml";
+			this.loadHelpPath = this.loadHelpPath.replace('.', '/') + "/" + action.getCode() + ".xml";
+
+			if(this.loadHelpPath.startsWith("/")) this.loadHelpPath = this.loadHelpPath.substring(1);
 		}
 
 		/**
@@ -1401,7 +1403,7 @@ public abstract class AbstractAction implements RuntimeAction
 
 				try
 				{
-					return new FileInputStream(xmlHelpDoc);
+					return new FileInputStream(RuntimeManager.getDocDirectory()+ "/help/" + xmlHelpDoc);
 				}
 				catch(IOException ioe)
 				{

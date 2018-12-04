@@ -13,10 +13,9 @@ package org.areasy.common.parser.excel.biff;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.parser.excel.*;
+import org.areasy.common.parser.excel.CellFeatures;
 import org.areasy.common.parser.excel.CellType;
 import org.areasy.common.parser.excel.format.*;
-import org.areasy.common.parser.excel.format.CellFormat;
 import org.areasy.common.parser.excel.write.WritableCell;
 import org.areasy.common.parser.excel.write.WritableCellFeatures;
 

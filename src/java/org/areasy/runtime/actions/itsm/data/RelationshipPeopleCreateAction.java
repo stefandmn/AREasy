@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.itsm.data;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
@@ -20,7 +21,6 @@ import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 import org.areasy.runtime.engine.workflows.ProcessorLevel2CmdbApp;
-import org.areasy.common.data.StringUtility;
 
 import java.util.HashMap;
 import java.util.List;

@@ -14,8 +14,8 @@ package org.areasy.common.support.configuration.base;
  */
 
 import org.areasy.common.data.BooleanUtility;
-import org.areasy.common.data.StringUtility;
 import org.areasy.common.data.StringEscapeUtility;
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.data.type.Predicate;
 import org.areasy.common.data.type.iterator.FilterIterator;
 import org.areasy.common.support.configuration.Configuration;

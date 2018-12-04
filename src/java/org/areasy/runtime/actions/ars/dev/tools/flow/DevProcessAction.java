@@ -14,6 +14,7 @@ package org.areasy.runtime.actions.ars.dev.tools.flow;
  */
 
 import com.bmc.arsys.api.StructItemInfo;
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.actions.ars.dev.DefinitionAction;
 import org.areasy.runtime.actions.ars.dev.ExportAction;
 import org.areasy.runtime.actions.ars.dev.tools.flow.events.*;
@@ -21,7 +22,6 @@ import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
 import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
-import org.areasy.common.data.StringUtility;
 
 import java.io.File;
 import java.util.*;

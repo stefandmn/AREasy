@@ -14,21 +14,20 @@ package org.areasy.runtime.actions.ars.admin;
  */
 
 import com.bmc.arsys.api.*;
+import org.areasy.common.data.DateUtility;
+import org.areasy.common.data.StringUtility;
+import org.areasy.common.data.type.map.ListOrderedMap;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.structures.CoreItem;
-import org.areasy.common.data.DateUtility;
-import org.areasy.common.data.StringUtility;
-import org.areasy.common.data.type.map.ListOrderedMap;
 
 import java.util.*;
 
 /**
  * Remedy licenses report action
- *
  */
 public class LicensesReportAction extends AbstractAction implements RuntimeAction
 {

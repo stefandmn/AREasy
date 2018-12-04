@@ -13,10 +13,10 @@ package org.areasy.common.velocity.runtime.introspection;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.data.type.iterator.ArrayIterator;
 import org.areasy.common.data.type.iterator.EnumerationIterator;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.velocity.runtime.parser.node.AbstractExecutor;
 import org.areasy.common.velocity.runtime.parser.node.BooleanPropertyExecutor;
 import org.areasy.common.velocity.runtime.parser.node.GetExecutor;

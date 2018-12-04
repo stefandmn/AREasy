@@ -20,8 +20,6 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfName;
 import com.lowagie.text.pdf.PdfString;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.doclet.DefaultConfiguration;
 import org.areasy.common.doclet.document.Bookmarks;
 import org.areasy.common.doclet.document.Destinations;
@@ -29,6 +27,8 @@ import org.areasy.common.doclet.document.State;
 import org.areasy.common.doclet.document.elements.LinkPhrase;
 import org.areasy.common.doclet.utilities.DocletUtility;
 import org.areasy.common.doclet.utilities.PDFUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.awt.*;
 import java.io.File;

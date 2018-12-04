@@ -14,19 +14,19 @@ package org.areasy.common.support.configuration.providers.properties;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.ConfigurationException;
-import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
-import org.areasy.common.support.configuration.providers.properties.rstream.ClassPropertiesConfiguration;
 import org.areasy.common.support.configuration.base.BaseConfiguration;
-import org.areasy.common.data.StringUtility;
+import org.areasy.common.support.configuration.providers.properties.rstream.ClassPropertiesConfiguration;
+import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import java.io.File;
-import java.io.InputStream;
 
 /**
  * loads the configuration from a properties file. <p>

@@ -13,10 +13,10 @@ package org.areasy.common.parser.excel.biff;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.common.parser.excel.LabelCell;
-import org.areasy.common.parser.excel.Sheet;
 import org.areasy.common.parser.excel.Cell;
 import org.areasy.common.parser.excel.CellType;
+import org.areasy.common.parser.excel.LabelCell;
+import org.areasy.common.parser.excel.Sheet;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

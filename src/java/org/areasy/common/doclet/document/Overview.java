@@ -15,14 +15,14 @@ package org.areasy.common.doclet.document;
 
 import com.lowagie.text.Element;
 import com.lowagie.text.Paragraph;
-import org.areasy.common.logger.Logger;
-import org.areasy.common.logger.LoggerFactory;
+import com.sun.javadoc.RootDoc;
 import org.areasy.common.doclet.AbstractConfiguration;
 import org.areasy.common.doclet.DefaultConfiguration;
 import org.areasy.common.doclet.document.tags.HtmlParserWrapper;
 import org.areasy.common.doclet.utilities.DocletUtility;
 import org.areasy.common.doclet.utilities.PDFUtility;
-import com.sun.javadoc.RootDoc;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 
 import java.io.File;
 

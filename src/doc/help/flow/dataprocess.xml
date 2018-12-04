@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE help SYSTEM "../action.dtd">
@@ -16,13 +15,13 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="flow.datatransfer.xml">
+<help inherits="action.xml">
 	<name>Data Export Workflow</name>
-	<description>Execute data export through a certain workflow</description>
+	<description>Execute data export through a designed workflow</description>
 	<syntax>
-		areasy -action flow.dataexport
+		areasy -action dataprocess
 	</syntax>
-	<samples>
+	<!--samples>
 		<sample code="" description=""/>
-	</samples>
+	</samples-->
 </help>

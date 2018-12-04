@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.itsm.admin;
+package org.areasy.runtime.actions.ars.admin;
 
 /*
  * Copyright (c) 2007-2018 AREasy Runtime

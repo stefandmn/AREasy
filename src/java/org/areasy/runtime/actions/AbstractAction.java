@@ -1764,7 +1764,7 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			String content = "";
 
-			if(getName() != null) content += getName() + "\n";
+			if(getName() != null) content += getName() + "\n" + StringUtility.center("", getName().length(), '=') + "\n";
 			if(getDescription() != null ) content += "\n" + getDescription() + "\n";
 
 			if(getSyntax() != null)

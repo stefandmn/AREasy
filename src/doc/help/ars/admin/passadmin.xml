@@ -21,10 +21,14 @@
 		This action is an ARS utility, designed to encrypt or to decrypt AR configuration keys and passwords. Please notice that this action needs connection to the server that manages that key or password.
 	</description>
 	<syntax>
-		areasy -action ars.passadmin -entity encrypt|decrypt -password [KeyOrPassword]
+		areasy -action passadmin -operation encrypt|decrypt -password [KeyOrPassword]
 	</syntax>
 	<options>
 		<option key="operation" type="string" selvalues="encrypt,decrypt" defvalue="" description="Execution mode or this action (encrypt or decrypt keys and passwords)"/>
 		<option key="password" type="string" description="Key or password that will be applied to encryption or decryption procedure"/>
 	</options>
+	<samples>
+		<sample code="areasy -action passadmin -operation encrypt -password test" description="Encrypt 'test' string in ARSystem format to become a classic AR password"/>
+		<sample code="areasy -action passadmin -operation encrypt -password test -arserver ars1 -aruser Demo" description="Encrypt 'test' string in ARSystem format to become a classic AR password but with explicit connection to a particular ARS server (and not relaying on the connection details defined in general runtime configuration)"/>
+	</samples>
 </help>

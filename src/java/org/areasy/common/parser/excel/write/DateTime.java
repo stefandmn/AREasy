@@ -113,7 +113,7 @@ public class DateTime extends DateRecord implements WritableCell, DateCell
 	}
 
 	/**
-	 * A constructor called by the worksheet when creating a writable version
+	 * A constructor called by the process when creating a writable version
 	 * of a spreadsheet that has been read in
 	 *
 	 * @param dc the date to copy

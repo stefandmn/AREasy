@@ -32,14 +32,14 @@ public class DataProcessAction extends FlowPatternAction
 
 	static
 	{
-		events.put("readheaders", "org.areasy.runtime.actions.flow.events.ReadHeadersEvent");
-		events.put("actionlist", "org.areasy.runtime.actions.flow.events.ReadActionlistEvent");
-		events.put("runworkflow", "org.areasy.runtime.actions.flow.events.RunWorkflowEvent");
-		events.put("loadmetadata", "org.areasy.runtime.actions.flow.events.LoadMetadataEvent");
-		events.put("runscheduler", "org.areasy.runtime.actions.flow.events.RunSchedulerEvent");
-		events.put("runautomap", "org.areasy.runtime.actions.flow.events.RunAutomapEvent");
-		events.put("runjobexport", "org.areasy.runtime.actions.flow.events.RunJobExportEvent");
-		events.put("runjobimport", "org.areasy.runtime.actions.flow.events.RunJobImportEvent");
+		events.put("readheaders", "org.areasy.runtime.actions.process.events.ReadHeadersEvent");
+		events.put("actionlist", "org.areasy.runtime.actions.process.events.ReadActionlistEvent");
+		events.put("runworkflow", "org.areasy.runtime.actions.process.events.RunWorkflowEvent");
+		events.put("loadmetadata", "org.areasy.runtime.actions.process.events.LoadMetadataEvent");
+		events.put("runscheduler", "org.areasy.runtime.actions.process.events.RunSchedulerEvent");
+		events.put("runautomap", "org.areasy.runtime.actions.process.events.RunAutomapEvent");
+		events.put("runjobexport", "org.areasy.runtime.actions.process.events.RunJobExportEvent");
+		events.put("runjobimport", "org.areasy.runtime.actions.process.events.RunJobImportEvent");
 	}
 
 	/**

@@ -218,7 +218,7 @@ public class FormulaRecord extends CellValue implements FormulaData
 	}
 
 	/**
-	 * Called when the cell is added to the worksheet.  Overrides the
+	 * Called when the cell is added to the process.  Overrides the
 	 * method in the base class in order to get a handle to the
 	 * WorkbookSettings so that this formula may be initialized
 	 *

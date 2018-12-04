@@ -1237,7 +1237,7 @@ public class HyperlinkRecord extends WritableRecordData
 	}
 
 	/**
-	 * Called by the worksheet.  Gets the string contents to put into the cell
+	 * Called by the process.  Gets the string contents to put into the cell
 	 * containing this hyperlink
 	 *
 	 * @return the string contents for the hyperlink cell

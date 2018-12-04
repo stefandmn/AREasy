@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.ars.dev;
+package org.areasy.runtime.actions.ars.dev.tools;
 
 /*
  * Copyright (c) 2007-2018 AREasy Runtime
@@ -16,6 +16,7 @@ package org.areasy.runtime.actions.ars.dev;
 import com.bmc.arsys.api.*;
 import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
+import org.areasy.runtime.actions.ars.dev.DefinitionAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Associate forms with workflow objects (filters, escalation, active links and also containers)
  */
-public class SetFormsAction extends DefinitionAction implements RuntimeAction
+public class SetFormsInObjectsAction extends DefinitionAction implements RuntimeAction
 {
 	private String addForm = null;
 	private String delForm = null;

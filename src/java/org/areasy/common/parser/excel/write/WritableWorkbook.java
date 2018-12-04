@@ -133,7 +133,7 @@ public abstract class WritableWorkbook
 	public abstract void close() throws IOException, WriteException;
 
 	/**
-	 * Creates, and returns a worksheet at the specified position
+	 * Creates, and returns a process at the specified position
 	 * with the specified name
 	 * If the index specified is less than or equal to zero, the new sheet
 	 * is created at the beginning of the workbook.  If the index is greater

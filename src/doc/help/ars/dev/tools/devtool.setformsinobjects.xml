@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -15,13 +15,23 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="data/base.data.xml">
-	<name>Import Object</name>
-	<description>Import Workflow Object(s)</description>
+<help inherits="action.xml">
+	<name>Set Forms in Objects</name>
+	<description>Set Form for Development</description>
 	<syntax>
-		areasy -action dev.import
+		areasy -action devtool.setformsinobjects
 	</syntax>
+	<options>
+		<option key="inputfile" type="string" description="parserfile, file"/>
+		<option key="parsertype" type="string" description=""/>
+		<option key="call" type="string" description="subaction"/>
+		<option key="limit" type="number" description=""/>
+		<option key="sleep" type="number" description=""/>
+	</options>
+	<!--options>
+		<option key="" type="string" description=""/>
+	</options>
 	<samples>
 		<sample code="" description=""/>
-	</samples>
+	</samples-->
 </help>

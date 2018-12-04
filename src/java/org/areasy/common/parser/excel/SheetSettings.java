@@ -21,7 +21,7 @@ import org.areasy.common.parser.excel.format.PaperSize;
 
 /**
  * This is a bean which client applications may use to get/set various
- * properties which are associated with a particular worksheet, such
+ * properties which are associated with a particular process, such
  * as headers and footers, page orientation etc.
  */
 public final class SheetSettings
@@ -516,7 +516,7 @@ public final class SheetSettings
 	}
 
 	/**
-	 * Sets the hidden status of this worksheet
+	 * Sets the hidden status of this process
 	 *
 	 * @param h the hidden flag
 	 */

@@ -189,7 +189,7 @@ final class SheetWriter
 	{
 		Assert.verify(rows != null);
 
-		// This worksheet consists of just one chart, so write it and return
+		// This process consists of just one chart, so write it and return
 		if (chartOnly)
 		{
 			drawingWriter.write(outputFile);

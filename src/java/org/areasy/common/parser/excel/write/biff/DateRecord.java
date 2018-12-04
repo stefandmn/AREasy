@@ -63,7 +63,7 @@ public abstract class DateRecord extends CellValue
 	private final static long msInADay = 24 * 60 * 60 * 1000;
 
 	/**
-	 * This is package protected so that the worksheet might detect
+	 * This is package protected so that the process might detect
 	 * whether or not to override it with the column cell format
 	 */
 	static final WritableCellFormat defaultDateFormat =

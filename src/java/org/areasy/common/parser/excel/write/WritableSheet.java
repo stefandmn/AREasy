@@ -22,7 +22,7 @@ import org.areasy.common.parser.excel.format.PaperSize;
 import org.areasy.common.parser.excel.write.biff.RowsExceededException;
 
 /**
- * Interface for a worksheet that may be modified.  The most
+ * Interface for a process that may be modified.  The most
  * important modification for a sheet is to have cells added to it
  */
 public interface WritableSheet extends Sheet
@@ -278,7 +278,7 @@ public interface WritableSheet extends Sheet
 	 * Adds the specified hyperlink.  Adding a hyperlink causes any populated
 	 * cells in the range of the hyperlink to be set to empty
 	 * If the cells which activate this hyperlink clash with any other cells,
-	 * they are still added to the worksheet and it is left to Excel to
+	 * they are still added to the process and it is left to Excel to
 	 * handle this.
 	 *
 	 * @param h the hyperlink

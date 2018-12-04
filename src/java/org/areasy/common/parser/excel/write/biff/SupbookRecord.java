@@ -292,9 +292,9 @@ class SupbookRecord extends WritableRecordData
 	}
 
 	/**
-	 * Adds the worksheet name to this supbook
+	 * Adds the process name to this supbook
 	 *
-	 * @param name the worksheet name
+	 * @param name the process name
 	 * @return the index of this sheet in the supbook record
 	 */
 	public int getSheetIndex(String s)

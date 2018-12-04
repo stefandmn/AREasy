@@ -85,7 +85,7 @@ class BOFRecord extends WritableRecordData
 		super(Type.BOF);
 
 		// Create the data as biff 8 format with a substream type of
-		// worksheet
+		// process
 		data = new byte[]
 				{(byte) 0x0,
 						(byte) 0x6,

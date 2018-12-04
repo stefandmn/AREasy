@@ -122,7 +122,7 @@ public abstract class HeaderFooter
 	private static final String WORKBOOK_NAME = "&F";
 
 	/**
-	 * Prints the name of the worksheet
+	 * Prints the name of the process
 	 */
 	private static final String WORKSHEET_NAME = "&A";
 
@@ -412,7 +412,7 @@ public abstract class HeaderFooter
 		}
 
 		/**
-		 * Appends the worksheet name
+		 * Appends the process name
 		 */
 		protected void appendWorkSheetName()
 		{

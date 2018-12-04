@@ -53,7 +53,7 @@ class RowRecord extends WritableRecordData
 	 */
 	private boolean collapsed;
 	/**
-	 * The number of this row within the worksheet
+	 * The number of this row within the process
 	 */
 	private int rowNumber;
 	/**

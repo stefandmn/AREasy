@@ -1118,7 +1118,7 @@ final class SheetReader
 					objRecord = null;
 				}
 
-				// If this worksheet is just a chart, then the EOF reached
+				// If this process is just a chart, then the EOF reached
 				// represents the end of the sheet as well as the end of the chart
 				if (sheetBof.isChart())
 				{

@@ -44,12 +44,12 @@ public abstract class CellValue extends WritableRecordData
 	private static Logger logger = LoggerFactory.getLog(CellValue.class);
 
 	/**
-	 * The row in the worksheet at which this cell is located
+	 * The row in the process at which this cell is located
 	 */
 	private int row;
 
 	/**
-	 * The column in the worksheet at which this cell is located
+	 * The column in the process at which this cell is located
 	 */
 	private int column;
 
@@ -67,7 +67,7 @@ public abstract class CellValue extends WritableRecordData
 
 	/**
 	 * A flag to indicate that this record is already referenced within
-	 * a worksheet
+	 * a process
 	 */
 	private boolean referenced;
 
@@ -249,8 +249,8 @@ public abstract class CellValue extends WritableRecordData
 	}
 
 	/**
-	 * Called when the cell is added to the worksheet in order to indicate
-	 * that this object is already added to the worksheet
+	 * Called when the cell is added to the process in order to indicate
+	 * that this object is already added to the process
 	 * This method also verifies that the associated formats and formats
 	 * have been initialized correctly
 	 *
@@ -523,7 +523,7 @@ public abstract class CellValue extends WritableRecordData
 		features = cf;
 		cf.setWritableCell(this);
 
-		// If the cell is already on the worksheet, then add the cell features
+		// If the cell is already on the process, then add the cell features
 		// to the workbook
 		if (referenced)
 		{

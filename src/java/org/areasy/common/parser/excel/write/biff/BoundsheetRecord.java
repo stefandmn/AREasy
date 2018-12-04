@@ -87,7 +87,7 @@ class BoundsheetRecord extends WritableRecordData
 		}
 		else
 		{
-			data[5] = 0; // set stream type to worksheet
+			data[5] = 0; // set stream type to process
 		}
 
 		if (hidden)

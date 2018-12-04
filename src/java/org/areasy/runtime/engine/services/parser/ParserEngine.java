@@ -23,7 +23,7 @@ import java.util.Vector;
 
 /**
  * Parser engine has the main role to initiate the right parser instance and to drive the
- * entire flow of data parsing procedure.
+ * entire process of data parsing procedure.
  */
 public class ParserEngine
 {

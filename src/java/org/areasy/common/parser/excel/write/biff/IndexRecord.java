@@ -18,7 +18,7 @@ import org.areasy.common.parser.excel.biff.Type;
 import org.areasy.common.parser.excel.biff.WritableRecordData;
 
 /**
- * Index into the cell rows in an worksheet
+ * Index into the cell rows in an process
  */
 class IndexRecord extends WritableRecordData
 {

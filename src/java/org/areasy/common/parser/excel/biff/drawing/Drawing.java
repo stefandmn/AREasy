@@ -29,7 +29,7 @@ import java.io.IOException;
 
 /**
  * Contains the various biff records used to insert a drawing into a
- * worksheet
+ * process
  */
 public class Drawing implements DrawingGroupObject, Image
 {

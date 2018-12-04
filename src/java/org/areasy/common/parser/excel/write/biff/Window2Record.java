@@ -19,7 +19,7 @@ import org.areasy.common.parser.excel.biff.Type;
 import org.areasy.common.parser.excel.biff.WritableRecordData;
 
 /**
- * Contains the window attributes for a worksheet
+ * Contains the window attributes for a process
  */
 class Window2Record extends WritableRecordData
 {

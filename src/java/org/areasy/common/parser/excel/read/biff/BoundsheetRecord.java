@@ -19,7 +19,7 @@ import org.areasy.common.parser.excel.biff.RecordData;
 import org.areasy.common.parser.excel.biff.StringHelper;
 
 /**
- * A boundsheet record, which contains the worksheet name
+ * A boundsheet record, which contains the process name
  */
 class BoundsheetRecord extends RecordData
 {
@@ -36,11 +36,11 @@ class BoundsheetRecord extends RecordData
 	 */
 	private byte visibilityFlag;
 	/**
-	 * The length of the worksheet name
+	 * The length of the process name
 	 */
 	private int length;
 	/**
-	 * The worksheet name
+	 * The process name
 	 */
 	private String name;
 
@@ -107,9 +107,9 @@ class BoundsheetRecord extends RecordData
 	}
 
 	/**
-	 * Accessor for the worksheet name
+	 * Accessor for the process name
 	 *
-	 * @return the worksheet name
+	 * @return the process name
 	 */
 	public String getName()
 	{
@@ -127,10 +127,10 @@ class BoundsheetRecord extends RecordData
 	}
 
 	/**
-	 * Accessor to determine if this is a worksheet, or some other nefarious
+	 * Accessor to determine if this is a process, or some other nefarious
 	 * type of object
 	 *
-	 * @return TRUE if this is a worksheet, FALSE otherwise
+	 * @return TRUE if this is a process, FALSE otherwise
 	 */
 	public boolean isSheet()
 	{

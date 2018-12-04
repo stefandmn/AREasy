@@ -25,8 +25,8 @@ import java.net.URL;
 public class WritableHyperlink extends HyperlinkRecord implements Hyperlink
 {
 	/**
-	 * Constructor used internally by the worksheet when making a copy
-	 * of worksheet
+	 * Constructor used internally by the process when making a copy
+	 * of process
 	 *
 	 * @param h  the hyperlink being read in
 	 * @param ws the writable sheet containing the hyperlink

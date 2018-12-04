@@ -639,7 +639,7 @@ public class StringBean extends NodeVisitor implements Serializable
     }
 
     /**
-     * Appends a newline to the output if the tag breaks flow, and
+     * Appends a newline to the output if the tag breaks process, and
      * possibly sets the state of the PRE and SCRIPT flags.
      */
     public void visitTag(Tag tag)

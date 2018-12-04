@@ -539,7 +539,7 @@ public class WorkbookParser extends Workbook
 		nameTable = new ArrayList();
 		addInFunctions = new ArrayList();
 
-		// Skip to the first worksheet
+		// Skip to the first process
 		while (bofs == 1)
 		{
 			r = excelFile.next();

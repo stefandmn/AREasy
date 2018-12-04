@@ -24,7 +24,7 @@ import java.io.IOException;
 
 /**
  * Contains the various biff records used to insert a drawing into a
- * worksheet.  This type of image does not have an associated object
+ * process.  This type of image does not have an associated object
  * record
  */
 public class Drawing2 implements DrawingGroupObject

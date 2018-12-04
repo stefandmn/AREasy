@@ -25,7 +25,7 @@ import org.areasy.common.parser.excel.read.biff.File;
 
 /**
  * Contains the various biff records used to insert a chart into a
- * worksheet
+ * process
  */
 public class Chart implements ByteData, EscherStream
 {
@@ -120,7 +120,7 @@ public class Chart implements ByteData, EscherStream
 		initialized = false;
 
 		// Note:  mso and obj values can be null if we are creating a chart
-		// which takes up an entire worksheet.  Check that both are null or both
+		// which takes up an entire process.  Check that both are null or both
 		// not null though
 		Assert.verify((mso != null && obj != null) ||
 				(mso == null && obj == null));

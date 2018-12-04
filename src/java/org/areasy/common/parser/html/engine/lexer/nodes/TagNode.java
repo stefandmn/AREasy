@@ -41,7 +41,7 @@ public class TagNode
 	protected Vector mAttributes;
 
 	/**
-	 * Set of tags that breaks the flow.
+	 * Set of tags that breaks the process.
 	 */
 	protected static Hashtable breakTags;
 
@@ -751,7 +751,7 @@ public class TagNode
 	}
 
 	/**
-	 * Determines if the given tag breaks the flow of text.
+	 * Determines if the given tag breaks the process of text.
 	 *
 	 * @return <code>true</code> if following text would start on a new line,
 	 *         <code>false</code> otherwise.

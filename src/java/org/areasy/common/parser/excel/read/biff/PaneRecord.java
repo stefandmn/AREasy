@@ -19,7 +19,7 @@ import org.areasy.common.parser.excel.biff.IntegerHelper;
 import org.areasy.common.parser.excel.biff.RecordData;
 
 /**
- * Contains the cell dimensions of this worksheet
+ * Contains the cell dimensions of this process
  */
 class PaneRecord extends RecordData
 {

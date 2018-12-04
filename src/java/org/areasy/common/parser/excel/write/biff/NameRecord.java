@@ -531,7 +531,7 @@ class NameRecord extends WritableRecordData
 	}
 
 	/**
-	 * Called when a row is removed on the worksheet
+	 * Called when a row is removed on the process
 	 *
 	 * @param sheetIndex the sheet index on which the column was inserted
 	 * @param row		the column number which was inserted
@@ -596,7 +596,7 @@ class NameRecord extends WritableRecordData
 	}
 
 	/**
-	 * Called when a row is removed on the worksheet
+	 * Called when a row is removed on the process
 	 *
 	 * @param sheetIndex the sheet index on which the column was inserted
 	 * @param row		the column number which was inserted

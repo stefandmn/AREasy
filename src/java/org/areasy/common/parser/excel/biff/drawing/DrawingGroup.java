@@ -77,7 +77,7 @@ public class DrawingGroup implements EscherStream
 
 	/**
 	 * Flag which indicates that at least one of the drawings has been omitted
-	 * from the worksheet
+	 * from the process
 	 */
 	private boolean drawingsOmitted;
 
@@ -533,7 +533,7 @@ public class DrawingGroup implements EscherStream
 
 	/**
 	 * Indicates that at least one of the drawings has been omitted from
-	 * the worksheet
+	 * the process
 	 *
 	 * @param mso the mso record
 	 * @param obj the obj record

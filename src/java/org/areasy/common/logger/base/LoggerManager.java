@@ -28,7 +28,7 @@ import java.util.Vector;
 
 /**
  * This logger manager library could be used to initialize and to manage different implementation of logger engines.
- * With this library any implemented logger engine could be manage using an unique model and flow and could be simplified
+ * With this library any implemented logger engine could be manage using an unique model and process and could be simplified
  * at three logger components:
  * <ul>
  * <li>logger - identify basic logger entity</li>

@@ -203,7 +203,7 @@ class DefaultWritableSheet implements WritableSheet
 	private final static int rowGrowSize = 10;
 
 	/**
-	 * The maximum number of rows excel allows in a worksheet
+	 * The maximum number of rows excel allows in a process
 	 */
 	private final static int numRowsPerSheet = 65536;
 
@@ -1148,7 +1148,7 @@ class DefaultWritableSheet implements WritableSheet
 		numRows = Math.max(row + 1, numRows);
 		numColumns = Math.max(numColumns, rowrec.getMaxColumn());
 
-		// Indicate this cell is now part of a worksheet, so that it can't be
+		// Indicate this cell is now part of a process, so that it can't be
 		// added anywhere else
 		cv.setCellDetails(formatRecords, sharedStrings, this);
 	}
@@ -1237,7 +1237,7 @@ class DefaultWritableSheet implements WritableSheet
 	}
 
 	/**
-	 * Sets the name of this worksheet
+	 * Sets the name of this process
 	 *
 	 * @param n the name of this sheet
 	 */

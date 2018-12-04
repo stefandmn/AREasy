@@ -16,7 +16,7 @@ package org.areasy.common.parser.excel.read.biff;
 import org.areasy.common.parser.excel.biff.RecordData;
 
 /**
- * Contains the print grid lines option of this worksheet
+ * Contains the print grid lines option of this process
  */
 class PrintGridLinesRecord extends RecordData
 {

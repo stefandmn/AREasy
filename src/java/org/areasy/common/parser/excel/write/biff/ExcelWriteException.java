@@ -44,15 +44,15 @@ public class ExcelWriteException extends WriteException
 	/**
 	 */
 	static WriteMessage cellReferenced =
-			new WriteMessage("Cell has already been added to a worksheet");
+			new WriteMessage("Cell has already been added to a process");
 
 	static WriteMessage maxRowsExceeded =
-			new WriteMessage("The maximum number of rows permitted on a worksheet " +
+			new WriteMessage("The maximum number of rows permitted on a process " +
 					"been exceeded");
 
 	static WriteMessage maxColumnsExceeded =
 			new WriteMessage("The maximum number of columns permitted on a " +
-					"worksheet has been exceeded");
+					"process has been exceeded");
 
 	static WriteMessage copyPropertySets =
 			new WriteMessage("Error encounted when copying additional property sets");

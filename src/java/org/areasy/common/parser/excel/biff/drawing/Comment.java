@@ -26,7 +26,7 @@ import java.io.IOException;
 
 /**
  * Contains the various biff records used to insert a cell note into a
- * worksheet
+ * process
  */
 public class Comment implements DrawingGroupObject
 {

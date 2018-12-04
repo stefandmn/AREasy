@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.ars.dev.tools.flow.events;
+package org.areasy.runtime.actions.ars.dev.tools.process.events;
 
 /*
  * Copyright (c) 2007-2018 AREasy Runtime
@@ -15,10 +15,10 @@ package org.areasy.runtime.actions.ars.dev.tools.flow.events;
 
 import com.bmc.arsys.api.ObjectBase;
 import org.areasy.common.support.configuration.Configuration;
-import org.areasy.runtime.actions.ars.dev.StatusAction;
-import org.areasy.runtime.actions.ars.dev.tools.flow.DevProcessAction;
-import org.areasy.runtime.actions.ars.dev.tools.flow.WorksheetEvent;
-import org.areasy.runtime.actions.ars.dev.tools.flow.WorksheetObject;
+import org.areasy.runtime.actions.ars.dev.RenameAction;
+import org.areasy.runtime.actions.ars.dev.tools.ProcessWorksheetAction;
+import org.areasy.runtime.actions.ars.dev.tools.process.WorksheetEvent;
+import org.areasy.runtime.actions.ars.dev.tools.process.WorksheetObject;
 import org.areasy.runtime.actions.ars.dev.wrappers.FormRelatedWrapper;
 import org.areasy.runtime.actions.ars.dev.wrappers.ObjectWrapper;
 import org.areasy.runtime.engine.RuntimeLogger;
@@ -26,25 +26,24 @@ import org.areasy.runtime.engine.RuntimeLogger;
 import java.util.List;
 
 /**
- * This class allows you to enable or disable selected workflow objects by a dictionary files
+ * This class allows you to rename selected workflow objects by a dictionary files
  * or repository.
  */
-public class WorksheetStatusEvent extends WorksheetEvent
+public class WorksheetRenameEvent extends WorksheetEvent
 {
-	private boolean enable = false;
-	
-	public WorksheetStatusEvent(Configuration config, List objmap)
+	public WorksheetRenameEvent(Configuration config, List objmap)
 	{
 		super(config, objmap);
 	}
 
-	public void perform(DevProcessAction develop)
+	public void perform(ProcessWorksheetAction develop)
 	{
 		//prepare data for export
 		for(int i = 0; getObjectsList() != null && i < getObjectsList().size(); i++)
 		{
 			String objname = null;
 			String objtype = null;
+			String newname = null;
 
 			try
 			{
@@ -55,7 +54,7 @@ public class WorksheetStatusEvent extends WorksheetEvent
 				objtype = devobj.getSignature();
 
 				//take the corresponding action
-				StatusAction action = new StatusAction();
+				RenameAction action = new RenameAction();
 				action.init(develop);
 
 				//get the base object instance and run the action
@@ -66,37 +65,31 @@ public class WorksheetStatusEvent extends WorksheetEvent
 				{
 					((FormRelatedWrapper) wrapper).setFormName(objname);
 					objname = devobj.getRelatedData();
+
+					if(objname.contains("@"))
+					{
+						objname = objname.substring(0, objname.indexOf("@", 0));
+						newname = objname.substring(objname.indexOf("@", 0) + 1);
+					}
 				}
+				else newname = devobj.getRelatedData();
 
 				ObjectBase object = wrapper.getInstance(objname);
 
-				if(isEnable()) action.setEnable();
-					else action.setDisable();
-
-				action.execute(object);
+				if(newname != null)
+				{
+					object.setNewName(devobj.getRelatedData());
+					action.execute(object);
+				}
+				else RuntimeLogger.warn("Object name " + devobj.getObjectName() + "' can not be changed because the new name is null");
 			}
 			catch(Throwable th)
 			{
-				RuntimeLogger.error("Error running status action for a '" + objname + "' definition: " + th.getMessage());
+				RuntimeLogger.error("Error running rename action for a '" + objname + "' definition: " + th.getMessage());
 				getLogger().debug("Exception", th);
 			}
 		}
 
-		RuntimeLogger.info("Status " + (isEnable() ? "(enabled)" : "(disabled)") + " action for the specified development package has been done");
-	}
-
-	protected boolean isEnable()
-	{
-		return enable;
-	}
-
-	public void setEnable()
-	{
-		this.enable = true;
-	}
-
-	public void setDisable()
-	{
-		this.enable = false;
+		RuntimeLogger.info("Rename action for the specified development package has been done");
 	}
 }

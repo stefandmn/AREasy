@@ -1,4 +1,4 @@
-package org.areasy.runtime.actions.ars.dev.tools.flow;
+package org.areasy.runtime.actions.ars.dev.tools.process;
 
 import com.bmc.arsys.api.StructItemInfo;
 import org.areasy.common.data.StringUtility;
@@ -6,6 +6,7 @@ import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.runtime.actions.ars.dev.DefinitionAction;
+import org.areasy.runtime.actions.ars.dev.tools.ProcessWorksheetAction;
 import org.areasy.runtime.engine.base.ServerConnection;
 
 import java.io.File;
@@ -36,25 +37,25 @@ public abstract class WorksheetEvent
 	private List objmap = null;
 	private Configuration config = null;
 
-	protected static String ACT_CREATE 				= "Create";
-	protected static String ACT_MODIFY 				= "Modify";
-	protected static String ACT_ENABLE 				= "Enable";
-	protected static String ACT_DISABLE 			= "Disable";
-	protected static String ACT_REMOVE 				= "Remove";
-	protected static String ACT_RENAME 				= "Rename";
+	public static String ACT_CREATE 		= "Create";
+	public static String ACT_MODIFY 		= "Modify";
+	public static String ACT_ENABLE 		= "Enable";
+	public static String ACT_DISABLE 		= "Disable";
+	public static String ACT_REMOVE 		= "Remove";
+	public static String ACT_RENAME 		= "Rename";
 
-	protected static String OBJ_FORM				= "01 - Form";
-	protected static String OBJ_FILTER				= "05 - Filter";
-	protected static String OBJ_ACTIVELINK			= "06 - Active Link";
-	protected static String OBJ_MENU				= "08 - Menu";
-	protected static String OBJ_ESCALATION			= "09 - Escalation";
-	protected static String OBJ_VIEW				= "14 - View";
-	protected static String OBJ_FIELD				= "15 - Field";
-	protected static String OBJ_IMAGE				= "17 - Image";
-	protected static String OBJ_CONTAINER			= "12 - Container";
-	protected static String OBJ_ACTIVELINKGUIDE		= "12.1 - Active Link Guide";
-	protected static String OBJ_APPLICATION			= "12.2 - Application";
-	protected static String OBJ_FILTERGUIDE			= "12.4 - Filter Guide";
+	public static String OBJ_FORM			= "01 - Form";
+	public static String OBJ_FILTER			= "05 - Filter";
+	public static String OBJ_ACTIVELINK		= "06 - Active Link";
+	public static String OBJ_MENU			= "08 - Menu";
+	public static String OBJ_ESCALATION		= "09 - Escalation";
+	public static String OBJ_VIEW			= "14 - View";
+	public static String OBJ_FIELD			= "15 - Field";
+	public static String OBJ_IMAGE			= "17 - Image";
+	public static String OBJ_CONTAINER		= "12 - Container";
+	public static String OBJ_ACTIVELINKGUIDE= "12.1 - Active Link Guide";
+	public static String OBJ_APPLICATION	= "12.2 - Application";
+	public static String OBJ_FILTERGUIDE	= "12.4 - Filter Guide";
 
 	public WorksheetEvent(Configuration config, List objmap)
 	{
@@ -77,7 +78,7 @@ public abstract class WorksheetEvent
 	 *
 	 * @param develop the remote action who will call this library.
 	 */
-	public abstract void perform(DevProcessAction develop);
+	public abstract void perform(ProcessWorksheetAction develop);
 
 	/**
 	 * Logger instance for the current action

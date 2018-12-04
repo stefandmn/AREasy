@@ -110,9 +110,9 @@ public class BOFRecord extends RecordData
 	}
 
 	/**
-	 * Interrogates the substream to see if it is the commencement of a worksheet
+	 * Interrogates the substream to see if it is the commencement of a process
 	 *
-	 * @return TRUE if this substream is the beginning of a worksheet, FALSE
+	 * @return TRUE if this substream is the beginning of a process, FALSE
 	 *         otherwise
 	 */
 	public boolean isWorksheet()
@@ -121,9 +121,9 @@ public class BOFRecord extends RecordData
 	}
 
 	/**
-	 * Interrogates the substream to see if it is the commencement of a worksheet
+	 * Interrogates the substream to see if it is the commencement of a process
 	 *
-	 * @return TRUE if this substream is the beginning of a worksheet, FALSE
+	 * @return TRUE if this substream is the beginning of a process, FALSE
 	 *         otherwise
 	 */
 	public boolean isMacroSheet()
@@ -134,7 +134,7 @@ public class BOFRecord extends RecordData
 	/**
 	 * Interrogates the substream to see if it is a chart
 	 *
-	 * @return TRUE if this substream is the beginning of a worksheet, FALSE
+	 * @return TRUE if this substream is the beginning of a process, FALSE
 	 *         otherwise
 	 */
 	public boolean isChart()

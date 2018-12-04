@@ -235,7 +235,7 @@ public final class HeaderFooter extends org.areasy.common.parser.excel.biff.Head
 		}
 
 		/**
-		 * Appends the worksheet name
+		 * Appends the process name
 		 */
 		public void appendWorkSheetName()
 		{

@@ -37,7 +37,7 @@ public final class WorkbookSettings
 
 	/**
 	 * The amount of memory allocated to store the workbook data when
-	 * reading a worksheet.  For processeses reading many small workbooks inside
+	 * reading a process.  For processeses reading many small workbooks inside
 	 * a WAS it might be necessary to reduce the default size
 	 */
 	private int initialFileSize;
@@ -138,7 +138,7 @@ public final class WorkbookSettings
 	 * The locale.  Normally this is the same as the system locale, but there
 	 * may be cases (eg. where you are uploading many spreadsheets from foreign
 	 * sources) where you may want to specify the locale on an individual
-	 * worksheet basis
+	 * process basis
 	 * The locale may also be specified on the command line using the lang and
 	 * country System properties eg. -Dparser.excel.lang=en -Dparser.excel.country=UK for UK
 	 * English
@@ -324,7 +324,7 @@ public final class WorkbookSettings
 
 	/**
 	 * Sets the initial amount of memory allocated to store the workbook data
-	 * when reading a worksheet.  For processeses reading many small workbooks
+	 * when reading a process.  For processeses reading many small workbooks
 	 * inside  a WAS it might be necessary to reduce the default size
 	 * Default value is 5 megabytes
 	 *

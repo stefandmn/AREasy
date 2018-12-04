@@ -18,23 +18,6 @@
 	<!-- Environment properties -->
 	<property environment="env"/>
 
-	<!-- Define operating system variables -->
-	<condition property="isUnix">
-		<or>
-			<os name="Linux"/>
-			<os name="Unix"/>
-		</or>
-	</condition>
-	<condition property="isWindows">
-		<or>
-			<os name="Windows 7"/>
-			<os name="Windows 8"/>
-			<os name="Windows 8.1"/>
-			<os name="Windows XP"/>
-			<os name="Windows_NT"/>
-		</or>
-	</condition>
-
 	<!-- Load core properties and attributes -->
 	<property file="${basedir}/core.properties"/>
 
@@ -83,15 +66,39 @@
 	</taskdef>
 
 
-	<if>
-		<equals arg1="${isUnix}" arg2="true"/>
-		<then>
+	<!-- Detect operating and activitae corresponding properties -->
+	<switch value="${os.name}">
+		<case value="Linux">
+			<property name="isUnix" value="true"/>
+			<property name="isWindows" value="false"/>
 			<property file="${basedir}/profile.unix.properties"/>
-		</then>
-		<else>
+		</case>
+		<case value="Unix">
+			<property name="isUnix" value="true"/>
+			<property name="isWindows" value="false"/>
+			<property file="${basedir}/profile.unix.properties"/>
+		</case>
+		<case value="Windows 7">
+			<property name="isUnix" value="false"/>
+			<property name="isWindows" value="true"/>
 			<property file="${basedir}/profile.windows.properties"/>
-		</else>
-	</if>
+		</case>
+		<case value="Windows 8">
+			<property name="isUnix" value="false"/>
+			<property name="isWindows" value="true"/>
+			<property file="${basedir}/profile.windows.properties"/>
+		</case>
+		<case value="Windows 8.1">
+			<property name="isUnix" value="false"/>
+			<property name="isWindows" value="true"/>
+			<property file="${basedir}/profile.windows.properties"/>
+		</case>
+		<case value="Windows_NT">
+			<property name="isUnix" value="false"/>
+			<property name="isWindows" value="true"/>
+			<property file="${basedir}/profile.windows.properties"/>
+		</case>
+	</switch>
 
 
 	<!-- Builds Classpath -->

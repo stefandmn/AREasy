@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.system.sysmon.infos;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.system.sysmon.ParserUtility;
+import org.areasy.runtime.actions.system.sysmon.FormatUtility;
 
 /**
  * This object represents a snapshot detailing the total time the CPUs have spent
@@ -61,6 +61,6 @@ public class UsageInfo
 
 	public String toString()
 	{
-		return "[jvm: " + ParserUtility.loadValueFormat(getProcessLoad()) + ", system: " + ParserUtility.loadValueFormat(getSystemLoad()) + "]";
+		return "[jvm: " + FormatUtility.loadValueFormat(getProcessLoad()) + ", system: " + FormatUtility.loadValueFormat(getSystemLoad()) + "]";
 	}
 }

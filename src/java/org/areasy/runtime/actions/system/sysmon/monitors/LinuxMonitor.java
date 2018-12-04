@@ -57,8 +57,8 @@ public class LinuxMonitor extends JavaMonitor implements Monitor
 	 */
 	public SystemInfo getSystemInfo()
 	{
-		String name = ParserUtility.runRegexOnFile(DISTRO_NAME, "/etc/lsb-release");
-		String version = ParserUtility.runRegexOnFile(DISTRO_VER, "/etc/lsb-release");
+		String name = FormatUtility.runRegexOnFile(DISTRO_NAME, "/etc/lsb-release");
+		String version = FormatUtility.runRegexOnFile(DISTRO_VER, "/etc/lsb-release");
 
 		if(name == null) name = System.getProperty("os.name");
 		if(version == null) version = System.getProperty("os.version");
@@ -69,10 +69,10 @@ public class LinuxMonitor extends JavaMonitor implements Monitor
 
 	public MemoryInfo getPhysicalMemoryInfo()
 	{
-		String totalMemory = ParserUtility.runRegexOnFile(TOTAL_MEMORY_PATTERN, "/proc/meminfo");
+		String totalMemory = FormatUtility.runRegexOnFile(TOTAL_MEMORY_PATTERN, "/proc/meminfo");
 		long total = Long.parseLong(totalMemory) * 1024;
 
-		String freeMemory = ParserUtility.runRegexOnFile(FREE_MEMORY_PATTERN, "/proc/meminfo");
+		String freeMemory = FormatUtility.runRegexOnFile(FREE_MEMORY_PATTERN, "/proc/meminfo");
 		long free = Long.parseLong(freeMemory) * 1024;
 
 		return new MemoryInfo(free, total);
@@ -80,10 +80,10 @@ public class LinuxMonitor extends JavaMonitor implements Monitor
 
 	public MemoryInfo getSwapMemoryInfo()
 	{
-		String totalMemory = ParserUtility.runRegexOnFile(TOTAL_SWAP_PATTERN, "/proc/meminfo");
+		String totalMemory = FormatUtility.runRegexOnFile(TOTAL_SWAP_PATTERN, "/proc/meminfo");
 		long total = Long.parseLong(totalMemory) * 1024;
 
-		String freeMemory = ParserUtility.runRegexOnFile(FREE_SWAP_PATTERN, "/proc/meminfo");
+		String freeMemory = FormatUtility.runRegexOnFile(FREE_SWAP_PATTERN, "/proc/meminfo");
 		long free = Long.parseLong(freeMemory) * 1024;
 
 		return new MemoryInfo(free, total);
@@ -94,7 +94,7 @@ public class LinuxMonitor extends JavaMonitor implements Monitor
 		int count = 0;
 		try
 		{
-			String cpuInfo = ParserUtility.slurp("/proc/cpuinfo");
+			String cpuInfo = FormatUtility.slurp("/proc/cpuinfo");
 			Matcher matcher = NUM_CPU_PATTERN.matcher(cpuInfo);
 
 			while (matcher.find())
@@ -104,7 +104,7 @@ public class LinuxMonitor extends JavaMonitor implements Monitor
 		}
 		catch (IOException ioe) { /* do nothing here */ }
 
-		String cpuFrequencyAsString = ParserUtility.runRegexOnFile(CPU_FREQ_PATTERN, "/proc/cpuinfo");
+		String cpuFrequencyAsString = FormatUtility.runRegexOnFile(CPU_FREQ_PATTERN, "/proc/cpuinfo");
 		int strLen = cpuFrequencyAsString.length();
 
 		BigDecimal cpuFrequency = new BigDecimal(cpuFrequencyAsString.substring(0, strLen - 3));

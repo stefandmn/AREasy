@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Convenience methods for interacting with the filesystem.
  */
-public class ParserUtility
+public class FormatUtility
 {
 	private static final Pattern PROC_DIR_PATTERN = Pattern.compile("([\\d]*)");
 
@@ -43,7 +43,7 @@ public class ParserUtility
 	 */
 	public static String[] pidsFromProcFilesystem()
 	{
-		return new File("/proc").list(ParserUtility.PROCESS_DIRECTORY_FILTER);
+		return new File("/proc").list(FormatUtility.PROCESS_DIRECTORY_FILTER);
 	}
 
 	/**
@@ -193,6 +193,6 @@ public class ParserUtility
 	{
 		if (load <= 0) return "0%";
 
-		return new DecimalFormat("##.##%").format(load);
+		return new DecimalFormat("##.## %").format(load);
 	}
 }

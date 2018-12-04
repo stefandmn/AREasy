@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.system;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.SystemAction;
 import org.areasy.runtime.actions.system.sysmon.*;
@@ -22,10 +23,6 @@ import org.areasy.runtime.actions.system.sysmon.monitors.JavaMonitor;
 import org.areasy.runtime.actions.system.sysmon.monitors.WindowsMonitor;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
-
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * This class provides the main API for JavaSysMon.
@@ -83,6 +80,36 @@ public class Sysmon extends SystemAction implements Monitor, RuntimeAction
 			RuntimeLogger.add("Swap:  " + getSwapMemoryInfo());
 			RuntimeLogger.add("JVM:   " + getJavaInfo());
 			RuntimeLogger.add("Usage: " + getUsageInfo());
+		}
+		else if(getConfiguration().getBoolean("os", false))
+		{
+			RuntimeLogger.add(getSystemInfo().toString());
+		}
+		else if(getConfiguration().getBoolean("cpu", false))
+		{
+			RuntimeLogger.add(getProcessorInfo().toString());
+		}
+		else if(getConfiguration().getBoolean("jvm", false))
+		{
+			RuntimeLogger.add(getJavaInfo().toString());
+		}
+		else if(getConfiguration().containsKey("ram"))
+		{
+			if(StringUtility.equalsIgnoreCase(getConfiguration().getString("ram"), "total")) RuntimeLogger.add(FormatUtility.memoryValueFormat(getPhysicalMemoryInfo().getTotalBytes()));
+				else if(StringUtility.equalsIgnoreCase(getConfiguration().getString("ram"), "free")) RuntimeLogger.add(FormatUtility.memoryValueFormat(getPhysicalMemoryInfo().getFreeBytes()));
+					else if(getConfiguration().getBoolean("ram", false)) RuntimeLogger.add(getPhysicalMemoryInfo().toString());
+		}
+		else if(getConfiguration().containsKey("swap"))
+		{
+			if(StringUtility.equalsIgnoreCase(getConfiguration().getString("swap"), "total")) RuntimeLogger.add(FormatUtility.memoryValueFormat(getSwapMemoryInfo().getTotalBytes()));
+				else if(StringUtility.equalsIgnoreCase(getConfiguration().getString("swap"), "free")) RuntimeLogger.add(FormatUtility.memoryValueFormat(getSwapMemoryInfo().getFreeBytes()));
+					else if(getConfiguration().getBoolean("swap", false)) RuntimeLogger.add(getSwapMemoryInfo().toString());
+		}
+		else if(getConfiguration().containsKey("usage"))
+		{
+			if(StringUtility.equalsIgnoreCase(getConfiguration().getString("usage"), "jvm")) RuntimeLogger.add(FormatUtility.loadValueFormat(getUsageInfo().getProcessLoad()));
+				else if(StringUtility.equalsIgnoreCase(getConfiguration().getString("usage"), "system")) RuntimeLogger.add(FormatUtility.loadValueFormat(getUsageInfo().getSystemLoad()));
+					else if(getConfiguration().getBoolean("usage", false)) RuntimeLogger.add(getUsageInfo().toString());
 		}
 	}
 

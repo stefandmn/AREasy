@@ -13,8 +13,6 @@ package org.areasy.runtime.actions.system.sysmon.infos;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.system.sysmon.ParserUtility;
-
 /**
  * This object represents system coordinates.
  */

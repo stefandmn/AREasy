@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.system.sysmon.infos;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.system.sysmon.ParserUtility;
+import org.areasy.runtime.actions.system.sysmon.FormatUtility;
 
 /**
  * This object represents the JVM details.
@@ -54,6 +54,6 @@ public class JavaInfo
 
 	public String toString()
 	{
-		return "[pid: " + getPid() + ", uptime: " + ParserUtility.msecs2DHMS(getUptime()) + "]";
+		return "[pid: " + getPid() + ", uptime: " + FormatUtility.msecs2DHMS(getUptime()) + "]";
 	}
 }

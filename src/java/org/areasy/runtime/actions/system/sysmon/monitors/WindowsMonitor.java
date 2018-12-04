@@ -13,10 +13,14 @@ package org.areasy.runtime.actions.system.sysmon.monitors;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.NumberUtility;
+import org.areasy.common.logger.Logger;
+import org.areasy.common.logger.LoggerFactory;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.system.Sysmon;
 import org.areasy.runtime.actions.system.sysmon.*;
 import org.areasy.runtime.actions.system.sysmon.infos.MemoryInfo;
+import org.areasy.runtime.actions.system.sysmon.infos.ProcessorInfo;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.utilities.StreamUtility;
 
@@ -26,7 +30,8 @@ import java.io.InputStreamReader;
 
 public class WindowsMonitor extends JavaMonitor implements Monitor
 {
-	private static final String CRLF = "\r\n";
+	/** Library logger */
+	protected static Logger logger = LoggerFactory.getLog(WindowsMonitor.class);
 
 	public WindowsMonitor()
 	{
@@ -38,111 +43,132 @@ public class WindowsMonitor extends JavaMonitor implements Monitor
 
 	public MemoryInfo getPhysicalMemoryInfo()
 	{
-		try
-		{
-			String mfree = getWMIValue("Select * from Win32_OperatingSystem", "FreePhysicalMemory");
-			String mtotal = getWMIValue("Select * from Win32_ComputerSystem", "TotalPhysicalMemory");
+		String mfree = callWMI("Select * from Win32_OperatingSystem", "FreePhysicalMemory");
+		String mtotal = callWMI("Select * from Win32_ComputerSystem", "TotalPhysicalMemory");
 
-			return new MemoryInfo(Long.parseLong(mfree)*1024, Long.parseLong(mtotal));
-		}
-		catch(Exception e)
-		{
-			RuntimeLogger.error(e.getMessage());
-
-			return super.getPhysicalMemoryInfo();
-		}
+		return new MemoryInfo(NumberUtility.toLong(mfree, 0)*1024, NumberUtility.toLong(mtotal, 0));
 	}
 
 	public MemoryInfo getSwapMemoryInfo()
 	{
-		try
-		{
-			String data = getWMIValue("Select * from Win32_OperatingSystem", "FreeVirtualMemory,TotalVirtualMemorySize");
-			String mfree = data.split(CRLF)[0].trim();
-			String mtotal = data.split(CRLF)[1].trim();
+		String data[] = callWMI("Select * from Win32_OperatingSystem", "FreeVirtualMemory","TotalVirtualMemorySize");
 
-			return new MemoryInfo(Long.parseLong(mfree)*1024, Long.parseLong(mtotal)*1024);
-		}
-		catch(Exception e)
-		{
-			RuntimeLogger.error(e.getMessage());
+		return new MemoryInfo(NumberUtility.toLong(data[0], 0)*1024, NumberUtility.toLong(data[1], 0)*1024);
+	}
 
-			return super.getSwapMemoryInfo();
-		}
+	public ProcessorInfo getProcessorInfo()
+	{
+		int count = 0;
+
+		String data[] = callWMI("Select * from Win32_ComputerSystem", "NumberOfProcessors","NumberOfLogicalProcessors");
+		count = Integer.parseInt(data[0].trim()) * Integer.parseInt(data[1].trim());
+
+		String cpuFreq = callWMI("Select * from Win32_Processor", "CurrentClockSpeed");
+
+		return new ProcessorInfo(count, NumberUtility.toLong(cpuFreq, 0) * 1000 * 1000);
 	}
 
 	/**
 	 * Generate a VBScript string capable of querying the desired WMI information.
-	 *
-	 * @param wmiQueryStr the query string to be passed to the WMI sub-system (i.e. "Select * from Win32_ComputerSystem")
-	 * @param wmiCommaSeparatedFieldName a comma separated list of the WMI fields to be collected from the query results (i.e. "Model")
-	 * @return the vbscript string.
-	 * */
-	private static String getVBScript(String wmiQueryStr, String wmiCommaSeparatedFieldName)
-	{
-		String vbs = "Dim oWMI : Set oWMI = GetObject(\"winmgmts:\")" + CRLF;
-		vbs += "Dim classComponent : Set classComponent = oWMI.ExecQuery(\"" + wmiQueryStr + "\")" + CRLF;
-		vbs += "Dim obj, strData" + CRLF;
-		vbs += "For Each obj in classComponent" + CRLF;
-
-		String[] wmiFieldNameArray = wmiCommaSeparatedFieldName.split(",");
-		for(int i = 0; i < wmiFieldNameArray.length; i++)
-		{
-			vbs += "  strData = strData & obj." + wmiFieldNameArray[i].trim() + " & VBCrLf" + CRLF;
-		}
-
-		vbs += "Next" + CRLF;
-		vbs += "wscript.echo strData" + CRLF;
-
-		return vbs;
-	}
-
-	/**
 	 * Get the given WMI value from the WMI subsystem on the local computer
-	 * @param wmiQueryStr the query string as syntactically defined by the WMI reference
-	 * @param wmiCommaSeparatedFieldName the field object that you want to get out of the query results
-	 * @return the value
-	 * @throws Exception if there is a problem obtaining the value
+	 *
+	 * @param wmiQuery the query string as syntactically defined by the WMI reference
+	 * @param fieldNames the array of fields object that you want to get out of the query results
+	 * @return the interrogated value trhough WMI
 	 * */
-	public static String getWMIValue(String wmiQueryStr, String wmiCommaSeparatedFieldName) throws Exception
+	public static String[] callWMI(String wmiQuery, String[] fieldNames)
 	{
-		String vbScript = getVBScript(wmiQueryStr, wmiCommaSeparatedFieldName);
-		File fScript = new File(RuntimeManager.getWorkingDirectory(), RuntimeLogger.getChannelName()+ "-wmi.vbs");
+		StringBuilder vbScript = new StringBuilder();
 
-		StreamUtility.writeTextFile("UTF-8", fScript, vbScript);
-		String output = execute(new String[] {"cmd.exe", "/C", "cscript.exe", fScript.getPath()});
-		StreamUtility.deleteFile(fScript);
+		vbScript.append("Dim oWMI : Set oWMI = GetObject(\"winmgmts:\")").append(System.getProperty("line.separator"));
+		vbScript.append("Dim classComponent : Set classComponent = oWMI.ExecQuery(\"").append(wmiQuery).append("\")").append(System.getProperty("line.separator"));
+		vbScript.append("Dim obj, strData").append(System.getProperty("line.separator"));
+		vbScript.append("For Each obj in classComponent").append(System.getProperty("line.separator"));
 
-		return output.trim();
+		String output[] = new String[fieldNames.length];
+
+		for (String aWmiFieldNameArray : fieldNames)
+		{
+			vbScript.append("  strData = strData & obj.").append(aWmiFieldNameArray.trim()).append(" & VBCrLf").append(System.getProperty("line.separator"));
+		}
+
+		vbScript.append("Next").append(System.getProperty("line.separator"));
+		vbScript.append("wscript.echo strData").append(System.getProperty("line.separator"));
+
+		//String vbScript = getVBScript(wmiQuery, fieldNames);
+		File vbFile = new File(RuntimeManager.getWorkingDirectory(), RuntimeLogger.getChannelName() + "-wmi.vbs");
+		StreamUtility.writeTextFile("UTF-8", vbFile, vbScript.toString());
+
+		try
+		{
+			int index = 0;
+			String line = null;
+			Process process = Runtime.getRuntime().exec(new String[] {"cmd.exe", "/C", "cscript.exe", vbFile.getPath()});
+			BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			while((line = input.readLine()) != null)
+			{
+				//need to filter out lines that don't contain our desired output
+				if(!line.contains("Microsoft") && !line.equals(""))
+				{
+					output[index] = line.trim();
+					index++;
+				}
+			}
+
+			StreamUtility.deleteFile(vbFile);
+			process.destroy();
+			process = null;
+		}
+		catch(Exception ioe)
+		{
+			RuntimeLogger.error("Error calling WMI utility: " + ioe.getMessage());
+			logger.debug("Exception", ioe);
+		}
+
+		return output;
 	}
 
 	/**
-	 * Execute the application with the given command line parameters.
+	 * Generate a VBScript string capable of querying the desired WMI information.
+	 * Get the given WMI value from the WMI subsystem on the local computer
 	 *
-	 * @param cmdArray an array of the command line params
-	 * @return the output as gathered from stdout of the process
-	 * @throws Exception upon encountering a problem
+	 * @param wmiQuery the query string as syntactically defined by the WMI reference
+	 * @param FieldName the field object that you want to get out of the wmiQuery results
+	 * @return the interrogated value trhough WMI
 	 * */
-	private static String execute(String[] cmdArray) throws Exception
+	public static String callWMI(String wmiQuery, String FieldName)
 	{
-		Process process = Runtime.getRuntime().exec(cmdArray);
-		BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		String output = "";
-		String line = "";
+		return callWMI(wmiQuery, new String[] {FieldName})[0];
+	}
 
-		while((line = input.readLine()) != null)
-		{
-			//need to filter out lines that don't contain our desired output
-			if(!line.contains("Microsoft") && !line.equals(""))
-			{
-				output += line +CRLF;
-			}
-		}
+	/**
+	 * Generate a VBScript string capable of querying the desired WMI information.
+	 * Get the given WMI value from the WMI subsystem on the local computer
+	 *
+	 * @param wmiQuery the query string as syntactically defined by the WMI reference
+	 * @param fieldName1 the first field object that you want to get out of the wmiQuery results
+	 * @param fieldName2 the second field object that you want to get out of the wmiQuery results
+	 * @return the interrogated value trhough WMI
+	 * */
+	public static String[] callWMI(String wmiQuery, String fieldName1, String fieldName2)
+	{
+		return callWMI(wmiQuery, new String[] {fieldName1, fieldName2});
+	}
 
-		process.destroy();
-		process = null;
-
-		return output.trim();
+	/**
+	 * Generate a VBScript string capable of querying the desired WMI information.
+	 * Get the given WMI value from the WMI subsystem on the local computer
+	 *
+	 * @param wmiQuery the query string as syntactically defined by the WMI reference
+	 * @param fieldName1 the first field object that you want to get out of the wmiQuery results
+	 * @param fieldName2 the second field object that you want to get out of the wmiQuery results
+	 * @param fieldName3 the second field object that you want to get out of the wmiQuery results
+	 * @return the interrogated value trhough WMI
+	 * */
+	public static String[] callWMI(String wmiQuery, String fieldName1, String fieldName2, String fieldName3)
+	{
+		return callWMI(wmiQuery, new String[] {fieldName1, fieldName2, fieldName3});
 	}
 }
 

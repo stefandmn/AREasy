@@ -13,7 +13,7 @@ package org.areasy.runtime.actions.system.sysmon.infos;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
-import org.areasy.runtime.actions.system.sysmon.ParserUtility;
+import org.areasy.runtime.actions.system.sysmon.FormatUtility;
 
 /**
  * This object represents a snapshot detailing the total memory of
@@ -53,6 +53,6 @@ public class ProcessorInfo
 
 	public String toString()
 	{
-		return "[count: " + getNumberOfProcessors() + ", frequency: " + ParserUtility.frequencyValueFormat(getProcessorFrequency()) + "]";
+		return "[count: " + getNumberOfProcessors() + ", frequency: " + FormatUtility.frequencyValueFormat(getProcessorFrequency()) + "]";
 	}
 }

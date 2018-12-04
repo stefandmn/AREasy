@@ -15,7 +15,7 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="action.xml">
+<help inherits="ars/data/basedata.xml">
 	<name>Data Transfer Workflow</name>
 	<description>Transfer data through a certain workflow</description>
 	<syntax>

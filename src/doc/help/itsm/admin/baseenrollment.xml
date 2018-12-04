@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime

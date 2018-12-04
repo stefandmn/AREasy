@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "../action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -16,10 +16,10 @@
   -->
 
 <help inherits="ars/data/basedata.xml">
-	<name>Data Export Workflow</name>
-	<description>Execute data export through a certain workflow</description>
+	<name>Service Target Administration</name>
+	<description>This action is an ITSM utility, allowing to create or to update SLM service targets defines into a specific worksheet</description>
 	<syntax>
-		areasy -action dataexport
+		areasy -action servicetargetadmin
 	</syntax>
 	<!--samples>
 		<sample code="" description=""/>

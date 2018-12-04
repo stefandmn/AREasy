@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -18,10 +18,10 @@
 <help inherits="action.xml">
 	<name>Support Group Migration</name>
 	<description>
-		This action is an ITSM utility, designed to migrate a support group by making Obsolete the original one and creating a new one with the specified options. All related details (e.g. aliases and memberships etc.) of the old support group will be copied to the new support group. Moreover, this action is able to replace the old support group with the new one in incidents, problems, known errors, changes, tasks, work orders and asset relationships.
+		This action is an ITSM utility, designed to migrate a support group details, by making Obsolete the original one and creating a new one with the specified options. All related details (e.g. aliases and memberships etc.) of the old support group will be copied to the new support group. Moreover, this action is able to replace the old support group with the new one in incidents, problems, known errors, changes, tasks, work orders and asset relationships.
 	</description>
 	<syntax>
-		areasy -action supportgroup.migration
+		areasy -action supportgroupmigration
 		-sgroupcompany CurrentSupportGroupCompany -sgrouporganisation CurrentSupportGroupOrganisation -sgroupname CurrentSupportGroupName [-sgroupid CurrentSupportGroupId]
 		-newsgroupcompany NewSupportGroupCompany -newsgrouporganisation NewSupportGroupOrganisation -newsgroupname NewSupportGroupName
 		[-creategroup] [-updategroup]
@@ -82,13 +82,13 @@
 		<option key="dataaccess" type="string" defvalue="update" selvalues="update,append" description="It could take 'update' or 'append' value; the meaning of this option is related permission group id associated with a support group entity; if the new support group name and id will be updated in tickets (incidents changes, etc.) also the related permission group id has to be updated by replacing or appending the new group id"/>
 	</options>
 	<samples>
-		<sample code='areasy -runtime -action supportgroup.migration -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info' 
+		<sample code='areasy -runtime -action supportgroupmigration -members -aliases -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info' 
 				description='Makes old support group offline, creates a new support group and transfers from old group to the new one the following entities: aliases, people accounts and application functional roles'/>
-		<sample code='areasy -runtime -action supportgroup.migration -members -aliases -incidents -incidenttemplates -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info'
+		<sample code='areasy -runtime -action supportgroupmigration -members -aliases -incidents -incidenttemplates -supportgroupcompany "Calbro Services" -supportgrouporganisation "Services Performance" -supportgroupname "Development" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Service Management" -newsupportgroupname "Development" -loglevel info'
 				description="Performs usual actions (mentioned in the first example) and additionally update changes in incidents and incident templates replacing old group with the new one and authoring areas is updated as well. All secondary authoring groups are evaluated for this type of change."/>
-		<sample code='areasy -runtime -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
+		<sample code='areasy -runtime -action supportgroupmigration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
 				description="Makes old group offline creates a new support group and transfer from old group to the new one all details. Additionally update all asset relationships where a support group is related, replacing old group with the new one."/>
-		<sample code='areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action supportgroup.migration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
+		<sample code='areasy -runtime -arserver localhost -arport 2000 -aruser Demo -arpassword "" -action supportgroupmigration -allgroupdetails -supportgroupcompany "Calbro Services" -supportgrouporganisation "IT Support" -supportgroupname "Service Desk" -newsupportgroupcompany "Calbro Services" -newsupportgrouporganisation "IT Support" -newsupportgroupname "Help Desk" -loglevel info -assetrelationships on'
 				description="The same target command but with an explicit connection to AR System server. The action will be executed in runtime mode (because of -runtime option specified in the command line)"/>
 	</samples>
 </help>

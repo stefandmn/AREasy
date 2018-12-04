@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -15,13 +15,13 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="data/admin/base.enrollment.xml">
+<help inherits="itsm/admin/baseenrollment.xml">
 	<name>Support Group Administration</name>
 	<description>
 		This action is an ITSM utility, designed to create or update support groups and to manage their members and related details.
 	</description>
 	<syntax>
-		areasy -action supportgroup.administration
+		areasy -action supportgroupadmin
 	</syntax>
 	<options>
 		<option key="operation" type="string" selvalues="setentity,setmembers,delmembers,setfrole,delfrole" defvalue="setentity" description="Execution mode or this action"/>

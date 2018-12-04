@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "../action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -15,13 +15,16 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="ars/data/basedata.xml">
-	<name>Data Export Workflow</name>
-	<description>Execute data export through a certain workflow</description>
+<help inherits="itsm/admin/baseenrollment.xml">
+	<name>Set Restricted Access</name>
+	<description>Set Restricted Access</description>
 	<syntax>
-		areasy -action dataexport
+		areasy -action setrestrictedaccess
 	</syntax>
-	<!--samples>
+	<!--options>
+		<option key="" type="string" description=""/>
+	</options>
+	<samples>
 		<sample code="" description=""/>
 	</samples-->
 </help>

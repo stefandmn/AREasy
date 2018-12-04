@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!DOCTYPE help SYSTEM "../../action.dtd">
+
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
   ~
@@ -13,14 +15,14 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="data/base.data.xml">
+<help inherits="itsm/admin/baseenrollment.xml">
 	<name>Set Application Permission</name>
 	<description><![CDATA[
 The action is part of AR System management tools and it has the main goal to set a specific application permission and the corresponding license type to one or many users.
 Application permission ans also login Ids are validated before to be processed.
 
 The standard command line is described below:
-areasy -action admin.set.application.permission -permission
+areasy -action setapppermission -permission
 
 <application permission>] [-license <fixed|floating>] [-login <val>] [-logins <val1> <val2> ... <valn>] [-fieldid <CTM:People field id> [-fieldvalue <CTM:People field value>]]
 
@@ -61,9 +63,9 @@ Examples:
 	= sets 'Infrastructure Change Master' permission (with floating license) for all People accounts that are found using specified selection critria. Actually this criteria select user accounts that have "Acounting Code" = "9R02"
 		]]></description>
 	<syntax>
-		areasy -action admin.set.application.permission -permission
+		areasy -action setapppermission -permission
 	</syntax>
-	<samples>
+	<!--samples>
 		<sample code="" description=""/>
-	</samples>
-	</help>
+	</samples-->
+</help>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -15,13 +15,13 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="data/base.data.xml">
-	<name>Create relationship CI</name>
-	<description>Create relationship CIs in CMDB</description>
+<help inherits="ars/data/basedata.xml">
+	<name>Set Incident Assigned Group</name>
+	<description>Apply assigned group to an incident ticket</description>
 	<syntax>
-		areasy -action data.cmdb.create.relationship.ci
+		areasy -action inc.setassignedgroup
 	</syntax>
-	<samples>
+	<!--samples>
 		<sample code="" description=""/>
-	</samples>
+	</samples-->
 </help>

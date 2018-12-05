@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE help SYSTEM "C:\Users\S.Damian\Workspace\Development\AREasy3\AREasy\src\doc\help\action.dtd">
+<!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
   ~ Copyright (c) 2007-2018 AREasy Runtime
@@ -15,13 +15,13 @@
   ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   -->
 
-<help inherits="data/base.data.xml">
-	<name>Register CI in Inventory</name>
-	<description>Create CI relationship with Inventory Location CIs</description>
+<help inherits="ars/data/basedata.xml">
+	<name>Replace CI relationship with People</name>
+	<description>Replace CI relationship People from CMDB</description>
 	<syntax>
-		areasy -action data.cmdb.register.inventory
+		areasy -action cmdb.replacepplrelationship
 	</syntax>
-	<samples>
+	<!--samples>
 		<sample code="" description=""/>
-	</samples>
+	</samples-->
 </help>

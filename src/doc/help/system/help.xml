@@ -24,14 +24,14 @@ In case of [-call ...] parameter is not specified, Help action displays this tex
 	</description>
 	<syntax>
 		areasy [-runtime] -action help
-		[-call [WrappedAction] -export [[-outputfile FileName] | [-exportformat txt|html|md]]
+		[-call [WrappedAction] [-export [-outputfile FileName] | [-exportformat txt|html|md|pdf]]
 	</syntax>
 	<options>
 		<option key="inventory" type="bool" defvalue="off" description="Returns a list of all registered actions"/>
 		<option key="call" type="string" description="Specifies a registered action that is called to retrieve its help document. 'subaction' parameter alias could be used in order to obtain the same thing"/>
 		<option key="export" type="bool" defvalue="off" description="Export help content into a supported document format (see 'exportformat' options)"/>
 		<option key="outputfile" type="string" description="Exports help document related to the action specified by 'call' parameter into the specified file path and name"/>
-		<option key="exportformat" type="string" description="In case the 'outputfile' is null (not specified) this parameter could mention the file format for the help document requested for export"/>
+		<option key="exportformat" type="string" description="In case the 'outputfile' is null (not specified) this parameter could mention the file format for the help document requested for export (through file extension)"/>
 	</options>
 	<samples>
 		<sample code='areasy -action help'

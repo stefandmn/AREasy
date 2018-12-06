@@ -15,9 +15,11 @@ package org.areasy.runtime.actions.itsm.admin;
 
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.AbstractAction;
+import org.areasy.runtime.actions.ars.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
+import org.areasy.runtime.engine.structures.MultiPartItem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.Vector;
 /**
  * Abstract class definition for user enrollment.
  */
-public abstract class AbstractUserEnrollment extends AbstractAction implements RuntimeAction
+public abstract class AbstractUserEnrollment extends BaseData implements RuntimeAction
 {
 	private List<String> usernames = null;
 
@@ -113,6 +115,39 @@ public abstract class AbstractUserEnrollment extends AbstractAction implements R
 			String loginId = (String) exceptions.get(i);
 
 			if(getUsers().contains(loginId)) getUsers().remove(loginId);
+		}
+	}
+
+	public void run(CoreItem entry) throws AREasyException
+	{
+		//data fill-in and create record
+		if(!entry.exists())
+		{
+			//set data values
+			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
+
+			if(getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			{
+				//set multipart form names
+				setMultiPartForms(entry);
+
+				//execute transactions
+				((MultiPartItem)entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+			}
+		}
+		else if(entry.exists())
+		{
+			//set data values
+			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
+
+			if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			{
+				//set multipart form names
+				setMultiPartForms(entry);
+
+				//execute transactions
+				((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+			}
 		}
 	}
 }

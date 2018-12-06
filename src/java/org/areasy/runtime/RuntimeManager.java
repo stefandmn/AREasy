@@ -93,6 +93,7 @@ public class RuntimeManager
 
 		//setup runtime manager instance for the current request
 		int mode = manager.setup(config);
+		boolean error = false;
 
 		//runtime workflow implementation
 		if(mode == SERVER)
@@ -111,6 +112,7 @@ public class RuntimeManager
 			manager.client(config);
 			manager.print(config);
 
+			error = RuntimeLogger.hasErrors();
 			RuntimeLogger.destroy();
 		}
 		else
@@ -123,11 +125,12 @@ public class RuntimeManager
 			manager.process(config);
 			manager.print(config);
 
+			error = RuntimeLogger.hasErrors();
 			RuntimeLogger.destroy();
 		}
 
 		//close session.
-		manager.end(false);
+		manager.end(error);
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 	/**
 	 * Create or update support group entities
 	 *
-	 * @throws AREasyException
+	 * @throws AREasyException in case any error occur
 	 */
 	protected void setEntity() throws AREasyException
 	{
@@ -63,6 +63,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		if(groupName != null) group.setSupportGroupName(groupName);
 		if(groupId != null) group.setAttribute(1, groupId);
 		group.read(getServerConnection());
+		this.run(group);
 
 		if(group.exists())
 		{
@@ -177,8 +178,8 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			ci.setAttribute(ARDictionary.CTM_FULLNAME, people.getFullName());		//Full Name
 			ci.setAttribute(1000000075, defaultGroup ? 0 : (hasMemberships(people.getEntryId()) ? 1 : 0)); //Default Group (Yes/No)
 
+			this.run(ci);
 			ci.create(getServerConnection());
-
 			RuntimeLogger.info("'" + loginId + "' successfully added to group '" + groupName + "'");
 
 			if(supportStaff)
@@ -356,6 +357,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 					entry.setAttribute(1000000080, person.getEntryId());
 
 					entry.read(getServerConnection());
+					this.run(entry);
 
 					if(!entry.exists())
 					{
@@ -513,6 +515,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		entry.setAttribute(ARDictionary.CTM_SGROUPALIAS, alias);
 
 		entry.read(getServerConnection());
+		this.run(entry);
 
 		if (entry.exists())
 		{

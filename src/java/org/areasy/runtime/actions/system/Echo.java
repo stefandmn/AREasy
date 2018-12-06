@@ -18,6 +18,7 @@ import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.SystemAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
+import org.areasy.runtime.engine.base.ServerConnection;
 
 import java.net.InetAddress;
 import java.util.Iterator;
@@ -39,22 +40,42 @@ public class Echo extends SystemAction implements RuntimeAction
 		String localHost = null;
 		String localPort = null;
 
-		try
+		if(getConfiguration().getBoolean("arsystem", false))
 		{
-			localHost = InetAddress.getLocalHost().getHostAddress();
+			try
+			{
+				this.setServerConnection();
+				localHost = getServerConnection().getUserName() + "@" + getServerConnection().getServerName();
+				localPort = String.valueOf(getServerConnection().getServerPort());
+
+				//processing echo command - echo server execution.
+				RuntimeLogger.info("Echo from AR System instance " + localHost + ":" + localPort);
+			}
+			catch (Exception e)
+			{
+				//processing echo command - echo server execution.
+				RuntimeLogger.error("No echo from AR System instance: " + e.getMessage());
+			}
 		}
-		catch(Exception e)
+		else
 		{
-			if(getServer() != null) localHost = getServer().getManager().getConfiguration().getString("app.server.host", null);
-				else localHost = getManager().getConfiguration().getString("app.server.host", null);
+			try
+			{
+				localHost = InetAddress.getLocalHost().getHostAddress();
+			}
+			catch (Exception e)
+			{
+				if (getServer() != null) localHost = getServer().getManager().getConfiguration().getString("app.server.host", null);
+					else localHost = getManager().getConfiguration().getString("app.server.host", null);
+			}
+
+			//get server port
+			if(getServer() != null) localPort = getServer().getManager().getConfiguration().getString("app.server.port", "0");
+				else localPort = getManager().getConfiguration().getString("app.server.port", "0");
+
+			//processing echo command - echo server execution.
+			RuntimeLogger.info("Echo from AREasy instance: " + localHost + ":" + localPort);
 		}
-
-		//get server port
-		if(getServer() != null) localPort = getServer().getManager().getConfiguration().getString("app.server.port", "0");
-			else localPort = getManager().getConfiguration().getString("app.server.port", "0");
-
-		//processing echo command - echo server execution.
-		RuntimeLogger.info("Echo from AREasy instance on " + localHost + ":" + localPort);
 
 		//inout parameter implementation
 		if(getConfiguration().getBoolean("inout", false))
@@ -63,7 +84,7 @@ public class Echo extends SystemAction implements RuntimeAction
 
 			if(iterator != null)
 			{
-				StringBuffer buffer = new StringBuffer("Input-output parameters list: \n");
+				StringBuilder buffer = new StringBuilder("Input-output parameters list: \n");
 
 				while(iterator.hasNext())
 				{
@@ -72,7 +93,7 @@ public class Echo extends SystemAction implements RuntimeAction
 
 					List list = getConfiguration().getList(param, null);
 					if(list != null) value = StringUtility.join( list.toArray(new String[list.size()]), ", ");
-					buffer.append("\t\t\t\t" + param + " = " + StringUtility.trim(value) + "\n");
+					buffer.append("\t\t\t\t").append(param).append(" = ").append(StringUtility.trim(value)).append("\n");
 				}
 
 

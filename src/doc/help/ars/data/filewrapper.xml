@@ -26,6 +26,7 @@
 	<options>
 		<option key="inputfile" type="string" description="Aliases for this option are: parserfile, file. Indicates the path of the data file"/>
 		<option key="parsertype" type="string" description="Identifies a particular files, if this option is not specified the file type and the corresponding parser will be detected based on file extension. SUpported data files are: comma separated, Excel (2003 format) and tab or delimiter separated"/>
+		<option key="when" type="string" description="Null value of conditional expression that allows to call wrapped action"/>
 		<option key="call" type="string" description="Alias for this option is: subaction. It specify the action that will be called by this wrapper thta can use the data records extracted by file parser and reader"/>
 		<option key="limit" type="number" description="Indicates the numer of records that will be read from the specified file"/>
 		<option key="sleep" type="number" description="Describes a sleep time (in seconds) between two consecutive reads from the file"/>

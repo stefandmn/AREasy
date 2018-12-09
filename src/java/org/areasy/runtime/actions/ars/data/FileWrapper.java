@@ -112,12 +112,16 @@ public class FileWrapper extends BaseData
 						}
 
 						//initialize and execute comand operation
-						command.init(this);
-						command.run();
+						String when = getConfiguration().getString("when", null);
+						if(StringUtility.isEmpty(when) || ProcessorLevel0Reader.evaluate(getContext(), getTranslatedCondition(when)))
+						{
+							command.init(this);
+							command.run();
 
-						//execution counter incrementation
-						if((command instanceof BaseData) && ((BaseData)command).getRecordsCounter() > 0) addRecordsCounter( ((BaseData)command).getRecordsCounter() );
-							else setRecordsCounter();
+							//execution counter incrementation
+							if ((command instanceof BaseData) && ((BaseData) command).getRecordsCounter() > 0) addRecordsCounter(((BaseData) command).getRecordsCounter());
+								else setRecordsCounter();
+						}
 					}
 					else emptyDataCounter++;
 				}
@@ -174,7 +178,7 @@ public class FileWrapper extends BaseData
 
 						Thread.sleep(sleep);
 					}
-					catch(InterruptedException e) { /** nothing to do */ }
+					catch(InterruptedException e) { /* nothing to do */ }
 				}
 			}
 			while(!errorFlag);

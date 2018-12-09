@@ -14,7 +14,6 @@ package org.areasy.runtime.actions.itsm.admin;
  */
 
 import org.areasy.runtime.RuntimeAction;
-import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.actions.ars.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;

@@ -174,7 +174,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			ci.setAttribute(ARDictionary.CTM_SGROUPID, sgroup.getEntryId()); 		//Support Group ID
 			ci.setAttribute(ARDictionary.CTM_LOGINID, people.getLoginId());			//Login ID
 			ci.setAttribute(ARDictionary.CTM_PERSONID, people.getEntryId());		//Person ID
-			ci.setAttribute(ARDictionary.CTM_SGROUP_ASSOC_ROLE, groupRole);				//Support Group Association Role
+			ci.setAttribute(ARDictionary.CTM_SGROUP_ASSOC_ROLE, groupRole);			//Support Group Association Role
 			ci.setAttribute(ARDictionary.CTM_FULLNAME, people.getFullName());		//Full Name
 			ci.setAttribute(1000000075, defaultGroup ? 0 : (hasMemberships(people.getEntryId()) ? 1 : 0)); //Default Group (Yes/No)
 

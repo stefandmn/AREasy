@@ -229,7 +229,7 @@ public class FormData extends BaseData
 				((MultiPartItem)entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
 			}
 		}
-		else if(getConfiguration().getBoolean("updateifexists", false) && !entry.exists()) runUpdate(entry);
+		else if(getConfiguration().getBoolean("updateifexists", false) && entry.exists()) runUpdate(entry);
 	}
 
 	public void runUpdate(CoreItem entry) throws AREasyException

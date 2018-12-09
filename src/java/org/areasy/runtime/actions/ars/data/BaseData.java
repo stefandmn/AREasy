@@ -338,7 +338,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				if(id.indexOf(MultiPartItem.partSeparator) > 1)
 				{
 					Object value = getConfiguration().getKey(id);
-					if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
+					{
+						String tmpCfgId = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String)value).length() - MultiPartItem.partVarEnd.length());
+						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(id);
+					}
 
 					setMap(map, key, value, "ignorenullpartquery");
 				}
@@ -419,7 +423,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				if(id.indexOf(MultiPartItem.partSeparator) > 1)
 				{
 					Object value = getConfiguration().getKey(id);
-					if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
+					{
+						String tmpCfgId = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String)value).length() - MultiPartItem.partVarEnd.length());
+						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(id);
+					}
 
 					setMap(map, key, value, "ignorenullpartdata");
 				}
@@ -785,13 +793,10 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 * @param value pseudo-expression
 	 * @return translated value
 	 */
-	public String getTranslatedQualification(String value)
+	public String getTranslatedCondition(String value)
 	{
-		if(value != null)
+		if(StringUtility.isNotEmpty(value))
 		{
-			//convert empty values into NULL identifier
-			if(value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
-
 			//check if the values contains quota
 			if(value.contains("\"") && value.contains("||")) value = StringUtility.replace(value, "\"", "\"\"");
 
@@ -802,6 +807,34 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			value = StringUtility.replace(value, "-le", "<=");
 			value = StringUtility.replace(value, "-gt", ">");
 			value = StringUtility.replace(value, "-ge", ">=");
+		}
+
+		return value;
+	}
+
+	/**
+	 * Translate a pseudo-expression into a normal expression using for qualifications or others. The specific of these pseudo-expression
+	 * are the symbols: <br/>
+	 * <table>
+	 *     <tr><td>||||</td><td>$NULL$</td></tr>
+	 *     <tr><td>||</td><td>double quote</td></tr>
+	 *     <tr><td>|</td><td>simple quote</td></tr>
+	 *     <tr><td>-lt</td><td><code>&#60;</code></td></tr>
+	 *     <tr><td>-le</td><td><code>&#60;=</code></td></tr>
+	 *     <tr><td>-gt</td><td><code>&#62;</code></td></tr>
+	 *     <tr><td>-ge</td><td><code>&#62;=</code></td></tr>
+	 * </table>
+	 * @param value pseudo-expression
+	 * @return translated value
+	 */
+	public String getTranslatedQualification(String value)
+	{
+		if(StringUtility.isNotEmpty(value))
+		{
+			//convert empty values into NULL identifier
+			if(value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
+
+			value = getTranslatedCondition(value);
 		}
 
 		return value;

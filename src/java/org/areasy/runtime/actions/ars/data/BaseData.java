@@ -705,7 +705,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 						String query = config.getString("query", null);
 						String store = config.getString("store", null);
 						String code = config.getString("key", StringUtility.variable(schema).toUpperCase());
-						int fieldId = config.getInt("return", 0);
+						long fieldId = config.getLong("return", 0);
 
 						//get interrogation text into a real qualification
 						query = getTranslatedQualification(query);
@@ -716,7 +716,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 						if (item.exists())
 						{
 							if (fieldId > 1) output = item.getStringAttributeValue(fieldId);
-							else output = item.getEntryId();
+								else output = item.getEntryId();
 
 							if (store != null)
 							{

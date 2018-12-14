@@ -40,8 +40,8 @@ public class ApplicationPermissionSetAction extends AbstractUserEnrollment
 		//validation of username(s) and specified role
 		if(getUsers().isEmpty() || permission == null || license == null ||
 			(!StringUtility.equalsIgnoreCase(license, "Fixed") && !StringUtility.equalsIgnoreCase(license, "Floating") &&
-			StringUtility.equalsIgnoreCase(license, "Read") &&!StringUtility.equalsIgnoreCase(license, "None") &&
-			StringUtility.equalsIgnoreCase(license, "Not Applicable"))) throw new AREasyException("Invalid input command. Please check help manual!");
+			!StringUtility.equalsIgnoreCase(license, "Read") &&!StringUtility.equalsIgnoreCase(license, "None") &&
+			!StringUtility.equalsIgnoreCase(license, "Not Applicable"))) throw new AREasyException("Invalid input command. Please check help manual!");
 
 		//get real license type and role
 		if(permission.equals(permission.toLowerCase())) permission = StringUtility.capitalizeAll(permission);

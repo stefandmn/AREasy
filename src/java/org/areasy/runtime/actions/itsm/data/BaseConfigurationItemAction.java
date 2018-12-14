@@ -39,9 +39,9 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 		Map kmap = getKeyMap();
 		Map qmap = getQueryFields();
 
-		ConfigurationItem search = new ConfigurationItem();
-		search.setClassId(getConfiguration().getString("classid", null));
-		search.setDatasetId(getConfiguration().getString("datasetid", search.getDatasetId()));
+		ConfigurationItem entry = new ConfigurationItem();
+		entry.setClassId(getConfiguration().getString("classid", null));
+		entry.setDatasetId(getConfiguration().getString("datasetid", entry.getDatasetId()));
 
 		if(getConfiguration().containsKey("qualification"))
 		{
@@ -49,58 +49,79 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 			String qualification = getTranslatedQualification(getConfiguration().getString("qualification", null));
 
 			//get list of found CIs
-			items = search.search(getServerConnection(), qualification);
+			items = entry.search(getServerConnection(), qualification);
 		}
 		else if(qmap != null && qmap.size() > 0)
 		{
 			//specify key attributes to process search operation.
-			search.setData(qmap);
-			search.setIgnoreNullValues(true);
-			search.setIgnoreUnchangedValues(true);
+			entry.setData(qmap);
+			entry.setIgnoreNullValues(true);
+			entry.setIgnoreUnchangedValues(true);
 
 			//get list of found CIs
-			items = search.search(getServerConnection());
+			items = entry.search(getServerConnection());
 		}
 		else if(kmap != null && kmap.size() > 0)
 		{
 			//specify key attributes to process search operation.
-			search.setData(kmap);
-			search.setIgnoreNullValues(true);
-			search.setIgnoreUnchangedValues(true);
+			entry.setData(kmap);
+			entry.setIgnoreNullValues(true);
+			entry.setIgnoreUnchangedValues(true);
 
 			//get list of found CIs
-			items = search.search(getServerConnection());
+			items = entry.search(getServerConnection());
 		}
 
-		for(int i = 0; loop && items != null && i < items.size(); i++)
+		if(items != null && items.size() > 0)
 		{
-			//gte entry
-			ConfigurationItem item = (ConfigurationItem)items.get(i);
+			for (int i = 0; loop && i < items.size(); i++)
+			{
+				//gte entry
+				ConfigurationItem item = (ConfigurationItem) items.get(i);
 
+				try
+				{
+					//process validation
+					run(item);
+
+				}
+				catch (Throwable th)
+				{
+					RuntimeLogger.error("Error running action for " + item + ": " + th.getMessage());
+					logger.debug("Exception", th);
+
+					loop = isForced();
+					setErrorsCounter();
+				}
+
+				setRecordsCounter();
+
+				// check interruption and and exit if the execution was really interrupted
+				if (isInterrupted())
+				{
+					RuntimeLogger.warn("Execution interrupted by user");
+					return;
+				}
+			}
+		}
+		else
+		{
 			try
 			{
 				//process validation
-				run(item);
-
+				run(entry);
 			}
-			catch(Throwable th)
+			catch (Throwable th)
 			{
-				RuntimeLogger.error("Error running action for " + item + ": " + th.getMessage());
+				RuntimeLogger.error("Error running action for " + entry + ": " + th.getMessage());
 				logger.debug("Exception", th);
 
-				loop = isForced();
 				setErrorsCounter();
 			}
 
 			setRecordsCounter();
-
-			// check interruption and and exit if the execution was really interrupted
-			if(isInterrupted())
-			{
-				RuntimeLogger.warn("Execution interrupted by user");
-				return;
-			}
 		}
+
 
 		//stop cron control
 		getCron().stop();

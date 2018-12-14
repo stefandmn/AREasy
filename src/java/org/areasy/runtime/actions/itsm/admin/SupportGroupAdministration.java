@@ -33,11 +33,12 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 	{
 		String operation = getConfiguration().getString("operation", "setentity");
 
-		if(StringUtility.equalsIgnoreCase(operation, "setentity")) setEntity();
+		if(StringUtility.equalsIgnoreCase(operation, "setentity") || StringUtility.equalsIgnoreCase(operation, "set") || StringUtility.equalsIgnoreCase(operation, "create") || StringUtility.equalsIgnoreCase(operation, "update")) setEntity();
+		else if(StringUtility.equalsIgnoreCase(operation, "delentity") || StringUtility.equalsIgnoreCase(operation, "delete")) delEntity();
 		else if(StringUtility.equalsIgnoreCase(operation, "setmembers")) setMembers();
 		else if(StringUtility.equalsIgnoreCase(operation, "delmembers")) delMembers();
-		else if(StringUtility.equalsIgnoreCase(operation, "setfrole")) setFunctionalRole();
-		else if(StringUtility.equalsIgnoreCase(operation, "delfrole")) delFunctionalRole();
+		else if(StringUtility.equalsIgnoreCase(operation, "setroles")) setFunctionalRole();
+		else if(StringUtility.equalsIgnoreCase(operation, "delroles")) delFunctionalRole();
 		else throw new AREasyException("Invalid execution operation: " + operation);
 	}
 
@@ -95,6 +96,64 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 				createAlias(group.getEntryId(), alias);
 			}
 		}
+	}
+
+	/**
+	 * Delete support group entities
+	 *
+	 * @throws AREasyException in case any error occur
+	 */
+	protected void delEntity() throws AREasyException
+	{
+		String groupCompany = getConfiguration().getString("sgroupcompany", getConfiguration().getString("supportgroupcompany", null));
+		String groupOrganisation = getConfiguration().getString("sgrouporganisation", getConfiguration().getString("supportgrouporganisation", null));
+		String groupName = getConfiguration().getString("sgroup", getConfiguration().getString("sgroupname", getConfiguration().getString("supportgroup", getConfiguration().getString("supportgroupname", null))));
+		String groupId = getConfiguration().getString("sgroupid", getConfiguration().getString("supportgroupid", null));
+
+		SupportGroup group = new SupportGroup();
+		if(groupCompany != null) group.setCompanyName(groupCompany);
+		if(groupOrganisation != null) group.setOrganisationName(groupOrganisation);
+		if(groupName != null) group.setSupportGroupName(groupName);
+		if(groupId != null) group.setAttribute(1, groupId);
+		group.read(getServerConnection());
+
+		if(group.exists())
+		{
+			//remove aliases
+			CoreItem searchAlias = new CoreItem();
+			searchAlias.setFormName("CTM:Support Group Alias");
+			searchAlias.setAttribute(ARDictionary.CTM_SGROUPID, group.getEntryId());
+			List aliases = searchAlias.search(getServerConnection());
+			for(int i = 0; i < aliases.size(); i++)
+			{
+				CoreItem item = (CoreItem) aliases.get(i);
+				item.remove(getServerConnection());
+			}
+
+			CoreItem searchRole = new CoreItem();
+			searchRole.setFormName("CTM:SupportGroupFunctionalRole");
+			searchRole.setAttribute(ARDictionary.CTM_SGROUPID, group.getEntryId());
+			List roles = searchAlias.search(getServerConnection());
+			for(int i = 0; i < roles.size(); i++)
+			{
+				CoreItem item = (CoreItem) roles.get(i);
+				item.remove(getServerConnection());
+			}
+
+			CoreItem searchMember = new CoreItem();
+			searchMember.setFormName("CTM:Support Group Association");
+			searchMember.setAttribute(ARDictionary.CTM_SGROUPID, group.getEntryId());
+			List members = searchAlias.search(getServerConnection());
+			for(int i = 0; i < members.size(); i++)
+			{
+				CoreItem item = (CoreItem) members.get(i);
+				item.remove(getServerConnection());
+			}
+
+			group.remove(getServerConnection());
+			RuntimeLogger.add("Support group '" + group.getEntryId() + "' has been deleted");
+		}
+		else RuntimeLogger.warn("Support group not found: " + group);
 	}
 
 	/**

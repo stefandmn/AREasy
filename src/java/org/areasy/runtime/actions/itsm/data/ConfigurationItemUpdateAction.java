@@ -80,6 +80,9 @@ public class ConfigurationItemUpdateAction extends ConfigurationItemCreateAction
 			item.update(getServerConnection());
 			RuntimeLogger.debug("CI has been updated: " + item);
 		}
-		else super.run(item);
+		else if(item != null && !item.exists())
+		{
+			super.run(item);
+		}
 	}
 }

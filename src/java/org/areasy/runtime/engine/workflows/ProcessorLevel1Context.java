@@ -14,6 +14,7 @@ package org.areasy.runtime.engine.workflows;
  */
 
 import com.bmc.arsys.api.*;
+import com.bmc.arsys.arencrypt.PasswordEncryption;
 import com.bmc.arsys.arencrypt.PasswordReserveFieldEncryption;
 import org.areasy.common.data.NumberUtility;
 import org.areasy.common.data.StringUtility;
@@ -264,14 +265,19 @@ public abstract class ProcessorLevel1Context extends ProcessorLevel0Reader
 	 *
 	 * @param password password string
 	 * @return encrypted string
-	 * @throws Exception in case of any exception occur
+	 * @throws AREasyException in case of any exception occur
 	 */
-	public static String encryptARPassword(String password) throws Exception
+	public static String encryptFieldARPassword(String password) throws AREasyException
 	{
-		PasswordReserveFieldEncryption pwdEnc = new PasswordReserveFieldEncryption(false);
-		String encryptedPassword = new String(pwdEnc.encryptPasswordEx(password.getBytes()));
-
-		return encryptedPassword;
+		try
+		{
+			PasswordReserveFieldEncryption pwdEnc = new PasswordReserveFieldEncryption(false);
+			return new String(pwdEnc.encryptPasswordEx(password.getBytes()));
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
 	}
 
 	/**
@@ -279,13 +285,103 @@ public abstract class ProcessorLevel1Context extends ProcessorLevel0Reader
 	 *
 	 * @param password password string
 	 * @return decrypted string
-	 * @throws Exception in case of any exception occur
+	 * @throws AREasyException in case of any exception occur
 	 */
-	public static String decryptARPassword(String password) throws Exception
+	public static String decryptFieldARPassword(String password) throws AREasyException
 	{
-		PasswordReserveFieldEncryption pwdEnc = new PasswordReserveFieldEncryption(false);
-		String decryptedPassword = new String(pwdEnc.decryptPasswordEx(password.getBytes()));
+		try
+		{
+			PasswordReserveFieldEncryption pwdEnc = new PasswordReserveFieldEncryption(false);
+			return new String(pwdEnc.decryptPasswordEx(password.getBytes()));
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
+	}
 
-		return decryptedPassword;
+	/**
+	 * Encrypt a string in ARSystem format to become a classic AR password.
+	 *
+	 * @param password password string
+	 * @return encrypted string
+	 * @throws AREasyException in case of any exception occur
+	 */
+	public static String encryptSystemARPassword(String password) throws AREasyException
+	{
+		try
+		{
+			PasswordEncryption pwdEnc = new PasswordEncryption(false);
+			return new String(pwdEnc.encryptPasswordEx(password.getBytes()));
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
+	}
+
+	/**
+	 * Decrypt an AR system password are return the clear password value.
+	 *
+	 * @param password password string
+	 * @return decrypted string
+	 * @throws AREasyException in case of any exception occur
+	 */
+	public static String decryptSystemARPassword(String password) throws AREasyException
+	{
+		try
+		{
+			PasswordEncryption pwdDec = new PasswordEncryption(false);
+			return new String(pwdDec.decryptPasswordEx(password.getBytes()));
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
+	}
+
+	/**
+	 * Execute AR Filter internal process
+	 *
+	 * @param arsession ARS server connection structure
+	 * @param process internal AR system process name
+	 * @param params related command line (input parameters) the specified internal process
+	 * @param wait flag to determine if the process execution waits until the end or it will return the control immediate after calling
+	 * @return the output returned by the specified internal process
+	 * @throws AREasyException @throws AREasyException if any error will occur
+	 */
+	public static String runFilterProcess(ServerConnection arsession, String process, String params, boolean wait) throws AREasyException
+	{
+		String output = null;
+
+		try
+		{
+			output = arsession.getContext().executeProcess(process + " " + params, wait).getOutput();
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
+
+		return output;
+	}
+
+	/**
+	 * Executes Escalation object identified by a specific name
+	 *
+	 * @param arsession ARS server connection structure
+	 * @param escalation escalation object name
+	 * @throws AREasyException @throws AREasyException if any error will occur
+	 */
+	public static void runEscalation(ServerConnection arsession, String escalation) throws AREasyException
+	{
+		try
+		{
+			arsession.getContext().runEscalation(escalation);
+		}
+		catch(Throwable th)
+		{
+			throw new AREasyException(th);
+		}
 	}
 }

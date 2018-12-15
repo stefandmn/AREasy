@@ -780,67 +780,6 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	}
 
 	/**
-	 * Translate a pseudo-expression into a normal expression using for qualifications or others. The specific of these pseudo-expression
-	 * are the symbols: <br/>
-	 * <table>
-	 *     <tr><td>||</td><td>double quote</td></tr>
-	 *     <tr><td>|</td><td>simple quote</td></tr>
-	 *     <tr><td>-lt</td><td><code>&#60;</code></td></tr>
-	 *     <tr><td>-le</td><td><code>&#60;=</code></td></tr>
-	 *     <tr><td>-gt</td><td><code>&#62;</code></td></tr>
-	 *     <tr><td>-ge</td><td><code>&#62;=</code></td></tr>
-	 * </table>
-	 * @param value pseudo-expression
-	 * @return translated value
-	 */
-	public String getTranslatedCondition(String value)
-	{
-		if(StringUtility.isNotEmpty(value))
-		{
-			//check if the values contains quota
-			if(value.contains("\"") && value.contains("||")) value = StringUtility.replace(value, "\"", "\"\"");
-
-			value = StringUtility.replace(value, "||", "\"");
-			value = StringUtility.replace(value, "|", "'");
-
-			value = StringUtility.replace(value, "-lt", "<");
-			value = StringUtility.replace(value, "-le", "<=");
-			value = StringUtility.replace(value, "-gt", ">");
-			value = StringUtility.replace(value, "-ge", ">=");
-		}
-
-		return value;
-	}
-
-	/**
-	 * Translate a pseudo-expression into a normal expression using for qualifications or others. The specific of these pseudo-expression
-	 * are the symbols: <br/>
-	 * <table>
-	 *     <tr><td>||||</td><td>$NULL$</td></tr>
-	 *     <tr><td>||</td><td>double quote</td></tr>
-	 *     <tr><td>|</td><td>simple quote</td></tr>
-	 *     <tr><td>-lt</td><td><code>&#60;</code></td></tr>
-	 *     <tr><td>-le</td><td><code>&#60;=</code></td></tr>
-	 *     <tr><td>-gt</td><td><code>&#62;</code></td></tr>
-	 *     <tr><td>-ge</td><td><code>&#62;=</code></td></tr>
-	 * </table>
-	 * @param value pseudo-expression
-	 * @return translated value
-	 */
-	public String getTranslatedQualification(String value)
-	{
-		if(StringUtility.isNotEmpty(value))
-		{
-			//convert empty values into NULL identifier
-			if(value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
-
-			value = getTranslatedCondition(value);
-		}
-
-		return value;
-	}
-
-	/**
 	 * Read from configuration <code>ignorenulls</code> parameter that fill in the list of field that has to be ignored
 	 * in case of the values are null. If the parameter is not defined the method will return an empty field.
 	 */

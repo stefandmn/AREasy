@@ -152,7 +152,7 @@ public class AreaLDAP extends AbstractArea
 					debug("AREA LDAP binding user name [" + index + "]: " + ldap.LDAP_USERNAME);
 
 					ldap.LDAP_PASSWORD = context.getARConfigEntry("AREA-LDAP-Bind-Password" + suffix);
-					try { ldap.LDAP_PASSWORD = ProcessorLevel1Context.decryptARPassword(ldap.LDAP_PASSWORD); } catch (Exception e) { /* nothing here */ }
+					try { ldap.LDAP_PASSWORD = ProcessorLevel1Context.decryptFieldARPassword(ldap.LDAP_PASSWORD); } catch (Exception e) { /* nothing here */ }
 					debug("AREA LDAP binding user password [" + index + "]: ********");
 
 					ldap.LDAP_BASEDN = context.getARConfigEntry("AREA-LDAP-User-Base" + suffix);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE help SYSTEM "../../action.dtd">
+
+<!--
+  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~
+  ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
+  ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either version 2.1 of the License,
+  ~ or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
+  ~ or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  -->
+
+<help inherits="action.xml">
+	<name>AR System Caller</name>
+	<description>
+		This action is an ARS utility, designed to execute different system internal objects (escalations, filter processes, etc.).
+	</description>
+	<syntax>
+		areasy -action syscaller [-process ProcessName [-wait] -expression ExpressionCommandLine] [-escalation EscalationObjectName]
+	</syntax>
+	<options>
+		<option key="process" type="string" description="Filter process name (as it is described in the documentation) to be executed"/>
+		<option key="wait" type="bool" description="Waits until the process execution is finished or returns the control to the caller"/>
+		<option key="params" type="string" description="Specifies additional parameters needed by the process to be executed"/>
+		<option key="escalation" type="string" description="Escalation object name to be triggered adhoc against of designed time or calendar trigger"/>
+	</options>
+	<samples>
+		<sample code="areasy -action syscaller -process 'Application-Generate-GUID'" description="Generates application GUID"/>
+	</samples>
+</help>

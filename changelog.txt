@@ -1,5 +1,6 @@
 3.0.1
 ======
+15. Optimize dev action in order to speed up inventoty that is used for definitions export or inventory
 14. Implementation of system monitoring action and published as system action
 13. Adapt engine to Remedy 9 (API and respective modules)
 12. Redesign project configuration management

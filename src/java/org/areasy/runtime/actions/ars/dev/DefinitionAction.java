@@ -14,8 +14,10 @@ package org.areasy.runtime.actions.ars.dev;
  */
 
 import com.bmc.arsys.api.*;
+import org.areasy.common.data.CollectionUtility;
 import org.areasy.common.data.DateUtility;
 import org.areasy.common.data.StringUtility;
+import org.areasy.common.data.workers.functors.StringPredicate;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.AbstractAction;
@@ -282,6 +284,8 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 
 		if (wrapper != null)
 		{
+			boolean regex = getConfiguration().getBoolean("regex", false);
+
 			//check server based parameters
 			if (prefix != null || since != null || StringUtility.isNotEmpty(owner) || StringUtility.isNotEmpty(changer) || StringUtility.isNotEmpty(keyword))
 			{
@@ -297,19 +301,19 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 							FormRelatedWrapper formWrapper = (FormRelatedWrapper)wrapper;
 
 							formWrapper.setFormName(related.getName());
-							objectKeys = formWrapper.find(since);
+							objectKeys = filter(formWrapper.find(since), prefix, keyword, regex);
 
 							for (int j = 0; objectKeys != null && j < objectKeys.size(); j++)
 							{
 								String objectKey = objectKeys.get(j);
 
 								//build object and idd on the final list
-								StructItemInfo info = getStructInfoFromObject(objectKey, wrapper, exclude, prefix, since, owner, changer, keyword);
+								StructItemInfo info = getStructInfoFromObject(objectKey, wrapper, exclude, prefix, owner, changer, keyword);
 
 								if(info != null)
 								{
 									objects.add(info);
-									RuntimeLogger.debug(getTextFromStructItemInfo(info) + " has been included in the processing list");
+									logger.debug(getTextFromStructItemInfo(info) + " has been included in the processing list");
 								}
 							}
 						}
@@ -317,19 +321,19 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 				}
 				else
 				{
-					objectKeys = wrapper.find(since);
+					objectKeys = filter(wrapper.find(since), prefix, keyword, regex);
 
 					for (int j = 0; objectKeys != null && j < objectKeys.size(); j++)
 					{
 						String objectKey = objectKeys.get(j);
 
 						//build object and idd on the final list
-						StructItemInfo info = getStructInfoFromObject(objectKey, wrapper, exclude, prefix, since, owner, changer, keyword);
+						StructItemInfo info = getStructInfoFromObject(objectKey, wrapper, exclude, prefix, owner, changer, keyword);
 
 						if(info != null)
 						{
 							objects.add(info);
-							RuntimeLogger.debug(getTextFromStructItemInfo(info) + " has been included in the processing list");
+							logger.debug(getTextFromStructItemInfo(info) + " has been included in the processing list");
 						}
 					}
 				}
@@ -339,7 +343,22 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		if(!objects.isEmpty()) output.addAll(objects);
 	}
 
-	private StructItemInfo getStructInfoFromObject(String objectKey, ObjectWrapper wrapper, List exclude, String prefix, Date since, String owner, String changer, String keyword)
+	private List filter(List objects, String prefix, String keyword, boolean regex)
+	{
+		if(StringUtility.isNotEmpty(prefix))
+		{
+			CollectionUtility.filter(objects, regex ? StringPredicate.getInstance("$" + prefix + ".*", 2) : StringPredicate.getInstance(prefix));
+		}
+
+		if(StringUtility.isNotEmpty(keyword))
+		{
+			CollectionUtility.filter(objects, regex ? StringPredicate.getInstance(keyword, 2) : StringPredicate.getInstance(keyword, 1));
+		}
+
+		return objects;
+	}
+
+	private StructItemInfo getStructInfoFromObject(String objectKey, ObjectWrapper wrapper, List exclude, String prefix, String owner, String changer, String keyword)
 	{
 		StructItemInfo info = null;
 
@@ -1329,5 +1348,25 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	{
 		if(info != null) return getObjectTypeNameByObjectTypeId(info.getType()) + " '" + info.getName() + "'";
 			else return null;
+	}
+
+	/**
+	 * Replace virtual structure with the signatures that are recognized by AR Server in order
+	 * to be processed (export, import, etc.)
+	 *
+	 * @param objects list of AR system structure (having AREasy identifiers)
+	 */
+	protected void recognizer(List objects)
+	{
+		for (int i = 0; objects != null && i < objects.size(); i++)
+		{
+			StructItemInfo info = (StructItemInfo) objects.get(i);
+
+			if (info.getType() == ACTIVELINKGUIDE || info.getType() == FILTERGUIDE ||
+					info.getType() == APPLICATIONCONTAINER || info.getType() == WEBSERVICE)
+			{
+				info.setType(StructItemInfo.CONTAINER);
+			}
+		}
 	}
 }

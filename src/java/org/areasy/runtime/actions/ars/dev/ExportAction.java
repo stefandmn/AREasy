@@ -68,6 +68,7 @@ public class ExportAction extends DefinitionAction implements RuntimeAction
 				if(StringUtility.equals(format, "xml") || StringUtility.equals(format, "def"))
 				{
 					boolean asxml = format.equals("xml");
+					recognizer(objects);
 
 					getServerConnection().getContext().exportDefToFile(objects, asxml, fileName, !append);
 					RuntimeLogger.info("Workflow objects have been exported in file: " + fileName);

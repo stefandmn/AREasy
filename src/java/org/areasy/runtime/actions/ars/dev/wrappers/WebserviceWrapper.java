@@ -61,6 +61,16 @@ public class WebserviceWrapper extends ContainerWrapper implements ObjectWrapper
 	}
 
 	/**
+	 * Get the object type id
+	 *
+	 * @return object type id
+	 */
+	public int getObjectTypeId()
+	{
+		return DefinitionAction.WEBSERVICE;
+	}
+
+	/**
 	 * Get the wrapper name (signature code)
 	 *
 	 * @return wrapper signature code

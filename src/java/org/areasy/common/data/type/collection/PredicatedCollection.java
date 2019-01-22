@@ -91,7 +91,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
 	 */
 	protected void validate(Object object)
 	{
-		if (predicate.evaluate(object) == false)
+		if (!predicate.evaluate(object))
 		{
 			throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate rejected it");
 		}
@@ -126,6 +126,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
 		{
 			validate(it.next());
 		}
+
 		return getCollection().addAll(coll);
 	}
 

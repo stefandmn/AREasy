@@ -62,6 +62,7 @@ public abstract class AbstractCollectionDecorator implements Collection
 		{
 			throw new IllegalArgumentException("Collection must not be null");
 		}
+
 		this.collection = coll;
 	}
 

@@ -93,6 +93,11 @@
 			<property name="isWindows" value="true"/>
 			<property file="${basedir}/profile.windows.properties"/>
 		</case>
+		<case value="Windows 10">
+			<property name="isUnix" value="false"/>
+			<property name="isWindows" value="true"/>
+			<property file="${basedir}/profile.windows.properties"/>
+		</case>
 		<case value="Windows_NT">
 			<property name="isUnix" value="false"/>
 			<property name="isWindows" value="true"/>

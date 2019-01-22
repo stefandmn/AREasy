@@ -111,6 +111,7 @@ public class PredicatedList extends PredicatedCollection implements List
 		{
 			validate(it.next());
 		}
+
 		return getList().addAll(index, coll);
 	}
 
@@ -133,6 +134,7 @@ public class PredicatedList extends PredicatedCollection implements List
 	public List subList(int fromIndex, int toIndex)
 	{
 		List sub = getList().subList(fromIndex, toIndex);
+
 		return new PredicatedList(sub, predicate);
 	}
 
@@ -141,7 +143,6 @@ public class PredicatedList extends PredicatedCollection implements List
 	 */
 	protected class PredicatedListIterator extends AbstractListIteratorDecorator
 	{
-
 		protected PredicatedListIterator(ListIterator iterator)
 		{
 			super(iterator);

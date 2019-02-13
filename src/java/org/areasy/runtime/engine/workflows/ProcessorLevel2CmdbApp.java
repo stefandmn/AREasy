@@ -364,7 +364,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		//define relation structure
 		CoreItem astpeople = new CoreItem();
 		astpeople.setFormName(FORM_ASSETPEOPLE);
-		astpeople.setAttribute(ASP_ASSETID, item.getAssetId());
+		//astpeople.setAttribute(ASP_ASSETID, item.getAssetId()); //removed because might be redundant
 		astpeople.setAttribute(ASP_ROLENAME, new Integer(roleId));
 		astpeople.setAttribute(ASP_ENTITYNAME, entryEntityName);
 		astpeople.setAttribute(ASP_PEOPLEID, entryId);

@@ -195,6 +195,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 			//set file parser environment parameters
 			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
 			engine.setResource("parserfile", getConfiguration().getString("includefile", null));
+			engine.setResource("startindex", 0);
 			engine.init("file");
 
 			String objects[] = null;

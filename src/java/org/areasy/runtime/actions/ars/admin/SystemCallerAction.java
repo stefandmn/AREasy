@@ -20,7 +20,7 @@ import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
 
 /**
- * Dedicated action execute different AR System internal objects (filter processes and/or escaltions).
+ * Dedicated action execute different AR System internal objects (filter processes and/or escalations).
  */
 public class SystemCallerAction extends AbstractAction
 {

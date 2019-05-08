@@ -17,49 +17,19 @@
 
 <help inherits="itsm/admin/baseenrollment.xml">
 	<name>Remove Application Permission</name>
-	<description><![CDATA[
-The action is part of AR System management tools and it has the main goal to remove a specific application permission for one or many users.
-Application permission ans also login Ids are validated before to be processed.
-
-The standard command line is described below:
-areasy -action delapppermission -permission
-
-<application permission>] [-login <val>] [-logins <val1> <val2> ... <valn>]
-
-Where:
-	-permission       = application permission (or permission name)
-
-	-login            = Remedy user id
-
-	-logins           = list of Remedy user ids
-
-	-userfieldid      = a specific field Id from CTM:People form to the create a qualification criteria to identify the login ids where this permission have to the applied
-
-	-userfieldvalue   = the corresponding value for -fieldid option to compose the qualification criteria: <CTM:People fieldid> = <fieldvalue>. From the found people records will be extracted login ids that will be appended to the specified list through -login(s) option
-
-	-userqualifiation = this could be the third option to take the list of persons and to provide them additional permissions and licenses. Actually this option provide a way to select persons using a qualification criteria addressed to the direct connected AR System server.
-
-	-userformname     = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field
-
-	-findusers        = in case of permission is specified and no other people account is mentioned in the command line this option will allows to discover all users that currently have the specified permission and the action will remove the permission for these users
-
-Note: This action allows you to remove the same application permission (ITSM permission) for many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -permission and -login options you'll refer columns from an Excel file or from a text file.
-
-Attention: In order to execute this action you must have configured in the default configuration sector the Remedy server and all related details or you can specify them in the command line, using general options. For more details check the help manual from help action.
-
-
-Examples:
----------
-1) areasy -action admin.remove.application.permission -permission "Infrastructure Change Master" -login abc123
-	= removes 'Infrastructure Change Master' permission from 'abc123' user profile
-
-2) areasy -action admin.remove.application.permission -permission "Infrastructure Change Master" -logins abc123 xyz456
-	= removes 'Infrastructure Change Master' permission from specified list of user profiles
-	]]></description>
+	<description>The action is part of AR System management tools and it has the main goal to remove a specific application permission for one or many users. Application permission and also login Ids are validated before to be processed</description>
 	<syntax>
-		areasy -action delapppermission -permission
+		areasy -action delapppermission -permission ApplicationPermissionName -login val -logins val1 val2 ... valN
+			-skipvalidation -findusers -excludeusers
 	</syntax>
-	<!--samples>
-		<sample code="" description=""/>
-	</samples-->
+	<options>
+		<option key="permission" type="string" description="Indicates the application permission name (e.g. 'Incident User') to be deleted from user permission list"/>
+		<option key="findusers" type="bool" description="In case the login ids are not specified the system can detect the whole list of user that have the specified permission name"/>
+		<option key="excludeusers" type="list" description="In case the user will be detected and you want to exclude a static list of user this option can be helpful"/>
+		<option key="skipvalidation" type="bool" description="Skip the validation of specified permission"/>
+	</options>
+	<samples>
+		<sample code="areasy -action delapppermission -permission 'Incident User'" description="Delete all incident User permissions from the system related to all found users"/>
+		<sample code="areasy -action delapppermission -permission 'Incident User' -login appadmin" description="Delete incident User permission associated to appadmin user"/>
+	</samples>
 </help>

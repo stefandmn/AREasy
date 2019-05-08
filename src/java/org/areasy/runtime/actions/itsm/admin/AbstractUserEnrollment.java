@@ -109,7 +109,7 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 	{
 		List exceptions = getConfiguration().getList("excludeusers", null);
 
-		for(int i = 0; i < exceptions.size(); i++)
+		for(int i = 0; exceptions!= null && i < exceptions.size(); i++)
 		{
 			String loginId = (String) exceptions.get(i);
 

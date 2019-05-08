@@ -49,7 +49,7 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 			permission.setAttribute(1000001578, permissionName);
 			permission.read(getServerConnection());
 
-			if (!permission.exists()) throw new AREasyException("Permission role '" + permissionName + "' not found");
+			if (!permission.exists() && !getConfiguration().getBoolean("skipvalidation", false)) throw new AREasyException("Permission role '" + permissionName + "' not found");
 		}
 
 		//check if it was specified to find all existing users and to apply action's workflow to this users
@@ -112,14 +112,20 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 		}
 	}
 
+	/**
+	 * Find users with a particular permission
+	 *
+	 * @param permission permission object read from <b>LIC:SYS-License Permission Map</b> form
+	 * @throws AREasyException general exception in case any error occurs
+	 */
 	protected void setDiscoveredUsers(CoreItem permission) throws AREasyException
 	{
 		if (getConfiguration().getBoolean("findusers", false))
 		{
 			CoreItem item = new CoreItem();
 			item.setFormName("CTM:People Permission Groups");
-			item.setAttribute(1000001578, permission.getStringAttributeValue(1000001578));
-			item.setAttribute(1000001579, permission.getStringAttributeValue(1000001579));
+			item.setAttribute(1000001578, permission.getAttributeValue(1000001578));
+			item.setAttribute(1000001579, permission.getAttributeValue(1000001579));
 			List list = item.search(getServerConnection());
 
 			for (int i = 0; i < list.size(); i++)

@@ -43,6 +43,8 @@ Where:
 
 	-userformname     = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field
 
+	-forceupdate      = update user permission (in case if is found in the system); license type will be overwritter
+
 Note: This action allows you to set the same application permission and the same license type to many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -permission, -license and -login options you'll refer columns from an Excel file or from a text file.
 
 Attention: In order to execute this action you must have configured in the default configuration sector the Remedy server and all related details or you can specify them in the command line, using general options. For more details check the help manual from help action.

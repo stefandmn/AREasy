@@ -13,3 +13,5 @@ or (at your option) any later version.
 This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 including but not limited to, the implied warranty of MERCHANTABILITY, NONINFRINGEMENT,
 or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+[For more details check the Wiki pages](https://github.com/stefandmn/AREasy/wiki)

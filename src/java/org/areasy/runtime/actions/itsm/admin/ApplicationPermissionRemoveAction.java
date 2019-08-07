@@ -66,9 +66,9 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 				people.setLoginId(username);
 				people.read(getServerConnection());
 
-				if (!people.exists())
+				if (!people.exists() && !getConfiguration().getBoolean("skipvalidation", false))
 				{
-					RuntimeLogger.error("People structure wasn't found: " + people);
+					RuntimeLogger.warn("People structure wasn't found: " + people);
 					continue;
 				}
 

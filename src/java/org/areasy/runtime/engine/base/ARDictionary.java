@@ -21,7 +21,7 @@ public interface ARDictionary
 {
 	public static final int[] 	 CONST_PEOPLE_ROLEIDS 					= { 76000, 31000, 39000, 8000, 10000, 6000 };
 	public static final String[] CONST_PEOPLE_ROLENAMES 				= { "Approved by", "Created by", "Managed by", "Owned by", "Supported by", "Used by" };
-	public static final String[] CONST_PEOPLE_RELATIONENTITIES 			= { "People", "Support Group" };
+	public static final String[] CONST_PEOPLE_RELATIONENTITIES 			= { "People", "Support Group", "People Organization"};
 
 	public static final int CI_ENTRYID 									= 1;
 	public static final int CI_STATUS									= 7;

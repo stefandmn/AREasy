@@ -18,6 +18,7 @@ import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
+import org.areasy.runtime.engine.structures.data.itsm.foundation.Organisation;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 import org.areasy.runtime.engine.workflows.ProcessorLevel2CmdbApp;
@@ -123,7 +124,8 @@ public class RelationshipPeopleCreateAction extends BaseConfigurationItemAction 
 
 		if(StringUtility.equalsIgnoreCase(peoplerelationentity, ProcessorLevel2CmdbApp.CONST_PEOPLE_RELATIONENTITIES[0])) item2 = new People();
 			else if(StringUtility.equalsIgnoreCase(peoplerelationentity, ProcessorLevel2CmdbApp.CONST_PEOPLE_RELATIONENTITIES[1])) item2 = new SupportGroup();
-				else throw new AREasyException("Invalid relationship entity type: " + peoplerelationentity);
+				else if(StringUtility.equalsIgnoreCase(peoplerelationentity, ProcessorLevel2CmdbApp.CONST_PEOPLE_RELATIONENTITIES[2])) item2 = new Organisation();
+					else throw new AREasyException("Invalid relationship entity type: " + peoplerelationentity);
 
 		if(getConfiguration().containsKey("entityqualification"))
 		{
@@ -155,6 +157,15 @@ public class RelationshipPeopleCreateAction extends BaseConfigurationItemAction 
 
 			item2.read(getServerConnection());
 		}
+		else if(StringUtility.equalsIgnoreCase(peoplerelationentity, ProcessorLevel2CmdbApp.CONST_PEOPLE_RELATIONENTITIES[2]) && (getConfiguration().containsKey("peoplecompany") ||
+				getConfiguration().containsKey("peopleorganisation") || getConfiguration().containsKey("peopledepartment")))
+		{
+			if(getConfiguration().containsKey("peoplecompany")) item2.setAttribute(1000000001, getConfiguration().getString("peoplecompany", null));
+			if(getConfiguration().containsKey("peopleorganisation")) item2.setAttribute(1000000010, getConfiguration().getString("peopleorganisation", null));
+			if(getConfiguration().containsKey("peopledepartment")) item2.setAttribute(200000006, getConfiguration().getString("peopledepartment", null));
+
+			item2.read(getServerConnection());
+		}
 		else if(getConfiguration().containsKey("peoplerelationkeyids") && getConfiguration().containsKey("peoplerelationkeyvalues"))
 		{
 			List peoplerelationkeyids = getConfiguration().getVector("peoplerelationkeyids", new Vector());
@@ -176,6 +187,7 @@ public class RelationshipPeopleCreateAction extends BaseConfigurationItemAction 
 			if(getConfiguration().containsKey("accesspermitted")) relationdatamap.put(301501400, getConfiguration().getString("accesspermitted", null));
 			if(getConfiguration().containsKey("assignmentlocked")) relationdatamap.put(1000002884, getConfiguration().getString("assignmentlocked", null));
 			if(getConfiguration().containsKey("rowlevelaccessenabled")) relationdatamap.put(301497700, getConfiguration().getString("rowlevelaccessenabled", null));
+			if(getConfiguration().containsKey("relationshiplevel")) relationdatamap.put("relationshiplevel", getConfiguration().getString("relationshiplevel", "company"));
 		}
 		else if(getConfiguration().containsKey("peoplerelationdataids") && getConfiguration().containsKey("peoplerelationdatavalues"))
 		{

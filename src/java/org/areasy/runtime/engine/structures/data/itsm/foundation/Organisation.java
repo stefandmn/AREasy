@@ -68,6 +68,16 @@ public class Organisation extends CoreItem
 	}
 
 	/**
+	 * Get group instance id value.
+	 *
+	 * @return group instance id.
+	 */
+	public String getInstanceId()
+	{
+		return getStringAttributeValue(CTM_INSTANCEID);
+	}
+
+	/**
 	 * Get company name attribute value.
 	 *
 	 * @return company name.

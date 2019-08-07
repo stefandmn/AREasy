@@ -50,6 +50,9 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Identifier for data parameter: <code>D + </code><field id> (number)</code> */
 	public static final String FDATA = "D";
 
+	/** Identifier for file parameter: <code>F + </code><field id> (number)</code> */
+	public static final String FFILE = "F";
+
 	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code> */
 	public static final String FDATAC = "DC";
 
@@ -125,6 +128,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				String key = id.substring(1);
 				if( NumberUtility.isNumber(key) ) list.add(id);
 			}
+			else if(id != null && id.startsWith(FFILE))
+			{
+				String key = id.substring(1);
+				if( NumberUtility.isNumber(key) ) list.add(id);
+			}
 		}
 
 		for(int i = 0; !list.isEmpty() && i < list.size(); i++)
@@ -137,6 +145,22 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 			Object value = getConfiguration().getKey(id);
 			if(value instanceof String && (((String)value).startsWith("$") || ((String)value).indexOf("${") >= 0)) value = getConfiguration().getString(id);
+
+			//handle attachments mapping
+			if(id.startsWith(FFILE) && value instanceof String)
+			{
+				File fvalue = new File(value.toString());
+				if(!fvalue.exists()) fvalue = new File(RuntimeManager.getHomeDirectory() + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERHOME")) fvalue = new File(System.getProperty("user.home") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERWORK")) fvalue = new File(System.getProperty("user.dir") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("JAVAHOME")) fvalue = new File(System.getProperty("java.home") + File.separator + value);
+				if(!fvalue.exists())
+				{
+					logger.warn("Attachment attribute id '" + key + "' has been skipped because the file reference is not found: " + fvalue.getPath());
+					continue;
+				}
+				else value = fvalue;
+			}
 
 			setAttribute(entry, key, value, "ignorenulldata");
 

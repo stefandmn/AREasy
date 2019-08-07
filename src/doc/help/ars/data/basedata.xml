@@ -19,6 +19,9 @@
 	<options1>
 		<option key="Q" type="string" description="Query prefix identifier to query after a field id"/>
 		<option key="D" type="string" description="Data prefix identified to push value of specific field id"/>
+		<option key="F" type="string" description="Data prefix identified to push file object to a specific field id"/>
+		<option key="DC" type="string" description="Data prefix identified to push value of specific field id but only for Create events"/>
+		<option key="DU" type="string" description="Data prefix identified to push value of specific field id but only for Update events"/>
 		<option key="partforms" type="list"  description="Define the list of multi-part forms. The syntax is the following: -partforms Par1@FormName1;Part2@FormName2;..;PartX@FormNameX"/>
 		<option key="multipart" type="bool" description="Activate multi-part form extension"/>
 		<option key="ignorenullvalues" type="bool" description="Ignore null values from input during transaction execution"/>

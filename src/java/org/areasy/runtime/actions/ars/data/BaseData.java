@@ -162,6 +162,22 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				else value = fvalue;
 			}
 
+			//handle attachments mapping
+			if(id.startsWith(FFILE) && value instanceof String)
+			{
+				File fvalue = new File(value.toString());
+				if(!fvalue.exists()) fvalue = new File(RuntimeManager.getHomeDirectory() + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERHOME")) fvalue = new File(System.getProperty("user.home") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERWORK")) fvalue = new File(System.getProperty("user.dir") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("JAVAHOME")) fvalue = new File(System.getProperty("java.home") + File.separator + value);
+				if(!fvalue.exists())
+				{
+					logger.warn("Attachment attribute id '" + key + "' has been skipped because the file reference is not found: " + fvalue.getPath());
+					continue;
+				}
+				else value = fvalue;
+			}
+
 			setAttribute(entry, key, value, "ignorenulldata");
 
 			if(!set) set = true;

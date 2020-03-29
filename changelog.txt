@@ -1,3 +1,7 @@
+3.0.2
+======
+01. Added possibility to use data already which already exists in the CoreItem structure.
+
 3.0.1
 ======
 15. Optimize dev action in order to speed up inventory that is used for definitions export or inventory

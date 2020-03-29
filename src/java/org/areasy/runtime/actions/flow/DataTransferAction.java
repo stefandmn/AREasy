@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.flow;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -283,7 +283,7 @@ public class DataTransferAction extends FlowPatternAction
 			dictionary = new HashMap();
 
 			if(getConfiguration().containsKey("dictionarykey")) dictionaryKey = getConfiguration().getKey("dictionarykey").toString();
-				else dictionaryKey = "${A}";
+				else dictionaryKey = MultiPartItem.partVarStart + "A" + MultiPartItem.partVarEnd;
 
 			try
 			{
@@ -436,7 +436,7 @@ public class DataTransferAction extends FlowPatternAction
 				{
 					if(sourceType == null)
 					{
-						getConfiguration().setKey(targetStringId, "${" + FDATA + sourceStringId + "}");
+						getConfiguration().setKey(targetStringId, MultiPartItem.partVarStart + FDATA + sourceStringId + MultiPartItem.partVarEnd);
 					}
 					else if(sourceType == 0)
 					{

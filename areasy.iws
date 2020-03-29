@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b1355531-c639-449f-b85c-8bbe473d9fa1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/areasy.iws" beforeDir="false" afterPath="$PROJECT_DIR$/areasy.iws" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1ZobwHu9wYlNz9F4Hn8PAM3gHQq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>$USER_HOME$/.subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1355531-c639-449f-b85c-8bbe473d9fa1" name="Default Changelist" comment="" />
+      <created>1585508630646</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585508630646</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Update copyright">
+      <created>1585509496346</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1585509496346</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update copyright">
+      <created>1585509541032</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585509541032</updated>
+    </task>
+    <task id="LOCAL-00003">
+      <created>1585509614757</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585509614757</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="Update copyright" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="858" y="423" width="494" height="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1585509521111">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="858" y="423" width="494" height="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.30.1920.1050@0.30.1920.1050" timestamp="1585509521111" />
+    <state x="758" y="302" width="693" height="505" key="CommitChangelistDialog2" timestamp="1585509612919">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="758" y="302" width="693" height="505" key="CommitChangelistDialog2/0.30.1920.1050@0.30.1920.1050" timestamp="1585509612919" />
+    <state x="893" y="311" width="424" height="487" key="FileChooserDialogImpl" timestamp="1585509041346">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="893" y="311" width="424" height="487" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1585509041346" />
+    <state x="979" y="454" key="Github.ShareDialog" timestamp="1585509784994">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="979" y="454" key="Github.ShareDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1585509784994" />
+    <state x="614" y="188" width="992" height="733" key="SettingsEditor" timestamp="1585509735370">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="614" y="188" width="992" height="733" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1585509735370" />
+    <state x="928" y="402" width="353" height="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585508644481">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="928" y="402" width="353" height="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.30.1920.1050@0.30.1920.1050" timestamp="1585508644481" />
+    <state x="957" y="452" key="svn.passwordDialog" timestamp="1585509462709">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="957" y="452" key="svn.passwordDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1585509462709" />
+  </component>
+</project>

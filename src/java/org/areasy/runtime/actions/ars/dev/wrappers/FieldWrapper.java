@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.dev.wrappers;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -116,7 +116,7 @@ public class FieldWrapper extends AbstractWrapper implements FormRelatedWrapper
 			{
 				Field field = (Field) fields.get(i);
 
-				if( StringUtility.equals(name, field.getName()))
+				if(StringUtility.equals(name, field.getName()) || StringUtility.equals(name, String.valueOf(field.getFieldID())))
 				{
 					object = field;
 					break;

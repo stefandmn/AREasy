@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.data;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -49,6 +49,9 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 	/** Identifier for data parameter: <code>D + </code><field id> (number)</code> */
 	public static final String FDATA = "D";
+
+	/** Identifier for file parameter: <code>F + </code><field id> (number)</code> */
+	public static final String FFILE = "F";
 
 	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code> */
 	public static final String FDATAC = "DC";
@@ -125,6 +128,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				String key = id.substring(1);
 				if( NumberUtility.isNumber(key) ) list.add(id);
 			}
+			else if(id != null && id.startsWith(FFILE))
+			{
+				String key = id.substring(1);
+				if( NumberUtility.isNumber(key) ) list.add(id);
+			}
 		}
 
 		for(int i = 0; !list.isEmpty() && i < list.size(); i++)
@@ -133,10 +141,26 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			String key = id.substring(1);
 
 			//check if it is about a transaction exception
-			if(id.startsWith(FDATAC) || id.startsWith(FDATAC)) key = id.substring(2);
+			if(id.startsWith(FDATAC) || id.startsWith(FDATAU)) key = id.substring(2);
 
 			Object value = getConfiguration().getKey(id);
-			if(value instanceof String && (((String)value).startsWith("$") || ((String)value).indexOf("${") >= 0)) value = getConfiguration().getString(id);
+			if(value instanceof String && (((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1)) || ((String)value).indexOf(MultiPartItem.partVarStart) >= 0)) value = getConfiguration().getString(id);
+
+			//handle attachments mapping
+			if(id.startsWith(FFILE) && value instanceof String)
+			{
+				File fvalue = new File(value.toString());
+				if(!fvalue.exists()) fvalue = new File(RuntimeManager.getHomeDirectory() + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERHOME")) fvalue = new File(System.getProperty("user.home") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("USERWORK")) fvalue = new File(System.getProperty("user.dir") + File.separator + value);
+				if(!fvalue.exists() && ((String) value).startsWith("JAVAHOME")) fvalue = new File(System.getProperty("java.home") + File.separator + value);
+				if(!fvalue.exists())
+				{
+					logger.warn("Attachment attribute id '" + key + "' has been skipped because the file reference is not found: " + fvalue.getPath());
+					continue;
+				}
+				else value = fvalue;
+			}
 
 			setAttribute(entry, key, value, "ignorenulldata");
 
@@ -660,6 +684,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		if(value != null)
 		{
 			int startIndex1 = value.indexOf(START_TOKEN, 0);
+			int endIndex = value.indexOf(END_TOKEN, 0);
 
 			if(startIndex1 >= 0)
 			{
@@ -668,7 +693,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 				int startIndex2 = value.indexOf(START_TOKEN, startIndex1 + START_TOKEN.length());
 
-				if(startIndex2 > startIndex1)
+				if(startIndex2 > startIndex1 && startIndex2 < endIndex)
 				{
 					expression = value.substring(startIndex1 + START_TOKEN.length());
 					output = getLookupValue(expression, entry);
@@ -679,8 +704,6 @@ public abstract class BaseData extends AbstractAction implements CoreData
 					//apply output in the original expression
 					value = StringUtility.replace(value, expression, output);
 				}
-
-				int endIndex = value.indexOf(END_TOKEN, 0);
 
 				if(endIndex > 0)
 				{
@@ -772,7 +795,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				if(output == null) output = "";
 
 				//apply output in the original expression
-				value = StringUtility.replace(value, expression, output);
+				value = getLookupValue(StringUtility.replace(value, expression, output), entry);
 			}
 		}
 
@@ -1077,7 +1100,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	}
 
 	/**
-	 * File dictionary in order to generate variales maps.
+	 * File dictionary in order to generate variables maps.
 	 */
 	public class Dictionary
 	{

@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.admin;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -61,7 +61,7 @@ public class ApplicationPermissionSetAction extends AbstractUserEnrollment
 			else if(requiredLicenseType == 1) license = "Read";
 				else if(requiredLicenseType == 2) license = "Fixed";
 					else if(requiredLicenseType == 3) license = "Floating";
-						else if(requiredLicenseType >=4 && !StringUtility.equalsIgnoreCase(license, "Floating") && !StringUtility.equalsIgnoreCase(license, "Fixed")) throw new AREasyException("For application role '" + permission + "' is mandatory to choose between 'Floating' or 'Fixed' license types");
+						else if(requiredLicenseType >=4 && !StringUtility.equalsIgnoreCase(license, "Floating") && !StringUtility.equalsIgnoreCase(license, "Fixed") && !StringUtility.equalsIgnoreCase(license, "None")) throw new AREasyException("For application role '" + permission + "' is mandatory to choose between 'Floating', 'Fixed' or 'None' license types");
 
 		//execute the requested action for each user
 		for(int i = 0; i < getUsers().size(); i++)
@@ -96,8 +96,18 @@ public class ApplicationPermissionSetAction extends AbstractUserEnrollment
 						entry.setAttribute(1000002294, license); //license type
 
 						entry.create(getServerConnection());
-
 						RuntimeLogger.info("Application role '" + permission + "' was configured for user '" + username + "'");
+					}
+					else if(entry.exists() && getConfiguration().getBoolean("forceupdate", false))
+					{
+						entry.setAttribute(7, "Enabled");
+						entry.setAttribute(240001002, item.getStringAttributeValue(240001002)); //product name
+						entry.setAttribute(1000002340, item.getStringAttributeValue(1000002340)); //permission tag name
+						entry.setAttribute(1000003972, new Integer(1)); //permission group type
+						entry.setAttribute(1000002294, license); //license type
+
+						entry.update(getServerConnection());
+						RuntimeLogger.info("Application role '" + permission + "' was updated for user '" + username + "'");
 					}
 					else RuntimeLogger.warn("Application role '" + permission + "' is already configured for user '" + username + "'");
 				}

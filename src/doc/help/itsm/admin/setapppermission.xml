@@ -3,7 +3,7 @@
 <!DOCTYPE help SYSTEM "../../action.dtd">
 
 <!--
-  ~ Copyright (c) 2007-2018 AREasy Runtime
+  ~ Copyright (c) 2007-2020 AREasy Runtime
   ~
   ~ This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
   ~ you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -42,6 +42,8 @@ Where:
 	-userqualifiation = this could be the third option to take the list of persons and to provide them additional permissions and licenses. Actually this option provide a way to select persons using a qualification criteria addressed to the direct connected AR System server.
 
 	-userformname     = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field
+
+	-forceupdate      = update user permission (in case if is found in the system); license type will be overwritter
 
 Note: This action allows you to set the same application permission and the same license type to many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -permission, -license and -login options you'll refer columns from an Excel file or from a text file.
 

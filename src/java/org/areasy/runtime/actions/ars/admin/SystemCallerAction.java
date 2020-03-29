@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.admin;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -20,7 +20,7 @@ import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
 
 /**
- * Dedicated action execute different AR System internal objects (filter processes and/or escaltions).
+ * Dedicated action execute different AR System internal objects (filter processes and/or escalations).
  */
 public class SystemCallerAction extends AbstractAction
 {

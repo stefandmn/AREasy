@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.admin;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -273,7 +273,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 		if(groupId != null) group.setAttribute(1, groupId);
 		group.read(getServerConnection());
 
-		if(!group.exists()) throw new AREasyException("Support group '" + group + "' does not exist");
+		if(!group.exists() && !getConfiguration().getBoolean("skipvalidation", false)) throw new AREasyException("Support group '" + group + "' does not exist");
 
 		//check if it was specified to find all existing users and to apply action's workflow to this users
 		if (group.exists() && (getUsers() == null || getUsers().isEmpty())) setDiscoveredUsers(group.getEntryId());
@@ -286,7 +286,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			people.setLoginId(loginId);
 			people.read(getServerConnection());
 
-			if (!people.exists())
+			if (!people.exists() && !getConfiguration().getBoolean("skipvalidation", false))
 			{
 				RuntimeLogger.warn("Person with login id '" + loginId + "' not found");
 				continue;
@@ -466,7 +466,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			if(sgroupId != null) group.setAttribute(1, sgroupId);
 
 			group.read(getServerConnection());
-			if(!group.exists()) throw new AREasyException("Support group '" + group + "' does not exist");
+			if(!group.exists() && !getConfiguration().getBoolean("skipvalidation", false)) throw new AREasyException("Support group '" + group + "' does not exist");
 		}
 
 		//get the application role
@@ -490,7 +490,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 			if(appCode != null) role.setAttribute(1000003698, appCode);
 
 			role.read(getServerConnection());
-			if(!role.exists()) throw new AREasyException("No '" + role + "' functional role registered in 'Menu Items' form");
+			if(!role.exists() && !getConfiguration().getBoolean("skipvalidation", false)) throw new AREasyException("No '" + role + "' functional role registered in 'Menu Items' form");
 		}
 
 		//check if it was specified to find all existing users and to apply action's workflow to this users
@@ -507,7 +507,7 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 				people.setLoginId(username);
 				people.read(getServerConnection());
 
-				if (!people.exists())
+				if (!people.exists() && !getConfiguration().getBoolean("skipvalidation", false))
 				{
 					RuntimeLogger.error("People structure wasn't found: " + people);
 					continue;

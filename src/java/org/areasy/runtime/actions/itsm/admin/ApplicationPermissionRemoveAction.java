@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.admin;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -49,7 +49,7 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 			permission.setAttribute(1000001578, permissionName);
 			permission.read(getServerConnection());
 
-			if (!permission.exists()) throw new AREasyException("Permission role '" + permissionName + "' not found");
+			if (!permission.exists() && !getConfiguration().getBoolean("skipvalidation", false)) throw new AREasyException("Permission role '" + permissionName + "' not found");
 		}
 
 		//check if it was specified to find all existing users and to apply action's workflow to this users
@@ -66,9 +66,9 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 				people.setLoginId(username);
 				people.read(getServerConnection());
 
-				if (!people.exists())
+				if (!people.exists() && !getConfiguration().getBoolean("skipvalidation", false))
 				{
-					RuntimeLogger.error("People structure wasn't found: " + people);
+					RuntimeLogger.warn("People structure wasn't found: " + people);
 					continue;
 				}
 
@@ -112,14 +112,20 @@ public class ApplicationPermissionRemoveAction extends AbstractUserEnrollment
 		}
 	}
 
+	/**
+	 * Find users with a particular permission
+	 *
+	 * @param permission permission object read from <b>LIC:SYS-License Permission Map</b> form
+	 * @throws AREasyException general exception in case any error occurs
+	 */
 	protected void setDiscoveredUsers(CoreItem permission) throws AREasyException
 	{
 		if (getConfiguration().getBoolean("findusers", false))
 		{
 			CoreItem item = new CoreItem();
 			item.setFormName("CTM:People Permission Groups");
-			item.setAttribute(1000001578, permission.getStringAttributeValue(1000001578));
-			item.setAttribute(1000001579, permission.getStringAttributeValue(1000001579));
+			item.setAttribute(1000001578, permission.getAttributeValue(1000001578));
+			item.setAttribute(1000001579, permission.getAttributeValue(1000001579));
 			List list = item.search(getServerConnection());
 
 			for (int i = 0; i < list.size(); i++)

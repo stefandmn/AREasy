@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.dev;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -195,6 +195,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 			//set file parser environment parameters
 			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
 			engine.setResource("parserfile", getConfiguration().getString("includefile", null));
+			engine.setResource("startindex", 0);
 			engine.init("file");
 
 			String objects[] = null;
@@ -270,7 +271,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 			ObjectWrapper wrapper = (ObjectWrapper) wrappers.get(i);
 
 			setObjectsListByWrapper(objects, wrapper, exclude, prefix, since, owner, changer, keyword);
-			setObjectsListByInputFile(objects, wrapper, input, exclude, validate);
+			setObjectsListByInputFile(objects, wrapper, exclusiveTypes, input, exclude, validate);
 			setObjectsListByInputParameters(objects, wrapper, validate);
 		}
 
@@ -415,13 +416,12 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		return info;
 	}
 
-	private void setObjectsListByInputFile(List output, ObjectWrapper wrapper, List input, List exclude, boolean validate) throws AREasyException
+	private void setObjectsListByInputFile(List output, ObjectWrapper wrapper, List exclusiveTypes, List input, List exclude, boolean validate) throws AREasyException
 	{
 		List objects = new Vector();
 
 		if (wrapper != null)
 		{
-			List exclusiveTypes = getExclusiveOptions();
 			if(exclusiveTypes != null && !exclusiveTypes.contains(wrapper.getPluralObjectTypeName())) return;
 
 			//check if there object specified into a file
@@ -678,6 +678,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 			field.setFormName(formName);
 
 			String fieldNames[] = StringUtility.split(objectKey.substring(indexOP + 1, indexCP), ',');
+			Vector foundNames = new Vector();
 
 			for(int i = 0; i < fieldNames.length; i++)
 			{
@@ -685,12 +686,20 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 
 				if(object == null)
 				{
-					RuntimeLogger.error("Object '" + fieldNames[i] + "' is null");
-					return null;
+					RuntimeLogger.warn("Field object '" + fieldNames[i] + "' related to '" + formName + "' forms doesn't exist");
+				}
+				else
+				{
+					foundNames.add(object.getName());
 				}
 			}
 
-			return new StructItemInfo(field.getObjectTypeId(), field.getFormName(), fieldNames);
+			if (foundNames.size() > 0)
+			{
+				fieldNames = (String[]) foundNames.toArray(new String[foundNames.size()]);
+				return new StructItemInfo(field.getObjectTypeId(), field.getFormName(), fieldNames);
+			}
+			else return null;
 		}
 		else
 		{
@@ -1048,11 +1057,22 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	protected List getExclusiveOptions()
 	{
 		List selectedTypes = new Vector();
+		boolean excluding = false;
 
 		for(int x = 0; x < types.length; x++)
 		{
 			boolean exclusive = getConfiguration().getBoolean("only-" + types[x], false);
+			excluding = excluding | getConfiguration().getBoolean("not-" + types[x], false);
 			if(exclusive) selectedTypes.add(types[x]);
+		}
+
+		if(selectedTypes.isEmpty() && excluding)
+		{
+			for(int x = 0; x < types.length; x++)
+			{
+				boolean exclude = getConfiguration().getBoolean("not-" + types[x], false);
+				if(!exclude) selectedTypes.add(types[x]);
+			}
 		}
 
 		if(selectedTypes.isEmpty()) return null;

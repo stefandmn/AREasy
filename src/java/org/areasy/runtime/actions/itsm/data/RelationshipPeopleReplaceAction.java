@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.data;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -37,7 +37,7 @@ public class RelationshipPeopleReplaceAction extends RelationshipPeopleCreateAct
 	 *
 	 * @see RelationshipPeopleRemoveAction#run(org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem)
 	 * @see RelationshipPeopleCreateAction# run (org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem)
-	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occur
+	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occure
 	 */
 	public void run(ConfigurationItem item) throws AREasyException
 	{

@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.workflows;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,7 @@ import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
 import org.areasy.runtime.engine.structures.data.cmdb.InventoryLocation;
+import org.areasy.runtime.engine.structures.data.itsm.foundation.Organisation;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.SupportGroup;
 
@@ -323,7 +324,11 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		if(item == null || !item.exists()) throw new AREasyException("Source CI entry doesn't exist: " + item);
 
 		//target validation
-		if(entry == null|| !entry.exists()) throw new AREasyException("Target entry (people or support group) doesn't exist: " + entry);
+		if(entry == null|| !entry.exists())
+		{
+			logger.warn("Target entry (people, support group or people organisation) was not found: " + entry);
+			return false;
+		}
 
 		if(entry instanceof People)
 		{
@@ -335,7 +340,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 
 			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[0];
 		}
-		else
+		else if(entry instanceof SupportGroup)
 		{
 		    SupportGroup group = (SupportGroup)entry;
 
@@ -345,6 +350,20 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 
 			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[1];
 		}
+		else if(entry instanceof Organisation)
+		{
+			Organisation organisation = (Organisation)entry;
+			entryId = organisation.getEntryId();
+			if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "department")) entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName() + "->" + organisation.getDepartmentName();
+				else if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "organisation")) entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName();
+					else if (!map.containsKey("relationshiplevel") || StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "company")) entryName = organisation.getCompanyName();
+						else throw new AREasyException("Unknown the relationship level");
+			map.remove("relationshiplevel");
+
+			entryInstanceId = organisation.getInstanceId();
+			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[2];
+		}
+		else throw new AREasyException("Target entity is not recognized: " + entry);
 
 		//get role id.
 		int roleId = 5;
@@ -364,7 +383,6 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		//define relation structure
 		CoreItem astpeople = new CoreItem();
 		astpeople.setFormName(FORM_ASSETPEOPLE);
-		astpeople.setAttribute(ASP_ASSETID, item.getAssetId());
 		astpeople.setAttribute(ASP_ROLENAME, new Integer(roleId));
 		astpeople.setAttribute(ASP_ENTITYNAME, entryEntityName);
 		astpeople.setAttribute(ASP_PEOPLEID, entryId);
@@ -386,12 +404,15 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		else
 		{
 			//fill additional attributes
+			astpeople.setAttribute(ASP_ASSETID, item.getName());
 			astpeople.setAttribute(ASP_STATUS, new Integer(0));
 			astpeople.setAttribute(ASP_ROLENAME, new Integer(roleId));
 			astpeople.setAttribute(ASP_PEOPLE_FULLNAME, entryName);
 			astpeople.setAttribute(ASP_DATASET, item.getDatasetId());
 			astpeople.setAttribute(ASP_AENTRYID, item.getEntryId());
 			astpeople.setAttribute(ASP_CLASSID, item.getClassId());
+			astpeople.setAttribute(ASP_REQUESTTYPE, entryEntityName);
+			astpeople.setAttribute(ASP_INDIVIDUALORGROUP, entryEntityName);
 
 			//add additional attributes.
 			astpeople.setData(map);

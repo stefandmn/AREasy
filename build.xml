@@ -422,7 +422,7 @@
 	</target>
 
 
-	<target name="7.Installer" description="Build installation kit">
+	<target name="7.Installer" depends="5.Deploy" description="Build installation kit">
 		<if>
 			<equals arg1="${isWindows}" arg2="true"/>
 			<then>
@@ -475,7 +475,7 @@
 	</target>
 
 
-	<target name="8.Package" description="Build zip/gzip package">
+	<target name="8.Package" depends="5.Deploy" description="Build zip/gzip package">
 		<if>
 			<equals arg1="${isUnix}" arg2="true"/>
 			<then>

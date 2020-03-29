@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.dev.tools;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -333,7 +333,7 @@ public class ProcessWorksheetAction extends DefinitionAction
 		}
 
 		//filter the list in case of is required to processed only overlays
-		if(getConfiguration().getBoolean("onlyoverlays", false)) foundlist = getOnlyOverlays(foundlist, false);
+		if(getConfiguration().getBoolean("only-overlays", false)) foundlist = getOnlyOverlays(foundlist, false);
 
 		//fill in the map
 		for(int i = 0; foundlist != null && i < foundlist.size(); i++)

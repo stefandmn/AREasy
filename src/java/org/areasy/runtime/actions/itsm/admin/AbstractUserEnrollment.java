@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.admin;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -109,7 +109,7 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 	{
 		List exceptions = getConfiguration().getList("excludeusers", null);
 
-		for(int i = 0; i < exceptions.size(); i++)
+		for(int i = 0; exceptions!= null && i < exceptions.size(); i++)
 		{
 			String loginId = (String) exceptions.get(i);
 

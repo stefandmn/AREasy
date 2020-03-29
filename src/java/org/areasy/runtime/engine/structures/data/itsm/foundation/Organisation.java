@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.structures.data.itsm.foundation;
 
 /*
- * Copyright (c) 2007-2018 AREasy Runtime
+ * Copyright (c) 2007-2020 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -65,6 +65,16 @@ public class Organisation extends CoreItem
 		if(containsAttributeField(POR_ORGANISATIONNAME)) getAttribute(POR_ORGANISATIONNAME).setLabel("Organisation");
 		if(containsAttributeField(POR_DEPARTMENTNAME)) getAttribute(POR_DEPARTMENTNAME).setLabel("Department");
 		if(containsAttributeField(POR_DESCRIPTION)) getAttribute(POR_DESCRIPTION).setLabel("Description");
+	}
+
+	/**
+	 * Get group instance id value.
+	 *
+	 * @return group instance id.
+	 */
+	public String getInstanceId()
+	{
+		return getStringAttributeValue(CTM_INSTANCEID);
 	}
 
 	/**

@@ -22,6 +22,7 @@ import org.areasy.common.data.StringUtility;
 import org.areasy.common.data.type.map.keyvalue.DefaultKeyValue;
 import org.areasy.common.support.configuration.Configuration;
 import org.areasy.common.support.configuration.base.BaseConfiguration;
+import org.areasy.common.velocity.context.Context;
 import org.areasy.runtime.actions.flow.sources.AbstractSource;
 import org.areasy.runtime.actions.flow.sources.RemedySource;
 import org.areasy.runtime.engine.RuntimeLogger;
@@ -1036,51 +1037,5 @@ public class DataTransferAction extends FlowPatternAction
 	public AbstractSource getDataSource()
 	{
 		return dataSource;
-	}
-
-	/**
-	 * Get answer stream.
-	 *
-	 * @param fileIn input file
-	 * @return stream data content
-	 */
-	protected String getInputStream(File fileIn)
-	{
-		if(fileIn != null && fileIn.exists())
-		{
-			String content = null;
-			InputStream stream = null;
-
-			try
-			{
-				byte[] buffer = new byte[1024];
-				stream = new FileInputStream(fileIn);
-				ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-				while(true)
-				{
-					int read = stream.read(buffer);
-					if(read <= 0) break;
-
-					output.write(buffer, 0, read);
-				}
-
-				content = new String(output.toByteArray());
-			}
-			catch (Exception e)
-			{
-				logger.error("Error reading input stream: " + e.getMessage());
-				logger.debug("Exception", e);
-
-				content = null;
-			}
-			finally
-			{
-				if(stream != null) try { stream.close(); } catch(Exception e) { /* nothing to do here */}
-			}
-
-			return content;
-		}
-		else return null;
 	}
 }

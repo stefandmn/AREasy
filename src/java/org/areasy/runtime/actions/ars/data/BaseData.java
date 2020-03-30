@@ -22,19 +22,27 @@ import org.areasy.common.support.configuration.ConfigurationException;
 import org.areasy.common.support.configuration.base.BaseConfiguration;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesConfiguration;
 import org.areasy.common.support.configuration.providers.properties.stream.PropertiesEntry;
+import org.areasy.common.velocity.context.Context;
 import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.status.BaseStatus;
+import org.areasy.runtime.engine.structures.Attribute;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.MultiPartItem;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
+import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
+import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
 import org.areasy.runtime.engine.workflows.ProcessorLevel2CmdbApp;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.*;
+
 
 /**
  * Abstract library that publish a shared API for all common action that use Remedy interrogation.
@@ -53,10 +61,13 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Identifier for file parameter: <code>F + </code><field id> (number)</code> */
 	public static final String FFILE = "F";
 
-	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code> */
+	/** Identifier for field value reference: <code>F + </code><field id> (number)</code> */
+	public static final String FDREF = "F";
+
+	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code>. This identifier should be used only for Create transactions */
 	public static final String FDATAC = "DC";
 
-	/** Identifier for data parameter: <code>DU + </code><field id> (number)</code> */
+	/** Identifier for data parameter: <code>DU + </code><field id> (number)</code>. This identifier should used only for Updates transactions */
 	public static final String FDATAU = "DU";
 
 	/** start token  */
@@ -91,7 +102,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 */
 	public boolean setDataFields(CoreItem entry) throws AREasyException
 	{
-		return setDataFields(entry, false, false);
+		return setDataFields(entry, !entry.exists(), entry.exists());
 	}
 
 	/**
@@ -137,14 +148,24 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 		for(int i = 0; !list.isEmpty() && i < list.size(); i++)
 		{
+			String key = null;
 			String id = list.get(i);
-			String key = id.substring(1);
-
-			//check if it is about a transaction exception
 			if(id.startsWith(FDATAC) || id.startsWith(FDATAU)) key = id.substring(2);
+				else key = id.substring(1);
 
 			Object value = getConfiguration().getKey(id);
-			if(value instanceof String && (((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1)) || ((String)value).indexOf(MultiPartItem.partVarStart) >= 0)) value = getConfiguration().getString(id);
+
+			// translate internal references stored in data structure
+			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
+			{
+				value = getInternalValue(String.valueOf(value), entry, 0);
+			}
+
+			// translate external and variable references stored in configuration
+			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
+			{
+				value = getConfiguration().getString(id);
+			}
 
 			//handle attachments mapping
 			if(id.startsWith(FFILE) && value instanceof String)
@@ -183,6 +204,12 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			if(!set) set = true;
 		}
 
+		//apply velocity transformation (if is defined)
+		String transformationContent = getConfiguration().getString("transformation", null);
+		String transformationFile = getConfiguration().getString("transformationfile", null);
+		if(transformationFile != null && transformationContent == null) transformationContent = getInputStream(new File(transformationFile));
+		if(transformationContent != null) transformCoreItem(entry, transformationContent);
+
 		return set;
 	}
 
@@ -216,7 +243,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			String key = id.substring(1);
 
 			Object value = getConfiguration().getKey(id);
-			if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+			if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1))) value = getConfiguration().getString(id);
 
 			setAttribute(entry, key, value, "ignorenullquery");
 
@@ -260,7 +287,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			String key = id.substring(1);
 
 			Object value = getConfiguration().getKey(id);
-			if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+			if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1))) value = getConfiguration().getString(id);
 
 			if(id.startsWith(FDATA)) setMap(map, key, value, "ignorenulldata");
 				else if(id.startsWith(FQUERY)) setMap(map, key, value, "ignorenullquery");
@@ -298,7 +325,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			String key = id.substring(1);
 
 			Object value = getConfiguration().getKey(id);
-			if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+			if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1))) value = getConfiguration().getString(id);
 
 			setMap(map, key, value, "ignorenullquery");
 		}
@@ -337,7 +364,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				if(id.indexOf(MultiPartItem.partSeparator) > 1)
 				{
 					Object value = getConfiguration().getKey(id);
-					if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1))) value = getConfiguration().getString(id);
 
 					setAttribute(entry, key, value, "ignorenullpartquery");
 
@@ -381,7 +408,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
 					{
 						String tmpCfgId = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String)value).length() - MultiPartItem.partVarEnd.length());
-						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(id);
+						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(tmpCfgId);
 					}
 
 					setMap(map, key, value, "ignorenullpartquery");
@@ -422,7 +449,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				if(id.indexOf(MultiPartItem.partSeparator) > 1)
 				{
 					Object value = getConfiguration().getKey(id);
-					if(value instanceof String && ((String)value).startsWith("$")) value = getConfiguration().getString(id);
+					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart.substring(0, 1))) value = getConfiguration().getString(id);
 
 					setAttribute(entry, key, value, "ignorenullpartdata");
 
@@ -466,7 +493,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 					if(value instanceof String && ((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
 					{
 						String tmpCfgId = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String)value).length() - MultiPartItem.partVarEnd.length());
-						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(id);
+						if(getConfiguration().containsKey(tmpCfgId)) value = getConfiguration().getString(tmpCfgId);
 					}
 
 					setMap(map, key, value, "ignorenullpartdata");
@@ -700,7 +727,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		if(value != null)
 		{
 			int startIndex1 = value.indexOf(START_TOKEN, 0);
-			int endIndex = value.indexOf(END_TOKEN, 0);
+			int endIndex = value.indexOf(END_TOKEN, startIndex1 + 1);
 
 			if(startIndex1 >= 0)
 			{
@@ -721,7 +748,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 					value = StringUtility.replace(value, expression, output);
 				}
 
-				if(endIndex > 0)
+				if(endIndex > startIndex1)
 				{
 					expression = value.substring(startIndex1, endIndex + END_TOKEN.length());
 					String qualification = expression.substring(START_TOKEN.length(), expression.length() - END_TOKEN.length());
@@ -812,6 +839,42 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 				//apply output in the original expression
 				value = getLookupValue(StringUtility.replace(value, expression, output), entry);
+			}
+		}
+
+		return value;
+	}
+
+	/**
+	 * Get and replace <b>CoreItem</b> references with the right values. This method should be used only in
+	 * <code>setDataFields</code> method just to reused data values whoc are already in the data structure and referred
+	 * through these indicators.
+	 * @param value initial value
+	 * @param entry <b>CoreItem</b> to be used and data-source
+	 * @return the new value that replaces the references with real values
+	 * @throws AREasyException in case of any error occurs
+	 */
+	private String getInternalValue(String value, CoreItem entry, int index) throws AREasyException
+	{
+		if(value != null)
+		{
+			int startIndex = value.indexOf(MultiPartItem.partVarStart, index);
+			int endIndex = value.indexOf(MultiPartItem.partVarEnd, startIndex + 1);
+
+			if (startIndex >= 0 && endIndex > startIndex)
+			{
+				String key = value.substring(startIndex + MultiPartItem.partVarStart.length(), endIndex);
+
+				if(key.startsWith(FDREF))
+				{
+					key = key.substring(1);
+					if( NumberUtility.isNumber(key))
+					{
+						value = value.substring(0, startIndex) + StringUtility.trimToEmpty(entry.getStringAttributeValue(key)) + value.substring(endIndex + 1);
+					}
+				}
+
+				value = getInternalValue(value, entry, endIndex + 1);
 			}
 		}
 
@@ -1159,5 +1222,104 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				throw new AREasyException(ce);
 			}
 		}
+	}
+
+	/**
+	 * Get answer stream.
+	 *
+	 * @param fileIn input file
+	 * @return stream data content
+	 */
+	protected String getInputStream(File fileIn)
+	{
+		if(fileIn != null && fileIn.exists())
+		{
+			String content = null;
+			InputStream stream = null;
+
+			try
+			{
+				byte[] buffer = new byte[1024];
+				stream = new FileInputStream(fileIn);
+				ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+				while(true)
+				{
+					int read = stream.read(buffer);
+					if(read <= 0) break;
+
+					output.write(buffer, 0, read);
+				}
+
+				content = new String(output.toByteArray());
+			}
+			catch (Exception e)
+			{
+				logger.error("Error reading input stream: " + e.getMessage());
+				logger.debug("Exception", e);
+
+				content = null;
+			}
+			finally
+			{
+				if(stream != null) try { stream.close(); } catch(Exception e) { /* nothing to do here */}
+			}
+
+			return content;
+		}
+		else return null;
+	}
+
+	/**
+	 * Process the request to transform data within a <code>CoreItem</code>instance using a
+	 * Velocity source code where the attributes are exported as variable in the context and
+	 * if these variables are changed will impact also the attributes that generate them.
+	 *
+	 * @param entry    <code>CoreItem</code> structure instance that is transformed
+	 * @param source    input string containing the VTL to be rendered
+	 * @return The process text as a String.
+	 * @throws AREasyException if any parsing and execution exeption will occur
+	 */
+	protected void transformCoreItem(CoreItem entry, String source) throws AREasyException
+	{
+		if(entry == null || source == null) return;
+
+		Context context = getContext();
+		context.put("entry", entry);
+
+		for(Object id: entry.getAttributeIds())
+		{
+			context.put(BaseData.FDREF + String.valueOf(id), StringUtility.trimToEmpty(entry.getStringAttributeValue(String.valueOf(id))));
+		}
+
+		//run transformation
+		String output = ProcessorLevel0Reader.parseText(context, source);
+		logger.debug("Transformation output: " + output);
+
+		for (Object key : context.getKeys())
+		{
+			if(key != null && String.valueOf(key).startsWith(BaseData.FDREF))
+			{
+				String id = String.valueOf(key).substring(1);
+				if( NumberUtility.isNumber(id) )
+				{
+					Attribute attr = entry.getAttribute(id);
+					if (attr != null)
+					{
+						Object oldval = attr.getValue();
+						Object newVal = context.get(String.valueOf(key));
+
+						if (oldval != newVal) attr.setValue(newVal);
+					}
+					else
+					{
+						Object newVal = context.get(String.valueOf(key));
+						entry.setAttribute(id, newVal);
+					}
+				}
+			}
+		}
+
+		setNullContext();
 	}
 }

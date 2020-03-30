@@ -344,7 +344,6 @@
 					<arg value="/grant"/>
 					<arg value="${user.name}:(f)"/>
 				</exec>
-
 				<exec executable="icacls">
 					<arg value="${deployment.path}/work"/>
 					<arg value="/grant"/>
@@ -357,8 +356,7 @@
 					<arg value="777"/>
 					<arg value="${deployment.path}/logs"/>
 				</exec>
-
-				<exec executable="icacls">
+				<exec executable="chmod">
 					<arg value="-R"/>
 					<arg value="777"/>
 					<arg value="${deployment.path}/work"/>

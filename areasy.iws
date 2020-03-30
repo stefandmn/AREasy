@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1355531-c639-449f-b85c-8bbe473d9fa1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.svnignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/areasy.iws" beforeDir="false" afterPath="$PROJECT_DIR$/areasy.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/changelog.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.windows.properties" beforeDir="false" afterPath="$PROJECT_DIR$/profile.windows.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cfg/runtime.areasy.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/cfg/runtime.areasy.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/data/BaseData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/ars/data/BaseData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/workflows/ProcessorLevel2CmdbApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/engine/workflows/ProcessorLevel2CmdbApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/DataTransferAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/org/areasy/runtime/actions/flow/DataTransferAction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +24,7 @@
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="settings.github" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="SvnConfiguration" cleanupOnStartRun="true">
     <configuration>$USER_HOME$/.subversion</configuration>
@@ -81,24 +77,44 @@
       <option name="project" value="LOCAL" />
       <updated>1585509614757</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Fix CmdbApp processor">
+      <created>1585510660833</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585510660833</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fix CMS part / Ant deploy task">
+      <created>1585511867104</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585511867104</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Update copyright" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Fix CmdbApp processor" />
+    <MESSAGE value="Fix CMS part / Ant deploy task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix CMS part / Ant deploy task" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="833" y="360" width="495" height="392" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585559319308">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="833" y="360" width="495" height="392" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1920.1050@0.30.1920.1050" timestamp="1585559319308" />
     <state x="858" y="423" width="494" height="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1585510268067">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="858" y="423" width="494" height="264" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.30.1920.1050@0.30.1920.1050" timestamp="1585510268067" />
-    <state x="758" y="302" width="693" height="746" key="CommitChangelistDialog2" timestamp="1585510651566">
+    <state x="758" y="302" width="693" height="505" key="CommitChangelistDialog2" timestamp="1585569205073">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="758" y="302" width="693" height="746" key="CommitChangelistDialog2/0.30.1920.1050@0.30.1920.1050" timestamp="1585510651566" />
+    <state x="758" y="302" width="693" height="505" key="CommitChangelistDialog2/0.30.1920.1050@0.30.1920.1050" timestamp="1585569205073" />
     <state x="0" y="207" width="1536" height="873" key="DiffContextDialog" timestamp="1585510486552">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -111,17 +127,21 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="979" y="454" key="Github.ShareDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1585510688922" />
-    <state x="614" y="188" width="992" height="733" key="SettingsEditor" timestamp="1585509735370">
+    <state x="614" y="188" width="992" height="733" key="SettingsEditor" timestamp="1585554384944">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="614" y="188" width="992" height="733" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1585509735370" />
+    <state x="614" y="188" width="992" height="733" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1585554384944" />
     <state x="928" y="402" width="353" height="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585508644481">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="928" y="402" width="353" height="306" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.30.1920.1050@0.30.1920.1050" timestamp="1585508644481" />
-    <state x="957" y="452" key="svn.passwordDialog" timestamp="1585510658114">
+    <state x="778" y="175" width="615" height="759" key="find.popup" timestamp="1585555261011">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="957" y="452" key="svn.passwordDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1585510658114" />
+    <state x="778" y="175" width="615" height="759" key="find.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1585555261011" />
+    <state x="957" y="452" key="svn.passwordDialog" timestamp="1585569210946">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="957" y="452" key="svn.passwordDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1585569210946" />
   </component>
 </project>

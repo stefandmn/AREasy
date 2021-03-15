@@ -20,11 +20,13 @@
 	<description>Execute data transactions through a dedicated AR form</description>
 	<syntax>
 		areasy -action formdata -operation insert|update|delete|merge
+		-precondition [VelocityExpression] -condition [VelocityExpression]
 		-form FormName [-id EntryId] [-Q10001 Values1 .. -Q1000N ValuesN] [-qualification "'7'=1"]
 		-D10001 Values1 .. -D1000N ValuesN
 	</syntax>
 	<options>
 		<option key="operation" type="string" selvalues="insert,update,delete,merge" description="Indicates type of transactions: insert, update, delete or merge"/>
+		<option key="runcondition" type="string" description="Describes the Velocity condition to allow the execution of action's operation. The evaluation is performed before action operation and contains a context with all input parameters and read attributes  for the particular CoreItem instance processed by the requested operation"/>
 		<option key="id" type="string" description="Identify form record by Request ID/Entry ID (field with Id 1)"/>
 		<option key="qualification" type="string" description="Identify form record based on a specific qualification"/>
 		<option key="chunk" type="string" description="A set of records fetched through a search having less number of records than total search operation is considered a chunk. Chunk option is used only with qualification flag and will shift the search starting from specific what chunk number"/>

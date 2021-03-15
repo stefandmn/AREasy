@@ -68,13 +68,16 @@ public class SupportGroupAdministration extends AbstractUserEnrollment
 
 		if(group.exists())
 		{
-			group.setCompanyName(groupCompany);
-			group.setOrganisationName(groupOrganisation);
-			if(groupRole != null) group.setRole(groupRole);
-			if(groupStatus != null) group.setAttribute(7, groupStatus);
+			if (getConfiguration().getBoolean("updateifexists", true))
+			{
+				group.setCompanyName(groupCompany);
+				group.setOrganisationName(groupOrganisation);
+				if (groupRole != null) group.setRole(groupRole);
+				if (groupStatus != null) group.setAttribute(7, groupStatus);
 
-			group.update(getServerConnection());
-			RuntimeLogger.add("Support group '" + group.getEntryId() + "' has been updated");
+				group.update(getServerConnection());
+				RuntimeLogger.add("Support group '" + group.getEntryId() + "' has been updated");
+			}
 		}
 		else
 		{

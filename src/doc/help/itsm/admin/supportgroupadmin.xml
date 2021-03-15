@@ -24,6 +24,7 @@
 		areasy -action supportgroupadmin
 	</syntax>
 	<options>
+		<option key="runcondition" type="string" description="Describes the Velocity condition to allow the execution of action's operation. The evaluation is performed before action operation and contains a context with all input parameters and read attributes  for the particular CoreItem instance processed by the requested operation"/>
 		<option key="operation" type="string" selvalues="setentity,setmembers,delmembers,setfrole,delfrole" defvalue="setentity" description="Execution mode or this action"/>
 		<option key="sgroupcompany" type="string" description="Current support group company. In addition the action supports another alias for this option: supportgroupcompany"/>
 		<option key="sgrouporganisation" type="string" description="Current support group organisation. In addition the action supports another alias for this option: supportgrouporganisation"/>

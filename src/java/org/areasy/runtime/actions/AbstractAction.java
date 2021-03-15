@@ -32,6 +32,7 @@ import org.areasy.runtime.engine.services.cache.CacheEntry;
 import org.areasy.runtime.engine.services.cache.InitialObject;
 import org.areasy.runtime.engine.services.status.BaseStatus;
 import org.areasy.runtime.engine.structures.CoreItem;
+import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -44,35 +45,52 @@ import java.util.*;
  * This is an abstract runtime action implementing all common methods and to let for
  * implementation only custom parts and specific actions. Also this library will make final
  * some implementation guide runtime workflow based on some standard implementation
- *
  */
 public abstract class AbstractAction implements RuntimeAction
 {
-	/** Library logger */
+	/**
+	 * Library logger
+	 */
 	protected static Logger logger = LoggerFactory.getLog(AbstractAction.class);
 
-	/** Action code (registered in <code>RuntimeManager</code> library) */
+	/**
+	 * Action code (registered in <code>RuntimeManager</code> library)
+	 */
 	private String code = null;
 
-	/** Velocity context */
+	/**
+	 * Velocity context
+	 */
 	private Context context = null;
 
-	/** Action custom parameters */
+	/**
+	 * Action custom parameters
+	 */
 	private Configuration configuration = null;
 
-	/** ARS Target server connection */
+	/**
+	 * ARS Target server connection
+	 */
 	private ServerConnection target = null;
 
-	/** AREasy Runtime manager */
+	/**
+	 * AREasy Runtime manager
+	 */
 	private RuntimeManager manager = null;
 
-	/** Flag to see if the action was initialized or not */
+	/**
+	 * Flag to see if the action was initialized or not
+	 */
 	private boolean initialized = false;
 
-	/** Flag to inform action's workers that the action was softly interrupted */
+	/**
+	 * Flag to inform action's workers that the action was softly interrupted
+	 */
 	private boolean interrupted = false;
 
-	/** Help document */
+	/**
+	 * Help document
+	 */
 	private HelpDoc help = null;
 
 	/**
@@ -103,7 +121,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 * Also this initialization phase permits to include a custom initiation task which could be
 	 * described in <code>init</code> method.
 	 *
-	 * @param config action parameters.
+	 * @param config  action parameters.
 	 * @param manager runtime manager instance.
 	 * @throws org.areasy.runtime.engine.base.AREasyException if any error will occur
 	 */
@@ -151,9 +169,9 @@ public abstract class AbstractAction implements RuntimeAction
 	 * Also this initialization phase permits to include a custom initiation task which could be
 	 * described in <code>init</code> method.
 	 *
-	 * @param config action parameters.
+	 * @param config  action parameters.
 	 * @param manager runtime manager instance.
-	 * @param target ar server connection structure.
+	 * @param target  ar server connection structure.
 	 * @throws AREasyException if any error will occur
 	 */
 	public final void init(Configuration config, RuntimeManager manager, ServerConnection target) throws AREasyException
@@ -177,14 +195,15 @@ public abstract class AbstractAction implements RuntimeAction
 	protected synchronized void init(boolean createConnection) throws AREasyException
 	{
 		//define answer structure
-		RuntimeLogger.setLevel( getConfiguration().getString("loglevel", null) );
-		RuntimeLogger.setCompact( getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()) );
+		RuntimeLogger.setLevel(getConfiguration().getString("loglevel", null));
+		RuntimeLogger.setCompact(getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()));
 
 		//execute initialization workflow
 		initWorkflow(createConnection);
 
 		//mark end of initialization
-		this.initialized = true;
+		this.initialized = getInitCondition();
+		if (!this.initialized) logger.debug("Initialization break off due to init-condition evaluation");
 
 		//initialize and load help documentation
 		help = new HelpDoc(this);
@@ -200,7 +219,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 */
 	protected void initWorkflow(boolean createConnection) throws AREasyException
 	{
-		if(createConnection)
+		if (createConnection)
 		{
 			//define target server connection
 			setServerConnection();
@@ -227,7 +246,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 */
 	public final void setHelpObj(RuntimeAction action) throws AREasyException
 	{
-		if(help == null && action != null && action.isInit())
+		if (help == null && action != null && action.isInit())
 		{
 			help = new HelpDoc(this, action.getConfiguration());
 		}
@@ -251,8 +270,8 @@ public abstract class AbstractAction implements RuntimeAction
 
 	public final String help() throws AREasyException
 	{
-		if(getHelpObj() != null) return getHelpObj().getPlainTextDocument();
-			else throw new AREasyException("Action '" + getCode() + "' is not yet initialized to provide help documentation");
+		if (getHelpObj() != null) return getHelpObj().getPlainTextDocument();
+		else throw new AREasyException("Action '" + getCode() + "' is not yet initialized to provide help documentation");
 	}
 
 	/**
@@ -269,26 +288,25 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			close();
 		}
-		catch(Throwable th)
+		catch (Throwable th)
 		{
 			logger.error("Error disposing action: " + th.getMessage());
-			if(logger.isDebugEnabled()) logger.debug("Exception", th);
+			if (logger.isDebugEnabled()) logger.debug("Exception", th);
 		}
 
 		//dispose server connection.
-		if(target != null && !target.isPersistent())
+		if (target != null && !target.isPersistent())
 		{
-			if(logger.isDebugEnabled()) logger.debug("Disposing server connection for action: " + getCode() + "@" + target);
+			if (logger.isDebugEnabled()) logger.debug("Disposing server connection for action: " + getCode() + "@" + target);
 
-			if(target.isConnected()) target.disconnect();
+			if (target.isConnected()) target.disconnect();
 			target = null;
-		}
-		else if(target != null && target.isPersistent()) logger.debug("Server connection will not be disposed because is persistent: " + getCode() + "@" + target);
+		} else if (target != null && target.isPersistent()) logger.debug("Server connection will not be disposed because is persistent: " + getCode() + "@" + target);
 
 		//dispose all object from the context (if is instantiated).
-		if(context != null)
+		if (context != null)
 		{
-			if(logger.isDebugEnabled()) logger.debug("Disposing context for action " + getCode());
+			if (logger.isDebugEnabled()) logger.debug("Disposing context for action " + getCode());
 			context.clear();
 			context = null;
 		}
@@ -305,7 +323,9 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			Thread.currentThread().interrupt();
 		}
-		catch(Exception e) { }
+		catch (Exception e)
+		{
+		}
 	}
 
 	/**
@@ -327,16 +347,16 @@ public abstract class AbstractAction implements RuntimeAction
 	{
 		try
 		{
-			if(isNotified())
+			if (isNotified())
 			{
 				String body = getReportContent();
-				if(StringUtility.isNotEmpty(body)) sendReport(body);
+				if (StringUtility.isNotEmpty(body)) sendReport(body);
 			}
 		}
-		catch(Throwable th)
+		catch (Throwable th)
 		{
 			RuntimeLogger.error("Error sending status report notification: " + th.getMessage());
-			if(logger.isDebugEnabled()) logger.debug("Exception", th);
+			if (logger.isDebugEnabled()) logger.debug("Exception", th);
 		}
 	}
 
@@ -364,22 +384,21 @@ public abstract class AbstractAction implements RuntimeAction
 		Configuration config = getConfiguration();
 
 		//write data & objects.
-		if(!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
+		if (!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
 		{
-			for(int i = 0; i < data.length; i++)
+			for (int i = 0; i < data.length; i++)
 			{
-				if(StringUtility.isNotEmpty(data[i]))
+				if (StringUtility.isNotEmpty(data[i]))
 				{
 					body.append(data[i]);
 					body.append("\n");
-				}
-				else body.append("\n");
+				} else body.append("\n");
 			}
 		}
 
-		if(!config.getBoolean("reportnolog", false) && StringUtility.isNotEmpty(logtext))
+		if (!config.getBoolean("reportnolog", false) && StringUtility.isNotEmpty(logtext))
 		{
-			if(!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
+			if (!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
 			{
 				body.append("\n");
 				body.append("=== AREasy Log Message ===");
@@ -403,7 +422,7 @@ public abstract class AbstractAction implements RuntimeAction
 		CoreItem notification = null;
 
 		//server connection validation
-		if(getServerConnection() == null || !getServerConnection().isConnected())
+		if (getServerConnection() == null || !getServerConnection().isConnected())
 		{
 			logger.warn("Server connection is not performed and the notification could be sent");
 			return notification;
@@ -425,23 +444,23 @@ public abstract class AbstractAction implements RuntimeAction
 		CoreItem mailbox = cache != null ? (CoreItem) cache.getContent() : null;
 
 		//get the mailbox structure
-		if(mailbox == null)
+		if (mailbox == null)
 		{
 			mailbox = getMailbox(mailboxname);
 
-			if(mailbox != null) RuntimeServer.getCache().add(mailboxkey, mailbox);
-				else throw new AREasyException("No active outgoing mailbox found in the configuration of 'AR System Email Mailbox Configuration' form");
+			if (mailbox != null) RuntimeServer.getCache().add(mailboxkey, mailbox);
+			else throw new AREasyException("No active outgoing mailbox found in the configuration of 'AR System Email Mailbox Configuration' form");
 		}
 
 		//evaluate recipients
-		if(StringUtility.isEmpty(recipientto))
+		if (StringUtility.isEmpty(recipientto))
 		{
 			recipientto = defaultRecipientTo;
-			if(StringUtility.isEmpty(recipientcc)) recipientcc = defaultRecipientCc;
+			if (StringUtility.isEmpty(recipientcc)) recipientcc = defaultRecipientCc;
 		}
 
 		//save a new entry in AR server to generate notification event.
-		if(StringUtility.isNotEmpty(recipientto) || StringUtility.isNotEmpty(recipientcc))
+		if (StringUtility.isNotEmpty(recipientto) || StringUtility.isNotEmpty(recipientcc))
 		{
 			notification = new CoreItem();
 			notification.setFormName("AR System Email Messages");
@@ -449,17 +468,16 @@ public abstract class AbstractAction implements RuntimeAction
 			notification.setAttribute(18092, "Outgoing");
 			notification.setAttribute(18099, action);
 			notification.setAttribute(18086, mailboxname);
-			notification.setAttribute(18139, mailbox.getStringAttributeValue(18056));	//from - display name
-			notification.setAttribute(18087, mailbox.getStringAttributeValue(18058));	//reply - reply to address
-			notification.setAttribute(18103, mailbox.getStringAttributeValue(18059));	//organisation
+			notification.setAttribute(18139, mailbox.getStringAttributeValue(18056));    //from - display name
+			notification.setAttribute(18087, mailbox.getStringAttributeValue(18058));    //reply - reply to address
+			notification.setAttribute(18103, mailbox.getStringAttributeValue(18059));    //organisation
 			notification.setAttribute(18085, recipientto);
 			notification.setAttribute(18088, recipientcc);
 			notification.setAttribute(18090, subject);
 			notification.setAttribute(18091, body);
 
 			notification.create(getServerConnection());
-		}
-		else logger.warn("Notification could not be sent because recipients are not defines");
+		} else logger.warn("Notification could not be sent because recipients are not defines");
 
 		return notification;
 	}
@@ -471,14 +489,14 @@ public abstract class AbstractAction implements RuntimeAction
 		mailconfig.setFormName("AR System Email Mailbox Configuration");
 		mailconfig.setAttribute(7, new Integer(0));
 		mailconfig.setAttribute(18049, new Integer(1));
-		
-		if(StringUtility.isNotEmpty(mailbox)) mailconfig.setAttribute(18139, mailbox);
-			else mailconfig.setAttribute(18147, new Integer(1));
+
+		if (StringUtility.isNotEmpty(mailbox)) mailconfig.setAttribute(18139, mailbox);
+		else mailconfig.setAttribute(18147, new Integer(1));
 
 		List list = mailconfig.search(getServerConnection());
 
-		if(list != null && !list.isEmpty()) return (CoreItem) list.get(0);
-			else return null;
+		if (list != null && !list.isEmpty()) return (CoreItem) list.get(0);
+		else return null;
 	}
 
 	/**
@@ -536,7 +554,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 * this method must be rewrote
 	 *
 	 * @return <code>BaseStatus</code> structure and in the current implementation is returning a null value. Notifier thread will be
-	 * activated only if this method is returning a not null answer. 
+	 * activated only if this method is returning a not null answer.
 	 */
 	public BaseStatus getCurrentStatus()
 	{
@@ -565,6 +583,7 @@ public abstract class AbstractAction implements RuntimeAction
 
 	/**
 	 * Get runtime manager instance
+	 *
 	 * @return runtime manager instance defined after action's initialization
 	 */
 	public final RuntimeManager getManager()
@@ -574,6 +593,7 @@ public abstract class AbstractAction implements RuntimeAction
 
 	/**
 	 * Get ARS server connection structure and context.
+	 *
 	 * @return <code>ServerConnection</code> instance or null.
 	 */
 	public final ServerConnection getServerConnection()
@@ -599,32 +619,32 @@ public abstract class AbstractAction implements RuntimeAction
 	 * This method is capable to validate if the parameter exist but hasn't a specified value
 	 * (and in this situation the parser will consider that this paremetr is a boolean parameter)
 	 *
-	 * @param name name of the input parameter
+	 * @param name         name of the input parameter
 	 * @param defaultValue default value in case of the discovered value is null
 	 * @return found string value for the specified input parameter
 	 */
 	protected String getStringInputParameter(String name, String defaultValue)
 	{
-		if(name == null) return null;
+		if (name == null) return null;
 
 		String value = getConfiguration().getString(name, null);
 		boolean valueBool = BooleanUtility.toBoolean(value);
 
-		if(StringUtility.isEmpty(value)) return defaultValue;
-			else if(valueBool) return defaultValue;
-				return value;
+		if (StringUtility.isEmpty(value)) return defaultValue;
+		else if (valueBool) return defaultValue;
+		return value;
 	}
 
 	/**
 	 * Create AR server connection instance based on specified parameters (for more details
 	 * about these parameter please see method <code>initialize</code>)
-	 * 
+	 *
 	 * @throws AREasyException if any error will occur.
 	 */
 	protected final void setServerConnection() throws AREasyException
 	{
 		//check server connection.
-		if(target == null || !target.isConnected())
+		if (target == null || !target.isConnected())
 		{
 			//init connection data if is necessary
 			initConnectionData();
@@ -632,7 +652,7 @@ public abstract class AbstractAction implements RuntimeAction
 			//get direct server name
 			String arserver = getConfiguration().getString("arserver", getManager().getConfiguration().getString("app.server.default.arsystem.server.name", "localhost"));
 
-			if(StringUtility.isNotEmpty(arserver))
+			if (StringUtility.isNotEmpty(arserver))
 			{
 				boolean arpasswordbool = false;
 				String impuser = null;
@@ -641,7 +661,7 @@ public abstract class AbstractAction implements RuntimeAction
 				String arpassword = getConfiguration().getString("arpassword", null);
 
 				//validate password value and see if it is about user impersonation
-				if(arpassword != null && StringUtility.equalsIgnoreCase(arpassword, "true"))
+				if (arpassword != null && StringUtility.equalsIgnoreCase(arpassword, "true"))
 				{
 					arpasswordbool = BooleanUtility.toBoolean(arpassword);
 					arpassword = "";
@@ -652,7 +672,7 @@ public abstract class AbstractAction implements RuntimeAction
 				int arrpc = getConfiguration().getInt("arrpc", getManager().getConfiguration().getInt("app.server.default.arsystem.rpc.queue", 0));
 
 				//check impersonation features.
-				if(StringUtility.isEmpty(arpassword) && !arpasswordbool)
+				if (StringUtility.isEmpty(arpassword) && !arpasswordbool)
 				{
 					impuser = aruser;
 
@@ -661,29 +681,26 @@ public abstract class AbstractAction implements RuntimeAction
 				}
 
 				//if is not an impersonated connection check if the connection could be taken from cache
-				if(impuser == null)
+				if (impuser == null)
 				{
 					//check if the target connection could be read from persistent layer
-					if(!getConfiguration().containsKey("arserver")) target = (ServerConnection) InitialObject.getObjectInstance(ServerConnection.class);
+					if (!getConfiguration().containsKey("arserver")) target = (ServerConnection) InitialObject.getObjectInstance(ServerConnection.class);
 
-					if(target != null)
+					if (target != null)
 					{
-						if(!target.isConnected()) target.prepare();
+						if (!target.isConnected()) target.prepare();
 						logger.debug("Server connection taken from persistent layer: " + target);
-					}
-					else
+					} else
 					{
 						target = new ServerConnection();
 						target.connect(arserver, aruser, arpassword, arport, arrpc, armode);
 					}
-				}
-				else
+				} else
 				{
 					target = new ServerConnection();
 					target.connect(arserver, aruser, arpassword, arport, arrpc, armode, impuser);
 				}
-			}
-			else logger.warn("AR server connection couldn't be created because '-arserver' option is null");
+			} else logger.warn("AR server connection couldn't be created because '-arserver' option is null");
 		}
 	}
 
@@ -717,6 +734,33 @@ public abstract class AbstractAction implements RuntimeAction
 		this.context.put("config", this.configuration);
 	}
 
+	public final void initConfigContext()
+	{
+		//create context.
+		this.context = new VelocityContext();
+
+		//put in context this library
+		this.context.put("action", this);
+
+		//put in context DateUtility library
+		this.context.put("dates", new DateUtility());
+
+		//put in context StringUtility library
+		this.context.put("strings", new StringUtility());
+
+		//put in context NumberUtility library
+		this.context.put("numbers", new NumberUtility());
+
+		Iterator iterator = getConfiguration().getKeys();
+		while ((iterator != null) && (iterator.hasNext()))
+		{
+			String key = (String) iterator.next();
+			if ((getConfiguration().getKey(key) instanceof String)) this.context.put(key, getConfiguration().getString(key));
+			else
+				this.context.put(key, getConfiguration().getKey(key));
+		}
+	}
+
 	/**
 	 * Get Velocity engine context to parse different expressions. If it is not initialized will instantiated here
 	 * and also will fill all additional objects.
@@ -725,14 +769,14 @@ public abstract class AbstractAction implements RuntimeAction
 	 */
 	public final Context getContext()
 	{
-		if(this.context == null) initContext();
+		if (this.context == null) initContext();
 
 		return this.context;
 	}
 
 	public final void resetContext()
 	{
-		if(this.context != null) this.context.clear();
+		if (this.context != null) this.context.clear();
 	}
 
 	public final void setNullContext()
@@ -740,10 +784,20 @@ public abstract class AbstractAction implements RuntimeAction
 		this.context = null;
 	}
 
+	public final void addCoreItem2Context(CoreItem item)
+	{
+		Iterator iterator = item.getAttributes().iterator();
+		while ((iterator != null) && (iterator.hasNext()))
+		{
+			String key = (String) iterator.next();
+			getContext().put(new StringBuilder().append("D").append(String.valueOf(key)).toString(), item.getAttributeValue(key));
+		}
+	}
+
 	/**
 	 * Get a map from a list of keys and a list with values.
 	 *
-	 * @param keys list of keys.
+	 * @param keys   list of keys.
 	 * @param values list of values
 	 * @return a map between keys and values.
 	 */
@@ -751,12 +805,12 @@ public abstract class AbstractAction implements RuntimeAction
 	{
 		Map map = new Hashtable();
 
-		for(int i = 0; keys != null && i < keys.size(); i++)
+		for (int i = 0; keys != null && i < keys.size(); i++)
 		{
 			String mapobj = (String) keys.get(i);
 			String mapvalue = "";
 
-			if(values != null && values.size() > i) mapvalue = (String) values.get(i);
+			if (values != null && values.size() > i) mapvalue = (String) values.get(i);
 
 			map.put(mapobj, mapvalue);
 		}
@@ -787,12 +841,12 @@ public abstract class AbstractAction implements RuntimeAction
 		List keyids = config.getVector("keyids", new Vector());
 		List keyvalues = config.getVector("keyvalues", new Vector());
 
-		if(StringUtility.isNotEmpty(keyid) && !keyids.contains(keyid))
+		if (StringUtility.isNotEmpty(keyid) && !keyids.contains(keyid))
 		{
 			keyids.add(keyid);
 
-			if(StringUtility.isNotEmpty(keyvalue)) keyvalues.add(keyvalue);
-				else keyvalues.add("");
+			if (StringUtility.isNotEmpty(keyvalue)) keyvalues.add(keyvalue);
+			else keyvalues.add("");
 		}
 
 		return getMap(keyids, keyvalues);
@@ -815,29 +869,31 @@ public abstract class AbstractAction implements RuntimeAction
 
 	/**
 	 * Get maximum memory used by the current virtual machine instance.
+	 *
 	 * @return heap length in megabytes.
 	 */
 	public long getMaxMemory()
 	{
-		 return Runtime.getRuntime().maxMemory()/(1024 * 1024);
+		return Runtime.getRuntime().maxMemory() / (1024 * 1024);
 	}
 
 	/**
 	 * Get maximum memory used by the current virtual machine instance.
+	 *
 	 * @return heap length in megabytes.
 	 */
 	public long getUsedMemory()
 	{
-		long total = Runtime.getRuntime().totalMemory()/(1024 * 1024);
-		return total - Runtime.getRuntime().freeMemory()/(1024 * 1024);
+		long total = Runtime.getRuntime().totalMemory() / (1024 * 1024);
+		return total - Runtime.getRuntime().freeMemory() / (1024 * 1024);
 	}
 
 	/**
 	 * eturns a string representation of the object. In general, the
-     * <code>toString</code> method returns a string that
-     * "textually represents" this object.
-	 * 
-	 * @return  a string representation of the object.
+	 * <code>toString</code> method returns a string that
+	 * "textually represents" this object.
+	 *
+	 * @return a string representation of the object.
 	 */
 	public String toString()
 	{
@@ -850,7 +906,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 * If destination doesn't exists will be created. <br/>
 	 * If destination is directory will be appeded source file name and will be created.
 	 *
-	 * @param source source file path
+	 * @param source      source file path
 	 * @param destination destination file path
 	 * @return the destination location
 	 * @throws IOException if any I/O error will occur
@@ -907,19 +963,19 @@ public abstract class AbstractAction implements RuntimeAction
 
 	/**
 	 * Write (create or rewrite) a text in a file.
-	 * 
+	 *
 	 * @param fileOut output file location
-	 * @param text file content
+	 * @param text    file content
 	 * @return true if operation succeeded
 	 */
 	public static boolean writeTextFile(File fileOut, String text)
 	{
-		if(fileOut == null) return false;
+		if (fileOut == null) return false;
 
 		try
 		{
-			if(fileOut.exists()) fileOut.createNewFile();
-			
+			if (fileOut.exists()) fileOut.createNewFile();
+
 			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fileOut.getAbsolutePath()), "UTF-8");
 			out.write(text);
 			out.close();
@@ -935,7 +991,7 @@ public abstract class AbstractAction implements RuntimeAction
 	/**
 	 * Write (create or rewrite) a text in a file.
 	 *
-	 * @param URI file location
+	 * @param URI  file location
 	 * @param text file content
 	 * @return true if operation succeded
 	 */
@@ -964,7 +1020,7 @@ public abstract class AbstractAction implements RuntimeAction
 	public static String readTextFile(File fileIn)
 	{
 		String content = null;
-		if(fileIn == null) return content;
+		if (fileIn == null) return content;
 
 		try
 		{
@@ -992,7 +1048,7 @@ public abstract class AbstractAction implements RuntimeAction
 	{
 		ServerConnection connection = null;
 
-		if(getConfiguration().getString("arremoteserver", null) != null && !StringUtility.equalsIgnoreCase(getConfiguration().getString("arremoteserver", null), getServerConnection().getServerName()))
+		if (getConfiguration().getString("arremoteserver", null) != null && !StringUtility.equalsIgnoreCase(getConfiguration().getString("arremoteserver", null), getServerConnection().getServerName()))
 		{
 			String arserver = getConfiguration().getString("arremoteserver");
 			String aruser = getConfiguration().getString("arremoteuser", getServerConnection().getUserName());
@@ -1004,9 +1060,8 @@ public abstract class AbstractAction implements RuntimeAction
 			connection = new ServerConnection();
 			connection.connect(arserver, aruser, arpassword, arport, arrpc, armode);
 
-			if(logger.isDebugEnabled()) logger.debug("Connected to remote server: " + connection);
-		}
-		else connection = getServerConnection();
+			if (logger.isDebugEnabled()) logger.debug("Connected to remote server: " + connection);
+		} else connection = getServerConnection();
 
 		return connection;
 	}
@@ -1021,7 +1076,7 @@ public abstract class AbstractAction implements RuntimeAction
 		List arservers = getConfiguration().getVector("arremoteserver", null);
 		List list = new Vector();
 
-		if(arservers != null && !arservers.isEmpty())
+		if (arservers != null && !arservers.isEmpty())
 		{
 			List arusers = getConfiguration().getVector("arremoteuser", null);
 			List arpasswords = getConfiguration().getVector("arremotepassword", null);
@@ -1029,24 +1084,24 @@ public abstract class AbstractAction implements RuntimeAction
 			List arrpcs = getConfiguration().getVector("arremoterpc", null);
 			List armodes = getConfiguration().getVector("arremotemode", null);
 
-			for(int i = 0; i < arservers.size(); i++)
+			for (int i = 0; i < arservers.size(); i++)
 			{
 				String arserver = (String) arservers.get(i);
 
 				String aruser = getServerConnection().getUserName();
-				if(arusers != null && arusers.size() > i) aruser = (String) arusers.get(i);
+				if (arusers != null && arusers.size() > i) aruser = (String) arusers.get(i);
 
 				String arpassword = getServerConnection().getUserPassword();
-				if(arpasswords != null && arpasswords.size() > i) arpassword = (String) arpasswords.get(i);
+				if (arpasswords != null && arpasswords.size() > i) arpassword = (String) arpasswords.get(i);
 
 				int arport = getServerConnection().getServerPort();
-				if(arports != null && arports.size() > i) arport = NumberUtility.toInt((String)arports.get(i), 0);
+				if (arports != null && arports.size() > i) arport = NumberUtility.toInt((String) arports.get(i), 0);
 
 				int arrpc = getServerConnection().getRpcQueue();
-				if(arrpcs != null && arrpcs.size() > i) arrpc = NumberUtility.toInt((String)arrpcs.get(i), 0);
+				if (arrpcs != null && arrpcs.size() > i) arrpc = NumberUtility.toInt((String) arrpcs.get(i), 0);
 
 				String armode = getServerConnection().getMode();
-				if(armode != null && armodes.size() > i) armode = (String) armodes.get(i);
+				if (armode != null && armodes.size() > i) armode = (String) armodes.get(i);
 
 				ServerConnection connection = new ServerConnection();
 
@@ -1055,14 +1110,13 @@ public abstract class AbstractAction implements RuntimeAction
 					connection.connect(arserver, aruser, arpassword, arport, arrpc, armode);
 					list.add(connection);
 				}
-				catch(AREasyException are)
+				catch (AREasyException are)
 				{
-					if(handlingerrors) logger.warn("Error performing server connection: " + connection + ": " + are.getMessage());
-						else throw are;
+					if (handlingerrors) logger.warn("Error performing server connection: " + connection + ": " + are.getMessage());
+					else throw are;
 				}
 			}
-		}
-		else list.add(getServerConnection());
+		} else list.add(getServerConnection());
 
 		return (ServerConnection[]) list.toArray(new ServerConnection[list.size()]);
 	}
@@ -1070,25 +1124,25 @@ public abstract class AbstractAction implements RuntimeAction
 	public void disconnectRemoteServerConnection(ServerConnection connection)
 	{
 		//disconnected second connection
-		if(connection != null && !getServerConnection().equals(connection)) connection.disconnect();
+		if (connection != null && !getServerConnection().equals(connection)) connection.disconnect();
 	}
 
 	public void disconnectRemoteServerConnections(ServerConnection connections[])
 	{
 		//disconnected additional connection
-		for(int i = 0; connections != null && i < connections.length; i++) disconnectRemoteServerConnection(connections[i]);
+		for (int i = 0; connections != null && i < connections.length; i++) disconnectRemoteServerConnection(connections[i]);
 	}
 
 	protected String getTargetServerNameOrAlias()
 	{
 		String targetServerName = getConfiguration().getString("arserveralias", null);
 
-		if(targetServerName == null)
+		if (targetServerName == null)
 		{
 			List list = getConfiguration().getVector("arremoteserver", null);
 
-			if(list != null && !list.isEmpty()) targetServerName = (String) list.get(0);
-				else targetServerName = getConfiguration().getString("arserver", getConfiguration().getString("arserver", getManager().getConfiguration().getString("app.server.default.arsystem.server.name", "localhost")));
+			if (list != null && !list.isEmpty()) targetServerName = (String) list.get(0);
+			else targetServerName = getConfiguration().getString("arserver", getConfiguration().getString("arserver", getManager().getConfiguration().getString("app.server.default.arsystem.server.name", "localhost")));
 
 		}
 
@@ -1106,15 +1160,16 @@ public abstract class AbstractAction implements RuntimeAction
 	 *     <tr><td>-gt</td><td><code>&#62;</code></td></tr>
 	 *     <tr><td>-ge</td><td><code>&#62;=</code></td></tr>
 	 * </table>
+	 *
 	 * @param value pseudo-expression
 	 * @return translated value
 	 */
 	public String getTranslatedCondition(String value)
 	{
-		if(StringUtility.isNotEmpty(value))
+		if (StringUtility.isNotEmpty(value))
 		{
 			//check if the values contains quota
-			if(value.contains("\"") && value.contains("||")) value = StringUtility.replace(value, "\"", "\"\"");
+			if (value.contains("\"") && value.contains("||")) value = StringUtility.replace(value, "\"", "\"\"");
 
 			value = StringUtility.replace(value, "||", "\"");
 			value = StringUtility.replace(value, "|", "'");
@@ -1140,15 +1195,16 @@ public abstract class AbstractAction implements RuntimeAction
 	 *     <tr><td>-gt</td><td><code>&#62;</code></td></tr>
 	 *     <tr><td>-ge</td><td><code>&#62;=</code></td></tr>
 	 * </table>
+	 *
 	 * @param value pseudo-expression
 	 * @return translated value
 	 */
 	public String getTranslatedQualification(String value)
 	{
-		if(StringUtility.isNotEmpty(value))
+		if (StringUtility.isNotEmpty(value))
 		{
 			//convert empty values into NULL identifier
-			if(value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
+			if (value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
 
 			value = getTranslatedCondition(value);
 		}
@@ -1156,7 +1212,36 @@ public abstract class AbstractAction implements RuntimeAction
 		return value;
 	}
 
-
+	   protected boolean getInitCondition()
+	   {
+		     String condition = getConfiguration().getString("initcondition", null);
+		
+		     if (StringUtility.isNotEmpty(condition))
+			     {
+			       initConfigContext();
+			       getContext().remove("initcondition");
+			       condition = getTranslatedCondition(condition);
+			
+			       return ProcessorLevel0Reader.evaluate(getContext(), condition);
+			     }
+		     return true;
+		   }
+	
+	   protected boolean getRunCondition(CoreItem item)
+	   {
+		     String condition = getConfiguration().getString("runcondition", null);
+		
+		     if (StringUtility.isNotEmpty(condition))
+			     {
+			       addCoreItem2Context(item);
+			       getContext().remove("runcondition");
+			       condition = getTranslatedCondition(condition);
+			
+			       return ProcessorLevel0Reader.evaluate(getContext(), condition);
+			     }
+		     return true;
+		   }
+		
 	/**
 	 * Dedicated class to manage help options for a specific action
 	 */
@@ -1175,15 +1260,15 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		public HelpDocOption(XMLStreamReader reader)
 		{
-			for(int i = 0; i < reader.getAttributeCount(); i++)
+			for (int i = 0; i < reader.getAttributeCount(); i++)
 			{
 				String data = reader.getAttributeValue(i).trim();
 
-				if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "key")) setKey(data);
-				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "type")) setType(data);
-				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "defvalue")) setDefaultValue(data);
-				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "selvalues")) setSelectionValues(data);
-				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
+				if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "key")) setKey(data);
+				else if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "type")) setType(data);
+				else if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "defvalue")) setDefaultValue(data);
+				else if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "selvalues")) setSelectionValues(data);
+				else if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
 			}
 		}
 
@@ -1303,13 +1388,14 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		public HelpDocSample(XMLStreamReader reader)
 		{
-			for(int i = 0; i < reader.getAttributeCount(); i++)
+			for (int i = 0; i < reader.getAttributeCount(); i++)
 			{
 				String data = reader.getAttributeValue(i).trim();
 
-				if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "code")) setCode(data);
-				else if(StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
-			};
+				if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "code")) setCode(data);
+				else if (StringUtility.equalsIgnoreCase(reader.getAttributeLocalName(i), "description")) setDescription(data);
+			}
+			;
 		}
 
 		/**
@@ -1363,9 +1449,9 @@ public abstract class AbstractAction implements RuntimeAction
 		private String syntax = null;
 		private String description = null;
 
-		private LinkedHashMap<String,HelpDocOption> options = new LinkedHashMap<String,HelpDocOption>();
-		private LinkedHashMap<String,HelpDocOption> options1 = new LinkedHashMap<String,HelpDocOption>();
-		private LinkedHashMap<String,HelpDocOption> options2 = new LinkedHashMap<String,HelpDocOption>();
+		private LinkedHashMap<String, HelpDocOption> options = new LinkedHashMap<String, HelpDocOption>();
+		private LinkedHashMap<String, HelpDocOption> options1 = new LinkedHashMap<String, HelpDocOption>();
+		private LinkedHashMap<String, HelpDocOption> options2 = new LinkedHashMap<String, HelpDocOption>();
 
 		private Vector<HelpDocSample> samples = new Vector<HelpDocSample>();
 
@@ -1387,6 +1473,7 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			this(action, action.getConfiguration());
 		}
+
 		/**
 		 * Initialize help document engine using the current action instance and a specific configuration structure,
 		 * perhaps from a wrapper/host action. This method has a limited access and usually is used when the associated
@@ -1400,14 +1487,14 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		protected HelpDoc(RuntimeAction action, Configuration config) throws AREasyException
 		{
-			if(config == null && action != null && action.isInit()) config = action.getConfiguration();
-			if(action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
-			if(config == null) throw new AREasyException("Runtime configuration is not loaded");
+			if (config == null && action != null && action.isInit()) config = action.getConfiguration();
+			if (action == null || action.getCode() == null) throw new AREasyException("Runtime action is not loaded or initialized");
+			if (config == null) throw new AREasyException("Runtime configuration is not loaded");
 
 			//get help level from the current action
-			if(config.containsKey("helplevel")) setLevel(config.getInt("helplevel", 0));
-			if(config.containsKey("helpoptions")) setShowOptions(config.getBoolean("helpoptions", true));
-			if(config.containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
+			if (config.containsKey("helplevel")) setLevel(config.getInt("helplevel", 0));
+			if (config.containsKey("helpoptions")) setShowOptions(config.getBoolean("helpoptions", true));
+			if (config.containsKey("helpsamples")) setShowSamples(config.getBoolean("helpsamples", true));
 
 			//detect help path
 			setActionHelpDocPath(action);
@@ -1428,15 +1515,14 @@ public abstract class AbstractAction implements RuntimeAction
 			String packageName = action.getClass().getPackage().getName();
 			int indexAction = packageName.indexOf("actions", 0);
 
-			if(indexAction > 0)
+			if (indexAction > 0)
 			{
 				this.loadHelpPath = packageName.substring(indexAction + "actions".length());
-			}
-			else throw new AREasyException("Help location could not be detected");
+			} else throw new AREasyException("Help location could not be detected");
 
 			this.loadHelpPath = this.loadHelpPath.replace('.', '/') + "/" + action.getCode() + ".xml";
 
-			if(this.loadHelpPath.startsWith("/")) this.loadHelpPath = this.loadHelpPath.substring(1);
+			if (this.loadHelpPath.startsWith("/")) this.loadHelpPath = this.loadHelpPath.substring(1);
 		}
 
 		/**
@@ -1459,20 +1545,19 @@ public abstract class AbstractAction implements RuntimeAction
 		 */
 		private InputStream getHelpDocStream(String xmlHelpDoc) throws AREasyException
 		{
-			if(xmlHelpDoc != null)
+			if (xmlHelpDoc != null)
 			{
-				if(!xmlHelpDoc.endsWith(".xml")) xmlHelpDoc += ".xml";
+				if (!xmlHelpDoc.endsWith(".xml")) xmlHelpDoc += ".xml";
 
 				try
 				{
-					return new FileInputStream(RuntimeManager.getDocDirectory()+ "/help/" + xmlHelpDoc);
+					return new FileInputStream(RuntimeManager.getDocDirectory() + "/help/" + xmlHelpDoc);
 				}
-				catch(IOException ioe)
+				catch (IOException ioe)
 				{
 					throw new AREasyException("Error loading Help document: " + ioe.getMessage(), ioe);
 				}
-			}
-			else throw new AREasyException("Help location could not be detected");
+			} else throw new AREasyException("Help location could not be detected");
 		}
 
 		/**
@@ -1491,7 +1576,7 @@ public abstract class AbstractAction implements RuntimeAction
 		 * inheritance rules are applied
 		 *
 		 * @param inputStream input stream from action help document path
-		 * @param rootDoc specify if the current input corresponds with the root help document
+		 * @param rootDoc     specify if the current input corresponds with the root help document
 		 * @throws AREasyException in case any error occurs
 		 */
 		private void load(InputStream inputStream, boolean rootDoc) throws AREasyException
@@ -1517,8 +1602,7 @@ public abstract class AbstractAction implements RuntimeAction
 								{
 									inheritancePath = reader.getAttributeValue(0);
 								}
-							}
-							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "option"))
+							} else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "option"))
 							{
 								HelpDocOption option = new HelpDocOption(reader);
 								keyMaxSize = Math.max(keyMaxSize, option.getKey().length());
@@ -1535,30 +1619,28 @@ public abstract class AbstractAction implements RuntimeAction
 										addOption2(option.getKey(), option);
 										break;
 								}
-							}
-							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "sample") && rootDoc)
+							} else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "sample") && rootDoc)
 							{
 								HelpDocSample sample = new HelpDocSample(reader);
 								addSample(sample);
-							}
-							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options")) optionsLevel = 0;
+							} else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options")) optionsLevel = 0;
 							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options1")) optionsLevel = 1;
 							else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "options2")) optionsLevel = 2;
 							else optionsLevel = -1;
 							break;
 						case XMLStreamConstants.CHARACTERS:
 						{
-							if(textConcat) text += reader.getText();
-								else text = reader.getText();
+							if (textConcat) text += reader.getText();
+							else text = reader.getText();
 
 							textConcat = true;
 							break;
 						}
 						case XMLStreamConstants.END_ELEMENT:
-							if(text == null) continue;
+							if (text == null) continue;
 							String data = text.trim();
 
-							if(rootDoc)
+							if (rootDoc)
 							{
 								if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "name")) setName(data);
 								else if (StringUtility.equalsIgnoreCase(reader.getLocalName(), "syntax")) setSyntax(data);
@@ -1570,13 +1652,13 @@ public abstract class AbstractAction implements RuntimeAction
 					}
 				}
 
-				if(inheritancePath != null)
+				if (inheritancePath != null)
 				{
 					InputStream inheritanceInputStream = getHelpDocStream(inheritancePath);
 					load(inheritanceInputStream, false);
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				throw new AREasyException("Error loading help document: " + e.getMessage(), e);
 			}
@@ -1645,38 +1727,39 @@ public abstract class AbstractAction implements RuntimeAction
 		/**
 		 * Add an option level 0 to the current help document
 		 *
-		 * @param key option key
+		 * @param key    option key
 		 * @param option option details provided by <code>HelpDocOption</code> structure.
 		 */
 		public void addOption(String key, HelpDocOption option)
 		{
-			if(key != null && option != null && StringUtility.equals(key, option.getKey())) this.options.put(key, option);
+			if (key != null && option != null && StringUtility.equals(key, option.getKey())) this.options.put(key, option);
 		}
 
 		/**
 		 * Add an option level 1 to the current help document
 		 *
-		 * @param key option key
+		 * @param key    option key
 		 * @param option option details provided by <code>HelpDocOption</code> structure.
 		 */
 		public void addOption1(String key, HelpDocOption option)
 		{
-			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options1.put(key, option);
+			if (key != null && option != null && StringUtility.equals(key, option.getKey())) this.options1.put(key, option);
 		}
 
 		/**
 		 * Add an option level 20 to the current help document
 		 *
-		 * @param key option key
+		 * @param key    option key
 		 * @param option option details provided by <code>HelpDocOption</code> structure.
 		 */
 		public void addOption2(String key, HelpDocOption option)
 		{
-			if(key != null && option != null && StringUtility.equals(key, option.getKey()))this.options2.put(key, option);
+			if (key != null && option != null && StringUtility.equals(key, option.getKey())) this.options2.put(key, option);
 		}
 
 		/**
 		 * Add sample (example) structure to be current help document
+		 *
 		 * @param sample sample structure provided by <code>HelpDocSample</code> structure
 		 */
 		public void addSample(HelpDocSample sample)
@@ -1689,7 +1772,7 @@ public abstract class AbstractAction implements RuntimeAction
 		 *
 		 * @return map structure with level 0 options
 		 */
-		public Map<String,HelpDocOption> getOptions()
+		public Map<String, HelpDocOption> getOptions()
 		{
 			return this.options;
 		}
@@ -1699,7 +1782,7 @@ public abstract class AbstractAction implements RuntimeAction
 		 *
 		 * @return map structure with level 1 options
 		 */
-		public Map<String,HelpDocOption> getOptions1()
+		public Map<String, HelpDocOption> getOptions1()
 		{
 			return this.options1;
 		}
@@ -1709,7 +1792,7 @@ public abstract class AbstractAction implements RuntimeAction
 		 *
 		 * @return map structure with level 2 options
 		 */
-		public Map<String,HelpDocOption> getOptions2()
+		public Map<String, HelpDocOption> getOptions2()
 		{
 			return this.options2;
 		}
@@ -1733,27 +1816,27 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			String content = "";
 
-			if(getName() != null) content += "# " + getName() + "\n";
-			if(getDescription() != null ) content += "\n" + getDescription() + "\n";
+			if (getName() != null) content += "# " + getName() + "\n";
+			if (getDescription() != null) content += "\n" + getDescription() + "\n";
 
-			if(getSyntax() != null)
+			if (getSyntax() != null)
 			{
 				content += "\n\n__SYNTAX:__\n\n";
 				content += "\t" + getSyntax() + "\n";
 			}
 
-			if(!getOptions().isEmpty() && isShowOptions())
+			if (!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\n__OPTIONS:__\n\n";
 				content += "| " + StringUtility.rightPad("Parameter", keyMaxSize) + " | " + StringUtility.rightPad("Description", keyMaxSize) + " |\n";
 				content += "| " + StringUtility.rightPad("-", keyMaxSize, "-") + " | " + StringUtility.rightPad("-", keyMaxSize, "-") + " |\n";
 
 				content += addOptionsMarkdownContent(getOptions());
-				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
-				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsMarkdownContent(getOptions2());
+				if (getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsMarkdownContent(getOptions1());
+				if (getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsMarkdownContent(getOptions2());
 			}
 
-			if(!getSamples().isEmpty() && isShowSamples())
+			if (!getSamples().isEmpty() && isShowSamples())
 			{
 				content += "\n\n__EXAMPLES__\n\n";
 
@@ -1775,31 +1858,31 @@ public abstract class AbstractAction implements RuntimeAction
 		public String getHTMLDocument()
 		{
 			String content = "<html>\n\t<head>\n";
-			if(getName() != null) content += "\t\t<title>" + getName() + "</title>\n";
+			if (getName() != null) content += "\t\t<title>" + getName() + "</title>\n";
 			content += "\t</head>\n\t<body>\n";
 
-			if(getName() != null) content += "\t\t<h1>" + getName() + "</h1>\n";
-			if(getDescription() != null ) content += "\t\t<p>" + getDescription() + "</p>\n";
+			if (getName() != null) content += "\t\t<h1>" + getName() + "</h1>\n";
+			if (getDescription() != null) content += "\t\t<p>" + getDescription() + "</p>\n";
 
-			if(getSyntax() != null)
+			if (getSyntax() != null)
 			{
 				content += "\n\t\t<h3>SYNTAX:</h3>\n";
 				content += "\t\t<pre>\n" + "\t" + getSyntax() + "\n\t\t</pre>\n";
 			}
 
-			if(!getOptions().isEmpty() && isShowOptions())
+			if (!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\t\t<h3>OPTIONS:</h3>\n";
 				content += "\t\t<table border=1>\n\t\t\t<tr>\n\t\t\t\t<th>Parameter</th>\n\t\t\t\t<th>Description</th>\n\t\t\t</tr>\n";
 
 				content += addOptionsHTMLContent(getOptions());
-				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsHTMLContent(getOptions1());
-				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsHTMLContent(getOptions2());
+				if (getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsHTMLContent(getOptions1());
+				if (getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsHTMLContent(getOptions2());
 
 				content += "\t\t</table>\n";
 			}
 
-			if(!getSamples().isEmpty() && isShowSamples())
+			if (!getSamples().isEmpty() && isShowSamples())
 			{
 				content += "\n\t\t<h3>EXAMPLES:</h3>\n";
 				content += "\t\t\t<dl>\n";
@@ -1826,25 +1909,25 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			String content = "";
 
-			if(getName() != null) content += getName() + "\n" + StringUtility.center("", getName().length(), '=') + "\n";
-			if(getDescription() != null ) content += "\n" + getDescription() + "\n";
+			if (getName() != null) content += getName() + "\n" + StringUtility.center("", getName().length(), '=') + "\n";
+			if (getDescription() != null) content += "\n" + getDescription() + "\n";
 
-			if(getSyntax() != null)
+			if (getSyntax() != null)
 			{
 				content += "\n\nSYNTAX:\n\n";
 				content += "\t" + getSyntax() + "\n";
 			}
 
-			if(!getOptions().isEmpty() && isShowOptions())
+			if (!getOptions().isEmpty() && isShowOptions())
 			{
 				content += "\n\nOPTIONS:\n\n";
 
 				content += addOptionsPlainTextContent(getOptions()) + "\n";
-				if(getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsPlainTextContent(getOptions1()) + "\n";
-				if(getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsPlainTextContent(getOptions2());
+				if (getLevel() >= 1 && !getOptions1().isEmpty()) content += addOptionsPlainTextContent(getOptions1()) + "\n";
+				if (getLevel() >= 2 && !getOptions2().isEmpty()) content += addOptionsPlainTextContent(getOptions2());
 			}
 
-			if(!getSamples().isEmpty() && isShowSamples())
+			if (!getSamples().isEmpty() && isShowSamples())
 			{
 				content += "\n\nEXAMPLES:\n\n";
 
@@ -1864,11 +1947,11 @@ public abstract class AbstractAction implements RuntimeAction
 		 * @param options map of help document options
 		 * @return options map content in <code>Markdown</code> format
 		 */
-		private String addOptionsMarkdownContent(Map<String,HelpDocOption> options)
+		private String addOptionsMarkdownContent(Map<String, HelpDocOption> options)
 		{
 			String content = "";
 
-			if(options != null && !options.isEmpty())
+			if (options != null && !options.isEmpty())
 			{
 				for (String optKey : options.keySet())
 				{
@@ -1886,11 +1969,11 @@ public abstract class AbstractAction implements RuntimeAction
 		 * @param options map of help document options
 		 * @return options map content in <code>HTML</code> format
 		 */
-		private String addOptionsHTMLContent(Map<String,HelpDocOption> options)
+		private String addOptionsHTMLContent(Map<String, HelpDocOption> options)
 		{
 			String content = "";
 
-			if(options != null && !options.isEmpty())
+			if (options != null && !options.isEmpty())
 			{
 				for (String optKey : options.keySet())
 				{
@@ -1911,11 +1994,12 @@ public abstract class AbstractAction implements RuntimeAction
 		 *
 		 * @param options map of help document options
 		 * @return options map content in plain text format
-		 */		private String addOptionsPlainTextContent(Map<String,HelpDocOption> options)
+		 */
+		private String addOptionsPlainTextContent(Map<String, HelpDocOption> options)
 		{
 			String content = "";
 
-			if(options != null && !options.isEmpty())
+			if (options != null && !options.isEmpty())
 			{
 				for (String optKey : options.keySet())
 				{

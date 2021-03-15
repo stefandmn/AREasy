@@ -197,10 +197,14 @@ public class FormData extends BaseData
 	{
 		String operation = getConfiguration().getString("operation", null);
 
-		if(StringUtility.equalsIgnoreCase(operation, "insert") || StringUtility.equalsIgnoreCase(operation, "create")) runCreate(entry);
-		else if(StringUtility.equalsIgnoreCase(operation, "update") || StringUtility.equalsIgnoreCase(operation, "modify")) runUpdate(entry);
-		else if(StringUtility.equalsIgnoreCase(operation, "delete") || StringUtility.equalsIgnoreCase(operation, "remove")) runRemove(entry);
-		else if(StringUtility.equalsIgnoreCase(operation, "merge")) runMerge(entry);
+		if (getRunCondition(entry))
+		{
+			if(StringUtility.equalsIgnoreCase(operation, "insert") || StringUtility.equalsIgnoreCase(operation, "create")) runCreate(entry);
+			else if(StringUtility.equalsIgnoreCase(operation, "update") || StringUtility.equalsIgnoreCase(operation, "modify")) runUpdate(entry);
+			else if(StringUtility.equalsIgnoreCase(operation, "delete") || StringUtility.equalsIgnoreCase(operation, "remove")) runRemove(entry);
+			else if(StringUtility.equalsIgnoreCase(operation, "merge")) runMerge(entry);
+		}
+		else logger.debug("Execution skipped due to run-condition evaluation");
 	}
 
 	/**

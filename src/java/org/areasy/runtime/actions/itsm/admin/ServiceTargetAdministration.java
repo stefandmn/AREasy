@@ -34,7 +34,9 @@ import java.util.List;
  */
 public class ServiceTargetAdministration extends BaseData
 {
-	boolean agreement = false;
+	private String mode = "target";
+	private boolean agreement = false;
+	private String formname = "SLM:ServiceTarget";
 
 	/**
 	 * Execute the current action.
@@ -42,8 +44,31 @@ public class ServiceTargetAdministration extends BaseData
 	 */
 	public void run() throws AREasyException
 	{
-		agreement = getConfiguration().getBoolean("agreement", false);;
-		CoreItem entry = new CoreItem(!agreement ? "SLM:ServiceTarget" : "SLM:SLADefinition");
+		this.mode = getConfiguration().getString("operation", "target");
+
+		if ((StringUtility.equalsIgnoreCase(this.mode, "svt")) || (StringUtility.equalsIgnoreCase(this.mode, "target")) || (StringUtility.equalsIgnoreCase(this.mode, "targets")))
+		{
+			this.agreement = getConfiguration().getBoolean("agreement", false);
+			this.formname = (!this.agreement ? "SLM:ServiceTarget" : "SLM:SLADefinition");
+			this.mode = "target";
+		}
+		else if ((StringUtility.equalsIgnoreCase(this.mode, "category")) || (StringUtility.equalsIgnoreCase(this.mode, "categories")))
+		{
+			this.formname = "SLM:Category";
+			this.mode = "category";
+		}
+		else if ((StringUtility.equalsIgnoreCase(this.mode, "milestone")) || (StringUtility.equalsIgnoreCase(this.mode, "milestones")))
+		{
+			this.formname = "SLM:Milestone";
+			this.mode = "milestone";
+		}
+		else if ((StringUtility.equalsIgnoreCase(this.mode, "action")) || (StringUtility.equalsIgnoreCase(this.mode, "actions")))
+		{
+			this.formname = "SLM:RuleAction";
+			this.mode = "action";
+		}
+
+		CoreItem entry = new CoreItem(this.formname);
 
 		if(!getConfiguration().containsKey("qualification"))
 		{
@@ -84,45 +109,76 @@ public class ServiceTargetAdministration extends BaseData
 	 */
 	public void run(CoreItem entry) throws AREasyException
 	{
-		boolean template = getConfiguration().getBoolean("istemplate", false);
-		boolean build = getConfiguration().getBoolean("build", false);
-
-		if(template && !agreement) build = false;
-
-		//set data values
-		setDataFields(entry);
-
-		//start building
-		if(build)
+		if (StringUtility.equalsIgnoreCase(this.mode, "target"))
 		{
-			entry.setAttribute(300543500, "Build In Progress");	//BuildStatus
-		}
+			boolean template = getConfiguration().getBoolean("istemplate", false);
+			boolean build = getConfiguration().getBoolean("build", false);
 
-		if(!entry.exists() && !agreement)
+			if(template && !agreement) build = false;
+
+			//set data values
+			setDataFields(entry);
+
+			//start building
+			if(build)
+			{
+				entry.setAttribute(300543500, "Build In Progress");	//BuildStatus
+			}
+
+			if(!entry.exists() && !agreement)
+			{
+				entry.setAttribute(300905300, new Integer(0)); //GoalTypes
+				entry.setAttribute(300431700, new Integer(0)); //UseGoalCostSelection
+				entry.setAttribute(301267400, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "GO")); //GoalGUID
+
+				setGoalSchedule(entry);
+			}
+
+			if(!entry.exists())
+			{
+				//commit service target
+				entry.create(getServerConnection());
+				RuntimeLogger.info((!agreement ? "Service target" : "Service agreement") + " '" + entry.getAttribute(300314700) + "' created" + (build ? " and built" : "") + ": " + entry);
+			}
+			else
+			{
+				//commit service target
+				entry.update(getServerConnection());
+				RuntimeLogger.info((!agreement ? "Service target" : "Service agreement") + " '" + entry.getAttribute(300314700) + "' updated" + (build ? " and built" : "") + ": " + entry);
+			}
+
+			if (build) waitToBuild(entry);
+		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "category"))
 		{
-			entry.setAttribute(300905300, new Integer(0)); //GoalTypes
-			entry.setAttribute(300431700, new Integer(0)); //UseGoalCostSelection
-			entry.setAttribute(301267400, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "GO")); //GoalGUID
+			setDataFields(entry);
 
-			//Set SLM Goal Schedule -- todo check if this operation is not done automatically by the workflow (over filters).
-			setGoalSchedule(entry);
+			if (!entry.exists())
+			{
+				entry.create(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Category '").append(entry.getAttribute(8L)).append("' has been created: ").append(entry).toString());
+			}
+			else
+			{
+				entry.update(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Category '").append(entry.getAttribute(8L)).append("' has been updated: ").append(entry).toString());
+			}
 		}
-
-		if(!entry.exists())
+		else if (StringUtility.equalsIgnoreCase(this.mode, "milestone"))
 		{
-			//commit service target
-			entry.create(getServerConnection());
-			RuntimeLogger.info((!agreement ? "Service target" : "Service agreement") + " '" + entry.getAttribute(300314700) + "' created" + (build ? " and built" : "") + ": " + entry);
-		}
-		else
-		{
-			//commit service target
-			entry.update(getServerConnection());
-			RuntimeLogger.info((!agreement ? "Service target" : "Service agreement") + " '" + entry.getAttribute(300314700) + "' updated" + (build ? " and built" : "") + ": " + entry);
-		}
+			setDataFields(entry);
 
-		//wait to build it, to start execution for next SVT.
-		if(build) waitToBuild(entry);
+			if (!entry.exists())
+			{
+				entry.create(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Milestone '").append(entry.getAttribute(8L)).append("' has been created: ").append(entry).toString());
+			}
+			else
+			{
+				entry.update(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Milestone '").append(entry.getAttribute(8L)).append("' has been updated: ").append(entry).toString());
+			}
+		}
 	}
 
 	/**
@@ -135,7 +191,31 @@ public class ServiceTargetAdministration extends BaseData
 	public boolean setQueryFields(CoreItem entry) throws AREasyException
 	{
 		boolean set = super.setQueryFields(entry);
-		set |= setAttribute(entry, "slmid", 300314700);
+
+		if (StringUtility.equalsIgnoreCase(this.mode, "target"))
+		{
+			set |= setAttribute(entry, "slmid", 300314700);
+		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "category"))
+		{
+			set |= setAttribute(entry, "category1", 301448400);
+			set |= setAttribute(entry, "category2", 301448500);
+			set |= setAttribute(entry, "category3", 301448600);
+			set |= setAttribute(entry, "category4", 301448700);
+			set |= setAttribute(entry, "category5", 301448800);
+			set |= setAttribute(entry, "category6", 301448900);
+			set |= setAttribute(entry, "category7", 301448900);
+			set |= setAttribute(entry, "category8", 301449100);
+			set |= setAttribute(entry, "category9", 301449100);
+			set |= setAttribute(entry, "category10", 301449300);
+
+			entry.setIgnoreNullValues(false);
+		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "milestone"))
+		{
+			set |= setAttribute(entry, "slmid", 300397800);
+			set |= setAttribute(entry, "title", 300397800);
+		}
 
 		return set;
 	}
@@ -149,87 +229,280 @@ public class ServiceTargetAdministration extends BaseData
 	 */
 	public boolean setDataFields(CoreItem entry) throws AREasyException
 	{
-		boolean template = getConfiguration().getBoolean("istemplate", false);
+
 		boolean set = super.setDataFields(entry);
 
-		//if it's a new SVT create a new instanceId and take the next SLM ID
-		if(!entry.exists())
+		if (StringUtility.equalsIgnoreCase(this.mode, "target"))
 		{
-			set = true;
-			String instanceId = ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL");
-			entry.setAttribute(179, instanceId);
 
-			if(getConfiguration().containsKey("slmid"))
+			boolean template = getConfiguration().getBoolean("istemplate", false);
+			//if it's a new SVT create a new instanceId and take the next SLM ID
+			if(!entry.exists())
 			{
-				//set SLMID as is defined in the input parameters
-				setAttribute(entry, "slmid", 300314700);
+				set = true;
+				String instanceId = ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL");
+				entry.setAttribute(179, instanceId);
+
+				if(getConfiguration().containsKey("slmid"))
+				{
+					//set SLMID as is defined in the input parameters
+					setAttribute(entry, "slmid", 300314700);
+				}
+				else
+				{
+					String slmId = getServiceTargetId(instanceId);
+					entry.setAttribute(300314700, slmId);
+				}
+
+				if(!agreement)
+				{
+					//mark it as template
+					if(template) entry.setAttribute(301268702, new Integer(0));
+
+					//if have to be created a new SVT and has template specified, apply template parameters
+					if(getConfiguration().containsKey("template"))
+					{
+						//run a procedure that put all the details that come from a SVT template
+						applyServiceTargetTemplate(getConfiguration().getString("template"), entry);
+					}
+				}
 			}
-			else
-			{
-				String slmId = getServiceTargetId(instanceId);
-				entry.setAttribute(300314700, slmId);
-			}
+
+			//set individual parameters
+			set |= setAttribute(entry, "title", 490000400);
+			set |= setAttribute(entry, "description", 300260300);
+			set |= setAttribute(entry, "status", 300314900);
+			set |= setAttribute(entry, "agreementtype", 300260900);
 
 			if(!agreement)
 			{
-				//mark it as template
-				if(template) entry.setAttribute(301268702, new Integer(0));
+				set |= setFolderAttribute(entry, "folder");
+				set |= setAppliedToAttribute(entry, "appliedto");
+				set |= setGoalTypeAttribute(entry, "goaltype");
+				set |= setAttribute(entry, "efectivefrom", 300272100);
+				set |= setAttribute(entry, "termsandconditions", 300271400);
+				set |= setIntegerAttribute(entry, "singlegoalhours", 300397900);
+				set |= setIntegerAttribute(entry, "singlegoalminutes", 300398100);
+				set |= setBusinessEntityAttribute(entry, "businessentity");
+				set |= setAttribute(entry, "usegoalonapp", 301339900);
+				set |= setAttribute(entry, "usestarttimeonapp", 301563900);
+				set |= setAttribute(entry, "measurementdescription", 301648900);
+				set |= setAttribute(entry, "measurementstartwhen", 300273000);
+				set |= setAttribute(entry, "measurementstopwhen", 300273100);
+				set |= setAttribute(entry, "measurementexclude", 300273200);
+				set |= setFloatAttribute(entry, "measurementwarningat", 300413800, true);
+				set |= setAttribute(entry, "measurementgroup", 300478200, true);
+				set |= setAttribute(entry, "measurementresetgoal", 301473300);
+				set |= setAttribute(entry, "measurementreopen", 303384400);
+			}
+			else
+			{
+				set |= setAttribute(entry, "serviceci", 303497300);
+				set |= setAttribute(entry, "expirationdate", 240001000);
+				set |= setAttribute(entry, "notificationdate", 240001015);
+			}
 
-				//if have to be created a new SVT and has template specified, apply template parameters
-				if(getConfiguration().containsKey("template"))
-				{
-					//run a procedure that put all the details that come from a SVT template
-					applyServiceTargetTemplate(getConfiguration().getString("template"), entry);
-				}
+			//validate and fix title value
+			if(entry.getStringAttributeValue(490000400) != null && entry.getStringAttributeValue(490000400).length() > 80)
+			{
+				RuntimeLogger.warn("Title parameter is too large and it will be truncated to 40 chars");
+				entry.setAttribute(490000400, entry.getStringAttributeValue(490000400).substring(0, 79));
+			}
+
+			//template and non-template details.
+			if(template && !agreement)
+			{
+				entry.setAttribute(301307201, "No");
+				entry.setAttribute(300543500, "Template");
+				entry.setAttribute(301268701, "Template");
 			}
 		}
-
-		//set individual parameters
-		set |= setAttribute(entry, "title", 490000400);
-		set |= setAttribute(entry, "description", 300260300);
-		set |= setAttribute(entry, "status", 300314900);
-		set |= setAttribute(entry, "agreementtype", 300260900);
-
-		if(!agreement)
+		else if (StringUtility.equalsIgnoreCase(this.mode, "category"))
 		{
-			set |= setAppliedToAttribute(entry, "appliedto");
-			set |= setGoalTypeAttribute(entry, "goaltype");
-			set |= setAttribute(entry, "efectivefrom", 300272100);
-			set |= setAttribute(entry, "termsandconditions", 300271400);
-			set |= setIntegerAttribute(entry, "singlegoalhours", 300397900);
-			set |= setIntegerAttribute(entry, "singlegoalminutes", 300398100);
-			set |= setBusinessEntityAttribute(entry, "businessentity");
-			set |= setAttribute(entry, "usegoalonapp", 301339900);
-			set |= setAttribute(entry, "usestarttimeonapp", 301563900);
-			set |= setAttribute(entry, "measurementdescription", 301648900);
-			set |= setAttribute(entry, "measurementstartwhen", 300273000);
-			set |= setAttribute(entry, "measurementstopwhen", 300273100);
-			set |= setAttribute(entry, "measurementexclude", 300273200);
-			set |= setFloatAttribute(entry, "measurementwarningat", 300413800, true);
-			set |= setAttribute(entry, "measurementgroup", 300478200, true);
-			set |= setAttribute(entry, "measurementresetgoal", 301473300);
-			set |= setAttribute(entry, "measurementreopen", 303384400);
+			set |= setAttribute(entry, "category1", 301448400, true);
+			set |= setAttribute(entry, "category2", 301448500, true);
+			set |= setAttribute(entry, "category3", 301448600, true);
+			set |= setAttribute(entry, "category4", 301448700, true);
+			set |= setAttribute(entry, "category5", 301448800, true);
+			set |= setAttribute(entry, "category6", 301448900, true);
+			set |= setAttribute(entry, "category7", 301449000, true);
+			set |= setAttribute(entry, "category8", 301449100, true);
+			set |= setAttribute(entry, "category9", 301449200, true);
+			set |= setAttribute(entry, "category10", 301449300, true);
+
+			if (!entry.exists())
+			{
+				int lid = 0;
+				String lname = null;
+				CoreItem parent = new CoreItem(this.formname);
+
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448400L))) lid = 1;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448500L))) lid = 2;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448600L))) lid = 3;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448700L))) lid = 4;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448800L))) lid = 5;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301448900L))) lid = 6;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301449000L))) lid = 7;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301449100L))) lid = 8;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301449200L))) lid = 9;
+				if (StringUtility.isNotEmpty(entry.getStringAttributeValue(301449300L))) lid = 10;
+
+				if (lid == 1)
+				{
+					lname = entry.getStringAttributeValue(301448400L);
+					parent = null;
+				}
+				else if (lid == 2)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					lname = entry.getStringAttributeValue(301448500L);
+					parent.setNullAttribute(301448500L);
+				}
+				else if (lid == 3)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					lname = entry.getStringAttributeValue(301448600L);
+					parent.setNullAttribute(301448600L);
+				}
+				else if (lid == 4)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					lname = entry.getStringAttributeValue(301448700L);
+					parent.setNullAttribute(301448700L);
+				}
+				else if (lid == 5)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					lname = entry.getStringAttributeValue(301448800L);
+					parent.setNullAttribute(301448800L);
+				}
+				else if (lid == 6)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					lname = entry.getStringAttributeValue(301448900L);
+					parent.setNullAttribute(301448900L);
+				}
+				else if (lid == 7)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
+					lname = entry.getStringAttributeValue(301449000L);
+					parent.setNullAttribute(301449000L);
+				}
+				else if (lid == 8)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
+					lname = entry.getStringAttributeValue(301449100L);
+					parent.setNullAttribute(301449100L);
+				}
+				else if (lid == 9)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
+					parent.setAttribute(301449100L, entry.getAttributeValue(301449100));
+					lname = entry.getStringAttributeValue(301449200L);
+					parent.setNullAttribute(301449200L);
+				}
+				else if (lid == 10)
+				{
+					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
+					parent.setAttribute(301449100L, entry.getAttributeValue(301449100));
+					parent.setAttribute(301449200L, entry.getAttributeValue(301449200));
+					lname = entry.getStringAttributeValue(301449300L);
+					parent.setNullAttribute(301449300L);
+				}
+
+				if (parent != null)
+				{
+					parent.setIgnoreNullValues(false);
+					parent.read(getServerConnection());
+
+					if (!parent.exists())
+					{
+						throw new AREasyException(new StringBuilder().append("SLM Parent category was not found: ").append(parent.toFullString()).toString());
+					}
+
+					parent.setAttribute(301454100L, "Yes");
+					parent.update(getServerConnection());
+
+					entry.setAttribute(301453800L, parent.getStringAttributeValue(179L));
+				}
+
+				entry.setAttribute(301140900L, Integer.valueOf(lid));
+				entry.setAttribute(490000400L, lname);
+			}
 		}
-		else
+		else if (StringUtility.equalsIgnoreCase(this.mode, "milestone"))
 		{
-			set |= setAttribute(entry, "serviceci", 303497300);
-			set |= setAttribute(entry, "expirationdate", 240001000);
-			set |= setAttribute(entry, "notificationdate", 240001015);
-		}
+			if (!entry.exists())
+			{
+				set |= setAttribute(entry, "slmid", 300397800);
+				set |= setAttribute(entry, "milestonetype", 300740600);
+				entry.setAttribute(7L, Integer.valueOf(0));
+				entry.setAttribute(8L, "Not Used");
+				entry.setAttribute(179L, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL"));
+				entry.setAttribute(300504600L, "179");
+				entry.setAttribute(300059000L, "Commit Pending");
+				entry.setAttribute(301268700L, Integer.valueOf(0));
+				entry.setNullAttribute(301545300L);
+				entry.setNotIgnoreNullValues();
 
-		//validate and fix title value
-		if(entry.getStringAttributeValue(490000400) != null && entry.getStringAttributeValue(490000400).length() > 80)
-		{
-			RuntimeLogger.warn("Title parameter is too large and it will be truncated to 40 chars");
-			entry.setAttribute(490000400, entry.getStringAttributeValue(490000400).substring(0, 79));
-		}
+				CoreItem parent = new CoreItem("SLM:ServiceTarget");
+				parent.setAttribute(300314700L, entry.getStringAttributeValue(300397800L));
+				parent.read(getServerConnection());
 
-		//template and non-template details.
-		if(template && !agreement)
-		{
-			entry.setAttribute(301307201, "No");
-			entry.setAttribute(300543500, "Template");
-			entry.setAttribute(301268701, "Template");
+				if (!parent.exists()) throw new AREasyException(new StringBuilder().append("SLM Parent service target was not found: ").append(parent.toFullString()).toString());
+
+				entry.setAttribute(490008100L, parent.getFormName());
+				entry.setAttribute(300394800L, parent.getStringAttributeValue(179L));
+				entry.setAttribute(300395100L, parent.getStringAttributeValue(303699500L));
+				entry.setAttribute(300394600L, parent.getStringAttributeValue(300260200L));
+				entry.setAttribute(300449400L, parent.getStringAttributeValue(300260200L));
+				entry.setAttribute(300398700L, parent.getStringAttributeValue(490000400L));
+				entry.setAttribute(490000700L, parent.getStringAttributeValue(490000700L));
+			}
+
+			set |= setAttribute(entry, "title", 490000400);
+			set |= setAttribute(entry, "description", 500047400);
+			set |= setAttribute(entry, "reqexecutewhen", 300645300);
+			set |= setAttribute(entry, "reqexecuteatfromgoal", 300413800);
+			set |= setAttribute(entry, "reqexecuteathours", 300395500);
+			set |= setAttribute(entry, "reqexecuteaminutes", 300395600);
+			set |= setAttribute(entry, "repeatefor", 300474100);
+			set |= setAttribute(entry, "repeathours", 300476800);
+			set |= setAttribute(entry, "repeatminutes", 300477100);
+			set |= setAttribute(entry, "reqexecuteif", 300381400);
 		}
 
 		return set;
@@ -429,6 +702,30 @@ public class ServiceTargetAdministration extends BaseData
 			}
 		}
 		else return false;
+	}
+
+	private boolean setFolderAttribute(CoreItem entry, String key) throws AREasyException
+	{
+		if ((key != null) && (getConfiguration().containsKey(key)))
+		{
+			String value = getConfiguration().getString(key);
+
+			CoreItem item = new CoreItem("SLM:Category");
+			item.setAttribute(8L, value);
+			item.read(getServerConnection());
+
+			if (item.exists())
+			{
+				entry.setAttribute(301461600L, item.getAttributeValue(179));
+
+				return true;
+			}
+
+			RuntimeLogger.warn(new StringBuilder().append("SLM Folder/Category was not found by the following identifier: ").append(key).toString());
+			return false;
+		}
+
+		return false;
 	}
 
 	private boolean setBusinessEntityAttribute(CoreItem entry, String key) throws AREasyException

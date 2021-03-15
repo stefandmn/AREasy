@@ -119,34 +119,38 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 
 	public void run(CoreItem entry) throws AREasyException
 	{
-		//data fill-in and create record
-		if(!entry.exists())
+		if (getRunCondition(entry))
 		{
-			//set data values
-			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
-
-			if(getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			//data fill-in and create record
+			if (!entry.exists())
 			{
-				//set multipart form names
-				setMultiPartForms(entry);
+				//set data values
+				setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
 
-				//execute transactions
-				((MultiPartItem)entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+				{
+					//set multipart form names
+					setMultiPartForms(entry);
+
+					//execute transactions
+					((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				}
+			}
+			else if (entry.exists())
+			{
+				//set data values
+				setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
+
+				if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+				{
+					//set multipart form names
+					setMultiPartForms(entry);
+
+					//execute transactions
+					((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				}
 			}
 		}
-		else if(entry.exists())
-		{
-			//set data values
-			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
-
-			if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
-			{
-				//set multipart form names
-				setMultiPartForms(entry);
-
-				//execute transactions
-				((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
-			}
-		}
+		else logger.debug("Execution skipped due to run-condition evaluation");
 	}
 }

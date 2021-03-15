@@ -37,5 +37,6 @@
 		<option key="mergetype" type="string" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description="Specify type of merge transaction"/>
 		<option key="mergeoptions" type="list" selvalues="norequired,nopattern,noworkflow" description="Specify additional merge options"/>
 		<option key="datamaps" type="list" description="Load data maps from external files"/>
+		<option key="initcondition" type="string" description="Describes the Velocity to allow the execution of action (when it is defined). The evaluation is done before action run method and contains a context with all input parameters"/>
 	</options1>
 </help>

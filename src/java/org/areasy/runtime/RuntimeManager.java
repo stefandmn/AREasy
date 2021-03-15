@@ -410,7 +410,7 @@ public class RuntimeManager
 					action.init(config, this);
 
 					//action execution
-					action.run();
+					if ((action.isInit()) && (!action.isInterrupted())) action.run();
 				}
 				else
 				{
@@ -439,7 +439,7 @@ public class RuntimeManager
 			}
 
 			//notify results
-			action.report();
+			if ((action.isInit()) && (!action.isInterrupted())) action.report();
 
 			//dispose action objects.
 			action.dispose();

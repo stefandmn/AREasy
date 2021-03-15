@@ -1,5 +1,4 @@
-*.ipr
+.idea
 *.iml
-*.iws
 .svn
 .git

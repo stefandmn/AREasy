@@ -1,6 +1,14 @@
 3.0.2
 ======
+05. Update devrename action in order to allow singla object renaming but also bulk updates for the
+	object names, using filters like add prefix, change part of the name or insert into name.
+04. Extend ServiceTargetAdministration to support milestones and related actions (notification and
+	set value actions)
+03. Defined execution parameters (conditions)  for init phase (always executed) and  run phase (called
+	by demand by each action)
+02, Update SupportGroupAdministration action to support all possible operation for related entities
 01. Added possibility to use data already which already exists in the CoreItem structure.
+
 
 3.0.1
 ======
@@ -35,66 +43,73 @@
 
 2.1
 ======
-27. Environment: Testing environment has been designed and implemented as general Ant targets and specific property file that
-	will includes test parametrization. The testing environment is fully functional on both Unix/Linux and Windows and could
-	be used in case of ANT_HOME, AREASY_HOME and JAVA_HOME are defined.
-26. Unix/Linux installer has been update to recognize the configuration already set in the previous installation. All these
-	configuration values will be provided as default values during installation process. Also the installer is able to update
-	user profile variables
-25. Environment: Deployment (local and remote) procedures have been improved and now the configuration management targets are
-	able to deploy complete or partial runtime components over SSH. In order to be able to do this you have to set your Ant
-	environment, deploying libs/tools/jsch*.jar library (in case of Ant is call through a development tool try to configure the
-	classpath of that tool to know about the location of jsch*.jar library)
-24. Environment: Ant targets have been improved to  be able to create WIndows installer even if the target is run from
-	Linux/Unix. This is possible in case of the host has WINE installed and Z: drive is the root. Also you have to have NSIS
-	installed over WINE.
-23. Preserve data type during communication between client and server when the input parameters contain functions.
-	The builtin functions are: int(), long(), float(), double(), decimal(), date(), bool(), file()
-22. Implement soft interruption mechanism in RuntimeAction and it was applied to main action from core and aar packages.
-21. It has been added two additional options to select target CI when the 'data.cmdb.remove.relationship.ci' and
-	'data.cmdb.create.relationship.ci' actions; it's about cirelationdatasetid and cirelationclassid that allows you to isolate
-	the target-ul CI.
-20. Update 'data.cmdb.create.relationship.ci' action to support specific type of relationships and also to have possibility to
-	set relationship impact.
+27. Environment: Testing environment has been designed and implemented as general Ant targets and specific
+	property file that
+	will includes test parametrization. The testing environment is fully functional on both Unix/Linux and
+	Windows and could be used in case of ANT_HOME, AREASY_HOME and JAVA_HOME are defined.
+26. Unix/Linux installer has been update to recognize the configuration already set in the previous
+	installation. All these
+	configuration values will be provided as default values during installation process. Also the installer
+	is able to update user profile variables
+25. Environment: Deployment (local and remote) procedures have been improved and now the configuration
+	management targets are able to deploy complete or partial runtime components over SSH. In order
+	to be able to do this you have to set your Ant
+	environment, deploying libs/tools/jsch*.jar library (in case of Ant is call through a development tool
+	try to configure the classpath of that tool to know about the location of jsch*.jar library)
+24. Environment: Ant targets have been improved to  be able to create WIndows installer even if the target
+	is run from Linux/Unix. This is possible in case of the host has WINE installed and Z: drive is the root.
+	Also you have to have NSIS installed over WINE.
+23. Preserve data type during communication between client and server when the input parameters contain
+	functions. The builtin functions are: int(), long(), float(), double(), decimal(), date(), bool(), file()
+22. Implement soft interruption mechanism in RuntimeAction and it was applied to main action from core and
+	aar packages.
+21. It has been added two additional options to select target CI when the 'data.cmdb.remove.relationship.ci'
+	and 'data.cmdb.create.relationship.ci' actions; it's about cirelationdatasetid and cirelationclassid
+	that allows you to isolate the target-ul CI.
+20. Update 'data.cmdb.create.relationship.ci' action to support specific type of relationships and also to
+	have possibility to set relationship impact.
 19. Two new actions have been added to register and remove user functional roles: admin.set.application.role,
 	admin.remove.application.role
-18. The  actions that register and remove ITSM application permissions have been renamed to: admin.set.application.permission,
-	admin.remove.application.permission
-17. Package action has been improved to support reconfiguration of 'default.properties' sector and to deploy resources
-	in /bin folder
+18. The  actions that register and remove ITSM application permissions have been renamed to:
+	admin.set.application.permission, admin.remove.application.permission
+17. Package action has been improved to support reconfiguration of 'default.properties' sector and to
+	deploy resources in /bin folder
 16. Add Windows binary to launch areasy command line
 15. Windows and Unix installers have been improved regarding Service registration options
 14. Add support for x64 platform, for registration of Windows service.
-13. Unix/Linux installer has been created as a self extractor archive and a shell script that is configuring the environment
-	and the runtime instance.
-12. Periodic runner from thread manager has been replaced with a veritable cron engine. Also thread manager has been updated
-	to simplify statuses and calling operations.
+13. Unix/Linux installer has been created as a self extractor archive and a shell script that is
+	configuring the environment and the runtime instance.
+12. Periodic runner from thread manager has been replaced with a veritable cron engine. Also thread manager
+	has been updated to simplify statuses and calling operations.
 11. Add a new functionality to initiate and store persistent objects, shared between actions.
-10. Package action has been updated to accept many library repositories that are appended to the main repositories managed
-	in the default.properties configuration sector.
-09. Windows installer has been improved to register AREASY_HOME/bin location in the PATH variable and to support re-install
-	actions.
-08. Designed and implemented a methodology to work with plugins and modules. Because of this purpose has been created a new
-	system action called 'package' that can install a new AREasy package (ARJ file). The installation procedure includes
-	deployment of configuration resources that will be merged/appended to the existing configuration, libraries that will be
-	loaded in the classpath without to restart the server.
-07. Add in Windows installer all necessary options for basic configuration: AREasy server name and port, AR System server name
-	and port, AR System credentials and windows service option.
-06. Transform "reload" action into "config" action having an extra-scope to set configuration keys from configuration sectors.
+10. Package action has been updated to accept many library repositories that are appended to the main
+	repositories managed in the default.properties configuration sector.
+09. Windows installer has been improved to register AREASY_HOME/bin location in the PATH variable and to
+	support re-install actions.
+08. Designed and implemented a methodology to work with plugins and modules. Because of this purpose
+	has been created a new system action called 'package' that can install a new AREasy package (ARJ file).
+	The installation procedure includes deployment of configuration resources that will be merged/appended
+	to the existing configuration, libraries that will be loaded in the classpath without to restart the
+	server.
+07. Add in Windows installer all necessary options for basic configuration: AREasy server name and port,
+	AR System server name and port, AR System credentials and windows service option.
+06. Transform "reload" action into "config" action having an extra-scope to set configuration keys from
+	configuration sectors.
 05. Add rich help texts to several administrative actions
 04. Add rich help texts for all system actions.
-03. Communication protocol has been changed to accept partial answer flushed during action execution and caught by the client
-   without to close the communication pipe
-02. Rich help mechanism. Documentation about each action is provided into a text file read and displayed by help action or -help
-   option attached to each action that has the help text file.
-01. Project reorganization. SNT.AREeasy project has been segregated in many sub-projects - one for API and runtime application and
-   each old module became a separate project.
+03. Communication protocol has been changed to accept partial answer flushed during action execution and
+	caught by the client without to close the communication pipe
+02. Rich help mechanism. Documentation about each action is provided into a text file read and displayed
+	by help action or -help option attached to each action that has the help text file.
+01. Project reorganization. SNT.AREeasy project has been segregated in many sub-projects - one for API and
+	runtime application and each old module became a separate project.
 
 2.0
 ======
-14. Action "data.wrapper.file" has been improved to allow data limit control and also to transfer parameters to sub-actions.
-13. Change communication protocol to accept an unlimited number of transferred file between server and client. The
-	enhanced protocol is not applicable for runtime execution mode.
+14. Action "data.wrapper.file" has been improved to allow data limit control and also to transfer
+	parameters to sub-actions.
+13. Change communication protocol to accept an unlimited number of transferred file between server
+	and client. The enhanced protocol is not applicable for runtime execution mode.
 12. Add a dedicated process for Windows service option. 
 11. Windows installer and uninstaller has been designed.
 10. Startup scrips have been redesigned.
@@ -111,22 +126,25 @@
 1.2
 ======
 05. Added RunProcessAction as a system action, allowing to execute external processes.
-04. Transform "data.fnd" actions into "ars.admin" actions and update them to support extended parametrization.
+04. Transform "data.fnd" actions into "ars.admin" actions and update them to support extended
+	parametrization.
 03. Extend number of input and output file (transferable file) to an unlimited number.
 02. Redesign communication protocol between client and server.
-01. Transform "file" and "input-file" in inputfile parameter (which can be transferable from the client to server) and also
-	transform "output-file" in "outputfile" parameter (which is also transferable frpom server to client).
+01. Transform "file" and "input-file" in inputfile parameter (which can be transferable from the
+	client to server) and also transform "output-file" in "outputfile" parameter (which is also
+	transferable frpom server to client).
 
 1.1
 ======
-04. Update RuntimeServer module to support execution of scheduled jobs not immediate after they are instantiated and
-to be started after wating time. For this scenario must be used configuration "app.server.startup.<jobname>.now=false".
-By default this option is true.
-03. Implement data file option for actions data.entry.add, data.entry.update, and data.entry.remove. These actions
-could use data from a specified file and will repeat the core action behavior for each record.
+04. Update RuntimeServer module to support execution of scheduled jobs not immediate after they are
+	instantiated and to be started after wating time. For this scenario must be used configuration
+	"app.server.startup.<jobname>.now=false". By default this option is true.
+03. Implement data file option for actions data.entry.add, data.entry.update, and data.entry.remove.
+	These actions could use data from a specified file and will repeat the core action behavior for
+	each record.
 02. Fix building & configuration procedure
-01. Implement and add "data.entry.add" and "data.entry.update" action to be able to submit data and update
-entries in any ARS schema.
+01. Implement and add "data.entry.add" and "data.entry.update" action to be able to submit data and
+	update entries in any ARS schema.
 
 1.0
 ======

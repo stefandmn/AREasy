@@ -76,12 +76,8 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 				try
 				{
 					ObjectBase objdata = wrapper.getInstance(oldname);
-
-					if (objdata != null)
-					{
-						objdata.setName(newname);
-						execute(objdata);
-					}
+					if(objdata == null) RuntimeLogger.error("No object found with this name: " + oldname);
+						else execute(objdata, newname);
 				}
 				catch (Throwable th)
 				{
@@ -89,9 +85,28 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 					getLogger().debug("Exception", th);
 				}
 			}
-			else super.run();
+			else RuntimeLogger.error("No object type has been specified");
 		}
-		else RuntimeLogger.error("No old and/or new name has been specified");
+		else super.run();
+	}
+
+	/**
+	 * Execute renaming action for an AR object
+	 * @param object AR object instance
+	 * @param name new name
+	 */
+	public void execute(ObjectBase object, String name)
+	{
+		try
+		{
+			object.setNewName(name);
+			commit(object);
+		}
+		catch (Throwable th)
+		{
+			RuntimeLogger.error("Error renaming definition object: " + th.getMessage());
+			getLogger().debug("Exception", th);
+		}
 	}
 
 	/**
@@ -118,7 +133,7 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 				if(StringUtility.isNotEmpty(insert)) setInsertToName(object, insert);
 				if(StringUtility.isNotEmpty(replace)) setReplaceToName(object, replace);
 
-				execute(object);
+				commit(object);
 			}
 			catch (Throwable th)
 			{
@@ -134,7 +149,7 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 	 * @param object managed object instance.
 	 * @throws ARException if the object factory will return an error
 	 */
-	public void execute(ObjectBase object) throws ARException
+	public void commit(ObjectBase object) throws ARException
 	{
 		if(!StringUtility.equals( object.getNewName(),  object.getName() ))
 		{

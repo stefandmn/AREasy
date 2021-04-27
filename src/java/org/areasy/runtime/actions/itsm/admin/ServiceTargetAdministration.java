@@ -64,7 +64,7 @@ public class ServiceTargetAdministration extends BaseData
 		}
 		else if ((StringUtility.equalsIgnoreCase(this.mode, "action")) || (StringUtility.equalsIgnoreCase(this.mode, "actions")))
 		{
-			this.formname = "SLM:RuleAction";
+			this.formname = "SLM:RuleActionSetValue";
 			this.mode = "action";
 		}
 
@@ -179,6 +179,21 @@ public class ServiceTargetAdministration extends BaseData
 				RuntimeLogger.info(new StringBuilder().append("Milestone '").append(entry.getAttribute(8L)).append("' has been updated: ").append(entry).toString());
 			}
 		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "action"))
+		{
+			setDataFields(entry);
+
+			if (!entry.exists())
+			{
+				entry.create(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Action '").append(entry.getAttribute(8L)).append("' has been created: ").append(entry).toString());
+			}
+			else
+			{
+				entry.update(getServerConnection());
+				RuntimeLogger.info(new StringBuilder().append("Action '").append(entry.getAttribute(8L)).append("' has been updated: ").append(entry).toString());
+			}
+		}
 	}
 
 	/**
@@ -215,6 +230,19 @@ public class ServiceTargetAdministration extends BaseData
 		{
 			set |= setAttribute(entry, "slmid", 300397800);
 			set |= setAttribute(entry, "title", 300397800);
+		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "action"))
+		{
+			CoreItem milestone = getMilestoneItem(getConfiguration().getString("slmid", null),
+										getConfiguration().getString("milestonetitle", null));
+			if(milestone == null) throw new AREasyException("Invalid milestone correlation for action definition");
+
+			set |= setAttribute(entry, "actiontitle", 490000400);
+			entry.setAttribute(490000700, milestone.getStringAttributeValue(490000700)); //OperationId
+			entry.setAttribute(490000100, "SLM_RULEACTIONSETVALUE"); //RoleObjectTYpe
+			entry.setAttribute(500048100, "Action"); //RoleObjectTYpe
+			entry.setAttribute(500001600, "SLM_RULEACTIONNOTIFIER"); //DestinationObjectId
+			entry.setAttribute(500001400, milestone.getStringAttributeValue(300395100)); //ReferenceFormId
 		}
 
 		return set;
@@ -354,91 +382,91 @@ public class ServiceTargetAdministration extends BaseData
 				}
 				else if (lid == 2)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
 					lname = entry.getStringAttributeValue(301448500L);
 					parent.setNullAttribute(301448500L);
 				}
 				else if (lid == 3)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
 					lname = entry.getStringAttributeValue(301448600L);
 					parent.setNullAttribute(301448600L);
 				}
 				else if (lid == 4)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
 					lname = entry.getStringAttributeValue(301448700L);
 					parent.setNullAttribute(301448700L);
 				}
 				else if (lid == 5)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
 					lname = entry.getStringAttributeValue(301448800L);
 					parent.setNullAttribute(301448800L);
 				}
 				else if (lid == 6)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
-					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800, entry.getAttributeValue(301448800));
 					lname = entry.getStringAttributeValue(301448900L);
 					parent.setNullAttribute(301448900L);
 				}
 				else if (lid == 7)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
-					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
-					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900, entry.getAttributeValue(301448900));
 					lname = entry.getStringAttributeValue(301449000L);
 					parent.setNullAttribute(301449000L);
 				}
 				else if (lid == 8)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
-					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
-					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
-					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000, entry.getAttributeValue(301449000));
 					lname = entry.getStringAttributeValue(301449100L);
 					parent.setNullAttribute(301449100L);
 				}
 				else if (lid == 9)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
-					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
-					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
-					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
-					parent.setAttribute(301449100L, entry.getAttributeValue(301449100));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000, entry.getAttributeValue(301449000));
+					parent.setAttribute(301449100, entry.getAttributeValue(301449100));
 					lname = entry.getStringAttributeValue(301449200L);
 					parent.setNullAttribute(301449200L);
 				}
 				else if (lid == 10)
 				{
-					parent.setAttribute(301448400L, entry.getAttributeValue(301448400));
-					parent.setAttribute(301448500L, entry.getAttributeValue(301448500));
-					parent.setAttribute(301448600L, entry.getAttributeValue(301448600));
-					parent.setAttribute(301448700L, entry.getAttributeValue(301448700));
-					parent.setAttribute(301448800L, entry.getAttributeValue(301448800));
-					parent.setAttribute(301448900L, entry.getAttributeValue(301448900));
-					parent.setAttribute(301449000L, entry.getAttributeValue(301449000));
-					parent.setAttribute(301449100L, entry.getAttributeValue(301449100));
-					parent.setAttribute(301449200L, entry.getAttributeValue(301449200));
+					parent.setAttribute(301448400, entry.getAttributeValue(301448400));
+					parent.setAttribute(301448500, entry.getAttributeValue(301448500));
+					parent.setAttribute(301448600, entry.getAttributeValue(301448600));
+					parent.setAttribute(301448700, entry.getAttributeValue(301448700));
+					parent.setAttribute(301448800, entry.getAttributeValue(301448800));
+					parent.setAttribute(301448900, entry.getAttributeValue(301448900));
+					parent.setAttribute(301449000, entry.getAttributeValue(301449000));
+					parent.setAttribute(301449100, entry.getAttributeValue(301449100));
+					parent.setAttribute(301449200, entry.getAttributeValue(301449200));
 					lname = entry.getStringAttributeValue(301449300L);
 					parent.setNullAttribute(301449300L);
 				}
@@ -453,14 +481,14 @@ public class ServiceTargetAdministration extends BaseData
 						throw new AREasyException(new StringBuilder().append("SLM Parent category was not found: ").append(parent.toFullString()).toString());
 					}
 
-					parent.setAttribute(301454100L, "Yes");
+					parent.setAttribute(301454100, "Yes");
 					parent.update(getServerConnection());
 
-					entry.setAttribute(301453800L, parent.getStringAttributeValue(179L));
+					entry.setAttribute(301453800, parent.getStringAttributeValue(179L));
 				}
 
-				entry.setAttribute(301140900L, Integer.valueOf(lid));
-				entry.setAttribute(490000400L, lname);
+				entry.setAttribute(301140900, Integer.valueOf(lid));
+				entry.setAttribute(490000400, lname);
 			}
 		}
 		else if (StringUtility.equalsIgnoreCase(this.mode, "milestone"))
@@ -469,28 +497,28 @@ public class ServiceTargetAdministration extends BaseData
 			{
 				set |= setAttribute(entry, "slmid", 300397800);
 				set |= setAttribute(entry, "milestonetype", 300740600);
-				entry.setAttribute(7L, Integer.valueOf(0));
-				entry.setAttribute(8L, "Not Used");
-				entry.setAttribute(179L, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL"));
-				entry.setAttribute(300504600L, "179");
-				entry.setAttribute(300059000L, "Commit Pending");
-				entry.setAttribute(301268700L, Integer.valueOf(0));
-				entry.setNullAttribute(301545300L);
+				entry.setAttribute(7, Integer.valueOf(0));
+				entry.setAttribute(8, "Not Used");
+				entry.setAttribute(179, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL"));
+				entry.setAttribute(300504600, "179");
+				entry.setAttribute(300059000, "Commit Pending");
+				entry.setAttribute(301268700, Integer.valueOf(0));
+				entry.setNullAttribute(301545300);
 				entry.setNotIgnoreNullValues();
 
 				CoreItem parent = new CoreItem("SLM:ServiceTarget");
-				parent.setAttribute(300314700L, entry.getStringAttributeValue(300397800L));
+				parent.setAttribute(300314700, entry.getStringAttributeValue(300397800));
 				parent.read(getServerConnection());
 
 				if (!parent.exists()) throw new AREasyException(new StringBuilder().append("SLM Parent service target was not found: ").append(parent.toFullString()).toString());
 
-				entry.setAttribute(490008100L, parent.getFormName());
-				entry.setAttribute(300394800L, parent.getStringAttributeValue(179L));
-				entry.setAttribute(300395100L, parent.getStringAttributeValue(303699500L));
-				entry.setAttribute(300394600L, parent.getStringAttributeValue(300260200L));
-				entry.setAttribute(300449400L, parent.getStringAttributeValue(300260200L));
-				entry.setAttribute(300398700L, parent.getStringAttributeValue(490000400L));
-				entry.setAttribute(490000700L, parent.getStringAttributeValue(490000700L));
+				entry.setAttribute(490008100, parent.getFormName());
+				entry.setAttribute(300394800, parent.getStringAttributeValue(179L));
+				entry.setAttribute(300395100, parent.getStringAttributeValue(303699500L));
+				entry.setAttribute(300394600, parent.getStringAttributeValue(300260200L));
+				entry.setAttribute(300449400, parent.getStringAttributeValue(300260200L));
+				entry.setAttribute(300398700, parent.getStringAttributeValue(490000400L));
+				entry.setAttribute(490000700, parent.getStringAttributeValue(490000700L));
 			}
 
 			set |= setAttribute(entry, "title", 490000400);
@@ -503,6 +531,28 @@ public class ServiceTargetAdministration extends BaseData
 			set |= setAttribute(entry, "repeathours", 300476800);
 			set |= setAttribute(entry, "repeatminutes", 300477100);
 			set |= setAttribute(entry, "reqexecuteif", 300381400);
+		}
+		else if (StringUtility.equalsIgnoreCase(this.mode, "action"))
+		{
+			if (!entry.exists()) entry.setAttribute(179, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "SL"));
+			CoreItem milestone = getMilestoneItem(getConfiguration().getString("slmid", null),
+					getConfiguration().getString("milestonetitle", null));
+			if(milestone == null) throw new AREasyException("Invalid milestone correlation for action definition");
+
+			set |= setAttribute(entry, "actiontitle", 490000400);
+			set |= setAttribute(entry, "actiontype", 300522100);
+			set |= setAttribute(entry, "actiondescription", 500047400);
+			entry.setAttribute(490000700, milestone.getStringAttributeValue(490000700)); //OperationId
+			entry.setAttribute(490000100, "SLM_RULEACTIONSETVALUE"); //RoleObjectTYpe
+			entry.setAttribute(500048100, "Action"); //RoleObjectTYpe
+			entry.setAttribute(500048200, "Set Value Action"); //SLA_Rule Object Subtype
+			entry.setAttribute(500000300, getServerConnection().getServerName()); //DestinationServerName
+			entry.setAttribute(500001600, "SLM_RULEACTIONNOTIFIER"); //DestinationObjectId
+			entry.setAttribute(500001400, milestone.getStringAttributeValue(300395100)); //ReferenceFormId
+			entry.setAttribute(500001400, 2); //RecordStatus = CommitPending
+			entry.setAttribute(301509500, 2); //RecordStatus_base = CommitPending
+			entry.setAttribute(301268700, 0); //ObjectTemplateType = Custom
+			entry.setAttribute(500050100, 1); //SetValueActionMode = PushValue
 		}
 
 		return set;
@@ -711,12 +761,12 @@ public class ServiceTargetAdministration extends BaseData
 			String value = getConfiguration().getString(key);
 
 			CoreItem item = new CoreItem("SLM:Category");
-			item.setAttribute(8L, value);
+			item.setAttribute(8, value);
 			item.read(getServerConnection());
 
 			if (item.exists())
 			{
-				entry.setAttribute(301461600L, item.getAttributeValue(179));
+				entry.setAttribute(301461600, item.getAttributeValue(179));
 
 				return true;
 			}
@@ -739,7 +789,7 @@ public class ServiceTargetAdministration extends BaseData
 
 			if(StringUtility.isNotEmpty(value))
 			{
-				entry.setAttribute(300830700, value);											//BusinessEntityTag
+				entry.setAttribute(300830700, value); //BusinessEntityTag
 
 				CoreItem item = new CoreItem("Business Time Shared Entity");
 				item.setAttribute(8, value);
@@ -747,8 +797,8 @@ public class ServiceTargetAdministration extends BaseData
 
 				if(item.exists())
 				{
-					entry.setAttribute(301413200, item.getAttributeValue(179));			//BusinessEntityID
-					entry.setAttribute(300830700, item.getAttributeValue(8));			//BusinessEntityTag
+					entry.setAttribute(301413200, item.getAttributeValue(179)); //BusinessEntityID
+					entry.setAttribute(300830700, item.getAttributeValue(8)); //BusinessEntityTag
 
 					return true;
 				}
@@ -784,25 +834,25 @@ public class ServiceTargetAdministration extends BaseData
 		if(template.exists())
 		{
 			//default value when the template is selected
-			entry.setAttribute(301874800, template.getStringAttributeValue(300314700));  	// TemplateSLMID
-			entry.setAttribute(300525700, template.getStringAttributeValue(179));  			// SVTTemplateMenu
-			entry.setAttribute(300338100, template.getStringAttributeValue(179)); 			//SVTTemplateInstanceID
+			entry.setAttribute(301874800, template.getStringAttributeValue(300314700));  // TemplateSLMID
+			entry.setAttribute(300525700, template.getStringAttributeValue(179)); // SVTTemplateMenu
+			entry.setAttribute(300338100, template.getStringAttributeValue(179));  //SVTTemplateInstanceID
 			entry.setAttribute(301322801, template.getStringAttributeValue(490000400)); 	//SVTTemplateName
 			entry.setAttribute(490000400, template.getStringAttributeValue(490000400) + "_" + entry.getStringAttributeValue(300314700)); //new Title
 			entry.setAttribute(301267400, ProcessorLevel2CmdbApp.getStringInstanceId(getServerConnection(), "GO")); //goalGUID
 
-			template.deleteAttribute(179);			//instance id
-			template.deleteAttribute(300525700);	//template instance id
-			template.deleteAttribute(301322801);	//template name
-			template.deleteAttribute(490000400);    //title
-			template.deleteAttribute(300314700);    //SLMId
-			template.deleteAttribute(301268702);    //template mark
-			template.deleteAttribute(301267400);    //GoalGUID
-			template.deleteAttribute(301307201);    //BMCSVTTemplate
-			template.deleteAttribute(300543500);	//BuildStatus
-			template.deleteAttribute(301268701);	//ObjectTemplateType
-			template.deleteAttribute(300338100);	//SVTTemplateInstanceID
-			template.deleteAttribute(301874800);	//TemplateSLMID
+			template.deleteAttribute(179); //instance id
+			template.deleteAttribute(300525700); //template instance id
+			template.deleteAttribute(301322801); //template name
+			template.deleteAttribute(490000400); //title
+			template.deleteAttribute(300314700); //SLMId
+			template.deleteAttribute(301268702); //template mark
+			template.deleteAttribute(301267400); //GoalGUID
+			template.deleteAttribute(301307201); //BMCSVTTemplate
+			template.deleteAttribute(300543500); //BuildStatus
+			template.deleteAttribute(301268701); //ObjectTemplateType
+			template.deleteAttribute(300338100); //SVTTemplateInstanceID
+			template.deleteAttribute(301874800); //TemplateSLMID
 			template.deleteAttribute(3);
 			template.deleteAttribute(5);
 			template.deleteAttribute(6);
@@ -822,9 +872,9 @@ public class ServiceTargetAdministration extends BaseData
 		}
 		else RuntimeLogger.warn("SLM Template not found for identifier: " + template);
 
-		entry.setNullAttribute(301307201);					//BMCSVTTemplate
+		entry.setNullAttribute(301307201); //BMCSVTTemplate
 		entry.setAttribute(300543500, "Need To Be Built");	//BuildStatus
-		entry.setAttribute(301268701, "Custom");			//ObjectTemplateType
+		entry.setAttribute(301268701, "Custom"); //ObjectTemplateType
 
 		//set AppliedTo
 		setAppliedToAttribute(entry, null);
@@ -846,9 +896,9 @@ public class ServiceTargetAdministration extends BaseData
 
 			milestone.setAttribute(300397800, entry.getStringAttributeValue(301874800));	//ParentSLMId
 			milestone.setAttribute(300398700, entry.getStringAttributeValue(301322801));	//SVT_Title
-			milestone.setAttribute(300525800, entry.getStringAttributeValue(179));			//zD_ParentCloneID
+			milestone.setAttribute(300525800, entry.getStringAttributeValue(179)); //zD_ParentCloneID
 			milestone.setAttribute(301412100, entry.getStringAttributeValue(300314700));	//zD_SLMIDforSVTTemplate_Mile
-			milestone.setAttribute(303737002, "YES");										//zD_FromSVTTemplate
+			milestone.setAttribute(303737002, "YES"); 	//zD_FromSVTTemplate
 
 			milestone.update(getServerConnection());
 		}
@@ -919,11 +969,6 @@ public class ServiceTargetAdministration extends BaseData
 
 	}
 
-	protected void runBuild(CoreItem svt)
-	{
-
-	}
-
 	private void waitToBuild(CoreItem entry) throws AREasyException
 	{
 		if(getConfiguration().getBoolean("waittobuild", false))
@@ -988,5 +1033,17 @@ public class ServiceTargetAdministration extends BaseData
 			}
 			while(wait);
 		}
+	}
+
+	private CoreItem getMilestoneItem(String slmid, String title) throws AREasyException
+	{
+		CoreItem entry = new CoreItem("SLM:Milestone");
+		entry.setAttribute(300397800, slmid);
+		entry.setAttribute(300397800, title);
+
+		entry.read(getServerConnection());
+
+		if (entry.exists()) return entry;
+			else return null;
 	}
 }

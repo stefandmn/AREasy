@@ -77,36 +77,25 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 				{
 					ObjectBase objdata = wrapper.getInstance(oldname);
 					if(objdata == null) RuntimeLogger.error("No object found with this name: " + oldname);
-						else execute(objdata, newname);
+					else
+					{
+						objdata.setNewName(newname);
+						commit(objdata);
+					}
 				}
 				catch (Throwable th)
 				{
-					RuntimeLogger.error("Error renaming definition object: " + th.getMessage());
-					getLogger().debug("Exception", th);
+					if(!getConfiguration().getBoolean("force", false))
+					{
+						RuntimeLogger.error("Error renaming definition object: " + th.getMessage());
+						getLogger().debug("Exception", th);
+					}
+					else RuntimeLogger.warn("Error renaming definition object: " + th.getMessage());
 				}
 			}
 			else RuntimeLogger.error("No object type has been specified");
 		}
 		else super.run();
-	}
-
-	/**
-	 * Execute renaming action for an AR object
-	 * @param object AR object instance
-	 * @param name new name
-	 */
-	public void execute(ObjectBase object, String name)
-	{
-		try
-		{
-			object.setNewName(name);
-			commit(object);
-		}
-		catch (Throwable th)
-		{
-			RuntimeLogger.error("Error renaming definition object: " + th.getMessage());
-			getLogger().debug("Exception", th);
-		}
 	}
 
 	/**
@@ -137,8 +126,12 @@ public class RenameAction extends DefinitionAction implements RuntimeAction
 			}
 			catch (Throwable th)
 			{
-				RuntimeLogger.error("Error processing '" + info.getName() + "' object name: " + th.getMessage());
-				getLogger().debug("Exception", th);
+				if(!getConfiguration().getBoolean("force", false))
+				{
+					RuntimeLogger.error("Error processing '" + info.getName() + "' object name: " + th.getMessage());
+					getLogger().debug("Exception", th);
+				}
+				else RuntimeLogger.warn("Error processing '" + info.getName() + "' object name: " + th.getMessage());
 			}
 		}
 	}

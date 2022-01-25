@@ -147,6 +147,11 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	 * 			The file(s) must be located on runtime server.</td>
 	 * 	</tr>
 	 * 	<tr>
+	 * 		<td><b>-excludefile</b></td>
+	 * 		<td>Specify a list of object names declared in a file in the same format like for <code>inputfile</code> option but
+	 * 		the objects from this list will be excluded from the global list (with discovered and/or included objects).</td>
+	 * 	</tr>
+	 * 	<tr>
 	 * 		<td><b>-owner</b></td>
 	 * 		<td>Get objects which have the specified owner</td>
 	 * 	</tr>
@@ -189,13 +194,15 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		String changer = getConfiguration().getString("changer", null);
 		String keyword = getConfiguration().getString("keyword", null);
 
-		//check if objects is a file
+		//check if objects are in a file
 		if (getConfiguration().containsKey("includefile"))
 		{
 			//set file parser environment parameters
 			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
 			engine.setResource("parserfile", getConfiguration().getString("includefile", null));
-			engine.setResource("startindex", 0);
+			engine.setResource("parserobjsigformat", getConfiguration().getString("includefile-objsigformat", null));
+			engine.setResource("parserseparator", getConfiguration().getString("includefile-separator", null));
+			engine.setResource("startindex", getConfiguration().getInt("includefile-startindex", 0));
 			engine.init("file");
 
 			String objects[] = null;
@@ -206,8 +213,48 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 
 				if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
 				{
-					if (!input.contains(objects[0])) input.add(objects[0]);
-					else RuntimeLogger.warn("Object '" + objects[0] + "' is skipped because is already included in the objects list");
+					String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
+
+					if (!input.contains(signature))
+					{
+						input.add(signature);
+						logger.debug("Object '" + signature + "' is added on the processing list");
+					}
+					else RuntimeLogger.warn("Object '" + signature + "' is skipped because is already included in the objects list");
+				}
+			}
+			while(objects != null);
+
+			engine.close();
+		}
+
+		//check if excluded objects are in a file
+		if (getConfiguration().containsKey("excludefile"))
+		{
+			//set file parser environment parameters
+			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
+			engine.setResource("parserfile", getConfiguration().getString("excludefile", null));
+			engine.setResource("parserobjsigformat", getConfiguration().getString("excludefile-objsigformat", null));
+			engine.setResource("parserseparator", getConfiguration().getString("excludefile-separator", null));
+			engine.setResource("startindex", getConfiguration().getInt("excludefile-startindex", 0));
+			engine.init("file");
+
+			String objects[] = null;
+
+			do
+			{
+				objects = engine.read();
+
+				if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
+				{
+					String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
+
+					if (!exclude.contains(signature))
+					{
+						exclude.add(signature);
+						logger.debug("Object '" + signature + "' is excluded from the processing list");
+					}
+					else RuntimeLogger.warn("Object '" + signature + "' is ignored because is already part of excluded list");
 				}
 			}
 			while(objects != null);
@@ -388,8 +435,10 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 				String changerval = object.getLastChangedBy();
 				String helptextval = object.getHelpText();
 
+				String signature = getObjectTypeNameByObjectTypeId(wrapper.getObjectTypeId()) + ": " + name;
+
 				//check if is on the excluded list
-				if(StringUtility.isEmpty(name) || exclude.contains(name)) return null;
+				if(StringUtility.isEmpty(name) || exclude.contains(name) || exclude.contains(signature)) return null;
 
 				//check prefix
 				if (StringUtility.isNotEmpty(prefix) && !name.startsWith(prefix)) return null;
@@ -456,6 +505,8 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 						{
 							try
 							{
+								String signature = getObjectTypeNameByObjectTypeId(wrapper.getObjectTypeId()) + ": " + objectName;
+
 								//check if the input object is a form with one or many views
 								if(wrapper.getObjectTypeId() == StructItemInfo.VUI)
 								{
@@ -465,7 +516,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 									String name = (info != null ? info.getName() : null);
 
 									//check if is on the excluded list
-									if(StringUtility.isEmpty(name) || exclude.contains(name)) continue;
+									if(StringUtility.isEmpty(name) || exclude.contains(name) || exclude.contains(signature)) continue;
 								}
 								else if(wrapper.getObjectTypeId() == StructItemInfo.FIELD)
 								{
@@ -475,7 +526,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 									String name = (info != null ? info.getName() : null);
 
 									//check if is on the excluded list
-									if(StringUtility.isEmpty(name) || exclude.contains(name)) continue;
+									if(StringUtility.isEmpty(name) || exclude.contains(name) || exclude.contains(signature)) continue;
 								}
 								else
 								{
@@ -485,7 +536,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 										String name = object.getName();
 
 										//check if is on the excluded list
-										if(StringUtility.isEmpty(name) || exclude.contains(name)) continue;
+										if(StringUtility.isEmpty(name) || exclude.contains(name) || exclude.contains(signature)) continue;
 
 										//build object and id on the final list
 										info = new StructItemInfo(wrapper.getObjectTypeId(), name, null);

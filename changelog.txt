@@ -1,6 +1,8 @@
 3.0.2
 ======
-05. Update devrename action in order to allow singla object renaming but also bulk updates for the
+07. Update devremove action to allow objects deletion action with -force option
+06. Improve abstract dev action to provide options for objects exclusion managed in text files.
+05. Update devrename action in order to allow single object renaming but also bulk updates for the
 	object names, using filters like add prefix, change part of the name or insert into name.
 04. Extend ServiceTargetAdministration to support milestones and related actions (notification and
 	set value actions)

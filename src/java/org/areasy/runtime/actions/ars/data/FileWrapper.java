@@ -111,7 +111,7 @@ public class FileWrapper extends BaseData
 							getConfiguration().addKey(column, data[i]);
 						}
 
-						//initialize and execute comand operation
+						//initialize and execute command operation
 						String when = getConfiguration().getString("when", null);
 						if(StringUtility.isEmpty(when) || ProcessorLevel0Reader.evaluate(getContext(), getTranslatedCondition(when)))
 						{

@@ -789,8 +789,8 @@ public abstract class AbstractAction implements RuntimeAction
 		Iterator iterator = item.getAttributes().iterator();
 		while ((iterator != null) && (iterator.hasNext()))
 		{
-			String key = (String) iterator.next();
-			getContext().put(new StringBuilder().append("D").append(String.valueOf(key)).toString(), item.getAttributeValue(key));
+			Object key = iterator.next();
+			getContext().put(new StringBuilder().append("D").append(key).toString(), item.getAttributeValue(key.toString()));
 		}
 	}
 

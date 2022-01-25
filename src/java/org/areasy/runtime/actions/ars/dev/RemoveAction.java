@@ -32,55 +32,68 @@ public class RemoveAction extends DefinitionAction implements RuntimeAction
 	 */
 	public void execute(ObjectBase object) throws ARException
 	{
-		if(!StringUtility.equals(object.getNewName(), object.getName()))
+		try
 		{
-			if(object instanceof ActiveLink)
+			if(!StringUtility.equals(object.getNewName(), object.getName()))
 			{
-				ActiveLink objdata = (ActiveLink) object;
-				getServerConnection().getContext().deleteActiveLink(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
-			}
-			else if(object instanceof Filter)
-			{
-				Filter objdata = (Filter) object;
-				getServerConnection().getContext().deleteFilter(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
-			}
-			else if(object instanceof Escalation)
-			{
-				Escalation objdata = (Escalation) object;
-				getServerConnection().getContext().deleteEscalation(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
-			}
-			else if(object instanceof Container)
-			{
-				Container objdata = (Container) object;
-				getServerConnection().getContext().deleteContainer(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
-			}
-			else if(object instanceof Form)
-			{
-				Form objdata = (Form) object;
-				getServerConnection().getContext().deleteForm(objdata.getName(), Constants.AR_SCHEMA_FORCE_DELETE);
-			}
-			else if(object instanceof Image)
-			{
-				Image objdata = (Image) object;
-				getServerConnection().getContext().deleteImage(objdata.getName(), true);
-			}
-			else if(object instanceof Menu)
-			{
-				Menu objdata = (Menu) object;
-				getServerConnection().getContext().deleteMenu(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
-			}
-			else if(object instanceof View)
-			{
-				View objdata = (View) object;
-				getServerConnection().getContext().deleteView(objdata.getFormName(), objdata.getVUIId());
-			}
-			else if(object instanceof Field)
-			{
-				Field objdata = (Field) object;
-				getServerConnection().getContext().deleteField(objdata.getForm(), objdata.getFieldID(), Constants.AR_FIELD_FORCE_DELETE);
-			}
+				if(object instanceof ActiveLink)
+				{
+					ActiveLink objdata = (ActiveLink) object;
+					getServerConnection().getContext().deleteActiveLink(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
+				}
+				else if(object instanceof Filter)
+				{
+					Filter objdata = (Filter) object;
+					getServerConnection().getContext().deleteFilter(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
+				}
+				else if(object instanceof Escalation)
+				{
+					Escalation objdata = (Escalation) object;
+					getServerConnection().getContext().deleteEscalation(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
+				}
+				else if(object instanceof Container)
+				{
+					Container objdata = (Container) object;
+					getServerConnection().getContext().deleteContainer(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
+				}
+				else if(object instanceof Form)
+				{
+					Form objdata = (Form) object;
+					getServerConnection().getContext().deleteForm(objdata.getName(), Constants.AR_SCHEMA_FORCE_DELETE);
+				}
+				else if(object instanceof Image)
+				{
+					Image objdata = (Image) object;
+					getServerConnection().getContext().deleteImage(objdata.getName(), true);
+				}
+				else if(object instanceof Menu)
+				{
+					Menu objdata = (Menu) object;
+					getServerConnection().getContext().deleteMenu(objdata.getName(), Constants.AR_DEFAULT_DELETE_OPTION);
+				}
+				else if(object instanceof View)
+				{
+					View objdata = (View) object;
+					getServerConnection().getContext().deleteView(objdata.getFormName(), objdata.getVUIId());
+				}
+				else if(object instanceof Field)
+				{
+					Field objdata = (Field) object;
+					getServerConnection().getContext().deleteField(objdata.getForm(), objdata.getFieldID(), Constants.AR_FIELD_FORCE_DELETE);
+				}
 
-			RuntimeLogger.info("Object name '" + object.getName() + "' has been removed");
+				RuntimeLogger.info("Object name '" + object.getName() + "' has been removed");
+			}
 		}
+		catch (Throwable th)
+		{
+			if(!getConfiguration().getBoolean("force", false))
+			{
+				RuntimeLogger.error("Error removing definition object: " + th.getMessage());
+				getLogger().debug("Exception", th);
+			}
+			else RuntimeLogger.warn("Error removing definition object: " + th.getMessage());
+		}
+
 	}
 }

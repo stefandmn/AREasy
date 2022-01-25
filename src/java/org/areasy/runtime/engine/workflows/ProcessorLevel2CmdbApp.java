@@ -319,6 +319,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		String entryName;
 		String entryInstanceId;
 		String entryEntityName;
+		int entryEntityCode = 0;
 
 		//asset validation
 		if(item == null || !item.exists()) throw new AREasyException("Source CI entry doesn't exist: " + item);
@@ -339,6 +340,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 			entryInstanceId = people.getInstanceId();
 
 			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[0];
+			entryEntityCode = 1800;
 		}
 		else if(entry instanceof SupportGroup)
 		{
@@ -349,6 +351,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 			entryInstanceId = group.getInstanceId();
 
 			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[1];
+			entryEntityCode = 2500;
 		}
 		else if(entry instanceof Organisation)
 		{
@@ -362,6 +365,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 
 			entryInstanceId = organisation.getInstanceId();
 			entryEntityName = CONST_PEOPLE_RELATIONENTITIES[2];
+			entryEntityCode = 1900;
 		}
 		else throw new AREasyException("Target entity is not recognized: " + entry);
 
@@ -411,7 +415,7 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 			astpeople.setAttribute(ASP_DATASET, item.getDatasetId());
 			astpeople.setAttribute(ASP_AENTRYID, item.getEntryId());
 			astpeople.setAttribute(ASP_CLASSID, item.getClassId());
-			astpeople.setAttribute(ASP_REQUESTTYPE, entryEntityName);
+			astpeople.setAttribute(ASP_REQUESTTYPE, new Integer(entryEntityCode));
 			astpeople.setAttribute(ASP_INDIVIDUALORGROUP, entryEntityName);
 
 			//add additional attributes.

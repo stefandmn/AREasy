@@ -315,11 +315,31 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 	 */
 	public static boolean setPeopleRelationship(ServerConnection arsession, ConfigurationItem item, CoreItem entry, Map map, String role) throws AREasyException
 	{
+		return setPeopleRelationship(arsession, item, entry, map, role, false);
+	}
+
+	/**
+	 * Set people relationships for an existent CI.
+	 *
+	 * @param arsession ARS server connection structure
+	 * @param item configuration item structure
+	 * @param map additional fields mapping to complete the relationship.
+	 * @param role relation role name
+	 * @param entry core item entity which is related with the specified configuration item
+	 * @param force flag to indicate if the relationship is updated or not, in case that entity already exist
+	 * @return true if the relationship is created
+	 * @throws AREasyException if any error will occur
+	 */
+	public static boolean setPeopleRelationship(ServerConnection arsession, ConfigurationItem item, CoreItem entry, Map map, String role, boolean force) throws AREasyException
+	{
 		String entryId;
 		String entryName;
 		String entryInstanceId;
 		String entryEntityName;
 		int entryEntityCode = 0;
+		String orgCompany = "";
+		String orgOrganisation = "";
+		String orgDepartment = "";
 
 		//asset validation
 		if(item == null || !item.exists()) throw new AREasyException("Source CI entry doesn't exist: " + item);
@@ -357,10 +377,26 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 		{
 			Organisation organisation = (Organisation)entry;
 			entryId = organisation.getEntryId();
-			if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "department")) entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName() + "->" + organisation.getDepartmentName();
-				else if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "organisation")) entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName();
-					else if (!map.containsKey("relationshiplevel") || StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "company")) entryName = organisation.getCompanyName();
-						else throw new AREasyException("Unknown the relationship level");
+			if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "department"))
+			{
+				entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName() + "->" + organisation.getDepartmentName();
+				orgDepartment = organisation.getDepartmentName();
+				orgOrganisation = organisation.getOrganisationName();
+				orgCompany = organisation.getCompanyName();
+			}
+			else if (StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "organisation"))
+			{
+				entryName = organisation.getCompanyName() + "->" + organisation.getOrganisationName();
+				orgOrganisation = organisation.getOrganisationName();
+				orgCompany = organisation.getCompanyName();
+			}
+			else if (!map.containsKey("relationshiplevel") || StringUtility.equalsIgnoreCase((String)map.get("relationshiplevel"), "company"))
+			{
+				entryName = organisation.getCompanyName();
+				orgCompany = organisation.getCompanyName();
+			}
+			else throw new AREasyException("Unknown the relationship level");
+
 			map.remove("relationshiplevel");
 
 			entryInstanceId = organisation.getInstanceId();
@@ -402,8 +438,41 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 
 		if(astpeople.exists())
 		{
-			RuntimeLogger.warn("People relationship already exist: " + entry + " -> " + item);
-			return false;
+			if(force)
+			{
+				logger.debug("People relationship already exist and trying to update it: " + entry + " -> " + item);
+
+				//fill additional attributes
+				astpeople.setAttribute(ASP_ASSETID, item.getName());
+				astpeople.setAttribute(ASP_STATUS, new Integer(0));
+				astpeople.setAttribute(ASP_PEOPLE_FULLNAME, entryName);
+				astpeople.setAttribute(ASP_DATASET, item.getDatasetId());
+				astpeople.setAttribute(ASP_AENTRYID, item.getEntryId());
+				astpeople.setAttribute(ASP_CLASSID, item.getClassId());
+				astpeople.setAttribute(ASP_REQUESTTYPE, new Integer(entryEntityCode));
+				astpeople.setAttribute(ASP_INDIVIDUALORGROUP, entryEntityName);
+
+				if (entry instanceof Organisation)
+				{
+					astpeople.setAttribute(1000000082, orgCompany);
+					astpeople.setAttribute(1000000010, orgOrganisation);
+					astpeople.setAttribute(200000006, orgDepartment);
+				}
+
+				//add additional attributes.
+				astpeople.setData(map);
+
+				//update relationship
+				astpeople.update(arsession);
+
+				RuntimeLogger.debug("People relationship has been updated: " + entry + " -> " + item);
+				return true;
+			}
+			else
+			{
+				RuntimeLogger.warn("People relationship already exist: " + entry + " -> " + item);
+				return false;
+			}
 		}
 		else
 		{
@@ -418,12 +487,20 @@ public class ProcessorLevel2CmdbApp extends ProcessorLevel1Context
 			astpeople.setAttribute(ASP_REQUESTTYPE, new Integer(entryEntityCode));
 			astpeople.setAttribute(ASP_INDIVIDUALORGROUP, entryEntityName);
 
+			if(entry instanceof Organisation)
+			{
+				astpeople.setAttribute(1000000082, orgCompany);
+				astpeople.setAttribute(1000000010, orgOrganisation);
+				astpeople.setAttribute(200000006, orgDepartment);
+			}
+
 			//add additional attributes.
 			astpeople.setData(map);
 
 			//create relationship
 			astpeople.create(arsession);
 
+			RuntimeLogger.debug("People relationship has been created: " + entry + " -> " + item);
 			return true;
 		}
 	}

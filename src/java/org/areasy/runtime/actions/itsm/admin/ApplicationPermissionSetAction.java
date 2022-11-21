@@ -119,7 +119,7 @@ public class ApplicationPermissionSetAction extends AbstractUserEnrollment
 				getLogger().debug("Exception", th);
 			}
 
-			// check interruption and and exit if the execution was really interrupted
+			// check interruption and exit if the execution was really interrupted
 			if(isInterrupted())
 			{
 				RuntimeLogger.warn("Execution interrupted by user");

@@ -17,6 +17,7 @@ import com.bmc.arsys.api.*;
 import org.areasy.common.data.CollectionUtility;
 import org.areasy.common.data.DateUtility;
 import org.areasy.common.data.StringUtility;
+import org.areasy.common.data.type.Predicate;
 import org.areasy.common.data.workers.functors.StringPredicate;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.RuntimeManager;
@@ -27,10 +28,9 @@ import org.areasy.runtime.engine.base.AREasyException;
 import org.areasy.runtime.engine.services.parser.ParserEngine;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+import java.util.regex.Pattern;
+
 
 /**
  * Abstract runtime action to process definition objects: export, import deletion, activation, etc.
@@ -130,6 +130,10 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	 * 		<td>Specify a string prefix to match a list of object names to be exported.</td>
 	 * 	</tr>
 	 * 	<tr>
+	 * 		<td><b>-preclude</b></td>
+	 * 		<td>Specify a string prefix to exclude from the list of object names to be exported.</td>
+	 * 	</tr>
+	 * 	<tr>
 	 * 		<td><b>-include</b></td>
 	 * 		<td>Specify an object name to be processed.</td>
 	 * 	</tr>
@@ -182,87 +186,89 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		//get list of excluded objects
 		List exclude = getConfiguration().getVector("exclude", new Vector());
 
-		//get prefix value.
-		String prefix = getConfiguration().getString("prefix", null);
-
-		Date since = null;
-		String changedSince = getConfiguration().getString("since", null);
-		try { since = DateUtility.parseDate(changedSince); } catch (Throwable th) { /* nothing to do now */ }
-
-		//get the owner, changer and keyword
-		String owner = getConfiguration().getString("owner", null);
-		String changer = getConfiguration().getString("changer", null);
-		String keyword = getConfiguration().getString("keyword", null);
-
 		//check if objects are in a file
-		if (getConfiguration().containsKey("includefile"))
+		if (getConfiguration().containsKey("includefile") || getConfiguration().containsKey("includefiles"))
 		{
-			//set file parser environment parameters
-			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
-			engine.setResource("parserfile", getConfiguration().getString("includefile", null));
-			engine.setResource("parserobjsigformat", getConfiguration().getString("includefile-objsigformat", null));
-			engine.setResource("parserseparator", getConfiguration().getString("includefile-separator", null));
-			engine.setResource("startindex", getConfiguration().getInt("includefile-startindex", 0));
-			engine.init("file");
+			List<String> files = new ArrayList();
+			if(getConfiguration().containsKey("includefile")) files.add(getConfiguration().getString("includefile", null));
+			if(getConfiguration().containsKey("includefiles")) files.addAll(getConfiguration().getList("includefiles", null));
 
-			String objects[] = null;
-
-			do
+			for (String file : files)
 			{
-				objects = engine.read();
+				//set file parser environment parameters
+				ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
+				engine.setResource("parserfile", file);
+				engine.setResource("parserobjsigformat", getConfiguration().getString("includefile-objsigformat", null));
+				engine.setResource("parserseparator", getConfiguration().getString("includefile-separator", null));
+				engine.setResource("startindex", getConfiguration().getInt("includefile-startindex", 0));
+				engine.init("file");
 
-				if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
+				String objects[] = null;
+
+				do
 				{
-					String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
+					objects = engine.read();
 
-					if (!input.contains(signature))
+					if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
 					{
-						input.add(signature);
-						logger.debug("Object '" + signature + "' is added on the processing list");
-					}
-					else RuntimeLogger.warn("Object '" + signature + "' is skipped because is already included in the objects list");
-				}
-			}
-			while(objects != null);
+						String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
 
-			engine.close();
+						if (!input.contains(signature))
+						{
+							input.add(signature);
+							logger.debug("Object '" + signature + "' is added on the processing list");
+						}
+						else RuntimeLogger.warn("Object '" + signature + "' is skipped because is already included in the objects list");
+					}
+				}
+				while(objects != null);
+
+				engine.close();
+			}
 		}
 
 		//check if excluded objects are in a file
-		if (getConfiguration().containsKey("excludefile"))
+		if (getConfiguration().containsKey("excludefile") || getConfiguration().containsKey("excludefiles"))
 		{
-			//set file parser environment parameters
-			ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
-			engine.setResource("parserfile", getConfiguration().getString("excludefile", null));
-			engine.setResource("parserobjsigformat", getConfiguration().getString("excludefile-objsigformat", null));
-			engine.setResource("parserseparator", getConfiguration().getString("excludefile-separator", null));
-			engine.setResource("startindex", getConfiguration().getInt("excludefile-startindex", 0));
-			engine.init("file");
+			List<String> files = new ArrayList();
+			if(getConfiguration().containsKey("excludefile")) files.add(getConfiguration().getString("excludefile", null));
+			if(getConfiguration().containsKey("excludefiles")) files.addAll(getConfiguration().getList("excludefiles", null));
 
-			String objects[] = null;
-
-			do
+			for (String file : files)
 			{
-				objects = engine.read();
+				//set file parser environment parameters
+				ParserEngine engine = new ParserEngine(getServerConnection(), getManager().getConfiguration(), getConfiguration());
+				engine.setResource("parserfile", file);
+				engine.setResource("parserobjsigformat", getConfiguration().getString("excludefile-objsigformat", null));
+				engine.setResource("parserseparator", getConfiguration().getString("excludefile-separator", null));
+				engine.setResource("startindex", getConfiguration().getInt("excludefile-startindex", 0));
+				engine.init("file");
 
-				if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
+				String objects[] = null;
+
+				do
 				{
-					String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
+					objects = engine.read();
 
-					if (!exclude.contains(signature))
+					if (objects != null && StringUtility.isNotEmpty(objects[0]) && !objects[0].trim().startsWith("#"))
 					{
-						exclude.add(signature);
-						logger.debug("Object '" + signature + "' is excluded from the processing list");
-					}
-					else RuntimeLogger.warn("Object '" + signature + "' is ignored because is already part of excluded list");
-				}
-			}
-			while(objects != null);
+						String signature = objects[0].trim().replaceFirst("\\:(\\s*\\t*)", ": ");
 
-			engine.close();
+						if (!exclude.contains(signature))
+						{
+							exclude.add(signature);
+							logger.debug("Object '" + signature + "' is excluded from the processing list");
+						}
+						else RuntimeLogger.warn("Object '" + signature + "' is ignored because is already part of excluded list");
+					}
+				}
+				while(objects != null);
+
+				engine.close();
+			}
 		}
 
-		return getItemList(input, exclude, prefix, since, owner, changer, keyword, validate);
+		return getItemList(input, exclude, validate);
 	}
 
 	/**
@@ -270,16 +276,10 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 	 *
 	 * @param input input lines that could be workflow object identifiers read from a file
 	 * @param exclude a list of object names which must be excluded
-	 * @param prefix  a prefix string
-	 * @param since	changed since
-	 * @param owner	an user name which should be the owner of the selected objects which must be processed
-	 * @param changer  an user name which should be the last changer of the selected objects which must be processed
-	 * @param keyword  a keyword which should identify all objects which must be processed. This identification is done using help text
-	 *                 section for each object name.
 	 * @return a list with confirmed (found) objects
 	 * @throws AREasyException in case of any exception occur
 	 */
-	protected List getItemList(List input, List exclude, String prefix, Date since, String owner, String changer, String keyword, boolean validate) throws AREasyException
+	protected List getItemList(List input, List exclude, boolean validate) throws AREasyException
 	{
 		List objects = new ArrayList();
 		List wrappers = new ArrayList();
@@ -317,7 +317,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		{
 			ObjectWrapper wrapper = (ObjectWrapper) wrappers.get(i);
 
-			setObjectsListByWrapper(objects, wrapper, exclude, prefix, since, owner, changer, keyword);
+			setObjectsListByWrapper(objects, wrapper, exclude);
 			setObjectsListByInputFile(objects, wrapper, exclusiveTypes, input, exclude, validate);
 			setObjectsListByInputParameters(objects, wrapper, validate);
 		}
@@ -325,13 +325,26 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		return objects;
 	}
 
-	private void setObjectsListByWrapper(List output, ObjectWrapper wrapper, List exclude, String prefix, Date since, String owner, String changer, String keyword) throws AREasyException
+	private void setObjectsListByWrapper(List output, ObjectWrapper wrapper, List exclude) throws AREasyException
 	{
 		List<String> objectKeys = null;
 		List objects = new Vector();
 
 		if (wrapper != null)
 		{
+			//get prefix value and also banned prefix.
+			String prefix = getConfiguration().getString("prefix", null);
+			String preclude = getConfiguration().getString("preclude", null);
+
+			Date since = null;
+			String changedSince = getConfiguration().getString("since", null);
+			try { since = DateUtility.parseDate(changedSince); } catch (Throwable th) { /* nothing to do now */ }
+
+			//get the owner, changer and keyword
+			String owner = getConfiguration().getString("owner", null);
+			String changer = getConfiguration().getString("changer", null);
+			String keyword = getConfiguration().getString("keyword", null);
+
 			boolean regex = getConfiguration().getBoolean("regex", false);
 
 			//check server based parameters
@@ -349,7 +362,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 							FormRelatedWrapper formWrapper = (FormRelatedWrapper)wrapper;
 
 							formWrapper.setFormName(related.getName());
-							objectKeys = filter(formWrapper.find(since), prefix, keyword, regex);
+							objectKeys = filter(formWrapper.find(since), prefix, keyword, preclude, regex);
 
 							for (int j = 0; objectKeys != null && j < objectKeys.size(); j++)
 							{
@@ -369,7 +382,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 				}
 				else
 				{
-					objectKeys = filter(wrapper.find(since), prefix, keyword, regex);
+					objectKeys = filter(wrapper.find(since), prefix, keyword, preclude, regex);
 
 					for (int j = 0; objectKeys != null && j < objectKeys.size(); j++)
 					{
@@ -391,7 +404,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		if(!objects.isEmpty()) output.addAll(objects);
 	}
 
-	private List filter(List objects, String prefix, String keyword, boolean regex)
+	private List filter(List objects, String prefix, String keyword, String preclude, boolean regex)
 	{
 		if(StringUtility.isNotEmpty(prefix))
 		{
@@ -401,6 +414,26 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		if(StringUtility.isNotEmpty(keyword))
 		{
 			CollectionUtility.filter(objects, regex ? StringPredicate.getInstance(keyword, 2) : StringPredicate.getInstance(keyword, 1));
+		}
+
+		if(StringUtility.isNotEmpty(preclude))
+		{
+			CollectionUtility.filter(objects, new Predicate() {
+				public boolean evaluate(Object obj)
+				{
+					boolean matching = true;
+
+					if (obj instanceof String)
+					{
+						String key = (String) obj;
+
+						if(regex) matching = Pattern.compile("$" + preclude + ".*").matcher(key).matches();
+							else matching = key.startsWith(preclude);
+					}
+
+					return !matching;
+				}
+			});
 		}
 
 		return objects;

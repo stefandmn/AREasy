@@ -203,7 +203,6 @@ public class RelationshipPeopleCreateAction extends BaseConfigurationItemAction 
 		item.setIgnoreNullValues(ignorenullvalue);
 		item.setIgnoreUnchangedValues(ignoreunchangedvalues);
 
-		boolean output = ProcessorLevel2CmdbApp.setPeopleRelationship(getServerConnection(), item, item2, relationdatamap, peoplerelationrole);
-		if(output) RuntimeLogger.debug("People relationship has been created: " + item + " -> " + item2);
+		ProcessorLevel2CmdbApp.setPeopleRelationship(getServerConnection(), item, item2, relationdatamap, peoplerelationrole, getConfiguration().getBoolean("force", false));
 	}
 }

@@ -43,6 +43,13 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 		entry.setClassId(getConfiguration().getString("classid", null));
 		entry.setDatasetId(getConfiguration().getString("datasetid", entry.getDatasetId()));
 
+		//identify it AM wrappers will be used instead of CMDB core forms
+		if(getConfiguration().containsKey("usecmdb"))
+		{
+			entry.useWrapperForms(getConfiguration().getBoolean("usecmdb", false));
+		}
+
+		//check qualification
 		if(getConfiguration().containsKey("qualification"))
 		{
 			//specify key attributes to process search operation.
@@ -72,6 +79,7 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 			items = entry.search(getServerConnection());
 		}
 
+		//execute flow
 		if(items != null && items.size() > 0)
 		{
 			for (int i = 0; loop && i < items.size(); i++)

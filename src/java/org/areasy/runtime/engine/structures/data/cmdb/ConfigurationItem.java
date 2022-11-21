@@ -945,5 +945,10 @@ public class ConfigurationItem extends MultiPartItem
 	{
 		this.usewrappers = false;
 	}
-}
 
+	public void useWrapperForms(boolean wrappers)
+	{
+		if(wrappers) useConfigurationManagement();
+			else useAssetManagement();
+	}
+}

@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.flow;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -214,7 +214,7 @@ public abstract class FlowPatternAction extends BaseData implements RuntimeActio
 		if(jobLogger != null && jobLogger.exists() && !getConfiguration().getBoolean("notracks", false) )
 		{
 			long logSize = 0;
-			String logFileName = RuntimeLogger.getChannelFileName();
+			String logFileName = RuntimeLogger.getChannel();
 
 			File file0 = new File(logFileName);
 			logSize = file0.length();
@@ -1041,8 +1041,14 @@ public abstract class FlowPatternAction extends BaseData implements RuntimeActio
 		if(commandLine == null) commandLine = "";
 
 		//detect log level from configuration
-		if(mainConfig != null) logLevel = mainConfig.getString("loglevel", null);
-			else  logLevel = getConfiguration().getString("loglevel", null);
+		if(mainConfig != null)
+		{
+			logLevel = mainConfig.getString("loglevel", null);
+		}
+		else
+		{
+			logLevel = getConfiguration().getString("loglevel", null);
+		}
 
 		//if log level wasn't found it will be taken from the logger answer
 		if(logLevel == null) logLevel = RuntimeLogger.getLevel();

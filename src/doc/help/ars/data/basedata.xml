@@ -32,6 +32,7 @@
 		<option key="entity" type="string" selvalues="company,region,site,organisation,sgroup,people,product,service,configurationitem,inventorylocation" description="Indicate what particular entity structure will process the data"/>
 		<option key="classid" type="string" description="In case you'll process CMDB data this attribute can identify class id (or class keyword) in order to detect the other details (forms, fields, etc.)"/>
 		<option key="formname" type="string" description="AR form name to process the transaction"/>
+        <option key="remoteform" type="string" description="AR form name to process the target transaction; this applicable only when the remote connection is defined"/>
 		<option key="ignorenulls" type="list" description="Specify to not fill in the entity structure with null data"/>
 		<option key="force" type="bool" description="Force transactions in case of the main transaction contains a cycle that repeats sub-transactions"/>
 		<option key="mergetype" type="string" selvalues="duperror,dupnewid,dupoverwrite,dupmerge" description="Specify type of merge transaction"/>

@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.structures;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -70,8 +70,33 @@ public class CoreItem implements ARDictionary
 	public CoreItem(String formName)
 	{
 		this();
-
 		if(formName != null) setFormName(formName);
+	}
+
+	public CoreItem(CoreItem entry)
+	{
+		set(entry);
+	}
+
+	public void set(CoreItem entry)
+	{
+		if(entry != null)
+		{
+			setEntryId(entry.getEntryId());
+			setFormName(entry.getFormName());
+			setData(entry.getAttributes());
+			setChanged();
+		}
+	}
+
+	public void offset(CoreItem entry)
+	{
+		if(entry != null)
+		{
+			setEntryId(entry.getEntryId());
+			setFormName(entry.getFormName());
+			setChanged();
+		}
 	}
 
 	/**
@@ -92,6 +117,16 @@ public class CoreItem implements ARDictionary
 	public CoreItem getInstance()
 	{
 		return new CoreItem();
+	}
+
+	/**
+	 * Get core item entry id.
+	 * @return entry id (unique key for an ARS form)
+	 */
+	public boolean isEntryIdChanged()
+	{
+		if (entryId != null) return entryId.isChanged();
+			else return false;
 	}
 
 	/**
@@ -318,7 +353,10 @@ public class CoreItem implements ARDictionary
 		if(value == null) setNullAttribute(id);
 		else
 		{
-			Attribute attr = getAttribute(id);
+			Attribute attr = null;
+
+			if(StringUtility.equals(id, "1")) attr = entryId;
+				else attr = getAttribute(id);
 
 			if(attr != null) attr.setValue(value);
 			else
@@ -415,6 +453,45 @@ public class CoreItem implements ARDictionary
 	}
 
 	/**
+	 * Check if specified attribute id is defined and is not null
+	 *
+	 * @param id field id
+	 * @return true if the specified id exist and is not null
+	 */
+	public boolean isNotEmptyAttribute(String id)
+	{
+		if(isAttribute(id))
+		{
+			Attribute attr = getAttribute(id);
+
+			if(attr != null)
+			{
+				Object value = attr.getValue();
+
+				if(value != null)
+				{
+					if(value instanceof String) return StringUtility.isNotEmpty(value.toString());
+						else return true;
+				}
+				else return false;
+			}
+			else return false;
+		}
+		else return false;
+	}
+
+	/**
+	 * Check if specified attribute id is defined and is not null
+	 *
+	 * @param id field id
+	 * @return true if the specified id exist and is not null
+	 */
+	public boolean isNotEmptyAttribute(long id)
+	{
+		return isNotEmptyAttribute(String.valueOf(id));
+	}
+
+	/**
 	 * Get a object attribute value from the core item attribute's list.
 	 *
  	 * @param id field id
@@ -422,14 +499,14 @@ public class CoreItem implements ARDictionary
 	 */
 	public Object getAttributeValue(String id)
 	{
-		Attribute attr = getAttribute(id);
+		Object value = null;
+		Attribute attr = null;
+
+		if(StringUtility.equals(id,"1")) attr = entryId;
+			else attr = getAttribute(id);
 
 		if(attr != null) return attr.getValue();
-		else
-		{
-			if(StringUtility.equals(id, "1")) return getEntryId();
-				else return null;
-		}
+			else return null;
 	}
 
 	/**
@@ -443,6 +520,36 @@ public class CoreItem implements ARDictionary
 		return getAttributeValue(String.valueOf(id));
 	}
 
+	/**
+	 * Get a object attribute value from the core item attribute's list.
+	 *
+	 * @param id field id
+	 * @return field value for the specified field id.
+	 */
+	public Object getNotNullAttributeValue(String id)
+	{
+		Object value = null;
+		Attribute attr = null;
+
+		if(StringUtility.equals(id,"1")) attr = entryId;
+			else attr = getAttribute(id);
+
+		if(attr != null) value = attr.getValue();
+
+		if(value != null) return value;
+			else return StringUtility.EMPTY;
+	}
+
+	/**
+	 * Get a string attribute value from the core item attribute's list.
+	 *
+	 * @param id field id
+	 * @return field value for the specified field id.
+	 */
+	public Object getNotNullAttributeValue(long id)
+	{
+		return getNotNullAttributeValue(String.valueOf(id));
+	}
 
 	/**
 	 * Get a string attribute value from the core item attribute's list.
@@ -463,10 +570,12 @@ public class CoreItem implements ARDictionary
 	 */
 	public String getStringAttributeValue(String id)
 	{
-		Attribute attr = getAttribute(id);
+		Attribute attr = null;
+		if(StringUtility.equals(id,"1")) attr = entryId;
+			else attr = getAttribute(id);
 
 		if(attr != null) return attr.getStringValue();
-			else return null;
+			else return StringUtility.EMPTY;
 	}
 
 	/**
@@ -478,6 +587,33 @@ public class CoreItem implements ARDictionary
 	public String getStringAttributeValue(long id)
 	{
 		return getStringAttributeValue(String.valueOf(id));
+	}
+
+	/**
+	 * Get a string attribute value from the core item attribute's list.
+	 *
+	 * @param id field id
+	 * @return field value for the specified field id.
+	 */
+	public String getEnclosedStringAttributeValue(String id)
+	{
+		Attribute attr = null;
+		if(StringUtility.equals(id,"1")) attr = entryId;
+			else attr = getAttribute(id);
+
+		if(attr != null) return "\"" + StringUtility.stripToEmpty(attr.getStringValue()) + "\"";
+			else return StringUtility.EMPTY;
+	}
+
+	/**
+	 * Get a string attribute value from the core item attribute's list.
+	 *
+	 * @param id field id
+	 * @return field value for the specified field id.
+	 */
+	public String getEnclosedStringAttributeValue(long id)
+	{
+		return getEnclosedStringAttributeValue(String.valueOf(id));
 	}
 
 	/**
@@ -602,7 +738,7 @@ public class CoreItem implements ARDictionary
 	 *
 	 * @return collection of attributes.
 	 */
-	public Collection getAttributes()
+	public Collection<Attribute> getAttributes()
 	{
 		return attributes.values();
 	}
@@ -685,6 +821,11 @@ public class CoreItem implements ARDictionary
 				{
 					if(fieldId == 1) setEntryId(String.valueOf(value));
 						else setDefaultAttribute(fieldId, value);
+				}
+				else if((value == null || value.getDataType() == DataType.NULL) && !ignoreNullValues())
+				{
+					if(fieldId == 1) setEntryId(null);
+						else setDefaultAttribute(fieldId, null);
 				}
 			}
 		}
@@ -924,7 +1065,7 @@ public class CoreItem implements ARDictionary
 	 */
 	public final boolean exists()
 	{
-		return StringUtility.isNotEmpty(getEntryId());
+		return StringUtility.isNotEmpty(getEntryId()) && !isEntryIdChanged();
 	}
 
 	private int getQualificationCriteriaOperator(Attribute attr)
@@ -1020,6 +1161,18 @@ public class CoreItem implements ARDictionary
 	 */
 	public int count(ServerConnection arsession) throws AREasyException
 	{
+		return count(arsession,0);
+	}
+
+	/**
+	 * Get the total number of entries provided by the qualification criteria generated by structure attributes
+	 *
+	 * @param arsession user session
+	 * @return total number of records in the <code>CoreItem</code> entity
+	 * @throws AREasyException if any error occurs
+	 */
+	public int count(ServerConnection arsession, int maxRetrive) throws AREasyException
+	{
 		Collection collection = new Vector();
 
 		if(ignoreUnchangedValues())
@@ -1033,7 +1186,7 @@ public class CoreItem implements ARDictionary
 			if(data != null && !data.isEmpty()) collection.addAll(data);
 		}
 
-		return count(arsession, collection);
+		return count(arsession, collection, maxRetrive);
 	}
 
 	/**
@@ -1047,7 +1200,22 @@ public class CoreItem implements ARDictionary
 	protected int count(ServerConnection arsession, Collection collection) throws AREasyException
 	{
 		//count data
-		return count(arsession, getQualificationInfo(collection));
+		return count(arsession, getQualificationInfo(collection), 0);
+	}
+
+
+	/**
+	 * Get the total number of entries provided by a specific qualification criteria
+	 *
+	 * @param arsession user session
+	 * @param collection collection structure that includes field details to compose qualification criteria
+	 * @return total number of records in the <code>CoreItem</code> entity
+	 * @throws AREasyException if any error occurs
+	 */
+	protected int count(ServerConnection arsession, Collection collection, int maxRetrive) throws AREasyException
+	{
+		//count data
+		return count(arsession, getQualificationInfo(collection), maxRetrive);
 	}
 
 	/**
@@ -1061,7 +1229,21 @@ public class CoreItem implements ARDictionary
 	public int count(ServerConnection arsession, Map map) throws AREasyException
 	{
 		//count data
-		return count(arsession, getQualificationInfo(map));
+		return count(arsession, getQualificationInfo(map), 0);
+	}
+
+	/**
+	 * Get the total number of entries provided by a specific qualification criteria
+	 *
+	 * @param arsession user session
+	 * @param map map structure that includes field details to compose qualification criteria
+	 * @return total number of records in the <code>CoreItem</code> entity
+	 * @throws AREasyException if any error occurs
+	 */
+	public int count(ServerConnection arsession, Map map, int MaxRetrive) throws AREasyException
+	{
+		//count data
+		return count(arsession, getQualificationInfo(map), MaxRetrive);
 	}
 
 	/**
@@ -1073,6 +1255,19 @@ public class CoreItem implements ARDictionary
 	 * @throws AREasyException if any error occurs
 	 */
 	public int count(ServerConnection arsession, String qualification) throws AREasyException
+	{
+		return count(arsession, qualification, 0);
+	}
+
+	/**
+	 * Get the total number of entries provided by a specific qualification criteria
+	 *
+	 * @param arsession user session
+	 * @param qualification string qualification criteria
+	 * @return total number of records in the <code>CoreItem</code> entity
+	 * @throws AREasyException if any error occurs
+	 */
+	public int count(ServerConnection arsession, String qualification, int maxRetrieve) throws AREasyException
 	{
 		List<Field> fields = null;
 		QualifierInfo qualInfo = null;
@@ -1096,7 +1291,7 @@ public class CoreItem implements ARDictionary
 		}
 
 		//count data
-		return count(arsession, qualInfo);
+		return count(arsession, qualInfo, maxRetrieve);
 	}
 
 	/**
@@ -1107,7 +1302,7 @@ public class CoreItem implements ARDictionary
 	 * @return total number of records in the <code>CoreItem</code> entity
 	 * @throws AREasyException if any error occurs
 	 */
-	protected int count(ServerConnection arsession, QualifierInfo qualInfo) throws AREasyException
+	protected int count(ServerConnection arsession, QualifierInfo qualInfo, int maxRetrieve) throws AREasyException
 	{
 		if(getFormName() == null) throw new AREasyException("Form name is not specified");
 
@@ -1118,11 +1313,15 @@ public class CoreItem implements ARDictionary
 
 			try
 			{
+				logger.debug("TEST 1: " + qualInfo);
 				//Retrieve all entries
-				List<Entry> entries = arsession.getContext().getListEntryObjects(getFormName(), qualInfo, 0, 0, null, fields, true, new OutputInteger());
-
-				if(entries != null) return entries.size();
-					else return 0;
+				List<Entry> entries = arsession.getContext().getListEntryObjects(getFormName(), qualInfo, 0, maxRetrieve, null, fields, true, new OutputInteger());
+				if(entries != null && !entries.isEmpty())
+				{
+					fetch(arsession, (Entry) entries.get(entries.size() - 1));
+					return entries.size();
+				}
+				else return 0;
 			}
 			catch(ARException are)
 			{
@@ -1309,7 +1508,7 @@ public class CoreItem implements ARDictionary
 		{
 			if(simulation)
 			{
-				RuntimeLogger.info("DELETE: " + toFullString());
+				RuntimeLogger.info("DELETE simulation: " + toFullString());
 			}
 			else
 			{
@@ -1807,7 +2006,7 @@ public class CoreItem implements ARDictionary
 			{
 				if(simulation)
 				{
-					RuntimeLogger.info("CREATE: " + toFullString());
+					RuntimeLogger.info("CREATE simulation: " + toFullString());
 				}
 				else
 				{
@@ -1895,7 +2094,7 @@ public class CoreItem implements ARDictionary
 
 				if(simulation)
 				{
-					RuntimeLogger.info("UPDATE: " + toFullString());
+					RuntimeLogger.info("UPDATE simulation: " + toFullString());
 				}
 				else
 				{
@@ -2082,7 +2281,7 @@ public class CoreItem implements ARDictionary
 				String key = (String) matchingFields.get(i);
 				Attribute attr = getAttribute(key);
 
-				if(key == null || StringUtility.isEmpty( String.valueOf(key) ) || (ignoreNullValues() && attr.getValue() == null)) continue;
+				if(key == null || StringUtility.isEmpty( String.valueOf(key) ) || attr == null || (ignoreNullValues() && attr.getValue() == null)) continue;
 
 				if(qualInfo == null) qualInfo = new QualifierInfo( new RelationalOperationInfo(Constants.AR_REL_OP_EQUAL, new ArithmeticOrRelationalOperand(attr.getFieldIdFormat()), new ArithmeticOrRelationalOperand(attr.getValueFormat()) ) );
 					else qualInfo = new QualifierInfo(QualifierInfo.AR_COND_OP_AND,  qualInfo, new QualifierInfo( new RelationalOperationInfo(Constants.AR_REL_OP_EQUAL, new ArithmeticOrRelationalOperand(attr.getFieldIdFormat()), new ArithmeticOrRelationalOperand( attr.getValueFormat() ) ) ) );
@@ -2129,7 +2328,7 @@ public class CoreItem implements ARDictionary
 
 				if(simulation)
 				{
-					RuntimeLogger.info("MERGE: " + toFullString());
+					RuntimeLogger.info("MERGE simulation: " + toFullString());
 				}
 				else
 				{
@@ -2169,11 +2368,11 @@ public class CoreItem implements ARDictionary
 	 */
 	public String toString()
 	{
-		if(exists()) return "Item ("+ getFormName() + ") [Request Id = " + getEntryId() +
+		if(exists()) return "Item ("+ getFormName() + ") [Entry Id = " + getEntryId() +
 			   ", Status = " + getAttributeValue(7) +
 			   ", Submitter = " + getAttributeValue(2) +
 			   ", Instance Id = " + getAttributeValue(179) + "]";
-		else return "Item ("+ getFormName() + ") [Request Id = " + getEntryId() + ", " + getStringFromChangedAttributes() + "]";
+		else return "Item ("+ getFormName() + ") [Entry Id = " + getEntryId() + ", " + getStringFromChangedAttributes() + "]";
 	}
 
 	/**
@@ -2183,8 +2382,18 @@ public class CoreItem implements ARDictionary
 	 */
 	public String toFullString()
 	{
+		return toFullString(true);
+	}
+
+	/**
+	 * Get string representation of the current core item structure.
+	 *
+	 * @return string data model.
+	 */
+	public String toFullString(boolean complete)
+	{
 		String data = getStringFromAttributes();
-		data = "Item ("+ getFormName() + ") [Request Id = " + getEntryId() + ", " + data + "]";
+		data = "Item ("+ getFormName() + ") " + (getEntryId() != null || complete ? "[Entry Id = " + getEntryId() + ", " + data + "]" : "[" + data + "]");
 
 		return data;
 	}
@@ -2579,5 +2788,10 @@ public class CoreItem implements ARDictionary
 	public void setFirstMatchReading()
 	{
 		this.readFirstMatch = true;
+	}
+
+	public void setFirstMatchReading(boolean read)
+	{
+		this.readFirstMatch = read;
 	}
 }

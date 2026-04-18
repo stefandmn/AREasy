@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.data;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -31,8 +31,6 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 {
 	public void run() throws AREasyException
 	{
-		getCron().start();
-
 		List items = null;
 		boolean loop = true;
 
@@ -129,10 +127,6 @@ public abstract class BaseConfigurationItemAction extends BaseData implements Co
 
 			setRecordsCounter();
 		}
-
-
-		//stop cron control
-		getCron().stop();
 	}
 
 	protected Map getRelationKeyMap()

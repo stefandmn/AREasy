@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.dev;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -14,9 +14,7 @@ package org.areasy.runtime.actions.ars.dev;
  */
 
 import com.bmc.arsys.api.*;
-import org.areasy.common.data.CollectionUtility;
-import org.areasy.common.data.DateUtility;
-import org.areasy.common.data.StringUtility;
+import org.areasy.common.data.*;
 import org.areasy.common.data.type.Predicate;
 import org.areasy.common.data.workers.functors.StringPredicate;
 import org.areasy.runtime.RuntimeAction;
@@ -200,6 +198,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 				engine.setResource("parserfile", file);
 				engine.setResource("parserobjsigformat", getConfiguration().getString("includefile-objsigformat", null));
 				engine.setResource("parserseparator", getConfiguration().getString("includefile-separator", null));
+				engine.setResource("parseraggregator", getConfiguration().getString("includefile-aggregator", null));
 				engine.setResource("startindex", getConfiguration().getInt("includefile-startindex", 0));
 				engine.init("file");
 
@@ -476,14 +475,22 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 				//check prefix
 				if (StringUtility.isNotEmpty(prefix) && !name.startsWith(prefix)) return null;
 
+				// check owner or changer
+				if ((StringUtility.isNotEmpty(changer) || StringUtility.isNotEmpty(owner)) &&
+						(!StringUtility.equals(ownerval, owner) && !ArrayUtility.contains(StringUtility.split(owner, " "), ownerval)) &&
+						(!StringUtility.equals(changerval, changer) && !ArrayUtility.contains(StringUtility.split(changer, " "), changerval))) return null;
+
 				//check owner
-				if (StringUtility.isNotEmpty(owner) && !StringUtility.equals(ownerval, owner)) return null;
+				if (StringUtility.isNotEmpty(owner) && StringUtility.isEmpty(changer) &&
+						!StringUtility.equals(ownerval, owner) && !ArrayUtility.contains(StringUtility.split(owner, " "), ownerval)) return null;
 
 				//check changer
-				if (StringUtility.isNotEmpty(changer) && !StringUtility.equals(changerval, changer)) return null;
+				if (StringUtility.isNotEmpty(changer) && StringUtility.isEmpty(owner) &&
+						!StringUtility.equals(changerval, changer) && !ArrayUtility.contains(StringUtility.split(changer, " "), changerval)) return null;
 
 				//check keywords
-				if (StringUtility.isNotEmpty(keyword) && !StringUtility.contains(helptextval, keyword)) return null;
+				if (StringUtility.isNotEmpty(keyword) && !StringUtility.contains(helptextval, keyword) &&
+						!ArrayUtility.contains(StringUtility.split(keyword, " "), helptextval))  return null;
 
 
 				info = new StructItemInfo(wrapper.getObjectTypeId(), name, elements);
@@ -1369,7 +1376,7 @@ public abstract class DefinitionAction extends AbstractAction implements Runtime
 		return outputReader;
 	}
 
-	protected List<StructItemInfo> getOnlyOverlays(List list, boolean force)
+	protected List<StructItemInfo> getOverlaysOnly(List list, boolean force)
 	{
 		List<String> validation = new ArrayList<String>();
 		List<StructItemInfo> output = new Vector<StructItemInfo>();

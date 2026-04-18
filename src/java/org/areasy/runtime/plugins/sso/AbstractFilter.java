@@ -1,7 +1,7 @@
 package org.areasy.runtime.plugins.sso;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -72,7 +72,7 @@ public abstract class AbstractFilter extends SingleSignOnAuthenticator implement
 			else
 			{
 				logger.error("Error executing HTTP filters chain: " + th.getMessage());
-				logger.trace("Exception", th);
+				if(logger.isTraceEnabled()) logger.debug("Exception", th);
 			}
 		}
 	}

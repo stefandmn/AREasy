@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.workflows;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -14,6 +14,7 @@ package org.areasy.runtime.engine.workflows;
  */
 
 import org.areasy.common.data.BooleanUtility;
+import org.areasy.common.data.NumberUtility;
 import org.areasy.common.data.StringUtility;
 import org.areasy.common.logger.Logger;
 import org.areasy.common.logger.LoggerFactory;
@@ -203,6 +204,62 @@ public abstract class ProcessorLevel0Reader implements ARDictionary
 		}
 
 		return checked;
+	}
+
+	/**
+	 * Process the request and fill in the temporary template with the values
+	 * you set in the Context. This method will trim the resulted text.
+	 *
+	 * @param context Velocity context
+	 * @param expression    input string containing the VTL to be rendered
+	 * @return The process text as a String.
+	 */
+	public static String compute(Context context, String expression)
+	{
+		return compute(context, null, expression);
+	}
+
+	/**
+	 * Process the request and fill in the temporary template with the values
+	 * you set in the Context. This method will trim the resulted text.
+	 *
+	 * @param context Velocity context
+	 * @param map parameter's map
+	 * @param expression    input string containing the VTL to be rendered
+	 * @return The process text as a String.
+	 */
+	public static String compute(Context context, Map map, String expression)
+	{
+		String compute = null;
+
+		try
+		{
+			if(StringUtility.isNotEmpty(expression))
+			{
+				if(map != null && !map.isEmpty())
+				{
+					Iterator iterator = map.keySet().iterator();
+
+					while(iterator != null && iterator.hasNext())
+					{
+						Object key = iterator.next();
+						Object value = map.get(key);
+
+						context.put("v" + key, value);
+					}
+				}
+
+				String template = "#set ($data = " + expression + ")\n$data";
+				compute = StringUtility.trimToEmpty(parseText(context, template));
+			}
+		}
+		catch(Throwable th)
+		{
+			logger.error("Error computing expression: " + th.getMessage());
+			logger.debug("Exception", th);
+		}
+
+		return compute;
 	}
 
 	/**

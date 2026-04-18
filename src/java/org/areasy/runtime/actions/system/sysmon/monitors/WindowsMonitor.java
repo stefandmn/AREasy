@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.system.sysmon.monitors;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -171,4 +171,3 @@ public class WindowsMonitor extends JavaMonitor implements Monitor
 		return callWMI(wmiQuery, new String[] {fieldName1, fieldName2, fieldName3});
 	}
 }
-

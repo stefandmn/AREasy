@@ -1,7 +1,7 @@
 package org.areasy.runtime.plugins.sso;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -131,7 +131,7 @@ public class SingleSignOnAuthenticator extends SimpleAuthenticator implements Au
 			catch(AREasyException are)
 			{
 				logger.debug("Authentication error: " + are.getMessage());
-				logger.trace("Exception", are);
+				if(logger.isTraceEnabled()) logger.debug("Exception", are);
 
 				//get the previous authentication method
 				int authMethod = getPreviousAuthenticationMethod(request) + 1;
@@ -414,8 +414,9 @@ public class SingleSignOnAuthenticator extends SimpleAuthenticator implements Au
 		}
 
 		String credentials = token.nextToken();
-		sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
-		String userPass = new String(decoder.decodeBuffer(credentials));
+
+        byte[] decodedBytes = java.util.Base64.getDecoder().decode(credentials);
+        String userPass = new String(decodedBytes);
 
 		int p = userPass.indexOf(":");
 

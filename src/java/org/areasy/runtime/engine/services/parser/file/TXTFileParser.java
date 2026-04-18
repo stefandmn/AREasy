@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.services.parser.file;
 
 /*
- *  Copyright (c) 2007-2022 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -19,6 +19,7 @@ import org.areasy.runtime.engine.services.parser.ParserException;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -111,7 +112,10 @@ public class TXTFileParser extends AbstractParser
 			String data[] = (String[]) lines.get(getCurrentIndex());
 			setNextCursor();
 
-			return data;
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[]) Arrays.asList(StringUtility.join(data, getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return data;
 		}
 		else return null;
 	}
@@ -127,7 +131,10 @@ public class TXTFileParser extends AbstractParser
 	{
 		if (lines != null && getStartIndex() >= index && index < getEndIndex())
 		{
-			return (String[]) lines.get(index);
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[]) Arrays.asList(StringUtility.join((String[]) lines.get(index), getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return (String[]) lines.get(index);
 		}
 		else return null;
 	}

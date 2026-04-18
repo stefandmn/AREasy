@@ -2,7 +2,7 @@ package org.areasy.common.data;
 
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2022 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -211,7 +211,7 @@ public class StopWatchUtility
 			else if (this.runningState == STATE_UNSTARTED) return 0;
 				else if (this.runningState == STATE_RUNNING) return System.currentTimeMillis() - this.startTime;
 
-		throw new RuntimeException("Illegal running state has occured. ");
+		throw new RuntimeException("Illegal running state has occurred");
 	}
 
 	/**

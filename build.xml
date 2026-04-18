@@ -103,6 +103,16 @@
 			<property name="isWindows" value="true"/>
 			<property file="${basedir}/profile.windows.properties"/>
 		</case>
+		<case value="Mac OS">
+			<property name="isUnix" value="true"/>
+			<property name="isWindows" value="false"/>
+			<property file="${basedir}/profile.macos.properties"/>
+		</case>
+		<case value="Mac OS X">
+			<property name="isUnix" value="true"/>
+			<property name="isWindows" value="false"/>
+			<property file="${basedir}/profile.macos.properties"/>
+		</case>
 	</switch>
 
 

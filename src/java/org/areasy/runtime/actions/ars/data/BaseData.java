@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.data;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -27,13 +27,13 @@ import org.areasy.runtime.RuntimeManager;
 import org.areasy.runtime.actions.AbstractAction;
 import org.areasy.runtime.engine.RuntimeLogger;
 import org.areasy.runtime.engine.base.AREasyException;
+import org.areasy.runtime.engine.base.ServerConnection;
 import org.areasy.runtime.engine.services.status.BaseStatus;
 import org.areasy.runtime.engine.structures.Attribute;
 import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.MultiPartItem;
 import org.areasy.runtime.engine.structures.data.cmdb.ConfigurationItem;
 import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
-import org.areasy.runtime.engine.workflows.ProcessorLevel1Context;
 import org.areasy.runtime.engine.workflows.ProcessorLevel2CmdbApp;
 
 import java.io.ByteArrayOutputStream;
@@ -67,8 +67,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Identifier for data parameter: <code>DC + </code><field id> (number)</code>. This identifier should be used only for Create transactions */
 	public static final String FDATAC = "DC";
 
-	/** Identifier for data parameter: <code>DU + </code><field id> (number)</code>. This identifier should used only for Updates transactions */
+	/** Identifier for data parameter: <code>DU + </code><field id> (number)</code>. This identifier should be used only for Updates transactions */
 	public static final String FDATAU = "DU";
+
+    /** Identifier for data parameter: <code>DD + </code><field id> (number)</code>. This identifier should be used only you want to remove from mapping */
+    public static final String FDATAD = "DD";
 
 	/** start token  */
 	protected static final String START_TOKEN = "@[";
@@ -82,6 +85,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Dedicated flag tell to the final action that an operation has to be forced if it contain a loop processing */
 	private Boolean force = null;
 
+    private int processorsCounter = 0;
 	/** Counter for total processed records */
 	private int recordsCounter = 0;
 	/** Counter for errors */
@@ -93,6 +97,23 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	/** Time control to measure the time for action execution*/
 	private StopWatchUtility cron = new StopWatchUtility();
 
+	/**
+	 * Run secondary initialization (from the final implementation class)
+	 *
+	 * @throws AREasyException if any error will occur.
+	 */
+	public void open() throws AREasyException
+	{
+		getCron().start();
+	}
+
+	/**
+	 * Run secondary disposer (from the final implementation class)
+	 */
+	public void close() throws AREasyException
+	{
+		getCron().stop();
+	}
 	/**
 	 * Collect data input parameters and publish them into a <code>CoreItem</code> structure.
 	 *
@@ -117,7 +138,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	public boolean setDataFields(CoreItem entry, boolean create, boolean update) throws AREasyException
 	{
 		boolean set = false;
-		List<String> list = new Vector<String>();
+		List<String> commit = new Vector<String>();
+        List<String> delete = new Vector<String>();
 		Iterator ids = getConfiguration().getKeys();
 
 		while(ids != null && ids.hasNext())
@@ -127,29 +149,34 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			if(create && id != null && id.startsWith(FDATAC))
 			{
 				String key = id.substring(2);
-				if( NumberUtility.isNumber(key) ) list.add(id);
+				if( NumberUtility.isNumber(key) ) commit.add(id);
 			}
 			else if(update && id != null && id.startsWith(FDATAU))
 			{
 				String key = id.substring(2);
-				if( NumberUtility.isNumber(key) ) list.add(id);
+				if( NumberUtility.isNumber(key) ) commit.add(id);
 			}
+            else if(id != null && id.startsWith(FDATAD))
+            {
+                String key = id.substring(2);
+                if( NumberUtility.isNumber(key) ) delete.add(key);
+            }
 			else if(id != null && id.startsWith(FDATA))
 			{
 				String key = id.substring(1);
-				if( NumberUtility.isNumber(key) ) list.add(id);
+				if( NumberUtility.isNumber(key) ) commit.add(id);
 			}
 			else if(id != null && id.startsWith(FFILE))
 			{
 				String key = id.substring(1);
-				if( NumberUtility.isNumber(key) ) list.add(id);
+				if( NumberUtility.isNumber(key) ) commit.add(id);
 			}
 		}
 
-		for(int i = 0; !list.isEmpty() && i < list.size(); i++)
+		for(int i = 0; !commit.isEmpty() && i < commit.size(); i++)
 		{
 			String key = null;
-			String id = list.get(i);
+			String id = commit.get(i);
 			if(id.startsWith(FDATAC) || id.startsWith(FDATAU)) key = id.substring(2);
 				else key = id.substring(1);
 
@@ -158,13 +185,36 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			// translate internal references stored in data structure
 			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
 			{
-				value = getInternalValue(String.valueOf(value), entry, 0);
+				if(((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd)
+						&& ((String)value).substring(MultiPartItem.partVarStart.length()).startsWith(FDREF)
+						&& StringUtility.isNotEmpty( ((String)value).substring(MultiPartItem.partVarStart.length() + 1, ((String) value).length() - MultiPartItem.partVarEnd.length())) )
+				{
+					String iid = ((String)value).substring(MultiPartItem.partVarStart.length() + 1, ((String) value).length() - MultiPartItem.partVarEnd.length());
+					value = entry.getAttributeValue(iid);
+				}
+				else value = getInternalValue(String.valueOf(value), entry, 0);
 			}
 
 			// translate external and variable references stored in configuration
 			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
 			{
-				value = getConfiguration().getString(id);
+				if(((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
+				{
+					String iid = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String) value).length() - MultiPartItem.partVarEnd.length());
+					value = getConfiguration().getKey(iid);
+				}
+				else value = getConfiguration().getString(id);
+			}
+
+			// translate external expressions described as Velocity code using entry fields
+			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart2.substring(0, 1)))
+			{
+				if(((String)value).startsWith(MultiPartItem.partVarStart2) && ((String)value).endsWith(MultiPartItem.partVarEnd2))
+				{
+					String source = ((String)value).substring(MultiPartItem.partVarStart2.length(), ((String) value).length() - MultiPartItem.partVarEnd2.length());
+					value = getComputedCoreItem(entry, source);
+				}
+				else value = getConfiguration().getString(id);
 			}
 
 			//handle attachments mapping
@@ -199,16 +249,30 @@ public abstract class BaseData extends AbstractAction implements CoreData
 				else value = fvalue;
 			}
 
+			if(logger.isTraceEnabled()) logger.debug("Setting data field: " + key + " = " + value);
 			setAttribute(entry, key, value, "ignorenulldata");
 
 			if(!set) set = true;
 		}
 
+		commit.clear();
+
+        //delete all excluded attributes by -DD option
+        if (!delete.isEmpty())
+        {
+            for(int i = 0; i < delete.size(); i++)
+            {
+                entry.deleteAttribute(delete.get(i));
+            }
+        }
+
+		delete.clear();
+
 		//apply velocity transformation (if is defined)
-		String transformationContent = getConfiguration().getString("transformation", null);
+		String transformationTxt = getTranslatedCondition(getConfiguration().getString("transformation", null));
 		String transformationFile = getConfiguration().getString("transformationfile", null);
-		if(transformationFile != null && transformationContent == null) transformationContent = getInputStream(new File(transformationFile));
-		if(transformationContent != null) transformCoreItem(entry, transformationContent);
+		if(transformationFile != null && transformationTxt == null) transformationTxt = getInputStream(new File(transformationFile));
+		if(transformationTxt != null) transformCoreItem(entry, transformationTxt);
 
 		return set;
 	}
@@ -249,6 +313,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 			if(!set) set = true;
 		}
+
+		list.clear();
 
 		return set;
 	}
@@ -571,13 +637,24 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 */
 	public CoreItem getCoreItem(String formName)
 	{
+		return getCoreItem(formName, null);
+	}
+
+	/**
+	 * Get a new instance of <code>CoreItem</code> structure having predefined the target form name.
+	 *
+	 * @param formName target Remedy form name
+	 * @return fresh <code>CoreItem</code> structure
+	 */
+	public CoreItem getCoreItem(String formName, List properties)
+	{
 		CoreItem item = new CoreItem(formName);
 
-		if(getConfiguration().containsKey("ignorenullvalues")) item.setIgnoreNullValues(getConfiguration().getBoolean("ignorenullvalues"));
-		if(getConfiguration().containsKey("ignoreunchangedvalues")) item.setIgnoreUnchangedValues(getConfiguration().getBoolean("ignoreunchangedvalues"));
-		if(getConfiguration().containsKey("simplified")) item.setSimplifiedStructure(getConfiguration().getBoolean("simplified"));
-		if(getConfiguration().containsKey("firstmatchreading")) item.setFirstMatchReading();
-		if(getConfiguration().containsKey("exactmatchreading")) item.setExactMatchReading();
+		if(getConfiguration().containsKey("ignorenullvalues") || (properties != null && properties.contains("ignorenullvalues"))) item.setIgnoreNullValues(getConfiguration().getBoolean("ignorenullvalues"));
+		if(getConfiguration().containsKey("ignoreunchangedvalues") || (properties != null && properties.contains("ignoreunchangedvalues"))) item.setIgnoreUnchangedValues(getConfiguration().getBoolean("ignoreunchangedvalues"));
+		if(getConfiguration().containsKey("simplified") || (properties != null && properties.contains("simplified"))) item.setSimplifiedStructure(getConfiguration().getBoolean("simplified"));
+		if(getConfiguration().containsKey("firstmatchreading") || (properties != null && properties.contains("firstmatchreading"))) item.setFirstMatchReading();
+		if(getConfiguration().containsKey("exactmatchreading") || (properties != null && properties.contains("exactmatchreading"))) item.setExactMatchReading();
 
 		return item;
 	}
@@ -594,7 +671,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 		String entity = getConfiguration().getString("entity", null);
 		String classId = getConfiguration().getString("classid", null);
-		String formName = getConfiguration().getString("form", getConfiguration().getString("formname", null));
+		String formName = isSpinOf() ? getConfiguration().getString("call-form", getConfiguration().getString("call-formname", null)) :
+				getConfiguration().getString("form", getConfiguration().getString("formname", null));
 
 		if(entity != null) item = getEntity(entity);
 		else
@@ -763,26 +841,40 @@ public abstract class BaseData extends AbstractAction implements CoreData
 						config.setConfigurationEntry(new PropertiesEntry(part));
 					}
 
+					boolean remote = false;
 					String schema = config.getString("schema", config.getString("form", null));
+					String remoteschema = config.getString("remoteschema", config.getString("remoteform", null));
+					if (StringUtility.isNotEmpty(remoteschema))
+					{
+						schema = remoteschema;
+						remote = true;
+					}
+
 					String map = config.getString("map", null);
 
 					if(StringUtility.isNotEmpty(schema))
 					{
 						String query = config.getString("query", null);
 						String store = config.getString("store", null);
+						String props = config.getString("props", null);
 						String code = config.getString("key", StringUtility.variable(schema).toUpperCase());
 						long fieldId = config.getLong("return", 0);
 
+
 						//get interrogation text into a real qualification
 						query = getTranslatedQualification(query);
+						query = getInternalValue(query, entry, 0);
+                        logger.debug("Lookup value translated query: " + query);
 
-						CoreItem item = getCoreItem(schema);
-						item.read(getServerConnection(), query);
+						CoreItem item = getCoreItem(schema, props != null ? Arrays.asList(StringUtility.split(props)) : null);
+						if(!remote) item.read(getServerConnection(), query);
+							else item.read(getRemoteServerConnection(), query);
 
 						if (item.exists())
 						{
 							if (fieldId > 1) output = item.getStringAttributeValue(fieldId);
 								else output = item.getEntryId();
+                            logger.debug("Lookup value return data: " + output);
 
 							if (store != null)
 							{
@@ -793,6 +885,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 									String storeKey = code + ":" + fields[i];
 									String storeValue = StringUtility.equals(fields[i], "1") ? item.getEntryId() : item.getStringAttributeValue(fields[i]);
 
+                                    logger.debug("Lookup value adding key: " + storeKey  + " = " + storeValue);
 									getConfiguration().setKey(storeKey, storeValue);
 								}
 							}
@@ -806,7 +899,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 								for (int i = 0; fields != null && i < fields.length; i++)
 								{
 									String key = code + ":" + fields[i];
-									if (getConfiguration().containsKey(key)) getConfiguration().removeKey(key);
+									if (getConfiguration().containsKey(key))
+                                    {
+                                        getConfiguration().removeKey(key);
+                                        logger.debug("Lookup value deleting key: " + key);
+                                    }
 								}
 							}
 						}
@@ -831,6 +928,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 							else value = "";
 						}
 						else value = "";
+
+						logger.debug("Lookup value returning static value: " + value);
 					}
 				}
 
@@ -939,6 +1038,16 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		return this.force.booleanValue();
 	}
 
+    public int addProcessorsCounter(int counter)
+    {
+        return this.processorsCounter += counter;
+    }
+
+    public int setProcessorsCounter()
+    {
+        return this.processorsCounter++;
+    }
+
 	public int addRecordsCounter(int counter)
 	{
 		return this.recordsCounter += counter;
@@ -964,6 +1073,11 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		return this.recordsCounter;
 	}
 
+    public int getProcessorsCounter()
+    {
+        return this.processorsCounter;
+    }
+
 	public int getErrorsCounter()
 	{
 		return this.errorsCounter;
@@ -971,6 +1085,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 	public void resetCounters()
 	{
+        this.processorsCounter = 0;
 		this.errorsCounter = 0;
 		this.recordsCounter = 0;
 	}
@@ -1071,10 +1186,17 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			{
 				if(execMessage == null)
 				{
-					message = prefix + "Action processed " + action.getRecordsCounter() + " entries in " + action.getCronTime();
+					message = prefix + "The processor handled " + action.getRecordsCounter() + " entries and performed ";
 
-					if (action.getErrorsCounter() > 0) message += " and discovered " + action.getErrorsCounter() + " errors.";
-						else message += " without errors";
+                    if (action.getProcessorsCounter() == 1) message += action.getErrorsCounter() + " transaction, ";
+                    else if (action.getProcessorsCounter() > 1) message += action.getErrorsCounter() + " transactions, ";
+                    else message += "no transaction,";
+
+                    if (action.getErrorsCounter() == 1) message += "and identified " + action.getErrorsCounter() + " error, ";
+					else if (action.getErrorsCounter() > 1) message += "and identified " + action.getErrorsCounter() + " errors, ";
+						else message += "without errors, ";
+
+                    message +=  "in " + action.getCronTime();
 				}
 				else message = prefix + getInternalMessage(execMessage);
 			}
@@ -1092,8 +1214,9 @@ public abstract class BaseData extends AbstractAction implements CoreData
 			if(message != null)
 			{
 				message = StringUtility.replace( message, "{1}", String.valueOf(action.getRecordsCounter()) );
-				message = StringUtility.replace( message, "{2}", String.valueOf(action.getErrorsCounter()) );
-				message = StringUtility.replace( message, "{3}", action.getCronTime() );
+                message = StringUtility.replace( message, "{2}", String.valueOf(action.getRecordsCounter()) );
+				message = StringUtility.replace( message, "{3}", String.valueOf(action.getErrorsCounter()) );
+				message = StringUtility.replace( message, "{4}", action.getCronTime() );
 			}
 
 			return message;
@@ -1277,8 +1400,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 *
 	 * @param entry    <code>CoreItem</code> structure instance that is transformed
 	 * @param source    input string containing the VTL to be rendered
-	 * @return The process text as a String.
-	 * @throws AREasyException if any parsing and execution exeption will occur
+	 * @throws AREasyException if any parsing and execution exception will occur
 	 */
 	protected void transformCoreItem(CoreItem entry, String source) throws AREasyException
 	{
@@ -1286,6 +1408,8 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 		Context context = getContext();
 		context.put("entry", entry);
+        context.put("config", getConfiguration());
+		context.put("query", new BaseDataQuery(getServerConnection(), getRemoteConnection()));
 
 		for(Object id: entry.getAttributeIds())
 		{
@@ -1294,7 +1418,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 		//run transformation
 		String output = ProcessorLevel0Reader.parseText(context, source);
-		logger.debug("Transformation output: " + output);
+		logger.debug("Transformation template output: " + output);
 
 		for (Object key : context.getKeys())
 		{
@@ -1321,5 +1445,130 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		}
 
 		setNullContext();
+	}
+
+	/**
+	 * Process the request to transform data within a <code>CoreItem</code>instance using a
+	 * Velocity source code where the attributes are exported as variable in the context and
+	 * if these variables are changed will impact also the attributes that generate them.
+	 *
+	 * @param entry    <code>CoreItem</code> structure instance that is transformed
+	 * @param source    input string containing the VTL to be rendered
+	 * @throws AREasyException if any parsing and execution exception will occur
+	 */
+	protected String getComputedCoreItem(CoreItem entry, String source) throws AREasyException
+	{
+		Context context = getContext();
+		context.put("entry", entry);
+		context.put("config", getConfiguration());
+
+		for(Object id: entry.getAttributeIds())
+		{
+			context.put(BaseData.FDREF + String.valueOf(id), StringUtility.trimToEmpty(entry.getStringAttributeValue(String.valueOf(id))));
+		}
+
+		//run transformation
+		String output = source.contains("#") ? StringUtility.trimToEmpty(ProcessorLevel0Reader.parseText(context, source)) : ProcessorLevel0Reader.compute(context, source);
+		logger.debug("Compute template output: " + output);
+
+		setNullContext();
+		return output;
+	}
+
+    protected void displayChunkStatusMessage(boolean ending, String lastId)
+    {
+        String message = null;
+
+        if (ending) message = StringUtility.capitalize(getCode()) + " operation ended by processing " + getRecordsCounter() + (isSpinOf() ? " spin": " cursor") + " records with ";
+			else message = StringUtility.capitalize(getCode()) + " operation running by processing " + getRecordsCounter() + (isSpinOf() ? " spin": " cursor") + " records with ";
+
+        if(getErrorsCounter() == 0) message += "no error ";
+        else if(getErrorsCounter() == 1) message += getErrorsCounter() + " error ";
+        else if(getErrorsCounter() > 1) message += getErrorsCounter() + " errors ";
+
+        if(getProcessorsCounter() == 0) message += "and with no transaction";
+        else if(getProcessorsCounter() == 1) message += "and with " + getProcessorsCounter() + " transaction";
+        else if(getProcessorsCounter() > 1) message += "and with " + getProcessorsCounter() + " transactions";
+
+        message += ", in " + getCronTime();
+        if(isSpinOf() && lastId != null) message += ". Last spin record id: " + lastId;
+        	else if(!isSpinOf() && lastId != null) message += ". Last cursor record id: " + lastId;
+
+        RuntimeLogger.info(message);
+    }
+
+    protected void setFlowAdaptation(CoreItem entry) throws AREasyException
+    {
+        String source = isSpinOf() ? getConfiguration().getString("call-adaptation", null) : getConfiguration().getString("adaptation", null);
+
+        if(source != null)
+        {
+            source = getTranslatedCondition(source);
+            if(logger.isDebugEnabled()) logger.debug("Translating adaptation source: " + source);
+		}
+
+		String sourceFile = isSpinOf() ? getConfiguration().getString("call-adaptationfile", null) : getConfiguration().getString("adaptationfile", null);
+		if(sourceFile != null && source == null) source = getInputStream(new File(sourceFile));
+
+		if(source != null) transformCoreItem(entry, source);
+	}
+
+	public class BaseDataQuery
+	{
+		private ServerConnection target = null;
+		private ServerConnection remote = null;
+
+		public BaseDataQuery(ServerConnection target)
+		{
+			this.target = target;
+			this.remote = null;
+		}
+
+		public BaseDataQuery(ServerConnection target, ServerConnection remote)
+		{
+			this.target = target;
+			this.remote = remote;
+		}
+
+		private Object interrogation(ServerConnection conn, String form, String query, boolean read) throws AREasyException
+		{
+			CoreItem search = new CoreItem(form);
+			query = getTranslatedCondition(query);
+
+			if (read)
+			{
+				search.read(conn, query);
+				return search;
+			}
+			else
+			{
+				List data = search.search(conn, query);
+				return data;
+			}
+		}
+
+		public CoreItem read(String form, String query) throws AREasyException
+		{
+			if (this.target != null) return (CoreItem) interrogation(this.target, form, query, true);
+				else return null;
+		}
+
+		public CoreItem remoteread(String form, String query) throws AREasyException
+		{
+			if (this.remote != null) return (CoreItem) interrogation(this.remote, form, query, true);
+				else return null;
+		}
+
+		public List search(String form, String query) throws AREasyException
+		{
+			if (this.target != null) return (List) interrogation(this.target, form, query, false);
+				else return null;
+		}
+
+		public List remotesearch(String form, String query) throws AREasyException
+		{
+			if (this.remote != null) return (List) interrogation(this.remote, form, query, false);
+				else return null;
+		}
 	}
 }

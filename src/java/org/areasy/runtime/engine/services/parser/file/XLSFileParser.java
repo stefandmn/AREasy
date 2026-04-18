@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.services.parser.file;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -14,6 +14,7 @@ package org.areasy.runtime.engine.services.parser.file;
  */
 
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.parser.excel.Cell;
 import org.areasy.common.parser.excel.Sheet;
 import org.areasy.common.parser.excel.Workbook;
@@ -22,6 +23,7 @@ import org.areasy.runtime.engine.services.parser.AbstractParser;
 import org.areasy.runtime.engine.services.parser.ParserException;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -116,7 +118,10 @@ public class XLSFileParser extends AbstractParser
 
 			setNextCursor();
 
-			return (String[])output.toArray(new String[output.size()]);
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[])Arrays.asList(StringUtility.join((String[])output.toArray(new String[output.size()]), getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return (String[])output.toArray(new String[output.size()]);
 		}
 		else return null;
 	}
@@ -146,7 +151,10 @@ public class XLSFileParser extends AbstractParser
 				}
 			}
 
-			return (String[])output.toArray(new String[output.size()]);
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[])Arrays.asList(StringUtility.join((String[])output.toArray(new String[output.size()]), getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return (String[])output.toArray(new String[output.size()]);
 		}
 		else return null;
 	}

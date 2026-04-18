@@ -1,7 +1,7 @@
 package org.areasy.common.data;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2022 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -3730,8 +3730,6 @@ outer:
 		return str;
 	}
 
-	// Case conversion
-
 	/**
 	 * <p>Converts a String to upper case as per {@link String#toUpperCase()}.</p>
 	 * <p/>
@@ -5042,5 +5040,20 @@ outer:
 		if (searchChars == null) return false;
 
 		return containsAny(str, searchChars.toCharArray());
+	}
+
+	/**
+	 * Convert any object to String
+	 *
+	 * @param object string for transformation into a variable
+	 * @return a converted text
+	 */
+	public static String convert(Object object)
+	{
+		if(object != null)
+		{
+			return object.toString();
+		}
+		else return null;
 	}
 }

@@ -1,5 +1,27 @@
+3.0.4
+=====
+07. Update and improve formdata action with various new functions, especially for lookup operations
+    data validation, data matching with a target system, etc.
+06. Implement chunk status to the active log and standard output
+05. Implement loop execution indicator in standard output when -chunk option is used to share the
+	execution status, number of errors, etc.
+04. Implement remote connection and remote transaction for all formdata operations. In addition,
+	remoteform option was added to replace the source form in case remote connection is used
+03. Apply interpolation for query string within @[] lookup expression
+02. Add -DD option to be able to delete data from the final mapping
+01. Update setsystemlicense action to support conversion of licenses to Helix style - meaning bundled
+    licenses and includes also an optimization process, converting only what si really needed in terms
+    of permissions and accesses that the users already have
+
+
+3.0.3
+=====
+01. Development objects manipulation has been updated, to allow objects collection for owner, changer
+    and keyword, to refer also data arrays.
+
+
 3.0.2
-======
+=====
 07. Update devremove action to allow objects deletion action with -force option
 06. Improve abstract dev action to provide options for objects exclusion managed in text files.
 05. Update devrename action in order to allow single object renaming but also bulk updates for the

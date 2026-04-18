@@ -41,6 +41,10 @@ Where:
 
 	-userformname     = in case of 'userqualifiation' is used you can say a value for this option to find the usernames into an independent Remedy form (also you have to use 'userfieldid' to specify the field id that will be read from that form) or don't specify it and will search directly in People form and will read 'Remedy Login ID' field, or in User form and will read 'User Name' field (according to the 'method' option value)
 
+	-convert          = fixed2bundled or floating2bundled
+
+	-bundled          = bundled license name
+
 
 Note: This action allows you to set the same license type for many users, from one action execution. You can combine this action with 'data.wrapper.file' and instead of real values for -license and -login options you'll refer columns from an Excel file or from a text file.
 

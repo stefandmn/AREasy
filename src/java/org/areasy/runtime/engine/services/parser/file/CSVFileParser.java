@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.services.parser.file;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -13,6 +13,7 @@ package org.areasy.runtime.engine.services.parser.file;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.common.parser.csv.CsvReader;
 import org.areasy.runtime.engine.services.parser.AbstractParser;
 import org.areasy.runtime.engine.services.parser.ParserException;
@@ -21,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -82,7 +84,10 @@ public class CSVFileParser extends AbstractParser
 			String data[] = (String[]) lines.get(getCurrentIndex());
 			setNextCursor();
 
-			return data;
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[]) Arrays.asList(StringUtility.join(data, getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return data;
 		}
 		else return null;
 	}
@@ -98,7 +103,10 @@ public class CSVFileParser extends AbstractParser
 	{
 		if (lines != null && getStartIndex() >= index && index < getEndIndex())
 		{
-			return (String[]) lines.get(index);
+			if(getParserConfig().getString("parseraggregator", null) != null)
+				return (String[]) Arrays.asList(StringUtility.join((String[]) lines.get(index), getParserConfig().getString("parseraggregator", null))).toArray(new String[1]);
+			else
+				return (String[]) lines.get(index);
 		}
 		else return null;
 	}

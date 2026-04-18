@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.admin;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,7 @@ import org.areasy.runtime.engine.structures.CoreItem;
 import org.areasy.runtime.engine.structures.MultiPartItem;
 import org.areasy.runtime.engine.structures.data.itsm.foundation.People;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Vector;
 
@@ -40,11 +41,39 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 
 		//get usernames from a custom expression
 		String fieldid = getConfiguration().getString("userfieldid", null);
-		String fieldvalue = getConfiguration().getString("userfieldvalue", null);
+		String fieldvalue = "NULL";
 
-		if(fieldid != null && fieldvalue != null)
+		if(fieldid != null)
 		{
-			String qualification = "'" +fieldid + "' = \"" + fieldvalue + "\"";
+			String qualification = null;
+
+			if(getConfiguration().getKey("userfieldvalue") instanceof Integer)
+			{
+				fieldvalue = getConfiguration().getInteger("userfieldvalue", null).toString();
+				qualification = "'" + fieldid + "' = " + fieldvalue;
+			}
+			else if(getConfiguration().getKey("userfieldvalue") instanceof Float)
+			{
+				fieldvalue = getConfiguration().getFloat("userfieldvalue", null).toString();
+				qualification = "'" + fieldid + "' = " + fieldvalue;
+			}
+			else if(getConfiguration().getKey("userfieldvalue") instanceof BigDecimal)
+			{
+				fieldvalue = getConfiguration().getBigDecimal("userfieldvalue", null).toString();
+				qualification = "'" + fieldid + "' = " + fieldvalue;
+			}
+			else if(getConfiguration().getKey("userfieldvalue") instanceof String)
+			{
+				fieldvalue = getConfiguration().getString("userfieldvalue", null).toString();
+				if(fieldvalue.startsWith("%") || fieldvalue.endsWith("%")) qualification = "'" + fieldid + "' LIKE \"" + fieldvalue + "\"";
+					else qualification = "'" + fieldid + "' = \"" + fieldvalue + "\"";
+			}
+
+			if(getConfiguration().getString("userqualification", null) != null)
+			{
+				qualification += " AND (" + getConfiguration().getString("userqualification", null) + ")";
+			}
+
 			People people = new People();
 			List list = people.search(getServerConnection(), qualification);
 
@@ -60,7 +89,6 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 		{
 			String qualification = getConfiguration().getString("userqualification", null);
 			String formname = getConfiguration().getString("userform", getConfiguration().getString("userformname", null));
-			String userfieldid = getConfiguration().getString("userfieldid", null);
 
 			if(qualification != null && formname == null)
 			{
@@ -80,14 +108,12 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 				CoreItem item = new CoreItem();
 				item.setFormName(formname);
 
-				if(userfieldid == null) userfieldid = "4";
-
 				List list = item.search(getServerConnection(), qualification);
 
 				for(int i = 0; list != null && i < list.size(); i++)
 				{
 					CoreItem entry = (CoreItem) list.get(i);
-					usernames.add( entry.getStringAttributeValue(userfieldid) );
+					usernames.add( entry.getStringAttributeValue(4) );
 				}
 
 				if(list == null || list.isEmpty()) RuntimeLogger.warn("No entries found using: " + item);

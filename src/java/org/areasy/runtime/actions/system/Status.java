@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.system;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -108,7 +108,7 @@ public class Status extends SystemAction implements RuntimeAction
 				if(repeat > 0 && times < repeat) next = true;
 				if(repeat > 0 && times >= repeat) next = false;
 
-				//send to teh client partial content
+				//send to the client partial content
 				if(next) RuntimeLogger.flush();
 			}
 			while(next);

@@ -26,20 +26,42 @@
 	</syntax>
 	<options>
 		<option key="operation" type="string" selvalues="insert,update,delete,merge" description="Indicates type of transactions: insert, update, delete or merge"/>
+        <option key="cal-operation" type="string" selvalues="insert,update,delete,merge" description="Indicates type of transactions: insert, update, delete or merge"/>
 		<option key="runcondition" type="string" description="Describes the Velocity condition to allow the execution of action's operation. The evaluation is performed before action operation and contains a context with all input parameters and read attributes  for the particular CoreItem instance processed by the requested operation"/>
+        <option key="call-runcondition" type="string" description="Describes the Velocity condition to allow the execution of action's operation. The evaluation is performed before action operation and contains a context with all input parameters and read attributes  for the particular CoreItem instance processed by the requested operation"/>
 		<option key="id" type="string" description="Identify form record by Request ID/Entry ID (field with Id 1)"/>
 		<option key="qualification" type="string" description="Identify form record based on a specific qualification"/>
+        <option key="call-qualification" type="string" description="Identify form record based on a specific qualification"/>
 		<option key="chunk" type="string" description="A set of records fetched through a search having less number of records than total search operation is considered a chunk. Chunk option is used only with qualification flag and will shift the search starting from specific what chunk number"/>
+        <option key="call-chunk" type="string" description="A set of records fetched through a search having less number of records than total search operation is considered a chunk. Chunk option is used only with qualification flag and will shift the search starting from specific what chunk number"/>
 		<option key="nextchunkid" type="string" description="Works only in conjunction with qualification and chunk options and a Request Id to be considered in search condition for the next chunk"/>
 		<option key="limit" type="string" description="Limits the search operation (and implicitly for data fetching) to to a number of records"/>
+        <option key="call-limit" type="string" description="Limits the search operation (and implicitly for data fetching) to to a number of records"/>
 		<option key="mergematchingfieldids" type="string" description="Specify a list of fields that will be considered for data matching"/>
 		<option key="mergevaliddata" type="bool" description="Run merge operation validating data before merge (e.g. to exist, etc.)"/>
 		<option key="createifnotexist" type="bool" description="For update operation creates the record if doesn't exist"/>
 		<option key="updateifexists" type="bool" description="For create operation updates the record if it is already registwered"/>
+        <option key="fastrun" type="bool" description=""/>
+        <option key="matchset" type="bool" description=""/>
+        <option key="reportdata" type="bool" description=""/>
+        <option key="reporterrors" type="bool" description=""/>
+        <option key="firstmatchreading" type="bool" description=""/>
+        <option key="exactmatchreading" type="bool" description=""/>
+        <option key="operation-remotetarget" type="bool" description=""/>
+        <option key="operation-remotetarget" type="bool" description=""/>
+        <option key="dataout" type="string" description=""/>
+        <option key="errorsout" type="string" description=""/>
+        <option key="targetidentification" type="string" description=""/>
+        <option key="call-targetidentification" type="string" description=""/>
+        <option key="select-data" type="string" description=""/>
+        <option key="select-header" type="string" description=""/>
+        <option key="select-type" type="string" description=""/>
+        <option key="display" type="string" description=""/>
+        <option key="separator" type="string" description=""/>
 	</options>
 	<samples>
-		<sample code="areasy -action ars.formdata -form TestForm -Q1000 'Key' -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation create -updateifexists" description="Creates a new entry in TestForm form but checking previously if it is already created checking in field '1000' the keyword 'Key'"/>
-		<sample code="areasy -action ars.formdata -form TestForm -qualification ||'1000'='Key' AND '7' = 0|| -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation update -createifnotexist" description="Updates an entry in TestForm form identifying it using a custom qualification search. In case the record(s) is/are not identified through the qualification it will be created"/>
-		<sample code="areasy -action ars.formdata -form TestForm -id 10000038764 -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation update -createifnotexist" description="Updates an entry in TestForm form identifying it using a specific entry id. In case the record is not identified (more exacly the entry id doesn't exist) it will be created"/>
+		<sample code="areasy -action formdata -form TestForm -Q1000 'Key' -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation create -updateifexists" description="Creates a new entry in TestForm form but checking previously if it is already created checking in field '1000' the keyword 'Key'"/>
+		<sample code="areasy -action formdata -form TestForm -qualification ||'1000'='Key' AND '7' = 0|| -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation update -createifnotexist" description="Updates an entry in TestForm form identifying it using a custom qualification search. In case the record(s) is/are not identified through the qualification it will be created"/>
+		<sample code="areasy -action formdata -form TestForm -id 10000038764 -D8 'Info' -D1001 'Blue Color' -D1002 123 -operation update -createifnotexist" description="Updates an entry in TestForm form identifying it using a specific entry id. In case the record is not identified (more exacly the entry id doesn't exist) it will be created"/>
 	</samples>
 </help>

@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.flow;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -62,7 +62,6 @@ public class DataTransferAction extends FlowPatternAction
 	 */
 	public void run() throws AREasyException
 	{
-		getCron().start();
 		Map<Integer, Object> map = null;
 
 		//fill in all the other input option
@@ -104,7 +103,6 @@ public class DataTransferAction extends FlowPatternAction
 		process(map);
 
 		//clock stopped
-		getCron().stop();
 		setOutputMessage();
 	}
 

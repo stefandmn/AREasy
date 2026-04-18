@@ -1,7 +1,7 @@
 package org.areasy.runtime;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -42,11 +42,10 @@ import java.util.jar.Manifest;
 
 /**
  * AREasy Runtime actions' manager.
- * This library could execute runtime actions defined in these package or outside of this library but
+ * This library could execute runtime actions defined in these package or outside this library but
  * registered in the application configuration sector. This class could initiate a dedicated environment
  * to execute or to call implemented runtime actions which should execute parsing operations, data updates
  * in CMDB or ARS server (for other applications), changes in definitions, etc.
- *
  */
 public class RuntimeManager
 {
@@ -163,7 +162,6 @@ public class RuntimeManager
 	public void print(Configuration config)
 	{
 		String data[] = RuntimeLogger.getData();
-		String logtext = RuntimeLogger.getMessages();
 
 		//write data & objects.
 		if(!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
@@ -179,21 +177,6 @@ public class RuntimeManager
 				}
 				else write(null);
 			}
-		}
-
-		if(!config.getBoolean("reportnolog", false) && StringUtility.isNotEmpty(logtext))
-		{
-			//write answer messages.
-			System.out.println();
-			System.out.println();
-
-			if(!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
-			{
-				System.out.println("=== AREasy Log Message ===");
-				System.out.println();
-			}
-
-			write(logtext.trim());
 		}
 
 		System.out.println();
@@ -401,9 +384,6 @@ public class RuntimeManager
 		{
 			try
 			{
-				//register the channel name in the runtime logger
-				RuntimeLogger.debug("Runtime Logger Channel: " + RuntimeLogger.getChannelName());
-
 				if(!config.getBoolean("help", false))
 				{
 					//action initialization
@@ -470,14 +450,14 @@ public class RuntimeManager
 					if(actionClass != null)
 					{
 						this.actions.put(aName, actionClass);
-						logger.trace("Action '" + aName + "' has been loaded using class: " + actionClass);
+						if(logger.isTraceEnabled()) logger.debug("Action '" + aName + "' has been loaded using class: " + actionClass);
 
 						String aAlias = getConfiguration().getString("app.runtime.action." + aName + ".alias", null);
 
 						if(aAlias != null)
 						{
 							this.actions.put("alias." + aAlias, aName);
-							logger.trace("Alias '" + aAlias + "' has been registered for action name: " + aName);
+							if(logger.isTraceEnabled()) logger.debug("Alias '" + aAlias + "' has been registered for action name: " + aName);
 						}
 					}
 				}
@@ -580,6 +560,14 @@ public class RuntimeManager
 			}
 		}
 		else throw new AREasyException("Unknown runtime action. Check your configuration file!");
+
+		return runtime;
+	}
+
+	public final RuntimeAction getSpinAction(String subaction) throws AREasyException
+	{
+		RuntimeAction runtime = getRuntimeAction(subaction);
+		runtime.setSpinOf();
 
 		return runtime;
 	}
@@ -1054,7 +1042,10 @@ public class RuntimeManager
 		}
 
 		//generates configuration structure.
-		for(int i = 0; i < list.size(); i++) configuration.addConfigurationEntry( (ConfigurationEntry)list.get(i) );
+		for(int i = 0; i < list.size(); i++)
+		{
+			configuration.addConfigurationEntry( (ConfigurationEntry)list.get(i) );
+		}
 
 		return configuration;
 	}

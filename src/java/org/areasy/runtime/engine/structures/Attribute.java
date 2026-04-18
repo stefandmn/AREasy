@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.structures;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -21,9 +21,13 @@ import org.areasy.runtime.engine.base.AREasyException;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * ARS core structure, defining an usual form attribute like a pair composed by field and value.
@@ -368,8 +372,15 @@ public class Attribute
 	 */
 	public String getStringValue()
 	{
-		if(this.value != null) return String.valueOf(this.value);
-			else return null;
+		if(this.value != null)
+		{
+			if (this.value instanceof Timestamp) return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(((Timestamp) this.value).toDate());
+			else if (this.value instanceof DiaryListValue) return ((DiaryListValue) this.value).getAppendedText().toString();
+			else if (this.value instanceof AttachmentValue) return new String(((AttachmentValue)this.value).getValue(), StandardCharsets.UTF_8);
+			else if (this.value instanceof CurrencyValue) return ((CurrencyValue) this.value).getValue().toString();
+			else return String.valueOf(this.value);
+		}
+		else return null;
 	}
 
 	/**
@@ -427,7 +438,7 @@ public class Attribute
 		else if(value instanceof String && getType() == DataType.NULL.toInt()) return new Value( String.valueOf(value) );
 		else if(value instanceof DiaryListValue) return new Value( (DiaryListValue)value );
 		else if(value instanceof AttachmentValue) return new Value((AttachmentValue)value );
-		else if(value instanceof Timestamp) return new Value( ((Timestamp)value) );
+		else if(value instanceof Timestamp) return new Value( ((Timestamp)value).getValue() );
 		else if(value instanceof Time) return new Value( ((Time)value) );
 		else if(value instanceof CurrencyValue) return new Value( ((CurrencyValue)value) );
 		else if(value instanceof DateInfo) return new Value( ((DateInfo)value) );

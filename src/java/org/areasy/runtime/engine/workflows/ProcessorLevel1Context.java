@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine.workflows;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -42,6 +42,7 @@ public abstract class ProcessorLevel1Context extends ProcessorLevel0Reader
 	public static String FORM_OBJSTRCLASS 		= "OBJSTR:Class";
 	public static String FORM_BASEELEMENT 		= "BMC.CORE:BMC_BaseElement";
 	public static String FORM_BASERELATIONSHIP	= "BMC.CORE:BMC_BaseRelationship";
+	public static String FORM_ASSETATTRIBUTES	= "AST:Attributes";
 	public static String FORM_ASSETPEOPLE		= "AST:AssetPeople";
 	public static String FORM_ASSETINVENTORYQTY	= "AST:InventoryQuantity";
 
@@ -117,6 +118,33 @@ public abstract class ProcessorLevel1Context extends ProcessorLevel0Reader
 		}
 
 		return schemaname;
+	}
+
+	public static String getFormId(ServerConnection arsession, String name)
+	{
+		String schemaid = null;
+
+		if(name != null)
+		{
+			ArithmeticOrRelationalOperand opLeft = new ArithmeticOrRelationalOperand(20000);
+			ArithmeticOrRelationalOperand opRight = new ArithmeticOrRelationalOperand(new Value( name ));
+			QualifierInfo qualInfo = new QualifierInfo( new RelationalOperationInfo(Constants.AR_REL_OP_EQUAL, opLeft, opRight) );
+
+			int[] fieldIds = {1, 20400};
+
+			try
+			{
+				//Retrieve all entries
+				List<Entry> entries = arsession.getContext().getListEntryObjects("AR System Metadata: arschema", qualInfo, 0, 0, null, fieldIds, true, null);
+				if(entries != null && entries.size() > 0) schemaid = entries.get(0).get(20400).toString();
+			}
+			catch(ARException are)
+			{
+				return null;
+			}
+		}
+
+		return schemaid;
 	}
 
 	public static ProductCategory getProductCategoryFromMapping(Map map)

@@ -1,7 +1,7 @@
 package org.areasy.runtime;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -21,9 +21,8 @@ import org.areasy.runtime.engine.services.status.BaseStatus;
 
 /**
  * This is a template for runtime actions which will take from the runtime manager the corresponding
- * configuration structure and the action signature. Based on this tample could be implemented all necessary
+ * configuration structure and the action signature. Based on this template could be implemented all necessary
  * action to do different tasks.
- *
  */
 public interface RuntimeAction
 {
@@ -165,7 +164,7 @@ public interface RuntimeAction
 	void dispose();
 
 	/**
-	 * Soft and safe interruption of action action.
+	 * Soft and safe interruption of action.
 	 */
 	void interrupt();
 
@@ -203,10 +202,32 @@ public interface RuntimeAction
 	ServerConnection getServerConnection();
 
 	/**
+	 * Get ARS server connection structure and context.
+	 * @return <code>ServerConnection</code> instance or null.
+	 */
+	ServerConnection getRemoteConnection();
+
+	void setRemoteConnection();
+
+	boolean isRemoteConnection();
+
+	/**
 	 * Get status instance. In order to deliver a status of the current stage (for actions which the execution will take much more time)
 	 * this method must be implemented.
 	 *
 	 * @return <code>BaseStatus</code> structure and in the current implementation is returning a null value.
 	 */
 	BaseStatus getCurrentStatus();
+
+	/**
+	 * Check if the current action is derivative from a parent action
+	 * @return true if is a child action
+	 */
+	boolean isSpinOf();
+
+	boolean isLinked();
+
+	RuntimeAction getParent();
+
+	void setSpinOf();
 }

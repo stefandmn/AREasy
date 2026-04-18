@@ -1,7 +1,7 @@
 package org.areasy.common.logger.base.log4j;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2022 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -72,8 +72,8 @@ public class Log4JLogger implements org.areasy.common.logger.Logger, Serializabl
 	 */
 	public void trace(Object message)
 	{
-		if (is12) getLogger().log(FQCN, Level.ALL, message, null);
-			else getLogger().log(FQCN, Level.ALL, message, null);
+		if (is12) getLogger().log(FQCN, Level.TRACE, message, null);
+			else getLogger().log(FQCN, Level.TRACE, message, null);
 	}
 
 	/**
@@ -82,8 +82,8 @@ public class Log4JLogger implements org.areasy.common.logger.Logger, Serializabl
 	 */
 	public void trace(Object message, Throwable t)
 	{
-		if (is12) getLogger().log(FQCN, Level.ALL, message, t);
-			else getLogger().log(FQCN, Level.ALL, message, t);
+		if (is12) getLogger().log(FQCN, Level.TRACE, message, t);
+			else getLogger().log(FQCN, Level.TRACE, message, t);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class Log4JLogger implements org.areasy.common.logger.Logger, Serializabl
 	 */
 	public boolean isTraceEnabled()
 	{
-		return getLogger().isEnabledFor(Level.ALL);
+		return getLogger().isEnabledFor(Level.TRACE);
 	}
 
 	/**

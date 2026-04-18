@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.dev;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -67,7 +67,7 @@ public class ImportAction extends DefinitionAction implements RuntimeAction
 				List<StructItemInfo> importlist = new Vector<StructItemInfo>();
 
 				//filter only overlay objects
-				if(getConfiguration().getBoolean("only-overlays", false))
+				if(getConfiguration().getBoolean("overlays-only", false))
 				{
 					//parse definition file to get the list of object to know in order to filter it only for overlays
 					List validation = getDefinitionFileStructure(fileName);
@@ -79,7 +79,7 @@ public class ImportAction extends DefinitionAction implements RuntimeAction
 						force = false;
 					}
 
-					importlist = getOnlyOverlays(objects, force);
+					importlist = getOverlaysOnly(objects, force);
 					importlist = getValidatedList(importlist, validation);
 
 				}

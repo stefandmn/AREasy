@@ -1,7 +1,7 @@
 package org.areasy.common.logger.base.log4j;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2022 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -80,7 +80,8 @@ public class Log4JManager extends LoggerManager
 					File file = new File(handlerFileName);
 					if(!file.getParentFile().exists()) file.getParentFile().mkdirs();
 
-					appender = createFileHandler(loggerName);
+					appender = logger.getAppender(handlerName);
+					if(appender == null) appender = createFileHandler(loggerName);
 
 					((FileAppender)appender).setFile(handlerFileName);
 					((FileAppender)appender).setAppend(handlerAppend);

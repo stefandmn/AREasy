@@ -1,7 +1,7 @@
 package org.areasy.runtime.engine;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -31,14 +31,16 @@ public class RuntimeLogger
 	/** Library logger */
 	private Logger logger = null;
 
-	/** Flag to identify if the answer will be compacted */
-	private boolean compact = false;
-
-	/** Flag to say what is the level of logging */
-	private String level = "info";
+	private static String level = "info";
+    private static String prefix = "answer";
+	private static String channel = null;
+	private static boolean active = false;
 
 	/** A list with all data values */
 	private List data = new Vector();
+
+	/** Flag to identify if the answer will be compacted */
+	private boolean compact = false;
 
 	/** validation flags */
 	private boolean hasErrors = false;
@@ -66,10 +68,13 @@ public class RuntimeLogger
 		this.data.clear();
 
 		//register this logger definition
-		LoggerFactory.getLogManager().addFileLogger(getChannelPath(), LoggerManager.getLoggerLevel("info"), getChannelName(), getChannelFileName(), false, LoggerManager.FORMATTER_SIMPLE, "%d %-5p - %m%n");
+		LoggerFactory.getLogManager().addFileLogger(getChannelPath(), LoggerManager.getLoggerLevel(getLevel()),
+                getChannelName(), getChannel(), false, LoggerManager.FORMATTER_SIMPLE, "%d %-5p - %m%n");
 
 		//create a new logger channel
+		active = true;
 		this.logger = LoggerFactory.getLog(getChannelPath());
+        LoggerFactory.getLog(RuntimeLogger.class).debug("Initializing new runtime logger: " + getChannelPath());
 	}
 
 	/**
@@ -87,18 +92,6 @@ public class RuntimeLogger
 	private static String getChannelPath()
 	{
 		return RuntimeLogger.class.getName() +  "." + getChannelName();
-	}
-
-	public static String getChannelFileName()
-	{
-		if((StringUtility.indexOf(RuntimeManager.getReference(), "JAR@") == 0) || (StringUtility.indexOf(RuntimeManager.getReference(), "CFG@") == 0))
-		{
-			return RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + "answer.log";
-		}
-		else
-		{
-			return RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + "answer-" + getChannelName() + ".log";
-		}
 	}
 
 	/**
@@ -217,7 +210,8 @@ public class RuntimeLogger
 		}
 		catch(AREasyException are)
 		{
-			RuntimeLogger.error("Error flushing data content: " + are.getMessage());
+			LoggerFactory.getLog(RuntimeLogger.class).error("Error flushing data content: " + are.getMessage());
+			LoggerFactory.getLog(RuntimeLogger.class).debug("Exception", are);
 		}
 	}
 
@@ -229,7 +223,7 @@ public class RuntimeLogger
 	public static String getMessages()
 	{
 		String content = null;
-		File fileIn = new File(getChannelFileName());
+		File fileIn = new File(RuntimeLogger.channel);
 
 		try
 		{
@@ -261,7 +255,7 @@ public class RuntimeLogger
 	public static void setMessages(String text)
 	{
 		RuntimeLogger rdata = getAnswer();
-		File fileIn = new File(getChannelFileName());
+		File fileIn = new File(RuntimeLogger.channel);
 
 		try
 		{
@@ -286,6 +280,11 @@ public class RuntimeLogger
 	public static void add(String data)
 	{
 		getAnswer().data.add(data);
+	}
+
+	public static boolean active()
+	{
+		return RuntimeLogger.active;
 	}
 
 	/**
@@ -322,9 +321,52 @@ public class RuntimeLogger
 				getAnswer().logger.debug(message);
 				RuntimeManager.getLogger().debug(message);
 
+				System.out.println(new Date() + " - DEBUG - " + message);
+				System.out.flush();
 			}
 		}
 	}
+
+	/**
+	 * Add new debugging message. Will be added only is <code>verbose</code> flag is configured.
+	 *
+	 * @param message informational message to be added
+	 */
+	public static void trace(String message)
+	{
+		if(!getAnswer().isOff && StringUtility.isNotEmpty(message))
+		{
+			if(getAnswer().logger.isDebugEnabled())
+			{
+				getAnswer().logger.debug(message);
+				RuntimeManager.getLogger().debug(message);
+
+				System.out.println(new Date() + " - TRACE - " + message);
+				System.out.flush();
+			}
+		}
+	}
+
+	/**
+	 * Add new debugging message. Will be added only is <code>verbose</code> flag is configured.
+	 *
+	 * @param message informational message to be added
+	 */
+	public static void debug4error(String message)
+	{
+		if(!getAnswer().isOff && StringUtility.isNotEmpty(message))
+		{
+			if(getAnswer().logger.isDebugEnabled())
+			{
+				getAnswer().logger.error(message);
+				RuntimeManager.getLogger().error(message);
+
+				System.out.println(new Date() + " - DEBUG - " + message);
+				System.out.flush();
+			}
+		}
+	}
+
 
 	/**
 	 * Add new informational message.
@@ -339,7 +381,20 @@ public class RuntimeLogger
 			{
 				getAnswer().logger.info(message);
 				RuntimeManager.getLogger().info(message);
+
+				System.out.println(new Date() + " - INFO - " + message);
+				System.out.flush();
 			}
+		}
+	}
+
+	public static void infoData()
+	{
+		String data = "Action Data Output:\n\n" + getCompactData();
+
+		if(!getAnswer().isOff && hasData())
+		{
+			getAnswer().logger.info(data);
 		}
 	}
 
@@ -362,6 +417,9 @@ public class RuntimeLogger
 			{
 				rdata.logger.warn(message);
 				RuntimeManager.getLogger().warn(message);
+
+				System.out.println(new Date() + " - WARN - " + message);
+				System.out.flush();
 			}
 		}
 	}
@@ -386,11 +444,17 @@ public class RuntimeLogger
 			{
 				rdata.logger.error(message);
 				RuntimeManager.getLogger().error(message);
+
+				System.out.println(new Date() + " - ERROR - " + message);
+				System.out.flush();
 			}
 			else if(getAnswer().logger.isFatalEnabled())
 			{
 				rdata.logger.fatal(message);
 				RuntimeManager.getLogger().fatal(message);
+
+				System.out.println(new Date() + " - FATAL - " + message);
+				System.out.flush();
 			}
 		}
 	}
@@ -450,7 +514,17 @@ public class RuntimeLogger
 	}
 
 	/**
-	 * Check is the answer is has errors and no warnings.
+	 * Get data strings into a list format.
+	 *
+	 * @return a list with data
+	 */
+	public static boolean hasData()
+	{
+		return !getAnswer().data.isEmpty();
+	}
+
+	/**
+	 * Check is the answer it has errors and no warnings.
 	 *
 	 * @return true if the action has errors and no warnings
 	 */
@@ -463,7 +537,7 @@ public class RuntimeLogger
 	}
 
 	/**
-	 * Check is the answer is has no error messages.
+	 * Check is the answer it has no error messages.
 	 *
 	 * @return true if the action has no error messages
 	 */
@@ -473,7 +547,7 @@ public class RuntimeLogger
 	}
 
 	/**
-	 * Check is the answer is has error messages.
+	 * Check is the answer it has error messages.
 	 *
 	 * @return true if the action has error messages
 	 */
@@ -515,7 +589,7 @@ public class RuntimeLogger
 	}
 
 	/**
-	 * Set logger channel to work in off line mode.
+	 * Set logger channel to work in offline mode.
 	 */
 	public static void Off()
 	{
@@ -523,7 +597,7 @@ public class RuntimeLogger
 	}
 
 	/**
-	 * Set logger channel to work in on line mode.
+	 * Set logger channel to work in online mode.
 	 */
 	public static void On()
 	{
@@ -531,78 +605,150 @@ public class RuntimeLogger
 	}
 
 	/**
+	 * Check if the answer will store trace, debug, info, error and warning messages.
+	 *
+	 * @return true if the answer will request logger level.
+	 */
+	public static boolean isTraceLevel()
+	{
+		return StringUtility.equalsIgnoreCase(RuntimeLogger.level, "trace");
+	}
+
+	/**
 	 * Check if the answer will store debug, info, error and warning messages.
 	 *
-	 * @return true if the answer will requested logger level.
+	 * @return true if the answer will request logger level.
 	 */
 	public static boolean isDebugLevel()
 	{
-		return StringUtility.equalsIgnoreCase(getAnswer().level, "debug");
+		return StringUtility.equalsIgnoreCase(RuntimeLogger.level, "debug");
 	}
 
 	/**
 	 * Check if the answer will store only info, error and warning messages.
 	 *
-	 * @return true if the answer will requested logger level.
+	 * @return true if the answer will requeste logger level.
 	 */
 	public static boolean isInfoLevel()
 	{
-		return StringUtility.equalsIgnoreCase(getAnswer().level, "info");
+		return StringUtility.equalsIgnoreCase(RuntimeLogger.level, "info");
 	}
 
 	/**
 	 * Check if the answer will store only error and warning messages.
 	 *
-	 * @return true if the answer will requested logger level.
+	 * @return true if the answer will requeste logger level.
 	 */
 	public static boolean isWarnLevel()
 	{
-		return StringUtility.equalsIgnoreCase(getAnswer().level, "warn");
+		return StringUtility.equalsIgnoreCase(RuntimeLogger.level, "warn");
 	}
 
 	/**
 	 * Check if the answer will store only error messages.
 	 *
-	 * @return true if the answer will requested logger level.
+	 * @return true if the answer will requeste logger level.
 	 */
 	public static boolean isErrorLevel()
 	{
-		return StringUtility.equalsIgnoreCase(getAnswer().level, "error");
+		return StringUtility.equalsIgnoreCase(RuntimeLogger.level, "error");
 	}
+
+	/**
+	 * Set prefix name/level for this <code>Answer</code> instance.
+	 *
+	 * @param prefix flag to say what type of messages will be kept in this answer structure.
+	 */
+	public static void setPrefix(String prefix)
+	{
+		if(prefix != null) RuntimeLogger.prefix = prefix;
+	}
+
+	/**
+	 * Set channel name/level for this <code>Answer</code> instance.
+	 *
+	 * @param channel flag to say what type of messages will be kept in this answer structure.
+	 */
+	public static void setChannel(String channel)
+	{
+		if(channel == null) return;
+
+		try
+		{
+			File f = new File(channel);
+
+			if(f.isDirectory())
+			{
+				if(RuntimeLogger.prefix == null) RuntimeLogger.prefix = "answer";
+				File ff = new File(f, RuntimeLogger.prefix + "-" + getChannelName() + ".log");
+				RuntimeLogger.channel = ff.getAbsolutePath();
+			}
+			else
+			{
+				f.getParentFile().mkdirs();
+				RuntimeLogger.channel = f.getAbsolutePath();
+			}
+
+			LoggerFactory.getLog(RuntimeLogger.class).debug("Setting up the logging channel: " + RuntimeLogger.channel);
+		}
+		catch(Exception e)
+		{
+			LoggerFactory.getLog(RuntimeLogger.class).debug("Error setting up the logging channel: "+ e.getMessage());
+		}
+	}
+
+    public static String getChannel()
+    {
+        if(RuntimeLogger.channel == null)
+		{
+			if ((StringUtility.indexOf(RuntimeManager.getReference(), "JAR@") == 0) || (StringUtility.indexOf(RuntimeManager.getReference(), "CFG@") == 0))
+			{
+				RuntimeLogger.channel = RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + RuntimeLogger.prefix + ".log";
+			}
+			else
+			{
+				RuntimeLogger.channel = RuntimeManager.getLogsDirectory().getAbsolutePath() + File.separator + RuntimeLogger.prefix + "-" + getChannelName() + ".log";
+			}
+		}
+
+		return RuntimeLogger.channel;
+    }
 
 	/**
 	 * Set verbose mode for this <code>Answer</code> instance.
 	 *
-	 * @param level flag to say what type of messages will kept in this answer structure.
+	 * @param level flag to say what type of messages will be kept in this answer structure.
 	 */
 	public static void setLevel(String level)
 	{
 		if(level == null) return;
 
-		if(!StringUtility.equalsIgnoreCase(level, getAnswer().level))
+		if(!StringUtility.equalsIgnoreCase(level, RuntimeLogger.level))
 		{
 			if(StringUtility.equalsIgnoreCase(level, "off")) getAnswer().isOff = true;
 			else
 			{
+				RuntimeLogger.level = level.toLowerCase();
 				getAnswer().isOff = false;
 
-				if(StringUtility.equalsIgnoreCase(level, "debug")) LoggerFactory.getLogManager().changeLevel("debug", getChannelPath());
-					else if(StringUtility.equalsIgnoreCase(level, "info")) LoggerFactory.getLogManager().changeLevel("info", getChannelPath());
-						else if(StringUtility.equalsIgnoreCase(level, "warn")) LoggerFactory.getLogManager().changeLevel("warn", getChannelPath());
-							else if(StringUtility.equalsIgnoreCase(level, "error")) LoggerFactory.getLogManager().changeLevel("error", getChannelPath());
+				if (StringUtility.equalsIgnoreCase(level, "debug")) LoggerFactory.getLogManager().changeLevel("debug", getChannelPath());
+                else if (StringUtility.equalsIgnoreCase(level, "trace")) LoggerFactory.getLogManager().changeLevel("trace", getChannelPath());
+				else if (StringUtility.equalsIgnoreCase(level, "info")) LoggerFactory.getLogManager().changeLevel("info", getChannelPath());
+				else if (StringUtility.equalsIgnoreCase(level, "warn")) LoggerFactory.getLogManager().changeLevel("warn", getChannelPath());
+				else if (StringUtility.equalsIgnoreCase(level, "error")) LoggerFactory.getLogManager().changeLevel("error", getChannelPath());
+
+				LoggerFactory.getLog(RuntimeLogger.class).debug("Setting up a new logging level: " + getChannelPath() + "->" + RuntimeLogger.level);
 			}
 		}
-
-		getAnswer().level = level.toLowerCase();
 	}
 
-	/**
+	/** Flag to say what is the level of logging */ /**
 	 * Get verbose mode for this <code>Answer</code> instance.
 	 *
 	 * @return the name (or the code) of verbosity mode.
 	 */
 	public static String getLevel()
 	{
-		return getAnswer().level;
+		return RuntimeLogger.level;
 	}
 }

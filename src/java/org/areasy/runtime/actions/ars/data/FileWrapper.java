@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.ars.data;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -28,6 +28,10 @@ import org.areasy.runtime.engine.workflows.ProcessorLevel0Reader;
  */
 public class FileWrapper extends BaseData
 {
+	private boolean reportdata = false;
+	private boolean reporterrors = false;
+	private String reportheader[] = null;
+
 	/**
 	 * Execute the current action.
 	 *
@@ -37,12 +41,20 @@ public class FileWrapper extends BaseData
 	public void run() throws AREasyException
 	{
 		/* The delegated action to be executed **/
-		RuntimeAction command;
-		boolean errorFlag = false;
+		RuntimeAction action = null;
+		boolean spinAction = false;
+
+		boolean stopFlag = false;
 		ParserEngine parser = null;
 
+		this.reportdata = getConfiguration().getBoolean("reportdata", false);
+		this.reporterrors = getConfiguration().getBoolean("reporterrors", false);
+		this.reportheader = getConfiguration().getStringArray("reportheader", null);
+
 		String file = getConfiguration().getString("parserfile", getConfiguration().getString("inputfile", getConfiguration().getString("file", null)));
-		String call = getConfiguration().getString("call", getConfiguration().getString("subaction", null));
+
+		String subAction = getConfiguration().getString("subaction",null);
+		String callAction = getConfiguration().getString("call", null);
 
 		//validate and set parser-type parameter
 		if((getConfiguration().containsKey("file") || getConfiguration().containsKey("inputfile") || getConfiguration().containsKey("parserfile")) && !getConfiguration().containsKey("parsertype"))
@@ -53,11 +65,18 @@ public class FileWrapper extends BaseData
 			getConfiguration().removeKey("inputfile");
 		}
 
-		if(StringUtility.isEmpty(call)) throw new AREasyException("Command action is null");
-		else
+		if(StringUtility.isEmpty(subAction) && StringUtility.isEmpty(callAction)) throw new AREasyException("Command action is null");
+		else if(!StringUtility.isEmpty(subAction))
 		{
-			command = getManager().getRuntimeAction(call);
-			RuntimeLogger.info("Wrapper processor runs '" + command.getCode() + "' action.");
+			if(!isLinked()) RuntimeLogger.info("File Wrapper processor runs '" + subAction + "' independent action");
+			getConfiguration().removeKey("subaction");
+			spinAction = false;
+		}
+		else if(!StringUtility.isEmpty(callAction))
+		{
+			if(!isLinked()) RuntimeLogger.info("File Wrapper processor runs '" + callAction + "' action action");
+			getConfiguration().removeKey("call");
+			spinAction = true;
 		}
 
 		if(StringUtility.isNotEmpty(file))
@@ -74,22 +93,25 @@ public class FileWrapper extends BaseData
 			}
 			catch(Throwable th)
 			{
-				getLogger().error("Error reading data source file: " + th.getMessage());
-				getLogger().debug("Exception", th);
+				logger.error("Error reading data source file: " + th.getMessage());
+				logger.debug("Exception", th);
 
 				throw new AREasyException("Data source is not present or parsing process recorded an error: " + th.getMessage());
 			}
 
-			getCron().start();
-
-			int emptyDataCounter = 0;
+			int maxLimit = getConfiguration().getInt("limit", 0);
+			int chunk = getConfiguration().getInt("chunk", 1000);
 
 			int indexLimit = 0;
-			int maxLimit = getConfiguration().getInt("limit", 0);
-			
+			int emptyDataCounter = 0;
+
 			do
 			{
 				String data[] = null;
+				
+				/* The delegated action to be executed **/
+				if(!spinAction) action = getManager().getRuntimeAction(subAction);
+					else action = getManager().getSpinAction(callAction);
 
 				try
 				{
@@ -111,33 +133,28 @@ public class FileWrapper extends BaseData
 							getConfiguration().addKey(column, data[i]);
 						}
 
-						//initialize and execute command operation
-						String when = getConfiguration().getString("when", null);
-						if(StringUtility.isEmpty(when) || ProcessorLevel0Reader.evaluate(getContext(), getTranslatedCondition(when)))
+						if(getWhenCondition(null))
 						{
-							command.init(this);
-							command.run();
-
-							//execution counter incrementation
-							if ((command instanceof BaseData) && ((BaseData) command).getRecordsCounter() > 0) addRecordsCounter(((BaseData) command).getRecordsCounter());
-								else setRecordsCounter();
+							action.init(this);
+							action.run();
 						}
 					}
 					else emptyDataCounter++;
 				}
 				catch(Throwable th)
 				{
-					errorFlag = true;
-					if((command instanceof BaseData) && ((BaseData)command).getErrorsCounter() > 0) addErrorsCounter( ((BaseData)command).getErrorsCounter() );
-						else setErrorsCounter();
+					setErrorsCounter();
 
-					String errorMsg = "Error running action using data extracted from line '" + parser.getParser().getCurrentIndex() + "'";
-					errorMsg += ": " + th.getMessage();
-
-					RuntimeLogger.error(errorMsg);
-
-					getLogger().error(errorMsg);
-					getLogger().debug("Exception", th);
+					if (isForced())
+					{
+						RuntimeLogger.error("Error running action using data extracted from line '" + parser.getParser().getCurrentIndex() + "': " + th.getMessage());
+						logger.debug("Exception", th);
+					}
+					else
+					{
+						if (th instanceof AREasyException) throw (AREasyException) th;
+							else throw new AREasyException(th);
+					}
 				}
 				finally
 				{
@@ -151,25 +168,41 @@ public class FileWrapper extends BaseData
 					}
 				}
 
+				//execution counter incrementation
+				if(action instanceof BaseData)
+				{
+					if( ((BaseData)action).getRecordsCounter() > 0 ) addRecordsCounter( ((BaseData)action).getRecordsCounter() );
+						else setRecordsCounter();
+
+					if( ((BaseData)action).getProcessorsCounter() > 0 ) addProcessorsCounter( ((BaseData)action).getProcessorsCounter() );
+
+					if( ((BaseData)action).getErrorsCounter() > 0 ) addErrorsCounter( ((BaseData)action).getErrorsCounter() );
+				}
+				else setRecordsCounter();
+
+                //display info
+                if(chunk > 0 && getRecordsCounter() >= chunk && getRecordsCounter() % chunk == 0) displayChunkStatusMessage(false, null);
+
 				//set session flags
-				errorFlag = RuntimeLogger.hasErrors();
-				if(isForced() && errorFlag) errorFlag = false;
+				stopFlag = RuntimeLogger.hasErrors();
+				if(isForced() && stopFlag) stopFlag = false;
 
 				//limitation to 10 empty lines, to cancel the process.
-				if(emptyDataCounter >= 3) errorFlag = true;
+				if(emptyDataCounter >= 3) stopFlag = true;
 				
 				//close loop evaluation
 				indexLimit++;
-				if(maxLimit > 0) errorFlag = indexLimit >= maxLimit;
+				if(maxLimit > 0) stopFlag = indexLimit >= maxLimit;
 
-				// check interruption and and exit if the execution was really interrupted
+				// check interruption and exit if the execution was really interrupted
 				if(isInterrupted())
 				{
 					RuntimeLogger.warn("Execution interrupted by user");
 					return;
 				}
 
-				if(getConfiguration().containsKey("sleep") && !errorFlag)
+				//execution sleep
+				if(getConfiguration().containsKey("sleep") && !stopFlag)
 				{
 					try
 					{
@@ -181,26 +214,53 @@ public class FileWrapper extends BaseData
 					catch(InterruptedException e) { /* nothing to do */ }
 				}
 			}
-			while(!errorFlag);
+			while(!stopFlag);
 
-			getCron().stop();
+            //display info
+            displayChunkStatusMessage(true, null);
 		}
 		else
 		{
 			try
 			{
 				//execute operation
-				command.run();
+				action.run();
 			}
 			catch(Throwable th)
 			{
-				String error = "Error running action '" + command.getCode() + "'";
+				String error = "Error running action '" + action.getCode() + "'";
 				error += ": " + th.getMessage();
 
 				RuntimeLogger.error(error);
+				logger.debug("Exception", th);
+			}
+		}
 
-				getLogger().error(error);
-				getLogger().debug("Exception", th);
+		if(!isLinked() && reportdata)
+		{
+			if(RuntimeLogger.hasData())
+			{
+				if(getConfiguration().getString("dataout", null) != null)
+				{
+					if(reportheader != null) writeTextFile(getConfiguration().getString("dataout", null), StringUtility.join(reportheader, ",") + "\n" + RuntimeLogger.getCompactData());
+					else writeTextFile(getConfiguration().getString("dataout", null), RuntimeLogger.getCompactData());
+				}
+				else
+				{
+					if(reportheader != null) RuntimeLogger.info(StringUtility.capitalize(getCode()) + " processor ended providing output data\n" + StringUtility.join(reportheader,",") + "\n" + RuntimeLogger.getCompactData());
+					else RuntimeLogger.info(StringUtility.capitalize(getCode()) + " processor ended providing output data\n" + RuntimeLogger.getCompactData());
+				}			}
+			else RuntimeLogger.warn("Processor ended without output data");
+		}
+		else
+		{
+			if(!isLinked() && reporterrors)
+			{
+				if (RuntimeLogger.hasErrors())
+				{
+					if(getConfiguration().getString("errorsout", null) != null) writeTextFile(getConfiguration().getString("errorsout", null), RuntimeLogger.getCompactData());
+						else RuntimeLogger.info(StringUtility.capitalize(getCode()) + " processor ended by collecting errors for request Ids\n" + RuntimeLogger.getCompactData());
+				}
 			}
 		}
 	}

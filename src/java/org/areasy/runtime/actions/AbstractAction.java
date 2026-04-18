@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -93,6 +93,15 @@ public abstract class AbstractAction implements RuntimeAction
 	 */
 	private HelpDoc help = null;
 
+	private boolean spinof = false;
+
+	/**
+	 * ARS Remote server connection
+	 */
+	private ServerConnection remote = null;
+
+	private RuntimeAction parent = null;
+
 	/**
 	 * Default runtime action constructor.
 	 */
@@ -143,8 +152,10 @@ public abstract class AbstractAction implements RuntimeAction
 	public final void init(RuntimeAction action) throws AREasyException
 	{
 		this.target = action.getServerConnection();
+		this.remote = action.getRemoteConnection();
 		this.manager = action.getManager();
 		this.configuration = action.getConfiguration();
+		this.parent = action;
 
 		//initialization
 		init(false);
@@ -194,16 +205,24 @@ public abstract class AbstractAction implements RuntimeAction
 	 */
 	protected synchronized void init(boolean createConnection) throws AREasyException
 	{
-		//define answer structure
-		RuntimeLogger.setLevel(getConfiguration().getString("loglevel", null));
-		RuntimeLogger.setCompact(getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()));
+		if(!isSpinOf() && !RuntimeLogger.active())
+		{
+			//define answer structure
+			RuntimeLogger.setPrefix(getConfiguration().getString("logprefix", null));
+			RuntimeLogger.setChannel(getConfiguration().getString("logchannel", null));
+			RuntimeLogger.setLevel(getConfiguration().getString("loglevel", null));
+			RuntimeLogger.setCompact(getConfiguration().getBoolean("compactmode", RuntimeLogger.isCompact()));
+
+			//register the channel name in the runtime logger
+			RuntimeLogger.info("Runtime Logger Channel: " + RuntimeLogger.getChannelName());
+		}
 
 		//execute initialization workflow
 		initWorkflow(createConnection);
 
 		//mark end of initialization
 		this.initialized = getInitCondition();
-		if (!this.initialized) logger.debug("Initialization break off due to init-condition evaluation");
+		if (!this.initialized && !isSpinOf()) logger.debug("Initialization break off due to init-condition evaluation");
 
 		//initialize and load help documentation
 		help = new HelpDoc(this);
@@ -223,6 +242,7 @@ public abstract class AbstractAction implements RuntimeAction
 		{
 			//define target server connection
 			setServerConnection();
+			setRemoteConnection();
 		}
 
 		//run secondary initialization (from the final implementation class).
@@ -312,6 +332,16 @@ public abstract class AbstractAction implements RuntimeAction
 		}
 	}
 
+	public void setSpinOf()
+	{
+		this.spinof = true;
+	}
+
+	public boolean isSpinOf()
+	{
+		return this.spinof;
+	}
+
 	/**
 	 * Soft and safe interruption of action action.
 	 */
@@ -380,7 +410,6 @@ public abstract class AbstractAction implements RuntimeAction
 		StringBuffer body = new StringBuffer();
 
 		String data[] = RuntimeLogger.getData();
-		String logtext = RuntimeLogger.getMessages();
 		Configuration config = getConfiguration();
 
 		//write data & objects.
@@ -394,18 +423,6 @@ public abstract class AbstractAction implements RuntimeAction
 					body.append("\n");
 				} else body.append("\n");
 			}
-		}
-
-		if (!config.getBoolean("reportnolog", false) && StringUtility.isNotEmpty(logtext))
-		{
-			if (!config.getBoolean("reportnodata", false) && data != null && data.length > 0)
-			{
-				body.append("\n");
-				body.append("=== AREasy Log Message ===");
-				body.append("\n").append("\n");
-			}
-
-			body.append(logtext.trim());
 		}
 
 		return body.toString();
@@ -602,6 +619,33 @@ public abstract class AbstractAction implements RuntimeAction
 	}
 
 	/**
+	 * Get ARS server connection structure and context.
+	 *
+	 * @return <code>ServerConnection</code> instance or null.
+	 */
+	public final ServerConnection getRemoteConnection()
+	{
+		return this.remote;
+	}
+
+	public final void setRemoteConnection()
+	{
+		try
+		{
+			this.remote = getRemoteServerConnection();
+		}
+		catch(Exception e)
+		{
+			if (logger.isDebugEnabled()) logger.debug("Exception", e);
+		}
+	}
+
+	public boolean isRemoteConnection()
+	{
+		return this.remote != null;
+	}
+
+	/**
 	 * Get an input parameter (from the action configuration structure) in string format.
 	 * This method is capable to validate if the parameter exist but hasn't a specified value
 	 * (and in this situation the parser will consider that this paremetr is a boolean parameter)
@@ -786,6 +830,8 @@ public abstract class AbstractAction implements RuntimeAction
 
 	public final void addCoreItem2Context(CoreItem item)
 	{
+		getContext().put(new StringBuilder().append("D1").toString(), item.getEntryId() != null ? item.getEntryId() : "NULL");
+
 		Iterator iterator = item.getAttributes().iterator();
 		while ((iterator != null) && (iterator.hasNext()))
 		{
@@ -993,7 +1039,7 @@ public abstract class AbstractAction implements RuntimeAction
 	 *
 	 * @param URI  file location
 	 * @param text file content
-	 * @return true if operation succeded
+	 * @return true if operation succeeded
 	 */
 	public static boolean writeTextFile(String URI, String text)
 	{
@@ -1061,7 +1107,8 @@ public abstract class AbstractAction implements RuntimeAction
 			connection.connect(arserver, aruser, arpassword, arport, arrpc, armode);
 
 			if (logger.isDebugEnabled()) logger.debug("Connected to remote server: " + connection);
-		} else connection = getServerConnection();
+		}
+		else connection = getServerConnection();
 
 		return connection;
 	}
@@ -1171,13 +1218,19 @@ public abstract class AbstractAction implements RuntimeAction
 			//check if the values contains quota
 			if (value.contains("\"") && value.contains("||")) value = StringUtility.replace(value, "\"", "\"\"");
 
+			value = StringUtility.replace(value, "//", "%");
 			value = StringUtility.replace(value, "||", "\"");
+            value = StringUtility.replace(value, "[[", "\"");
+            value = StringUtility.replace(value, "]]", "\"");
 			value = StringUtility.replace(value, "|", "'");
 
 			value = StringUtility.replace(value, "-lt", "<");
 			value = StringUtility.replace(value, "-le", "<=");
 			value = StringUtility.replace(value, "-gt", ">");
 			value = StringUtility.replace(value, "-ge", ">=");
+			value = StringUtility.replace(value, "-eq", "=");
+            value = StringUtility.replace(value, "-or", "||");
+            value = StringUtility.replace(value, "-and", "&&");
 		}
 
 		return value;
@@ -1207,6 +1260,7 @@ public abstract class AbstractAction implements RuntimeAction
 			if (value.contains("||||")) value = StringUtility.replace(value, "||||", "$\\NULL$");
 
 			value = getTranslatedCondition(value);
+			logger.debug("Translated qualification: " + value);
 		}
 
 		return value;
@@ -1214,33 +1268,73 @@ public abstract class AbstractAction implements RuntimeAction
 
 	   protected boolean getInitCondition()
 	   {
-		     String condition = getConfiguration().getString("initcondition", null);
+		   String condition = isSpinOf() ? getConfiguration().getString("call-initcondition", null) : getConfiguration().getString("initcondition", null);
 		
-		     if (StringUtility.isNotEmpty(condition))
-			     {
-			       initConfigContext();
-			       getContext().remove("initcondition");
-			       condition = getTranslatedCondition(condition);
-			
-			       return ProcessorLevel0Reader.evaluate(getContext(), condition);
-			     }
-		     return true;
-		   }
+			if (StringUtility.isNotEmpty(condition))
+			{
+				initConfigContext();
+				getContext().put("config", getConfiguration());
+				condition = getTranslatedCondition(condition);
+
+				boolean value =  ProcessorLevel0Reader.evaluate(getContext(), condition);
+				logger.debug("Translated Init condition: " + condition + " -> " + value);
+
+				return value;
+			}
+
+		   return true;
+	   }
 	
-	   protected boolean getRunCondition(CoreItem item)
+	   protected boolean getRunCondition(CoreItem entry)
 	   {
-		     String condition = getConfiguration().getString("runcondition", null);
-		
-		     if (StringUtility.isNotEmpty(condition))
-			     {
-			       addCoreItem2Context(item);
-			       getContext().remove("runcondition");
-			       condition = getTranslatedCondition(condition);
-			
-			       return ProcessorLevel0Reader.evaluate(getContext(), condition);
-			     }
-		     return true;
-		   }
+			String condition = isSpinOf() ? getConfiguration().getString("call-runcondition", null) : getConfiguration().getString("runcondition", null);
+
+			if (StringUtility.isNotEmpty(condition))
+			{
+				addCoreItem2Context(entry);
+				getContext().put("config", getConfiguration());
+				getContext().put("entry", entry);
+				condition = getTranslatedCondition(condition);
+
+				boolean value = ProcessorLevel0Reader.evaluate(getContext(), condition);
+				logger.debug("Translated Run condition: " + condition + " -> " + value);
+
+				return value;
+			}
+
+			return true;
+	   }
+
+	protected boolean getWhenCondition(CoreItem entry)
+	{
+		String condition = getConfiguration().getString("when", null);
+
+		if (StringUtility.isNotEmpty(condition))
+		{
+			if(entry != null) addCoreItem2Context(entry);
+			getContext().put("config", getConfiguration());
+			if(entry != null) getContext().put("entry", entry);
+			condition = getTranslatedCondition(condition);
+
+			boolean value = ProcessorLevel0Reader.evaluate(getContext(), condition);
+			logger.debug("Translated When condition: " + condition + " -> " + value);
+
+			return value;
+		}
+
+		return true;
+	}
+
+	public RuntimeAction getParent()
+   	{
+		if(isSpinOf()) return this.parent;
+	   		else return null;
+   	}
+
+	public boolean isLinked()
+	{
+		return this.parent != null;
+	}
 		
 	/**
 	 * Dedicated class to manage help options for a specific action

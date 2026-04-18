@@ -1,7 +1,7 @@
 package org.areasy.runtime.actions.itsm.data;
 
 /*
- * Copyright (c) 2007-2020 AREasy Runtime
+ *  Copyright (c) 2007-2023 AREasy Runtime
  *
  * This library, AREasy Runtime and API for BMC Remedy AR System, is free software ("Licensed Software");
  * you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -31,7 +31,7 @@ public class IncidentAssignedGroupSetAction extends AbstractAction
 	 * Execute the current action.
 	 *
 	 * @throws org.areasy.runtime.engine.base.AREasyException
-	 *          if any error will occur
+	 * if any error will occur
 	 */
 	public void run() throws AREasyException
 	{

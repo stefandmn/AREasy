@@ -13,6 +13,7 @@ package org.areasy.runtime.actions.itsm.admin;
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
+import org.areasy.common.data.StringUtility;
 import org.areasy.runtime.RuntimeAction;
 import org.areasy.runtime.actions.ars.data.BaseData;
 import org.areasy.runtime.engine.RuntimeLogger;
@@ -34,6 +35,8 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 
 	public void open() throws AREasyException
 	{
+		super.open();
+
 		//get usernames
 		String username = getConfiguration().getString("login", getConfiguration().getString("username", null));
 		usernames = getConfiguration().getVector("logins", getConfiguration().getVector("usernames", new Vector<String>()));
@@ -42,11 +45,11 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 		//get usernames from a custom expression
 		String fieldid = getConfiguration().getString("userfieldid", null);
 		String fieldvalue = "NULL";
+		String qualification = null;
+		String formname = null;
 
 		if(fieldid != null)
 		{
-			String qualification = null;
-
 			if(getConfiguration().getKey("userfieldvalue") instanceof Integer)
 			{
 				fieldvalue = getConfiguration().getInteger("userfieldvalue", null).toString();
@@ -73,7 +76,18 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 			{
 				qualification += " AND (" + getConfiguration().getString("userqualification", null) + ")";
 			}
+		}
+		else
+		{
+			qualification = getConfiguration().getString("userqualification", null);
+		}
 
+		qualification = getTranslatedQualification(qualification);
+		formname = getConfiguration().getString("userform", getConfiguration().getString("userformname", null));
+		logger.debug("Running the following query for '"+ (formname == null ? "Poeple" : formname) + "' form entity: "+ qualification);
+
+		if(qualification != null && formname == null)
+		{
 			People people = new People();
 			List list = people.search(getServerConnection(), qualification);
 
@@ -85,40 +99,25 @@ public abstract class AbstractUserEnrollment extends BaseData implements Runtime
 
 			if(list == null || list.isEmpty()) RuntimeLogger.warn("No entries found using: " + people);
 		}
-		else
+		else if(qualification != null && formname != null)
 		{
-			String qualification = getConfiguration().getString("userqualification", null);
-			String formname = getConfiguration().getString("userform", getConfiguration().getString("userformname", null));
+			long fielId = 4;
+			if(StringUtility.equals(formname, "User")) fielId = 101;
 
-			if(qualification != null && formname == null)
+			CoreItem item = new CoreItem();
+			item.setFormName(formname);
+
+			List list = item.search(getServerConnection(), qualification);
+
+			for(int i = 0; list != null && i < list.size(); i++)
 			{
-				People people = new People();
-				List list = people.search(getServerConnection(), qualification);
-
-				for(int i = 0; list != null && i < list.size(); i++)
-				{
-					People person = (People) list.get(i);
-					usernames.add( person.getLoginId() );
-				}
-
-				if(list == null || list.isEmpty()) RuntimeLogger.warn("No entries found using: " + people);
+				CoreItem entry = (CoreItem) list.get(i);
+				usernames.add( entry.getStringAttributeValue(fielId) );
 			}
-			else if(qualification != null && formname != null)
-			{
-				CoreItem item = new CoreItem();
-				item.setFormName(formname);
 
-				List list = item.search(getServerConnection(), qualification);
-
-				for(int i = 0; list != null && i < list.size(); i++)
-				{
-					CoreItem entry = (CoreItem) list.get(i);
-					usernames.add( entry.getStringAttributeValue(4) );
-				}
-
-				if(list == null || list.isEmpty()) RuntimeLogger.warn("No entries found using: " + item);
-			}
+			if(list == null || list.isEmpty()) RuntimeLogger.warn("No entries found using: " + item);
 		}
+
 	}
 
 	public List<String> getUsers()

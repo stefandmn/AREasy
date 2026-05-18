@@ -43,29 +43,24 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 		method = getConfiguration().getString("method", "people");
 		convert = getConfiguration().getString("convert", null);
 
-		if(convert != null) method = "people";
-
-		if(StringUtility.equals(method, "people"))
+		if(StringUtility.equals(getMethod(), "people"))
 		{
+			if(getConfiguration().containsKey("userform")) getConfiguration().removeKey("userform");
 			if(getConfiguration().containsKey("userformname")) getConfiguration().removeKey("userformname");
 		}
-		else if(StringUtility.equals(method, "user"))
+		else if(StringUtility.equals(getMethod(), "user"))
 		{
-			if(getConfiguration().containsKey("userqualifiation"))
-			{
-				getConfiguration().setKey("userfieldid", "101");
-				getConfiguration().setKey("userformname", "User");
-			}
+			getConfiguration().setKey("userformname", "User");
 		}
-		else throw new AREasyException("Invalid searching method: " + method);
+		else throw new AREasyException("Invalid searching method: " + getMethod());
 
-		if(StringUtility.equals(convert, "fixed2bundled"))
+		if(StringUtility.equals(getConvert(), "fixed2bundled"))
 		{
 			getConfiguration().setKey("userfieldid", "109");
 			getConfiguration().setKey("userfieldvalue", new Integer(1));
 			getConfiguration().setKey("license", "bundled");
 		}
-		else if(StringUtility.equals(convert, "floating2bundled"))
+		else if(StringUtility.equals(getConvert(), "floating2bundled"))
 		{
 			getConfiguration().setKey("userfieldid", "109");
 			getConfiguration().setKey("userfieldvalue", new Integer(2));
@@ -88,7 +83,11 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 		String bundled = getConfiguration().getString("bundled", null);
 
 		//validation of username(s) and specified role
-		if(getUsers().isEmpty() || (!StringUtility.equalsIgnoreCase(license, "read") && !StringUtility.equalsIgnoreCase(license, "fixed") && !StringUtility.equalsIgnoreCase(license, "floating") && !StringUtility.equalsIgnoreCase(license, "bundled"))) throw new AREasyException("Invalid input command. Please refer help manual!");
+		if(getUsers().isEmpty() || (!StringUtility.equalsIgnoreCase(license, "read") && !StringUtility.equalsIgnoreCase(license, "fixed") && !StringUtility.equalsIgnoreCase(license, "floating") && !StringUtility.equalsIgnoreCase(license, "bundled")))
+		{
+			RuntimeLogger.warn("No data to process!");
+			return;
+		}
 
 		int licenseType = -1;
 		if(StringUtility.equalsIgnoreCase(license, "read")) licenseType = 0;
@@ -103,7 +102,7 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 
 			try
 			{
-				if(StringUtility.equals(method, "people"))
+				if(StringUtility.equals(getMethod(), "people"))
 				{
 					People person = new People();
 					person.setLoginId(username);
@@ -115,7 +114,7 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 						{
 							//apply bundled license
 							boolean convert2Read = false;
-							if(licenseType == 4) convert2Read = setBundledLicense(person, bundled);
+							if(licenseType == 4) convert2Read = setPeopleBundledLicense(person, bundled);
 							if(convert2Read)
 							{
 								RuntimeLogger.info("License converted to Read for user '" + person.getLoginId() + "'");
@@ -129,9 +128,9 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 						}
 						else RuntimeLogger.warn("'" + license + "' system license is already configured for '" + username + "' user account");
 					}
-					else if(!StringUtility.equals(method, "any")) RuntimeLogger.error("Person with login '" + username + "' not found");
+					else if(!StringUtility.equals(getMethod(), "any")) RuntimeLogger.error("Person with login '" + username + "' not found");
 				}
-				else if(StringUtility.equals(method, "user"))
+				else if(StringUtility.equals(getMethod(), "user"))
 				{
 					CoreItem user = new CoreItem();
 					user.setFormName("User");
@@ -155,11 +154,11 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 					}
 					else RuntimeLogger.error("User with login '" + user + "' not found");
 				}
-				else throw new AREasyException("Invalid searching method: " + method);
+				else throw new AREasyException("Invalid searching method: " + getMethod());
 			}
 			catch(Throwable th)
 			{
-				RuntimeLogger.error("Error configuring '" + license  + "' system license using '" + method + "' method, for user '" + username + "': " + th.getMessage());
+				RuntimeLogger.error("Error configuring '" + license  + "' system license using '" + getMethod() + "' method, for user '" + username + "': " + th.getMessage());
 				getLogger().debug("Exception", th);
 			}
 		}
@@ -183,7 +182,7 @@ public class SystemLicenseSetAction extends AbstractUserEnrollment
 	 * @return False if the conversion is applied or overwritten, and it is not need to convert the existing license into a READ one.
 	 * @throws AREasyException in case of any error occurs
 	 */
-	public boolean setBundledLicense(People person, String bundled) throws AREasyException
+	public boolean setPeopleBundledLicense(People person, String bundled) throws AREasyException
 	{
 		// detect bundled named if its not specified - that means it is desired to optimize the type of licenses
 		if(StringUtility.isEmpty(bundled))

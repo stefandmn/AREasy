@@ -249,7 +249,7 @@ public abstract class ProcessorLevel0Reader implements ARDictionary
 					}
 				}
 
-				String template = "#set ($data = " + expression + ")\n$data";
+				String template = "#set ($data = " + expression + ")\n$!data";
 				compute = StringUtility.trimToEmpty(parseText(context, template));
 			}
 		}

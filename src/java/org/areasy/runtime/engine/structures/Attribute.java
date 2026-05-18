@@ -375,9 +375,9 @@ public class Attribute
 		if(this.value != null)
 		{
 			if (this.value instanceof Timestamp) return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(((Timestamp) this.value).toDate());
-			else if (this.value instanceof DiaryListValue) return ((DiaryListValue) this.value).getAppendedText().toString();
-			else if (this.value instanceof AttachmentValue) return new String(((AttachmentValue)this.value).getValue(), StandardCharsets.UTF_8);
-			else if (this.value instanceof CurrencyValue) return ((CurrencyValue) this.value).getValue().toString();
+			else if (this.value instanceof DiaryListValue && !((DiaryListValue)this.value).isEmpty()) return ((DiaryListValue) this.value).getAppendedText().toString();
+			else if (this.value instanceof AttachmentValue && ((AttachmentValue)this.value).getValue() != null) return new String(((AttachmentValue)this.value).getValue(), StandardCharsets.UTF_8);
+			else if (this.value instanceof CurrencyValue && ((CurrencyValue)this.value).getValue() != null) return ((CurrencyValue) this.value).getValueString();
 			else return String.valueOf(this.value);
 		}
 		else return null;

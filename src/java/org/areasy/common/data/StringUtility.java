@@ -4761,7 +4761,7 @@ outer:
 	public static String append(String original, String argStr)
 	{
 		if (isNotEmpty(argStr)) return (original + argStr);
-		else return original;
+			else return original;
 	}
 
 	/**

@@ -1229,8 +1229,11 @@ public abstract class AbstractAction implements RuntimeAction
 			value = StringUtility.replace(value, "-gt", ">");
 			value = StringUtility.replace(value, "-ge", ">=");
 			value = StringUtility.replace(value, "-eq", "=");
+			value = StringUtility.replace(value, "-ne", "!=");
             value = StringUtility.replace(value, "-or", "||");
             value = StringUtility.replace(value, "-and", "&&");
+			value = StringUtility.replace(value, "-pip", "|");
+			value = StringUtility.replace(value, "-amp", "&");
 		}
 
 		return value;
@@ -1281,8 +1284,7 @@ public abstract class AbstractAction implements RuntimeAction
 
 				return value;
 			}
-
-		   return true;
+			else return true;
 	   }
 	
 	   protected boolean getRunCondition(CoreItem entry)
@@ -1301,9 +1303,27 @@ public abstract class AbstractAction implements RuntimeAction
 
 				return value;
 			}
-
-			return true;
+			else return true;
 	   }
+
+		protected boolean getCommitCondition(CoreItem entry)
+		{
+			String condition = isSpinOf() ? getConfiguration().getString("call-commitcondition", null) : getConfiguration().getString("commitcondition", null);
+
+			if (StringUtility.isNotEmpty(condition))
+			{
+				addCoreItem2Context(entry);
+				getContext().put("config", getConfiguration());
+				getContext().put("entry", entry);
+				condition = getTranslatedCondition(condition);
+
+				boolean value = ProcessorLevel0Reader.evaluate(getContext(), condition);
+				logger.debug("Translated Commit condition: " + condition + " -> " + value);
+
+				return value;
+			}
+			else return true;
+		}
 
 	protected boolean getWhenCondition(CoreItem entry)
 	{
@@ -1321,8 +1341,7 @@ public abstract class AbstractAction implements RuntimeAction
 
 			return value;
 		}
-
-		return true;
+		else return true;
 	}
 
 	public RuntimeAction getParent()

@@ -2192,17 +2192,14 @@ public class CoreItem implements ARDictionary
      *          <li>Allow NULL in required fields (not applicable for the Submitter, Status, or Short-Description core fields) (AR_MERGE_NO_REQUIRED_INCREMENT) = 1024</li>
      *           <li>Skip field pattern checking (including $MENU$) (AR_MERGE_NO_PATTERNS_INCREMENT) = 2048</li>
      *      </ul>
-	 * @param matchingField by default the matching is done based on the request Id. In case of you want to do the match using other field you have to specify this parameter
+	 * @param matchingFields by default the matching is done based on the request Id. In case of you want to do the match using other field you have to specify this parameter
      * @throws AREasyException if any error will occur
      */
-    public void merge(ServerConnection arsession, int nMergeType, String matchingField) throws AREasyException
+    protected void merge(ServerConnection arsession, int nMergeType, String matchingFields[]) throws AREasyException
 	{
-		if(matchingField != null)
+		if(matchingFields != null)
 		{
-			List list = new ArrayList();
-			list.add(matchingField);
-
-			merge(arsession, nMergeType, list);
+			merge(arsession, nMergeType, Arrays.asList(matchingFields));
 		}
 		else merge(arsession, nMergeType, (List) null);
 	}
@@ -2244,6 +2241,45 @@ public class CoreItem implements ARDictionary
 		}
 
         merge(arsession, collection, nMergeType, matchingFields);
+	}
+
+	/**
+	 * Merge an entry record in the ARS server using core item attributes and then is read it
+	 * to transform it into a valid core item instance. If Entry ID already exists, an action is performed depending on the value of parameter nMergeType:
+	 *
+	 * @param arsession user session
+	 * @param nMergeType A value indicating the action to take if the Entry ID already exists in the target form.
+	 *      This parameter is ignored if you do not specify the Entry ID or the ID specified does not conflict with existing entry IDs.
+	 *      <ul>
+	 *          <li>Generate an error (AR_MERGE_ENTRY_DUP_ERROR) = 1</li>
+	 *          <li>Create a new entry with a new ID (AR_MERGE_ENTRY_DUP_NEW_ID) = 2</li>
+	 *          <li>Delete the existing entry and create a new one in its place (AR_MERGE_ENTRY_DUP_OVERWRITE) = 3</li>
+	 *          <li>Update the fields specified in fieldList in the existing entry (AR_MERGE_ENTRY_DUP_MERGE) = 4</li>
+	 *      </ul>
+	 *      To omit some field validation steps, add the appropriate increments to the merge type.
+	 *      <ul>
+	 *          <li>Allow NULL in required fields (not applicable for the Submitter, Status, or Short-Description core fields) (AR_MERGE_NO_REQUIRED_INCREMENT) = 1024</li>
+	 *           <li>Skip field pattern checking (including $MENU$) (AR_MERGE_NO_PATTERNS_INCREMENT) = 2048</li>
+	 *      </ul>
+	 * @param qualification by default the matching is done based on the request Id. In case of you want to do the match using a list of fields you have to specify this parameter
+	 * @throws AREasyException if any error will occur
+	 */
+	public void merge(ServerConnection arsession, int nMergeType, String qualification) throws AREasyException
+	{
+		Collection collection = new Vector();
+
+		if(ignoreUnchangedValues() && nMergeType == Constants.AR_MERGE_ENTRY_DUP_MERGE)
+		{
+			Collection data = getChangedAttributes();
+			if(data != null && !data.isEmpty()) collection.addAll(data);
+		}
+		else
+		{
+			Collection data = getAttributes();
+			if(data != null && !data.isEmpty()) collection.addAll(data);
+		}
+
+		merge(arsession, collection, nMergeType, qualification);
 	}
 
     /**
@@ -2290,6 +2326,28 @@ public class CoreItem implements ARDictionary
 		catch(Throwable th)
 		{
 			throw new AREasyException("Error creating matching qualification: " + th.getMessage(), th);
+		}
+
+		merge(arsession, collection, nMergeType, qualInfo);
+	}
+
+	protected void merge(ServerConnection arsession, Collection collection, int nMergeType, String qualification) throws AREasyException
+	{
+		List<Field> fields = null;
+		QualifierInfo qualInfo = null;
+
+		try
+		{
+			// Retrieve the detail info of all fields from the form.
+			fields = getListFieldObjects(arsession);
+
+			// Create the search qualifier.
+			qualInfo = arsession.getContext().parseQualification(qualification, fields, null, Constants.AR_QUALCONTEXT_DEFAULT);
+		}
+		catch(Throwable th)
+		{
+			if(th instanceof AREasyException) throw (AREasyException)th;
+			else throw new AREasyException(th);
 		}
 
 		merge(arsession, collection, nMergeType, qualInfo);

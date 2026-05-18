@@ -41,10 +41,12 @@ public class FormData extends BaseData
 	private boolean matchset = false;
 	private boolean reportdata = false;
 	private boolean reporterrors = false;
+	private boolean createonly = false;
 	private boolean firstmatchreading = false;
 	private boolean exactmatchreading = false;
 	private boolean operationRemoteTarget = false;
 	private boolean callRemoteTarget = false;
+	private boolean fastrun = false;
 
 	/**
 	 * Execute the current action.
@@ -54,9 +56,11 @@ public class FormData extends BaseData
 	 */
 	public void run() throws AREasyException
 	{
+		this.fastrun = getConfiguration().getBoolean("fastrun", false);
 		this.matchset = getConfiguration().getBoolean("matchset", false);
 		this.reportdata = getConfiguration().getBoolean("reportdata", false);
 		this.reporterrors = getConfiguration().getBoolean("reporterrors", false);
+		this.createonly = getConfiguration().getBoolean("createonly", false);
 		this.firstmatchreading = getConfiguration().getBoolean("firstmatchreading", false);
 		this.exactmatchreading = getConfiguration().getBoolean("exactmatchreading", false);
 		this.operationRemoteTarget = getConfiguration().getBoolean("operation-remotetarget", false);
@@ -184,12 +188,25 @@ public class FormData extends BaseData
 				else action = getManager().getSpinAction(subaction);
 
 			getConfiguration().setKey("S1", source.getEntryId());
-			getConfiguration().setKey("S179", source.getStringAttributeValue(179));
+			getConfiguration().setKey("S8", source.getEntryId());
+			if(source.containsAttributeField(179)) getConfiguration().setKey("S179", source.getStringAttributeValue(179));
+			if(source.containsAttributeField(379)) getConfiguration().setKey("S379", source.getStringAttributeValue(379));
+			if(source.containsAttributeField(400129200)) getConfiguration().setKey("S400129200", source.getStringAttributeValue(400129200));
+			if(source.containsAttributeField(200000020)) getConfiguration().setKey("S200000020", source.getStringAttributeValue(200000020));
+			if(getConfiguration().containsKey("sourceconfigmapping"))
+			{
+				List mappingList = getConfiguration().getList("sourceconfigmapping");
+				for(int i = 0; mappingList != null && i < mappingList.size(); i++)
+				{
+					String key = (String) mappingList.get(i);
+					getConfiguration().setKey("S" + key, source.getStringAttributeValue(key));
+				}
+			}
 
 			try
 			{
 				//target data lockup
-				if(getConfiguration().containsKey("targetidentification"))
+				if(getConfiguration().containsKey("targetidentification") || getConfiguration().containsKey("targetidentificationquery"))
 				{
 					boolean vchange = false;
 					CoreItem target = new CoreItem();
@@ -197,21 +214,26 @@ public class FormData extends BaseData
 					target.setFirstMatchReading(getConfiguration().getBoolean("targetidentification-ignorenull", false));
 					setFormName(target);
 
-					for (Object fid : getConfiguration().getList("targetidentification", new ArrayList()))
+					if(getConfiguration().containsKey("targetidentification"))
 					{
-						if (source.getAttribute(fid) != null)
+						for (Object fid : getConfiguration().getList("targetidentification", new ArrayList()))
 						{
-							target.setAttribute(source.getAttribute(fid));
-							vchange = true;
+							if (source.getAttribute(fid) != null)
+							{
+								target.setAttribute(source.getAttribute(fid));
+								vchange = true;
+							}
 						}
 					}
+					else if(getConfiguration().containsKey("targetidentificationquery")) vchange = true;
 
 					if (vchange)
 					{
 						try
 						{
 							target.setChanged();
-							target.read(getServerConnection());
+							if(getConfiguration().containsKey("targetidentificationquery")) target.read(getServerConnection(), getTranslatedQualification(getConfiguration().getString("targetidentificationquery")));
+								else target.read(getServerConnection());
 						}
 						catch (Exception e)
 						{
@@ -359,14 +381,14 @@ public class FormData extends BaseData
 			}
 			logger.debug("Reading data for " + (isSpinOf() ? "spin" : "main") + " processor: " + entry);
 		}
-		else
+		else if(!createonly)
 		{
 			entries = searchData(searchEntry, labelIdentifier, operationRemoteTarget);
+			if (entries == null || entries.isEmpty()) logger.debug("No record found for " + (isSpinOf() ? "spin" : "main") + " processor");
 		}
 
 		if (entries == null || entries.isEmpty())
 		{
-			logger.debug("No record found for " + (isSpinOf() ? "spin" : "main") + " processor");
 			run(searchEntry);
 		}
 		else
@@ -384,10 +406,23 @@ public class FormData extends BaseData
 				if(logger.isDebugEnabled()) logger.debug("Preparing " + (isSpinOf() ? "spin" : "main") + " action for record: " + source.toFullString());
 
 				getConfiguration().setKey("S1", source.getEntryId());
-				getConfiguration().setKey("S179", source.getStringAttributeValue(179));
+				getConfiguration().setKey("S8", source.getEntryId());
+				if(source.containsAttributeField(179)) getConfiguration().setKey("S179", source.getStringAttributeValue(179));
+				if(source.containsAttributeField(379)) getConfiguration().setKey("S379", source.getStringAttributeValue(379));
+				if(source.containsAttributeField(400129200)) getConfiguration().setKey("S400129200", source.getStringAttributeValue(400129200));
+				if(source.containsAttributeField(200000020)) getConfiguration().setKey("S200000020", source.getStringAttributeValue(200000020));
+				if(getConfiguration().containsKey("sourceconfigmapping"))
+				{
+					List mappingList = getConfiguration().getList("sourceconfigmapping");
+					for(int i = 0; mappingList != null && i < mappingList.size(); i++)
+					{
+						String key = (String) mappingList.get(i);
+						getConfiguration().setKey("S" + key, source.getStringAttributeValue(key));
+					}
+				}
 
 				//call lockup or identification procedure in target system
-				if(getConfiguration().containsKey(isSpinOf() ? "call-targetidentification" : "targetidentification"))
+				if(getConfiguration().containsKey(isSpinOf() ? "call-targetidentification" : "targetidentification") || getConfiguration().containsKey(isSpinOf() ? "call-targetidentificationquery" : "targetidentificationquery"))
 				{
 					CoreItem target = new CoreItem();
 					target.setFirstMatchReading(getConfiguration().getBoolean((isSpinOf() ? "call-targetidentification" : "targetidentification") +"-firstmatch", false));
@@ -395,17 +430,26 @@ public class FormData extends BaseData
 					boolean vchange = false;
 					setFormName(target);
 
-					for (Object fid : getConfiguration().getList(isSpinOf() ? "call-targetidentification" : "targetidentification", new ArrayList()))
+					if(getConfiguration().containsKey(isSpinOf() ? "call-targetidentification" : "targetidentification"))
 					{
-						if (source.getAttribute(fid) != null) { target.setAttribute(source.getAttribute(fid)); vchange = true; }
+						for (Object fid : getConfiguration().getList(isSpinOf() ? "call-targetidentification" : "targetidentification", new ArrayList()))
+						{
+							if (source.getAttribute(fid) != null)
+							{
+								target.setAttribute(source.getAttribute(fid));
+								vchange = true;
+							}
+						}
 					}
+					else if(getConfiguration().containsKey(isSpinOf() ? "call-targetidentificationquery" : "targetidentificationquery")) vchange = true;
 
 					if (vchange)
 					{
 						try
 						{
 							target.setChanged();
-							target.read(getServerConnection());
+							if(getConfiguration().containsKey(isSpinOf() ? "call-targetidentificationquery" : "targetidentificationquery")) target.read(getServerConnection(), getTranslatedQualification(getConfiguration().getString(isSpinOf() ? "call-targetidentificationquery" : "targetidentificationquery")));
+								else target.read(getServerConnection());
 						}
 						catch (Exception e)
 						{
@@ -572,7 +616,6 @@ public class FormData extends BaseData
 	 */
 	public void run(CoreItem entry) throws AREasyException
 	{
-		boolean fastrun = getConfiguration().getBoolean("fastrun", false);
 		String operation = getConfiguration().getString("operation", getConfiguration().getString("call-operation", null));
 		logger.debug("Start executing operation: " + operation);
 
@@ -607,61 +650,68 @@ public class FormData extends BaseData
 		//set data values
 		setDataFields(entry);
 
-		if(!validateSet)
-		{
-			validateSelectData = getConfiguration().getStringArray("select-data", null);
-			validateSelectHeader = getConfiguration().getStringArray("select-header", null);
-			validateSelectType = getConfiguration().getString("select-type", null);
-			validateDisplay = getConfiguration().getString("display", null);
-			validateSeparator = getConfiguration().getString("separator", ",");
-			validateSet = true;
-		}
+		boolean condition = false;
+		if (!fastrun) condition = getCommitCondition(entry);
 
-		if(entry.exists() && (validateDisplay == null || StringUtility.equalsIgnoreCase(validateDisplay, "on")))
+		if (fastrun || condition)
 		{
-			RuntimeLogger.info("On : " + entry);
-			log = true;
-		}
-		else if(!entry.exists() && (validateDisplay == null || StringUtility.equalsIgnoreCase(validateDisplay, "off")))
-		{
-			RuntimeLogger.info("Off: " + entry);
-			log = true;
-		}
-
-		if(entry.exists() && (validateSelectType == null || StringUtility.equalsIgnoreCase(validateSelectType, "on")))
-		{
-			log = true;
-		}
-		else if(!entry.exists() && (validateSelectType == null || StringUtility.equalsIgnoreCase(validateSelectType, "off")))
-		{
-			log = true;
-		}
-
-        setProcessorsCounter();
-
-        if(log && reportdata)
-		{
-			if(validateSelectData == null) RuntimeLogger.add(entry.getEntryId());
-			else
+			if(!validateSet)
 			{
-				String line = "";
-				for(int i = 0; i < validateSelectData.length; i++)
-				{
-					if(validateSelectData.length == 1 || !StringUtility.equals(validateSelectType, ","))
-					{
-						if(i > 0) line += validateSeparator + entry.getStringAttributeValue(StringUtility.trim(validateSelectData[i]));
-							else line = entry.getStringAttributeValue(StringUtility.trim(validateSelectData[i]));
-					}
-					else
-					{
-						if(i > 0) line += validateSeparator + entry.getEnclosedStringAttributeValue(StringUtility.trim(validateSelectData[i]));
-							else line = entry.getEnclosedStringAttributeValue(StringUtility.trim(validateSelectData[i]));
-					}
-				}
+				validateSelectData = getConfiguration().getStringArray("select-data", null);
+				validateSelectHeader = getConfiguration().getStringArray("select-header", null);
+				validateSelectType = getConfiguration().getString("select-type", null);
+				validateDisplay = getConfiguration().getString("display", null);
+				validateSeparator = getConfiguration().getString("separator", ",");
+				validateSet = true;
+			}
 
-				RuntimeLogger.add(line);
+			if(entry.exists() && (validateDisplay == null || StringUtility.equalsIgnoreCase(validateDisplay, "on")))
+			{
+				RuntimeLogger.info("On : " + entry);
+				log = true;
+			}
+			else if(!entry.exists() && (validateDisplay == null || StringUtility.equalsIgnoreCase(validateDisplay, "off")))
+			{
+				RuntimeLogger.info("Off: " + entry);
+				log = true;
+			}
+
+			if(entry.exists() && (validateSelectType == null || StringUtility.equalsIgnoreCase(validateSelectType, "on") || StringUtility.equalsIgnoreCase(validateSelectType, "all")))
+			{
+				log = true;
+			}
+			else if(!entry.exists() && (validateSelectType == null || StringUtility.equalsIgnoreCase(validateSelectType, "off") || StringUtility.equalsIgnoreCase(validateSelectType, "all")))
+			{
+				log = true;
+			}
+
+			setProcessorsCounter();
+
+			if(log && reportdata)
+			{
+				if(validateSelectData == null) RuntimeLogger.add(entry.getEntryId());
+				else
+				{
+					String line = "";
+					for(int i = 0; i < validateSelectData.length; i++)
+					{
+						if(validateSelectData.length == 1 || !StringUtility.equals(validateSelectType, ","))
+						{
+							if(i > 0) line += validateSeparator + entry.getStringAttributeValue(StringUtility.trim(validateSelectData[i]));
+								else line = entry.getStringAttributeValue(StringUtility.trim(validateSelectData[i]));
+						}
+						else
+						{
+							if(i > 0) line += validateSeparator + entry.getEnclosedStringAttributeValue(StringUtility.trim(validateSelectData[i]));
+								else line = entry.getEnclosedStringAttributeValue(StringUtility.trim(validateSelectData[i]));
+						}
+					}
+
+					RuntimeLogger.add(line);
+				}
 			}
 		}
+		else RuntimeLogger.debug("Execution skipped due to commit-condition evaluation: " + entry);
     }
 
 	/**
@@ -707,21 +757,29 @@ public class FormData extends BaseData
 		{
 			//set data values
 			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
-			entry.create(getServerConnection());
-            setProcessorsCounter();
 
-			if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Created data entry: " + entry.toFullString());
-				else RuntimeLogger.debug("Created data entry: " + entry);
-            if(reportdata) RuntimeLogger.add(entry.getEntryId());
+			boolean condition = false;
+			if (!fastrun) condition = getCommitCondition(entry);
 
-			if(getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			if (fastrun || condition)
 			{
-				//set multipart form names
-				setMultiPartForms(entry);
+				entry.create(getServerConnection());
+				setProcessorsCounter();
 
-				//execute transactions
-                ((MultiPartItem)entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				if (RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Created data entry: " + entry.toFullString());
+				else RuntimeLogger.debug("Created data entry: " + entry);
+				if (reportdata) RuntimeLogger.add(entry.getEntryId());
+
+				if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+				{
+					//set multipart form names
+					setMultiPartForms(entry);
+
+					//execute transactions
+					((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				}
 			}
+			else RuntimeLogger.debug("Execution skipped due to commit-condition evaluation: " + entry);
 		}
 		else if(getConfiguration().getBoolean("updateifexists", false) && entry.exists()) runUpdate(entry);
 	}
@@ -735,22 +793,30 @@ public class FormData extends BaseData
 		{
 			//set data values
 			setDataFields(entry, getConfiguration().getBoolean("createifnotexist", false), getConfiguration().getBoolean("updateifexists", false));
-            entry.update(getServerConnection());
-            setProcessorsCounter();
 
-			if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Updated data entry: " + entry.toFullString());
-				else RuntimeLogger.debug("Updated data entry: " + entry);
-			if(reportdata) RuntimeLogger.add(entry.getEntryId());
+			boolean condition = false;
+			if (!fastrun) condition = getCommitCondition(entry);
 
-			if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			if (fastrun || condition)
 			{
-				//set multipart form names
-				setMultiPartForms(entry);
+				entry.update(getServerConnection());
+				setProcessorsCounter();
 
-				//execute transactions
-				if(!isRemoteConnection()) ((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
-                    else ((MultiPartItem) entry).commitParts(getRemoteConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Updated data entry: " + entry.toFullString());
+					else RuntimeLogger.debug("Updated data entry: " + entry);
+				if(reportdata) RuntimeLogger.add(entry.getEntryId());
+
+				if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+				{
+					//set multipart form names
+					setMultiPartForms(entry);
+
+					//execute transactions
+					if(!isRemoteConnection()) ((MultiPartItem) entry).commitParts(getServerConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+						else ((MultiPartItem) entry).commitParts(getRemoteConnection(), getMultiPartQueryFields(), getMultiPartDataFields());
+				}
 			}
+			else RuntimeLogger.debug("Execution skipped due to commit-condition evaluation: " + entry);
 		}
 		else if(getConfiguration().getBoolean("createifnotexist", false) && !entry.exists()) runCreate(entry);
 	}
@@ -771,22 +837,29 @@ public class FormData extends BaseData
 			//set data values
 			setDataFields(entry);
 
-			if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+			boolean condition = false;
+			if (!fastrun) condition = getCommitCondition(entry);
+
+			if (fastrun || condition)
 			{
-				//set multipart form names
-				setMultiPartForms(entry);
+				if (getConfiguration().getBoolean("multipart", false) && entry instanceof MultiPartItem)
+				{
+					//set multipart form names
+					setMultiPartForms(entry);
 
-				setMultiPartQueryFields(entry);
-				((MultiPartItem) entry).readParts(getServerConnection());
-				((MultiPartItem) entry).removeParts(getServerConnection());
+					setMultiPartQueryFields(entry);
+					((MultiPartItem) entry).readParts(getServerConnection());
+					((MultiPartItem) entry).removeParts(getServerConnection());
+				}
+
+				entry.remove(getServerConnection());
+				setProcessorsCounter();
+
+				if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Deleted data entry: " + entry.toFullString());
+					else RuntimeLogger.debug("Deleted data entry: " + entry);
+				if(reportdata) RuntimeLogger.add(entry.getEntryId());
 			}
-
-            entry.remove(getServerConnection());
-            setProcessorsCounter();
-
-            if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Deleted data entry: " + entry.toFullString());
-				else RuntimeLogger.debug("Deleted data entry: " + entry);
-			if(reportdata) RuntimeLogger.add(entry.getEntryId());
+			else RuntimeLogger.debug("Execution skipped due to commit-condition evaluation: " + entry);
 		}
 	}
 
@@ -804,15 +877,24 @@ public class FormData extends BaseData
 		//set data values
 		setDataFields(entry);
 
-		List qualList = getConfiguration().getList("mergematchingfields", null);
-        if (qualList != null) entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()), qualList);
-            else entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()));
+		boolean condition = false;
+		if (!fastrun) condition = getCommitCondition(entry);
 
-        setProcessorsCounter();
+		if (fastrun || condition)
+		{
+			List qualList = getConfiguration().getList("mergematchingfields", null);
+			String qualData = getConfiguration().getString("mergematchingquery", null);
+			if (qualList != null) entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()), qualList);
+				else if (qualData != null) entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()), qualData);
+					else entry.merge(getServerConnection(), getMergeTypeAndOptions(getConfiguration()));
 
-		if(RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Merged data entry: " + entry.toFullString());
-			else RuntimeLogger.debug("Merged data entry: " + entry);
-		if(reportdata) RuntimeLogger.add(entry.getEntryId());
+			setProcessorsCounter();
+
+			if (RuntimeLogger.isTraceLevel()) RuntimeLogger.trace("Merged data entry: " + entry.toFullString());
+				else RuntimeLogger.debug("Merged data entry: " + entry);
+			if (reportdata) RuntimeLogger.add(entry.getEntryId());
+		}
+		else RuntimeLogger.debug("Execution skipped due to commit-condition evaluation: " + entry);
 	}
 
 	protected void setRemoteFormName(CoreItem entry)

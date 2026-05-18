@@ -1,5 +1,7 @@
 3.0.4
 =====
+08. Fix, update and improve formdata action and all related objects, in order to improve interpolate
+    functions and lookup functions.
 07. Update and improve formdata action with various new functions, especially for lookup operations
     data validation, data matching with a target system, etc.
 06. Implement chunk status to the active log and standard output

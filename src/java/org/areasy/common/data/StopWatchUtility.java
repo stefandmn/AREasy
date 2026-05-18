@@ -130,6 +130,11 @@ public class StopWatchUtility
 		stopTime = -1;
 	}
 
+	public boolean isRunning()
+	{
+		return this.runningState == STATE_RUNNING;
+	}
+
 	/**
 	 * <p>Split the time.</p>
 	 * <p/>

@@ -61,29 +61,57 @@ public class FileResourceLoader extends ResourceLoader
 	 */
 	public synchronized InputStream getResourceStream(String templateName) throws ResourceNotFoundException
 	{
+		InputStream inputStream = null;
 		if (templateName == null || templateName.length() == 0) throw new ResourceNotFoundException("Need to specify a file name or file path!");
 
-		String template = StringUtility.normalizePath(templateName);
-		if (template == null || template.length() == 0)
+		if (templateName.startsWith("/") || templateName.charAt(1) == ':')
 		{
-			String msg = "File resource error: argument '" + template + "' contains and may be trying to access content outside of template root.  Rejected.";
-			logger.error(msg);
+			logger.debug("Searching template starting from root file system: " + templateName);
+			File file = new File(templateName);
 
-			throw new ResourceNotFoundException(msg);
-		}
-
-		if (template.startsWith("/")) template = template.substring(1);
-
-		int size = paths.size();
-		for (int i = 0; i < size; i++)
-		{
-			String path = (String) paths.get(i);
-			InputStream inputStream = findTemplate(path, template);
-
-			if (inputStream != null)
+			if (file.canRead())
 			{
-				templatePaths.put(templateName, path);
-				return inputStream;
+				try
+				{
+					inputStream = new BufferedInputStream(new FileInputStream(file.getAbsolutePath()));
+				}
+				catch (FileNotFoundException fnfe)
+				{
+					return null;
+				}
+
+				if (inputStream != null)
+				{
+					templatePaths.put(templateName, "");
+					return inputStream;
+				}
+			}
+		}
+		else
+		{
+			String template = StringUtility.normalizePath(templateName);
+			logger.debug("Normalizing template: " + template);
+
+			if (template == null || template.length() == 0)
+			{
+				String msg = "File resource error: argument '" + template + "' contains and may be trying to access content outside of template root.  Rejected.";
+				logger.error(msg);
+
+				throw new ResourceNotFoundException(msg);
+			}
+
+			if (template.startsWith("/")) template = template.substring(1);
+			int size = paths.size();
+			for (int i = 0; i < size; i++)
+			{
+				String path = (String) paths.get(i);
+				inputStream = findTemplate(path, template);
+
+				if (inputStream != null)
+				{
+					templatePaths.put(template, path);
+					return inputStream;
+				}
 			}
 		}
 

@@ -112,7 +112,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 */
 	public void close() throws AREasyException
 	{
-		getCron().stop();
+		if(getCron().isRunning()) getCron().stop();
 	}
 	/**
 	 * Collect data input parameters and publish them into a <code>CoreItem</code> structure.
@@ -182,39 +182,10 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 			Object value = getConfiguration().getKey(id);
 
-			// translate internal references stored in data structure
-			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
+			if (value instanceof String && (((String)value).contains(MultiPartItem.partVarStart) || ((String)value).contains(MultiPartItem.partVarStart2)))
 			{
-				if(((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd)
-						&& ((String)value).substring(MultiPartItem.partVarStart.length()).startsWith(FDREF)
-						&& StringUtility.isNotEmpty( ((String)value).substring(MultiPartItem.partVarStart.length() + 1, ((String) value).length() - MultiPartItem.partVarEnd.length())) )
-				{
-					String iid = ((String)value).substring(MultiPartItem.partVarStart.length() + 1, ((String) value).length() - MultiPartItem.partVarEnd.length());
-					value = entry.getAttributeValue(iid);
-				}
-				else value = getInternalValue(String.valueOf(value), entry, 0);
-			}
-
-			// translate external and variable references stored in configuration
-			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart.substring(0, 1)))
-			{
-				if(((String)value).startsWith(MultiPartItem.partVarStart) && ((String)value).endsWith(MultiPartItem.partVarEnd))
-				{
-					String iid = ((String)value).substring(MultiPartItem.partVarStart.length(), ((String) value).length() - MultiPartItem.partVarEnd.length());
-					value = getConfiguration().getKey(iid);
-				}
-				else value = getConfiguration().getString(id);
-			}
-
-			// translate external expressions described as Velocity code using entry fields
-			if(value instanceof String && ((String)value).contains(MultiPartItem.partVarStart2.substring(0, 1)))
-			{
-				if(((String)value).startsWith(MultiPartItem.partVarStart2) && ((String)value).endsWith(MultiPartItem.partVarEnd2))
-				{
-					String source = ((String)value).substring(MultiPartItem.partVarStart2.length(), ((String) value).length() - MultiPartItem.partVarEnd2.length());
-					value = getComputedCoreItem(entry, source);
-				}
-				else value = getConfiguration().getString(id);
+				value = getInterpolatedValue((String)value, entry);
+				value = getInterpolatedCalculation((String)value, entry);
 			}
 
 			//handle attachments mapping
@@ -862,8 +833,7 @@ public abstract class BaseData extends AbstractAction implements CoreData
 
 
 						//get interrogation text into a real qualification
-						query = getTranslatedQualification(query);
-						query = getInternalValue(query, entry, 0);
+						query = getTranslatedQualification(getInterpolatedValue(query, entry));
                         logger.debug("Lookup value translated query: " + query);
 
 						CoreItem item = getCoreItem(schema, props != null ? Arrays.asList(StringUtility.split(props)) : null);
@@ -953,27 +923,56 @@ public abstract class BaseData extends AbstractAction implements CoreData
 	 * @return the new value that replaces the references with real values
 	 * @throws AREasyException in case of any error occurs
 	 */
-	private String getInternalValue(String value, CoreItem entry, int index) throws AREasyException
+	private String getInterpolatedValue(String value, CoreItem entry) throws AREasyException
 	{
 		if(value != null)
 		{
-			int startIndex = value.indexOf(MultiPartItem.partVarStart, index);
-			int endIndex = value.indexOf(MultiPartItem.partVarEnd, startIndex + 1);
+			int startIndex = value.indexOf(MultiPartItem.partVarStart, 0);
+			int endIndex = value.indexOf(MultiPartItem.partVarEnd, startIndex + MultiPartItem.partVarStart.length());
 
 			if (startIndex >= 0 && endIndex > startIndex)
 			{
 				String key = value.substring(startIndex + MultiPartItem.partVarStart.length(), endIndex);
 
-				if(key.startsWith(FDREF))
+				if(key.startsWith(FDREF) && NumberUtility.isNumber( key.substring(1)))
 				{
 					key = key.substring(1);
-					if( NumberUtility.isNumber(key))
-					{
-						value = value.substring(0, startIndex) + StringUtility.trimToEmpty(entry.getStringAttributeValue(key)) + value.substring(endIndex + 1);
-					}
+					value = value.substring(0, startIndex) + StringUtility.trimToEmpty(entry.getStringAttributeValue(key)) + value.substring(endIndex + 1);
+				}
+				else if(getConfiguration().containsKey(key))
+				{
+					value = value.substring(0, startIndex) + StringUtility.trimToEmpty(getConfiguration().getString(key, "")) + value.substring(endIndex + 1);
 				}
 
-				value = getInternalValue(value, entry, endIndex + 1);
+				return getInterpolatedValue(value, entry);
+			}
+		}
+
+		return value;
+	}
+
+	/**
+	 * Get and replace <b>CoreItem</b> references with the right values. This method should be used only in
+	 * <code>setDataFields</code> method just to reused data values whoc are already in the data structure and referred
+	 * through these indicators.
+	 * @param value initial value
+	 * @param entry <b>CoreItem</b> to be used and data-source
+	 * @return the new value that replaces the references with real values
+	 * @throws AREasyException in case of any error occurs
+	 */
+	private String getInterpolatedCalculation(String value, CoreItem entry) throws AREasyException
+	{
+		if(value != null)
+		{
+			int startIndex = value.indexOf(MultiPartItem.partVarStart2, 0);
+			int endIndex = value.indexOf(MultiPartItem.partVarEnd2, startIndex + MultiPartItem.partVarStart2.length());
+
+			if (startIndex >= 0 && endIndex > startIndex)
+			{
+				String code = value.substring(startIndex + MultiPartItem.partVarStart2.length(), endIndex);
+				value = value.substring(0, startIndex) + StringUtility.trimToEmpty(getComputedCoreItem(entry, getTranslatedCondition(code))) + value.substring(endIndex + 1);
+
+				return getInterpolatedCalculation(value, entry);
 			}
 		}
 
@@ -1568,6 +1567,28 @@ public abstract class BaseData extends AbstractAction implements CoreData
 		public List remotesearch(String form, String query) throws AREasyException
 		{
 			if (this.remote != null) return (List) interrogation(this.remote, form, query, false);
+				else return null;
+		}
+
+		public String getInstanceId() throws AREasyException
+		{
+			return ProcessorLevel2CmdbApp.getStringInstanceId(this.target);
+		}
+
+		public String getInstanceId(String prefix) throws AREasyException
+		{
+			return ProcessorLevel2CmdbApp.getStringInstanceId(this.target, prefix);
+		}
+
+		public String getRemoteInstanceId() throws AREasyException
+		{
+			if (this.remote != null) return ProcessorLevel2CmdbApp.getStringInstanceId(this.remote);
+				else return null;
+		}
+
+		public String getRemoteInstanceId(String prefix) throws AREasyException
+		{
+			if (this.remote != null) return ProcessorLevel2CmdbApp.getStringInstanceId(this.remote, prefix);
 				else return null;
 		}
 	}
